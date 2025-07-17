@@ -32,8 +32,11 @@ import { optimizeRoute, getCurrentPosition, groupPackagesByAddress } from './ser
 import { CameraCapture } from './components/CameraCapture';
 import { PackageCard } from './components/PackageCard';
 import { StatsPanel } from './components/StatsPanel';
-import { AddressForm } from './components/AddressForm';
+import { EnhancedAddressForm } from './components/EnhancedAddressForm';
 import { DeliveryMap } from './components/DeliveryMap';
+import { GPSNavigation } from './components/GPSNavigation';
+import { RouteOptimizer, OptimizationMode } from './services/routeOptimization';
+import { AddressDatabaseService } from './services/addressDatabase';
 
 function App() {
   const [currentView, setCurrentView] = useState<AppView>('home');
@@ -47,6 +50,8 @@ function App() {
   const [ocrConfidence, setOcrConfidence] = useState<number>(0);
   const [deliveryPoints, setDeliveryPoints] = useState<DeliveryPoint[]>([]);
   const [currentPointIndex, setCurrentPointIndex] = useState(0);
+  const [optimizationMode, setOptimizationMode] = useState<OptimizationMode>({ type: 'simple' });
+  const [showOptimizationSettings, setShowOptimizationSettings] = useState(false);
   const [customLocations, setCustomLocations] = useLocalStorage<TruckLocation[]>('custom-locations', []);
   const [showAddLocation, setShowAddLocation] = useState(false);
   const [newLocationName, setNewLocationName] = useState('');
@@ -384,7 +389,7 @@ function App() {
             )}
           </div>
           
-          <AddressForm
+          <EnhancedAddressForm
             initialAddress={capturedAddress ? {
               id: '',
               street_number: '',
@@ -403,6 +408,7 @@ function App() {
               setCapturedAddress('');
               setCurrentView('home');
             }}
+            currentUser="Chauffeur" // À remplacer par le vrai nom d'utilisateur
           />
         </div>
       );
@@ -515,7 +521,56 @@ function App() {
         return;
       }
 
-      const optimizedPoints = await optimizeRoute(pendingPackages, userPosition);
+      // Grouper les colis par adresse
+      const points = groupPackagesByAddress(pendingPackages);
+      
+      // Géocoder toutes les adresses
+      const geocodedPoints = await Promise.all(
+        points.map(async (point) => {
+          if (!point.address.coordinates) {
+            const coords = await AddressService.geocodeAddress(point.address);
+            if (coords) {
+              point.address.coordinates = coords;
+              // Mettre à jour les colis avec les coordonnées
+              point.packages.forEach(pkg => {
+                pkg.address.coordinates = coords;
+              });
+            }
+          }
+          return point;
+        })
+      );
+
+      const validPoints = geocodedPoints.filter(point => point.address.coordinates);
+      
+      if (validPoints.length === 0) {
+        alert('Impossible de géocoder les adresses. Vérifiez votre connexion internet.');
+        setIsProcessing(false);
+        return;
+      }
+
+      // Calculer la matrice de distances
+      const coordinates = validPoints.map(p => p.address.coordinates!);
+      const distanceMatrix = await RouteOptimizer.getDistanceMatrix(coordinates);
+
+      // Optimiser selon le mode choisi
+      let optimizedPoints: DeliveryPoint[];
+      if (optimizationMode.type === 'constrained' && optimizationMode.constraints) {
+        optimizedPoints = RouteOptimizer.optimizeWithConstraints(
+          validPoints,
+          userPosition,
+          distanceMatrix,
+          optimizationMode.constraints
+        );
+      } else {
+        optimizedPoints = RouteOptimizer.optimizeSimple(validPoints, userPosition, distanceMatrix);
+      }
+
+      // Améliorer avec 2-opt si plus de 4 points
+      if (optimizedPoints.length > 4) {
+        optimizedPoints = RouteOptimizer.improve2Opt(optimizedPoints, distanceMatrix);
+      }
+
       setDeliveryPoints(optimizedPoints);
       setCurrentView('route');
       
@@ -545,6 +600,8 @@ function App() {
     // Mark all packages in this point as delivered
     point.packages.forEach(pkg => {
       updatePackage(pkg.id, { status: 'delivered' });
+      // Ajouter à l'historique de livraison
+      AddressDatabaseService.addDeliveryHistory(pkg.address.id, true, 'Chauffeur');
     });
 
     // Move to next point
@@ -554,6 +611,54 @@ function App() {
     } else {
       alert('Tournée terminée ! Félicitations !');
       setCurrentView('home');
+    }
+  };
+
+  const handleAddAddressTour = async () => {
+    // Logique pour ajouter une adresse pendant la tournée
+    setCurrentView('scan');
+  };
+
+  const handleRecalculateRoute = async () => {
+    if (deliveryPoints.length === 0) return;
+
+    setIsProcessing(true);
+    try {
+      const userPosition = await getCurrentPosition();
+      if (!userPosition) {
+        alert('Impossible d\'obtenir votre position.');
+        setIsProcessing(false);
+        return;
+      }
+
+      // Recalculer à partir du point actuel
+      const remainingPoints = deliveryPoints.slice(currentPointIndex);
+      const coordinates = remainingPoints
+        .filter(p => p.address.coordinates)
+        .map(p => p.address.coordinates!);
+
+      if (coordinates.length > 0) {
+        const distanceMatrix = await RouteOptimizer.getDistanceMatrix(coordinates);
+        const optimized = RouteOptimizer.optimizeSimple(remainingPoints, userPosition, distanceMatrix);
+        
+        // Réajuster les ordres
+        optimized.forEach((point, index) => {
+          point.order = currentPointIndex + index + 1;
+        });
+
+        const newDeliveryPoints = [
+          ...deliveryPoints.slice(0, currentPointIndex),
+          ...optimized
+        ];
+
+        setDeliveryPoints(newDeliveryPoints);
+        alert('Itinéraire recalculé !');
+      }
+    } catch (error) {
+      console.error('Recalculation error:', error);
+      alert('Erreur lors du recalcul de l\'itinéraire.');
+    } finally {
+      setIsProcessing(false);
     }
   };
 
@@ -607,7 +712,7 @@ function App() {
           </button>
 
           <button
-            onClick={startDeliveryTour}
+            onClick={() => setCurrentView('gps')}
             disabled={deliveryPoints.length === 0}
             className="bg-purple-600 text-white py-4 px-4 rounded-lg text-lg font-semibold hover:bg-purple-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
           >
@@ -615,6 +720,52 @@ function App() {
             <span>Lancer Tournée</span>
           </button>
         </div>
+
+        <button
+          onClick={() => setShowOptimizationSettings(!showOptimizationSettings)}
+          className="w-full bg-gray-600 text-white py-3 px-4 rounded-lg text-lg font-semibold hover:bg-gray-700 transition-colors flex items-center justify-center space-x-2"
+        >
+          <Settings size={20} />
+          <span>Mode d'optimisation</span>
+        </button>
+
+        {showOptimizationSettings && (
+          <div className="bg-white rounded-lg shadow-md p-6 border-2 border-blue-200">
+            <h3 className="text-lg font-semibold mb-4">Paramètres d'optimisation</h3>
+            
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-2">Mode d'optimisation</label>
+                <div className="space-y-2">
+                  <label className="flex items-center space-x-2">
+                    <input
+                      type="radio"
+                      checked={optimizationMode.type === 'simple'}
+                      onChange={() => setOptimizationMode({ type: 'simple' })}
+                      className="text-blue-600"
+                    />
+                    <span>Simple (distance minimale)</span>
+                  </label>
+                  <label className="flex items-center space-x-2">
+                    <input
+                      type="radio"
+                      checked={optimizationMode.type === 'constrained'}
+                      onChange={() => setOptimizationMode({ 
+                        type: 'constrained',
+                        constraints: {
+                          priorities: {},
+                          timeWindows: {}
+                        }
+                      })}
+                      className="text-blue-600"
+                    />
+                    <span>Avec contraintes (priorités, horaires)</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         <button
           onClick={() => setCurrentView('settings')}
@@ -892,11 +1043,25 @@ function App() {
         return <RouteView />;
       case 'map':
         return (
-          <DeliveryMap
+          <GPSNavigation
+            deliveryPoints={deliveryPoints}
+            currentPointIndex={currentPointIndex}
+            userPosition={userPosition}
+            onDeliveryComplete={handlePointComplete}
+            onAddAddress={handleAddAddressTour}
+            onRecalculateRoute={handleRecalculateRoute}
+            onBack={() => setCurrentView('route')}
+          />
+        );
+      case 'gps':
+        return (
+          <GPSNavigation
             points={deliveryPoints}
-            currentPoint={deliveryPoints[currentPointIndex] || null}
-            userPosition={null}
+            currentPointIndex={currentPointIndex}
+            userPosition={userPosition}
             onPointComplete={handlePointComplete}
+            onAddAddress={handleAddAddressTour}
+            onRecalculateRoute={handleRecalculateRoute}
             onBack={() => setCurrentView('route')}
           />
         );
