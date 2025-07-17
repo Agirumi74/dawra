@@ -53,7 +53,7 @@ export class RouteOptimizer {
     return matrix;
   }
 
-  private static calculateHaversineDistance(p1: { lat: number; lng: number }, p2: { lat: number; lng: number }): number {
+  static calculateHaversineDistance(p1: { lat: number; lng: number }, p2: { lat: number; lng: number }): number {
     const R = 6371; // Rayon de la Terre en km
     const dLat = (p2.lat - p1.lat) * Math.PI / 180;
     const dLng = (p2.lng - p1.lng) * Math.PI / 180;
@@ -86,6 +86,55 @@ export class RouteOptimizer {
       console.error('Route polyline error:', error);
       return [from, to]; // Fallback: ligne droite
     }
+  }
+
+  // Grouper les colis par adresse et calculer la priorité du point
+  static groupPackagesByAddress(packages: Package[]): DeliveryPoint[] {
+    const addressGroups = new Map<string, Package[]>();
+    
+    packages.forEach(pkg => {
+      const addressKey = pkg.address.full_address;
+      if (!addressGroups.has(addressKey)) {
+        addressGroups.set(addressKey, []);
+      }
+      addressGroups.get(addressKey)!.push(pkg);
+    });
+
+    const points: DeliveryPoint[] = [];
+    let order = 1;
+
+    addressGroups.forEach((pkgs, addressKey) => {
+      const firstPkg = pkgs[0];
+      
+      // Déterminer le statut du point
+      const allDelivered = pkgs.every(p => p.status === 'delivered');
+      const someDelivered = pkgs.some(p => p.status === 'delivered');
+      let status: 'pending' | 'completed' | 'partial' = 'pending';
+      if (allDelivered) status = 'completed';
+      else if (someDelivered) status = 'partial';
+
+      // Déterminer la priorité du point (la plus haute parmi les colis)
+      const priorities = pkgs.map(p => p.priority);
+      let pointPriority: 'standard' | 'express_midi' | 'premier' = 'standard';
+      
+      if (priorities.includes('premier')) {
+        pointPriority = 'premier';
+      } else if (priorities.includes('express_midi')) {
+        pointPriority = 'express_midi';
+      }
+
+      points.push({
+        id: `point-${addressKey.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '')}`,
+        address: firstPkg.address,
+        packages: pkgs,
+        status,
+        order: order++,
+        distance: 0,
+        priority: pointPriority
+      });
+    });
+
+    return points;
   }
 
   // Optimisation simple (Nearest Neighbor)
@@ -138,48 +187,75 @@ export class RouteOptimizer {
     return optimized;
   }
 
-  // Optimisation avec contraintes
+  // Optimisation avec contraintes (priorités et fenêtres temporelles)
   static optimizeWithConstraints(
     points: DeliveryPoint[], 
     userPosition: UserPosition, 
     distanceMatrix: number[][], 
     constraints: RouteConstraints
   ): DeliveryPoint[] {
-    // Trier d'abord par priorité
-    const sortedPoints = [...points].sort((a, b) => {
-      const priorityA = constraints.priorities?.[a.id] || 999;
-      const priorityB = constraints.priorities?.[b.id] || 999;
-      return priorityA - priorityB;
-    });
+    if (points.length === 0) return [];
 
-    // Séparer les points haute priorité
-    const highPriorityPoints = sortedPoints.filter(p => 
-      (constraints.priorities?.[p.id] || 999) <= 3
-    );
-    const normalPoints = sortedPoints.filter(p => 
-      (constraints.priorities?.[p.id] || 999) > 3
-    );
+    // Séparer par priorité
+    const premierPoints = points.filter(p => p.priority === 'premier');
+    const expressMidiPoints = points.filter(p => p.priority === 'express_midi');
+    const standardPoints = points.filter(p => p.priority === 'standard');
 
-    // Optimiser les points haute priorité en premier
-    const optimizedHigh = this.optimizeSimple(highPriorityPoints, userPosition, distanceMatrix);
-    
-    // Optimiser les points normaux
-    let lastPosition = userPosition;
-    if (optimizedHigh.length > 0) {
-      const lastPoint = optimizedHigh[optimizedHigh.length - 1];
+    let optimized: DeliveryPoint[] = [];
+    let currentPosition = userPosition;
+    let order = 1;
+
+    // 1. Traiter les points "premier" en premier
+    if (premierPoints.length > 0) {
+      const premierOptimized = this.optimizeSimple(premierPoints, currentPosition, distanceMatrix);
+      premierOptimized.forEach(point => {
+        point.order = order++;
+        optimized.push(point);
+      });
+      
+      // Mettre à jour la position actuelle
+      const lastPoint = premierOptimized[premierOptimized.length - 1];
       if (lastPoint.address.coordinates) {
-        lastPosition = lastPoint.address.coordinates;
+        currentPosition = lastPoint.address.coordinates;
       }
     }
-    
-    const optimizedNormal = this.optimizeSimple(normalPoints, lastPosition, distanceMatrix);
-    
-    // Ajuster les numéros d'ordre
-    optimizedNormal.forEach((point, index) => {
-      point.order = optimizedHigh.length + index + 1;
-    });
 
-    return [...optimizedHigh, ...optimizedNormal];
+    // 2. Traiter les points "express_midi" avant midi
+    if (expressMidiPoints.length > 0) {
+      const expressOptimized = this.optimizeSimple(expressMidiPoints, currentPosition, distanceMatrix);
+      expressOptimized.forEach(point => {
+        point.order = order++;
+        point.estimatedTime = this.calculateEstimatedTime(point.order, 8); // Départ à 8h
+        optimized.push(point);
+      });
+      
+      // Mettre à jour la position actuelle
+      const lastPoint = expressOptimized[expressOptimized.length - 1];
+      if (lastPoint.address.coordinates) {
+        currentPosition = lastPoint.address.coordinates;
+      }
+    }
+
+    // 3. Traiter les points standard
+    if (standardPoints.length > 0) {
+      const standardOptimized = this.optimizeSimple(standardPoints, currentPosition, distanceMatrix);
+      standardOptimized.forEach(point => {
+        point.order = order++;
+        point.estimatedTime = this.calculateEstimatedTime(point.order, 8); // Départ à 8h
+        optimized.push(point);
+      });
+    }
+
+    return optimized;
+  }
+
+  // Calculer l'heure estimée d'arrivée
+  private static calculateEstimatedTime(order: number, startHour: number): string {
+    const minutesPerStop = 15; // 15 minutes par arrêt en moyenne
+    const totalMinutes = startHour * 60 + (order - 1) * minutesPerStop;
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
   }
 
   // Ajouter dynamiquement des adresses à une tournée existante
@@ -207,8 +283,15 @@ export class RouteOptimizer {
 
     const distanceMatrix = await this.getDistanceMatrix(coordinates);
 
-    // Optimiser la nouvelle tournée
-    const optimized = this.optimizeSimple(allPoints, userPosition, distanceMatrix);
+    // Optimiser la nouvelle tournée en tenant compte des priorités
+    const hasConstraints = allPoints.some(p => p.priority !== 'standard');
+    let optimized: DeliveryPoint[];
+
+    if (hasConstraints) {
+      optimized = this.optimizeWithConstraints(allPoints, userPosition, distanceMatrix, {});
+    } else {
+      optimized = this.optimizeSimple(allPoints, userPosition, distanceMatrix);
+    }
 
     // Ajuster les numéros d'ordre
     optimized.forEach((point, index) => {
@@ -258,5 +341,33 @@ export class RouteOptimizer {
     });
 
     return currentTour;
+  }
+
+  // Obtenir la position actuelle de l'utilisateur
+  static async getCurrentPosition(): Promise<UserPosition | null> {
+    return new Promise<UserPosition | null>((resolve) => {
+      if (!navigator.geolocation) {
+        resolve(null);
+        return;
+      }
+      
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          resolve({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          });
+        },
+        (error) => {
+          console.error('Geolocation error:', error);
+          resolve(null);
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 60000,
+        }
+      );
+    });
   }
 }

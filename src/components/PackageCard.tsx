@@ -10,7 +10,10 @@ import {
   Clock,
   CheckCircle,
   XCircle,
-  MapPin
+  MapPin,
+  Star,
+  Zap,
+  AlertTriangle
 } from 'lucide-react';
 import { Package } from '../types';
 
@@ -61,6 +64,27 @@ export const PackageCard: React.FC<PackageCardProps> = ({
     }
   };
 
+  const getPriorityIcon = () => {
+    switch (pkg.priority) {
+      case 'premier':
+        return <Star size={16} className="text-red-600" />;
+      case 'express_midi':
+        return <Zap size={16} className="text-orange-600" />;
+      default:
+        return null;
+    }
+  };
+
+  const getPriorityLabel = () => {
+    switch (pkg.priority) {
+      case 'premier':
+        return 'PREMIER';
+      case 'express_midi':
+        return 'AVANT MIDI';
+      default:
+        return null;
+    }
+  };
   return (
     <div className={`p-4 rounded-lg border-2 transition-all ${getStatusColor()} ${
       pkg.status === 'delivered' ? 'opacity-75' : ''
@@ -76,6 +100,12 @@ export const PackageCard: React.FC<PackageCardProps> = ({
               <div className="text-sm text-blue-600 font-medium">
                 Arrêt #{showOrder}
               </div>
+              {getPriorityIcon() && (
+                <div className="flex items-center space-x-1">
+                  {getPriorityIcon()}
+                  <span className="text-xs font-medium">{getPriorityLabel()}</span>
+                </div>
+              )}
             </div>
           )}
 
@@ -95,6 +125,20 @@ export const PackageCard: React.FC<PackageCardProps> = ({
               )}
             </div>
           </div>
+
+          {/* Priority indicator */}
+          {getPriorityIcon() && (
+            <div className="flex items-center space-x-2 mb-2">
+              {getPriorityIcon()}
+              <span className={`text-xs px-2 py-1 rounded-full font-medium ${
+                pkg.priority === 'premier' ? 'bg-red-100 text-red-800' :
+                pkg.priority === 'express_midi' ? 'bg-orange-100 text-orange-800' :
+                'bg-blue-100 text-blue-800'
+              }`}>
+                {getPriorityLabel()}
+              </span>
+            </div>
+          )}
 
           {/* Location in truck */}
           <div className="flex items-center space-x-2 mb-2">

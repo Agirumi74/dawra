@@ -28,7 +28,7 @@ import { AppView, TruckLocation, DeliveryPoint, Address } from './types';
 import { DEFAULT_TRUCK_LOCATIONS } from './constants/locations';
 import { geminiOCR } from './services/geminiOCR';
 import { offlineStorage } from './services/offlineStorage';
-import { optimizeRoute, getCurrentPosition, groupPackagesByAddress } from './services/routingService';
+import { RouteOptimizer, OptimizationMode } from './services/routeOptimization';
 import { BANService } from './services/banService';
 import { CameraCapture } from './components/CameraCapture';
 import { PackageCard } from './components/PackageCard';
@@ -36,7 +36,6 @@ import { StatsPanel } from './components/StatsPanel';
 import { SmartAddressForm } from './components/SmartAddressForm';
 import { DeliveryMap } from './components/DeliveryMap';
 import { GPSNavigation } from './components/GPSNavigation';
-import { RouteOptimizer, OptimizationMode } from './services/routeOptimization';
 import { AddressDatabaseService } from './services/addressDatabase';
 
 function App() {
@@ -89,7 +88,7 @@ function App() {
 
   // Update delivery points when packages change
   useEffect(() => {
-    const points = groupPackagesByAddress(packages);
+    const points = RouteOptimizer.groupPackagesByAddress(packages);
     setDeliveryPoints(points);
   }, [packages, setDeliveryPoints]);
 
@@ -396,33 +395,31 @@ function App() {
           </div>
           
           <SmartAddressForm
-            onAddressComplete={(address, note, isGlobalNote, photo, duplicateCount = 1) => {
-              setSelectedAddress(address);
-              setShowSmartAddressForm(false);
-              
-              // Si on a plusieurs colis identiques, les créer tous
+            onPackageComplete={(packageData, duplicateCount = 1) => {
+              // Créer les colis (avec duplication si nécessaire)
               for (let i = 0; i < duplicateCount; i++) {
-                const packageData = {
-                  barcode: scanResult || 'MANUAL_ENTRY',
-                  address: address,
-                  location: '', // Sera rempli dans le formulaire suivant
-                  notes: note || '',
-                  type: 'particulier' as 'particulier' | 'entreprise',
-                  status: 'pending' as const,
-                  photo: photo
-                };
-                
-                // Pour l'instant on stocke juste l'adresse, le reste sera complété
-                setSelectedAddress(address);
+                addPackage(packageData);
               }
+              
+              setShowSmartAddressForm(false);
+              setScanResult('');
+              setCapturedAddress('');
+              setCurrentView('home');
+              
+              const message = duplicateCount > 1 
+                ? `${duplicateCount} colis enregistrés !` 
+                : 'Colis enregistré !';
+              alert(message + ' Prêt pour le suivant.');
             }}
             onCancel={() => {
               setShowSmartAddressForm(false);
               setCapturedAddress('');
+              setScanResult('');
               setCurrentView('home');
             }}
             defaultPostcode="74"
             currentUser="Chauffeur"
+            scannedBarcode={scanResult}
           />
         </div>
       );
@@ -528,7 +525,7 @@ function App() {
     setIsProcessing(true);
     
     try {
-      const userPosition = await getCurrentPosition();
+      const userPosition = await RouteOptimizer.getCurrentPosition();
       if (!userPosition) {
         alert('Impossible d\'obtenir votre position. Vérifiez les permissions de géolocalisation.');
         setIsProcessing(false);
@@ -536,7 +533,7 @@ function App() {
       }
 
       // Grouper les colis par adresse
-      const points = groupPackagesByAddress(pendingPackages);
+      const points = RouteOptimizer.groupPackagesByAddress(pendingPackages);
       
       // Géocoder toutes les adresses
       const geocodedPoints = await Promise.all(
@@ -638,7 +635,7 @@ function App() {
 
     setIsProcessing(true);
     try {
-      const userPosition = await getCurrentPosition();
+      const userPosition = await RouteOptimizer.getCurrentPosition();
       if (!userPosition) {
         alert('Impossible d\'obtenir votre position.');
         setIsProcessing(false);
