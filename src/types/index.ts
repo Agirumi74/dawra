@@ -20,6 +20,7 @@ export interface Package {
   notes: string;
   type: 'particulier' | 'entreprise';
   status: 'pending' | 'delivered' | 'failed';
+  photo?: string;
   createdAt: Date;
 }
 

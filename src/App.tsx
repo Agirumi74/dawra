@@ -29,10 +29,11 @@ import { DEFAULT_TRUCK_LOCATIONS } from './constants/locations';
 import { geminiOCR } from './services/geminiOCR';
 import { offlineStorage } from './services/offlineStorage';
 import { optimizeRoute, getCurrentPosition, groupPackagesByAddress } from './services/routingService';
+import { BANService } from './services/banService';
 import { CameraCapture } from './components/CameraCapture';
 import { PackageCard } from './components/PackageCard';
 import { StatsPanel } from './components/StatsPanel';
-import { EnhancedAddressForm } from './components/EnhancedAddressForm';
+import { SmartAddressForm } from './components/SmartAddressForm';
 import { DeliveryMap } from './components/DeliveryMap';
 import { GPSNavigation } from './components/GPSNavigation';
 import { RouteOptimizer, OptimizationMode } from './services/routeOptimization';
@@ -56,7 +57,7 @@ function App() {
   const [showAddLocation, setShowAddLocation] = useState(false);
   const [newLocationName, setNewLocationName] = useState('');
   const [newLocationColor, setNewLocationColor] = useState('#3b82f6');
-  const [showAddressForm, setShowAddressForm] = useState(false);
+  const [showSmartAddressForm, setShowSmartAddressForm] = useState(false);
   
   const { packages, addPackage, updatePackage, removePackage, clearAllPackages, getPackagesByStatus } = usePackages();
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -136,11 +137,11 @@ function App() {
         alert('Impossible de lire l\'adresse. Veuillez saisir manuellement.');
         setCapturedAddress('');
         setOcrConfidence(0);
-        setShowAddressForm(true);
+        setShowSmartAddressForm(true);
       } else {
         setCapturedAddress(result.address);
         setOcrConfidence(result.confidence);
-        setShowAddressForm(true);
+        setShowSmartAddressForm(true);
       }
       
       setIsAddressCapture(false);
@@ -150,7 +151,7 @@ function App() {
       setCapturedAddress('');
       setOcrConfidence(0);
       setIsAddressCapture(false);
-      setShowAddressForm(true);
+      setShowSmartAddressForm(true);
     } finally {
       setIsProcessing(false);
     }
@@ -176,6 +177,7 @@ function App() {
       location: '',
       notes: '',
       type: 'particulier' as 'particulier' | 'entreprise',
+      photo: '',
     });
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -185,14 +187,17 @@ function App() {
         return;
       }
 
-      addPackage({
+      const packageData = {
         barcode: scanResult || 'MANUAL_ENTRY',
         address: selectedAddress,
         location: formData.location,
         notes: formData.notes.trim(),
         type: formData.type as 'particulier' | 'entreprise',
         status: 'pending',
-      });
+        photo: formData.photo
+      };
+
+      addPackage(packageData);
 
       // Reset form
       setFormData({
@@ -214,12 +219,13 @@ function App() {
         location: '',
         notes: '',
         type: 'particulier',
+        photo: '',
       });
       setScanResult('');
       setCapturedAddress('');
       setSelectedAddress(null);
       setOcrConfidence(0);
-      setShowAddressForm(false);
+      setShowSmartAddressForm(false);
       setCurrentView('home');
     };
 
@@ -378,8 +384,8 @@ function App() {
   };
 
   const ScanView = () => {
-    // Address form after OCR or manual entry
-    if (showAddressForm) {
+    // Smart address form after OCR or manual entry
+    if (showSmartAddressForm) {
       return (
         <div className="space-y-6">
           <div className="text-center">
@@ -389,26 +395,34 @@ function App() {
             )}
           </div>
           
-          <EnhancedAddressForm
-            initialAddress={capturedAddress ? {
-              id: '',
-              street_number: '',
-              street_name: '',
-              postal_code: '',
-              city: '',
-              country: 'France',
-              full_address: capturedAddress
-            } : undefined}
-            onAddressSelect={(address) => {
+          <SmartAddressForm
+            onAddressComplete={(address, note, isGlobalNote, photo, duplicateCount = 1) => {
               setSelectedAddress(address);
-              setShowAddressForm(false);
+              setShowSmartAddressForm(false);
+              
+              // Si on a plusieurs colis identiques, les créer tous
+              for (let i = 0; i < duplicateCount; i++) {
+                const packageData = {
+                  barcode: scanResult || 'MANUAL_ENTRY',
+                  address: address,
+                  location: '', // Sera rempli dans le formulaire suivant
+                  notes: note || '',
+                  type: 'particulier' as 'particulier' | 'entreprise',
+                  status: 'pending' as const,
+                  photo: photo
+                };
+                
+                // Pour l'instant on stocke juste l'adresse, le reste sera complété
+                setSelectedAddress(address);
+              }
             }}
             onCancel={() => {
-              setShowAddressForm(false);
+              setShowSmartAddressForm(false);
               setCapturedAddress('');
               setCurrentView('home');
             }}
-            currentUser="Chauffeur" // À remplacer par le vrai nom d'utilisateur
+            defaultPostcode="74"
+            currentUser="Chauffeur"
           />
         </div>
       );
@@ -423,7 +437,7 @@ function App() {
           onCapture={handleAddressCapture}
           onCancel={() => {
             setIsAddressCapture(false);
-            setShowAddressForm(true);
+            setShowSmartAddressForm(true);
           }}
           isProcessing={isProcessing}
         />
@@ -461,7 +475,7 @@ function App() {
             <button
               onClick={() => {
                 setScanResult('MANUAL_ENTRY');
-                setShowAddressForm(true);
+                setShowSmartAddressForm(true);
               }}
               className="w-full bg-gray-600 text-white py-6 px-6 rounded-lg text-xl font-semibold hover:bg-gray-700 transition-colors flex items-center justify-center space-x-3"
             >
@@ -528,7 +542,7 @@ function App() {
       const geocodedPoints = await Promise.all(
         points.map(async (point) => {
           if (!point.address.coordinates) {
-            const coords = await AddressService.geocodeAddress(point.address);
+            const coords = await BANService.geocodeAddress(point.address);
             if (coords) {
               point.address.coordinates = coords;
               // Mettre à jour les colis avec les coordonnées
