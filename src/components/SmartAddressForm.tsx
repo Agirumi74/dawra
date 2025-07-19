@@ -104,7 +104,7 @@ export const SmartAddressForm: React.FC<SmartAddressFormProps> = ({
   useEffect(() => {
     if (postcode.length >= 2) {
       setIsLoadingCity(true);
-      BANService.searchCitiesByPostcode(postcode)
+      BANService.searchCitiesByPostcodeDebounced(postcode)
         .then(results => {
           setCitySuggestions(results);
           if (city.length >= 2) {

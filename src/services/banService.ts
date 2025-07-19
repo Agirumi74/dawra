@@ -59,6 +59,20 @@ export class BANService {
     });
   }
 
+  // Recherche de villes avec debounce
+  static async searchCitiesByPostcodeDebounced(postcode: string): Promise<BANSuggestion[]> {
+    return new Promise((resolve) => {
+      if (this.debounceTimer) {
+        clearTimeout(this.debounceTimer);
+      }
+
+      this.debounceTimer = setTimeout(async () => {
+        const results = await this.searchCitiesByPostcode(postcode);
+        resolve(results);
+      }, this.DELAY_MS);
+    });
+  }
+
   // Recherche de villes par code postal
   static async searchCitiesByPostcode(postcode: string): Promise<BANSuggestion[]> {
     if (postcode.length < 2) return [];
