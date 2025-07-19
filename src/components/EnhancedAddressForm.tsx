@@ -18,7 +18,7 @@ import {
   MessageSquare
 } from 'lucide-react';
 import { Address } from '../types';
-import { AddressService } from '../services/addressService';
+import { CSVAddressService } from '../services/csvAddressService';
 import { AddressDatabaseService, EnhancedAddress, AddressNote } from '../services/addressDatabase';
 
 interface EnhancedAddressFormProps {
@@ -54,7 +54,7 @@ export const EnhancedAddressForm: React.FC<EnhancedAddressFormProps> = ({
 
   useEffect(() => {
     if (initialAddress) {
-      setQuery(AddressService.formatAddress(initialAddress));
+      setQuery(CSVAddressService.formatAddress(initialAddress));
       const enhanced = AddressDatabaseService.findAddress(initialAddress);
       if (enhanced) {
         setSelectedAddress(enhanced);
@@ -71,7 +71,7 @@ export const EnhancedAddressForm: React.FC<EnhancedAddressFormProps> = ({
       const localResults = AddressDatabaseService.searchAddresses(query);
       
       // Puis rechercher en ligne
-      AddressService.searchAddressesDebounced(query)
+      CSVAddressService.searchAddressesDebounced(query)
         .then(onlineResults => {
           // Combiner les résultats locaux et en ligne
           const combined = [
@@ -102,7 +102,7 @@ export const EnhancedAddressForm: React.FC<EnhancedAddressFormProps> = ({
       setShowAddressDetails(true);
     } else {
       // Adresse en ligne
-      const address = AddressService.parseAddress(suggestion);
+      const address = CSVAddressService.parseCSVAddress(suggestion);
       const enhanced = AddressDatabaseService.findAddress(address);
       
       if (enhanced) {
@@ -115,7 +115,7 @@ export const EnhancedAddressForm: React.FC<EnhancedAddressFormProps> = ({
         setShowAddressDetails(true);
       }
       
-      setQuery(AddressService.formatAddress(address));
+      setQuery(CSVAddressService.formatAddress(address));
     }
     
     setShowSuggestions(false);

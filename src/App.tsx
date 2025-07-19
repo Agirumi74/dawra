@@ -29,7 +29,7 @@ import { DEFAULT_TRUCK_LOCATIONS } from './constants/locations';
 import { geminiOCR } from './services/geminiOCR';
 import { offlineStorage } from './services/offlineStorage';
 import { RouteOptimizer, OptimizationMode } from './services/routeOptimization';
-import { BANService } from './services/banService';
+import { CSVAddressService } from './services/csvAddressService';
 import { CameraCapture } from './components/CameraCapture';
 import { PackageCard } from './components/PackageCard';
 import { StatsPanel } from './components/StatsPanel';
@@ -539,7 +539,7 @@ function App() {
       const geocodedPoints = await Promise.all(
         points.map(async (point) => {
           if (!point.address.coordinates) {
-            const coords = await BANService.geocodeAddress(point.address);
+            const coords = await CSVAddressService.geocodeAddress(point.address);
             if (coords) {
               point.address.coordinates = coords;
               // Mettre à jour les colis avec les coordonnées

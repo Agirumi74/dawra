@@ -1,5 +1,4 @@
 import { Package, DeliveryPoint, UserPosition } from '../types';
-import { AddressService } from './addressService';
 
 export interface RouteConstraints {
   timeWindows?: { [addressId: string]: { start: string; end: string } };

@@ -1,5 +1,5 @@
 import { Package, DeliveryPoint, UserPosition } from '../types';
-import { AddressService } from './addressService';
+import { CSVAddressService } from './csvAddressService';
 
 export function calculateDistance(lat1: number, lng1: number, lat2: number, lng2: number): number {
   const R = 6371; // Earth's radius in km
@@ -16,7 +16,7 @@ export function calculateDistance(lat1: number, lng1: number, lat2: number, lng2
 export function groupPackagesByAddress(packages: Package[]): DeliveryPoint[] {
   const addressGroups = new Map<string, Package[]>();
   packages.forEach(pkg => {
-    const addressKey = AddressService.formatAddress(pkg.address);
+    const addressKey = CSVAddressService.formatAddress(pkg.address);
     if (!addressGroups.has(addressKey)) {
       addressGroups.set(addressKey, []);
     }
@@ -50,7 +50,7 @@ export async function optimizeRoute(packages: Package[], userPosition: UserPosit
   const geocodedPoints = await Promise.all(
     points.map(async (point) => {
       if (!point.address.coordinates) {
-        const coords = await AddressService.geocodeAddress(point.address);
+        const coords = await CSVAddressService.geocodeAddress(point.address);
         if (coords) {
           point.address.coordinates = coords;
           point.packages.forEach(pkg => {
