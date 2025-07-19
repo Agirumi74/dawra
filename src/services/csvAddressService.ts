@@ -1,5 +1,7 @@
 import { Address } from '../types';
 
+import { AddressDatabaseService } from './addressDatabase';
+
 export interface CSVAddress {
   id: string;
   numero: string;
@@ -120,23 +122,60 @@ export class CSVAddressService {
     const normalizedQuery = this.normalizeText(query);
     let results: CSVAddress[] = [];
 
+    // Recherche dans la base d'adresses locale d'abord
+    const localAddresses = AddressDatabaseService.searchAddresses(query);
+    for (const localAddr of localAddresses) {
+      if (results.length >= limit) break;
+      
+      // Convertir l'adresse locale en format CSV
+      const csvAddr: CSVAddress = {
+        id: localAddr.id,
+        numero: localAddr.street_number,
+        nom_voie: localAddr.street_name,
+        code_postal: localAddr.postal_code,
+        nom_commune: localAddr.city,
+        lon: localAddr.coordinates?.lng || 0,
+        lat: localAddr.coordinates?.lat || 0,
+        libelle_acheminement: localAddr.city.toUpperCase(),
+        nom_afnor: localAddr.street_name.toUpperCase()
+      };
+      
+      // Filtrer par code postal si fourni
+      if (!postcode || csvAddr.code_postal.startsWith(postcode)) {
+        results.push(csvAddr);
+      }
+    }
+
     // Recherche dans les adresses
     for (const address of this.addresses) {
       if (results.length >= limit) break;
 
-      const addressText = this.normalizeText(`${address.numero} ${address.nom_voie} ${address.nom_commune}`);
+      // Recherche plus flexible : numéro + voie OU juste voie
+      const fullAddressText = this.normalizeText(`${address.numero} ${address.nom_voie} ${address.nom_commune}`);
       const voieText = this.normalizeText(address.nom_voie);
       const communeText = this.normalizeText(address.nom_commune);
+      const numeroVoieText = this.normalizeText(`${address.numero} ${address.nom_voie}`);
 
       // Filtrer par code postal si fourni
       if (postcode && !address.code_postal.startsWith(postcode)) {
         continue;
       }
 
-      // Vérifier si la requête correspond
-      if (addressText.includes(normalizedQuery) || 
+      // Éviter les doublons avec la base locale
+      const isDuplicate = results.some(r => 
+        r.numero === address.numero && 
+        r.nom_voie === address.nom_voie && 
+        r.code_postal === address.code_postal
+      );
+      
+      if (isDuplicate) continue;
+
+      // Vérifier si la requête correspond (recherche plus flexible)
+      if (fullAddressText.includes(normalizedQuery) || 
           voieText.includes(normalizedQuery) || 
-          communeText.includes(normalizedQuery)) {
+          communeText.includes(normalizedQuery) ||
+          numeroVoieText.includes(normalizedQuery) ||
+          normalizedQuery.includes(voieText)) {
         results.push(address);
       }
     }
@@ -152,6 +191,14 @@ export class CSVAddressService {
       if (postcode && !lieuDit.code_postal.startsWith(postcode)) {
         continue;
       }
+
+      // Éviter les doublons avec la base locale et les adresses
+      const isDuplicate = results.some(r => 
+        r.nom_voie === lieuDit.nom_lieu_dit && 
+        r.code_postal === lieuDit.code_postal
+      );
+      
+      if (isDuplicate) continue;
 
       // Vérifier si la requête correspond
       if (lieuDitText.includes(normalizedQuery) || nomText.includes(normalizedQuery)) {
@@ -173,11 +220,16 @@ export class CSVAddressService {
 
     // Trier par pertinence (correspondance exacte en premier)
     results.sort((a, b) => {
-      const aText = this.normalizeText(`${a.numero} ${a.nom_voie}`);
-      const bText = this.normalizeText(`${b.numero} ${b.nom_voie}`);
+      const aText = this.normalizeText(`${a.numero} ${a.nom_voie}`.trim());
+      const bText = this.normalizeText(`${b.numero} ${b.nom_voie}`.trim());
       
-      const aExact = aText.startsWith(normalizedQuery) ? 1 : 0;
-      const bExact = bText.startsWith(normalizedQuery) ? 1 : 0;
+      // Priorité : correspondance exacte > commence par > contient
+      const aExact = aText === normalizedQuery ? 3 : 
+                    aText.startsWith(normalizedQuery) ? 2 : 
+                    aText.includes(normalizedQuery) ? 1 : 0;
+      const bExact = bText === normalizedQuery ? 3 : 
+                    bText.startsWith(normalizedQuery) ? 2 : 
+                    bText.includes(normalizedQuery) ? 1 : 0;
       
       return bExact - aExact;
     });

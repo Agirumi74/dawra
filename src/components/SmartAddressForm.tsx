@@ -50,6 +50,7 @@ export const SmartAddressForm: React.FC<SmartAddressFormProps> = ({
   const [showCitySuggestions, setShowCitySuggestions] = useState(false);
   const [isLoadingStreet, setIsLoadingStreet] = useState(false);
   const [isLoadingCity, setIsLoadingCity] = useState(false);
+  const [streetQuery, setStreetQuery] = useState('');
   
   // États pour les informations du colis
   const [location, setLocation] = useState('');
@@ -82,9 +83,9 @@ export const SmartAddressForm: React.FC<SmartAddressFormProps> = ({
 
   // Recherche dynamique dans le champ adresse
   useEffect(() => {
-    if (streetName.length >= 2) {
+    if (streetQuery.length >= 2) {
       setIsLoadingStreet(true);
-      CSVAddressService.searchAddressesDebounced(streetName, postcode || undefined)
+      CSVAddressService.searchAddressesDebounced(streetQuery, postcode || undefined)
         .then(results => {
           setStreetSuggestions(results);
           setShowStreetSuggestions(true);
@@ -97,8 +98,9 @@ export const SmartAddressForm: React.FC<SmartAddressFormProps> = ({
     } else {
       setStreetSuggestions([]);
       setShowStreetSuggestions(false);
+      setIsLoadingStreet(false);
     }
-  }, [streetName, postcode]);
+  }, [streetQuery, postcode]);
 
   // Recherche de villes par code postal
   useEffect(() => {
@@ -119,6 +121,7 @@ export const SmartAddressForm: React.FC<SmartAddressFormProps> = ({
     } else {
       setCitySuggestions([]);
       setShowCitySuggestions(false);
+      setIsLoadingCity(false);
     }
   }, [postcode]);
 
@@ -146,9 +149,11 @@ export const SmartAddressForm: React.FC<SmartAddressFormProps> = ({
     const address = CSVAddressService.parseCSVAddress(suggestion);
     setStreetNumber(address.street_number);
     setStreetName(address.street_name);
+    setStreetQuery(address.street_name);
     setPostcode(address.postal_code);
     setCity(address.city);
     setShowStreetSuggestions(false);
+    setIsLoadingStreet(false);
   };
 
   const handleCitySuggestionSelect = (suggestion: CSVAddress) => {
@@ -156,6 +161,7 @@ export const SmartAddressForm: React.FC<SmartAddressFormProps> = ({
     setCity(address.city);
     setPostcode(address.postal_code);
     setShowCitySuggestions(false);
+    setIsLoadingCity(false);
   };
 
   const handlePhotoCapture = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -308,9 +314,12 @@ export const SmartAddressForm: React.FC<SmartAddressFormProps> = ({
               <input
                 ref={streetInputRef}
                 type="text"
-                value={streetName}
-                onChange={(e) => setStreetName(e.target.value)}
-                placeholder="Rue de la Paix"
+                value={streetQuery}
+                onChange={(e) => {
+                  setStreetQuery(e.target.value);
+                  setShowStreetSuggestions(true);
+                }}
+                placeholder="38 Clos du nant ou juste Clos du nant"
                 className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none pr-10"
                 required
               />
@@ -448,7 +457,7 @@ export const SmartAddressForm: React.FC<SmartAddressFormProps> = ({
         )}
 
         {/* Bouton pour ajouter à l'index si adresse inexistante */}
-        {!existingAddress && streetName && city && postcode && (
+        {!existingAddress && streetName && city && postcode && streetNumber && (
           <button
             onClick={addToIndex}
             className="w-full mt-4 bg-blue-100 text-blue-700 py-2 px-4 rounded-lg hover:bg-blue-200 transition-colors flex items-center justify-center space-x-2"
