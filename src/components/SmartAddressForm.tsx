@@ -19,7 +19,7 @@ import {
   AlertTriangle
 } from 'lucide-react';
 import { Address, Package } from '../types';
-import { BANService, BANSuggestion } from '../services/banService';
+import { CSVAddressService, CSVAddress } from '../services/csvAddressService';
 import { AddressDatabaseService, EnhancedAddress } from '../services/addressDatabase';
 
 interface SmartAddressFormProps {
@@ -44,8 +44,8 @@ export const SmartAddressForm: React.FC<SmartAddressFormProps> = ({
   const [city, setCity] = useState('');
   
   // États pour la recherche
-  const [streetSuggestions, setStreetSuggestions] = useState<BANSuggestion[]>([]);
-  const [citySuggestions, setCitySuggestions] = useState<BANSuggestion[]>([]);
+  const [streetSuggestions, setStreetSuggestions] = useState<CSVAddress[]>([]);
+  const [citySuggestions, setCitySuggestions] = useState<CSVAddress[]>([]);
   const [showStreetSuggestions, setShowStreetSuggestions] = useState(false);
   const [showCitySuggestions, setShowCitySuggestions] = useState(false);
   const [isLoadingStreet, setIsLoadingStreet] = useState(false);
@@ -84,7 +84,7 @@ export const SmartAddressForm: React.FC<SmartAddressFormProps> = ({
   useEffect(() => {
     if (streetName.length >= 2) {
       setIsLoadingStreet(true);
-      BANService.searchAddressesDebounced(streetName, postcode || undefined)
+      CSVAddressService.searchAddressesDebounced(streetName, postcode || undefined)
         .then(results => {
           setStreetSuggestions(results);
           setShowStreetSuggestions(true);
@@ -104,7 +104,7 @@ export const SmartAddressForm: React.FC<SmartAddressFormProps> = ({
   useEffect(() => {
     if (postcode.length >= 2) {
       setIsLoadingCity(true);
-      BANService.searchCitiesByPostcodeDebounced(postcode)
+      CSVAddressService.searchCitiesByPostcodeDebounced(postcode)
         .then(results => {
           setCitySuggestions(results);
           if (city.length >= 2) {
@@ -142,8 +142,8 @@ export const SmartAddressForm: React.FC<SmartAddressFormProps> = ({
     }
   }, [streetNumber, streetName, postcode, city]);
 
-  const handleStreetSuggestionSelect = (suggestion: BANSuggestion) => {
-    const address = BANService.parseBANSuggestion(suggestion);
+  const handleStreetSuggestionSelect = (suggestion: CSVAddress) => {
+    const address = CSVAddressService.parseCSVAddress(suggestion);
     setStreetNumber(address.street_number);
     setStreetName(address.street_name);
     setPostcode(address.postal_code);
@@ -151,8 +151,8 @@ export const SmartAddressForm: React.FC<SmartAddressFormProps> = ({
     setShowStreetSuggestions(false);
   };
 
-  const handleCitySuggestionSelect = (suggestion: BANSuggestion) => {
-    const address = BANService.parseBANSuggestion(suggestion);
+  const handleCitySuggestionSelect = (suggestion: CSVAddress) => {
+    const address = CSVAddressService.parseCSVAddress(suggestion);
     setCity(address.city);
     setPostcode(address.postal_code);
     setShowCitySuggestions(false);
@@ -186,7 +186,7 @@ export const SmartAddressForm: React.FC<SmartAddressFormProps> = ({
     };
 
     // Géocoder l'adresse
-    const coords = await BANService.geocodeAddress(address);
+    const coords = await CSVAddressService.geocodeAddress(address);
     if (coords) {
       address.coordinates = coords;
     }
@@ -332,9 +332,11 @@ export const SmartAddressForm: React.FC<SmartAddressFormProps> = ({
                   >
                     <MapPin size={16} className="text-blue-600 mt-1 flex-shrink-0" />
                     <div className="flex-1">
-                      <p className="font-medium text-gray-900">{suggestion.properties.label}</p>
+                      <p className="font-medium text-gray-900">
+                        {suggestion.numero} {suggestion.nom_voie}, {suggestion.code_postal} {suggestion.nom_commune}
+                      </p>
                       <p className="text-sm text-gray-600">
-                        Score: {Math.round(suggestion.properties.score * 100)}%
+                        {suggestion.libelle_acheminement}
                       </p>
                     </div>
                   </button>
@@ -385,15 +387,15 @@ export const SmartAddressForm: React.FC<SmartAddressFormProps> = ({
               {showCitySuggestions && citySuggestions.length > 0 && (
                 <div className="absolute z-10 w-full mt-1 bg-white border-2 border-gray-200 rounded-lg shadow-lg max-h-40 overflow-y-auto">
                   {citySuggestions
-                    .filter(s => s.properties.city.toLowerCase().includes(city.toLowerCase()))
+                    .filter(s => s.nom_commune.toLowerCase().includes(city.toLowerCase()))
                     .map((suggestion, index) => (
                     <button
                       key={index}
                       onClick={() => handleCitySuggestionSelect(suggestion)}
                       className="w-full p-2 text-left hover:bg-blue-50 border-b border-gray-100 last:border-b-0"
                     >
-                      <p className="font-medium text-sm">{suggestion.properties.city}</p>
-                      <p className="text-xs text-gray-600">{suggestion.properties.postcode}</p>
+                      <p className="font-medium text-sm">{suggestion.nom_commune}</p>
+                      <p className="text-xs text-gray-600">{suggestion.code_postal}</p>
                     </button>
                   ))}
                 </div>
