@@ -13,6 +13,7 @@ import {
 import { BarcodeScanner } from '../BarcodeScanner';
 import { PackageForm } from '../PackageForm';
 import { EnhancedRouteView } from '../EnhancedRouteView';
+import { TourProgressView } from '../TourProgressView';
 import { usePackages } from '../../hooks/usePackages';
 
 interface DriverDashboardProps {

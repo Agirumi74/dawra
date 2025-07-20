@@ -147,7 +147,6 @@ export const GPSNavigation: React.FC<GPSNavigationProps> = ({
     if (!currentPoint?.address.coordinates) return;
 
     const { lat, lng } = currentPoint.address.coordinates;
-    const address = encodeURIComponent(currentPoint.address.full_address);
 
     // Détecter le système et ouvrir l'app GPS appropriée
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
@@ -163,6 +162,28 @@ export const GPSNavigation: React.FC<GPSNavigationProps> = ({
       // Web: Google Maps
       window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving`);
     }
+  };
+
+  const launchFullTourInGPS = () => {
+    // Launch entire tour in external GPS app
+    const points = deliveryPoints
+      .filter(point => point.address.coordinates)
+      .map(point => {
+        const { lat, lng } = point.address.coordinates!;
+        return `${lat},${lng}`;
+      });
+
+    if (points.length === 0) return;
+
+    // Create waypoints string for Google Maps
+    const waypoints = points.slice(1).join('|');
+    const destination = points[0];
+    
+    const url = waypoints.length > 0 
+      ? `https://www.google.com/maps/dir/?api=1&destination=${destination}&waypoints=${waypoints}&travelmode=driving`
+      : `https://www.google.com/maps/dir/?api=1&destination=${destination}&travelmode=driving`;
+    
+    window.open(url, '_blank');
   };
 
   const createCustomIcon = (color: string, text: string) => {
@@ -265,6 +286,13 @@ export const GPSNavigation: React.FC<GPSNavigationProps> = ({
           </div>
           
           <div className="flex space-x-2">
+            <button
+              onClick={launchFullTourInGPS}
+              className="p-2 bg-purple-100 text-purple-600 rounded-lg hover:bg-purple-200 transition-colors"
+              title="Lancer toute la tournée dans GPS externe"
+            >
+              <Navigation size={20} />
+            </button>
             <button
               onClick={onAddAddress}
               className="p-2 bg-green-100 text-green-600 rounded-lg hover:bg-green-200 transition-colors"
@@ -414,27 +442,37 @@ export const GPSNavigation: React.FC<GPSNavigationProps> = ({
           </div>
         </div>
 
-        {/* Boutons d'action */}
-        <div className="flex space-x-3">
+        {/* Boutons d'action - Simplifiés pour usage terrain */}
+        <div className="flex space-x-2">
+          <button
+            onClick={launchFullTourInGPS}
+            className="flex-1 bg-purple-600 text-white py-3 px-4 rounded-lg hover:bg-purple-700 transition-colors flex items-center justify-center space-x-2"
+          >
+            <Navigation size={20} />
+            <span>Tournée complète GPS</span>
+          </button>
+          
           <button
             onClick={openInGPS}
             className="flex-1 bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center space-x-2"
           >
             <Navigation size={20} />
-            <span>Ouvrir GPS</span>
+            <span>Arrêt actuel GPS</span>
           </button>
-          
+        </div>
+
+        <div className="flex space-x-2 mt-3">
           <button
             onClick={handleDeliveryComplete}
-            className="flex-1 bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center space-x-2"
+            className="flex-1 bg-green-600 text-white py-4 px-4 rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center space-x-2 text-lg font-semibold"
           >
-            <CheckCircle size={20} />
-            <span>Colis livré</span>
+            <CheckCircle size={24} />
+            <span>Livraison terminée</span>
           </button>
           
           <button
             onClick={handleFailedDelivery}
-            className="px-4 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors flex items-center justify-center space-x-2"
+            className="px-6 py-4 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors flex items-center justify-center space-x-2"
           >
             <X size={20} />
             <span>Échec</span>
