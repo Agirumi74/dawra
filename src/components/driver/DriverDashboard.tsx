@@ -11,6 +11,10 @@ import {
   Camera,
   Settings
 } from 'lucide-react';
+import { BarcodeScanner } from '../BarcodeScanner';
+import { PackageForm } from '../PackageForm';
+import { RouteView } from '../RouteView';
+import { usePackages } from '../../hooks/usePackages';
 
 interface DriverDashboardProps {
   user: any;
@@ -20,6 +24,11 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
   const [activeTab, setActiveTab] = useState<'today' | 'scan' | 'route' | 'history'>('today');
   const [currentVehicle, setCurrentVehicle] = useState<any>(null);
   const [todayRoute, setTodayRoute] = useState<any>(null);
+  const [showBarcodeScanner, setShowBarcodeScanner] = useState(false);
+  const [showPackageForm, setShowPackageForm] = useState(false);
+  const [currentBarcode, setCurrentBarcode] = useState<string | undefined>(undefined);
+  
+  const { packages, addPackage, getPackagesByStatus } = usePackages();
 
   useEffect(() => {
     // Charger les données du chauffeur
@@ -32,6 +41,40 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
     // - Tournée du jour
     // - Statistiques
   };
+
+  const handleBarcodeScanned = (barcode: string) => {
+    setCurrentBarcode(barcode);
+    setShowBarcodeScanner(false);
+    setShowPackageForm(true);
+  };
+
+  const handlePackageSaved = (packageData: any) => {
+    addPackage(packageData);
+    setShowPackageForm(false);
+    setCurrentBarcode(undefined);
+    // Retourner à l'onglet scan pour continuer
+    setActiveTab('scan');
+  };
+
+  const handleCancelScanning = () => {
+    setShowBarcodeScanner(false);
+    setShowPackageForm(false);
+    setCurrentBarcode(undefined);
+  };
+
+  const startScanning = () => {
+    setShowBarcodeScanner(true);
+  };
+
+  const startManualEntry = () => {
+    setCurrentBarcode(undefined);
+    setShowPackageForm(true);
+  };
+
+  // Statistiques des colis
+  const pendingPackages = getPackagesByStatus('pending');
+  const deliveredPackages = getPackagesByStatus('delivered');
+  const failedPackages = getPackagesByStatus('failed');
 
   const renderTodayView = () => (
     <div className="space-y-6">
@@ -171,7 +214,10 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
 
       <div className="bg-white rounded-lg shadow-md p-6">
         <div className="space-y-4">
-          <button className="w-full bg-blue-600 text-white py-6 px-6 rounded-lg text-xl font-semibold hover:bg-blue-700 transition-colors flex items-center justify-center space-x-3">
+          <button 
+            onClick={startScanning}
+            className="w-full bg-blue-600 text-white py-6 px-6 rounded-lg text-xl font-semibold hover:bg-blue-700 transition-colors flex items-center justify-center space-x-3"
+          >
             <Camera size={32} />
             <span>Démarrer le scan</span>
           </button>
@@ -180,7 +226,10 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
             <p className="text-gray-500 mb-4">ou</p>
           </div>
 
-          <button className="w-full bg-gray-600 text-white py-4 px-6 rounded-lg text-lg font-semibold hover:bg-gray-700 transition-colors">
+          <button 
+            onClick={startManualEntry}
+            className="w-full bg-gray-600 text-white py-4 px-6 rounded-lg text-lg font-semibold hover:bg-gray-700 transition-colors"
+          >
             Saisie manuelle
           </button>
         </div>
@@ -191,19 +240,44 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
         <h3 className="text-lg font-semibold mb-4">Colis scannés aujourd'hui</h3>
         <div className="grid grid-cols-3 gap-4 text-center">
           <div>
-            <div className="text-2xl font-bold text-blue-600">0</div>
+            <div className="text-2xl font-bold text-blue-600">{packages.length}</div>
             <div className="text-sm text-gray-600">Total</div>
           </div>
           <div>
-            <div className="text-2xl font-bold text-green-600">0</div>
+            <div className="text-2xl font-bold text-green-600">{deliveredPackages.length}</div>
             <div className="text-sm text-gray-600">Livrés</div>
           </div>
           <div>
-            <div className="text-2xl font-bold text-red-600">0</div>
+            <div className="text-2xl font-bold text-red-600">{failedPackages.length}</div>
             <div className="text-sm text-gray-600">Échecs</div>
           </div>
         </div>
       </div>
+
+      {/* Liste des colis récents */}
+      {packages.length > 0 && (
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <h3 className="text-lg font-semibold mb-4">Colis récents</h3>
+          <div className="space-y-3">
+            {packages.slice(-5).reverse().map((pkg) => (
+              <div key={pkg.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div className="flex-1">
+                  <p className="font-medium text-sm">{pkg.address.full_address}</p>
+                  <p className="text-xs text-gray-600">{pkg.location}</p>
+                </div>
+                <div className={`px-2 py-1 rounded text-xs font-medium ${
+                  pkg.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                  pkg.status === 'delivered' ? 'bg-green-100 text-green-800' :
+                  'bg-red-100 text-red-800'
+                }`}>
+                  {pkg.status === 'pending' ? 'En attente' :
+                   pkg.status === 'delivered' ? 'Livré' : 'Échec'}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 
@@ -214,7 +288,7 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
       case 'scan':
         return renderScanView();
       case 'route':
-        return <div className="text-center py-8 text-gray-500">Navigation en développement</div>;
+        return <RouteView />;
       case 'history':
         return <div className="text-center py-8 text-gray-500">Historique en développement</div>;
       default:
@@ -224,6 +298,23 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Modals */}
+      {showBarcodeScanner && (
+        <BarcodeScanner
+          onScan={handleBarcodeScanned}
+          onCancel={handleCancelScanning}
+          isActive={showBarcodeScanner}
+        />
+      )}
+
+      {showPackageForm && (
+        <PackageForm
+          barcode={currentBarcode}
+          onSave={handlePackageSaved}
+          onCancel={handleCancelScanning}
+        />
+      )}
+
       {/* Header */}
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
