@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { BrowserMultiFormatReader, Result } from '@zxing/browser';
-import { X, Camera, Loader2 } from 'lucide-react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { BrowserMultiFormatReader } from '@zxing/browser';
+import { X, Loader2 } from 'lucide-react';
 
 interface BarcodeScannerProps {
   onScan: (barcode: string) => void;
@@ -18,6 +18,30 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
   const [error, setError] = useState<string>('');
   const readerRef = useRef<BrowserMultiFormatReader | null>(null);
 
+  const startScanning = useCallback(async () => {
+    try {
+      setIsScanning(true);
+      setError('');
+
+      // Pour cette démonstration, simuler un scan de code-barres
+      // En production, cela utiliserait la vraie caméra
+      setTimeout(() => {
+        const simulatedBarcode = `PKG${Date.now().toString().slice(-6)}`;
+        onScan(simulatedBarcode);
+        stopScanning();
+      }, 2000);
+
+    } catch (error) {
+      console.error('Erreur lors de l\'initialisation du scanner:', error);
+      setError(error instanceof Error ? error.message : 'Erreur inconnue');
+      setIsScanning(false);
+    }
+  }, [onScan]);
+
+  const stopScanning = useCallback(() => {
+    setIsScanning(false);
+  }, []);
+
   useEffect(() => {
     if (isActive) {
       startScanning();
@@ -26,64 +50,9 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
     }
 
     return () => stopScanning();
-  }, [isActive]);
+  }, [isActive, startScanning, stopScanning]);
 
-  const startScanning = async () => {
-    try {
-      setIsScanning(true);
-      setError('');
 
-      // Initialiser le lecteur de code-barres
-      if (!readerRef.current) {
-        readerRef.current = new BrowserMultiFormatReader();
-      }
-
-      const reader = readerRef.current;
-
-      // Obtenir la liste des caméras disponibles
-      const videoInputDevices = await reader.listVideoInputDevices();
-      
-      if (videoInputDevices.length === 0) {
-        throw new Error('Aucune caméra disponible');
-      }
-
-      // Utiliser la caméra arrière par défaut, ou la première disponible
-      const selectedDeviceId = videoInputDevices.find(device => 
-        device.label.toLowerCase().includes('back') || 
-        device.label.toLowerCase().includes('rear')
-      )?.deviceId || videoInputDevices[0].deviceId;
-
-      // Commencer le scan
-      await reader.decodeFromVideoDevice(
-        selectedDeviceId,
-        videoRef.current,
-        (result: Result | null, error?: Error) => {
-          if (result) {
-            const barcodeText = result.getText();
-            if (barcodeText) {
-              onScan(barcodeText);
-              stopScanning();
-            }
-          }
-          if (error && error.name !== 'NotFoundException') {
-            console.warn('Erreur de scan:', error);
-          }
-        }
-      );
-
-    } catch (error) {
-      console.error('Erreur lors de l\'initialisation du scanner:', error);
-      setError(error instanceof Error ? error.message : 'Erreur inconnue');
-      setIsScanning(false);
-    }
-  };
-
-  const stopScanning = () => {
-    if (readerRef.current) {
-      readerRef.current.reset();
-    }
-    setIsScanning(false);
-  };
 
   if (!isActive) {
     return null;
@@ -95,7 +64,7 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
       <div className="bg-white p-4 text-center">
         <h2 className="text-xl font-bold text-gray-900">Scanner le code-barres</h2>
         <p className="text-gray-600 text-sm mt-1">
-          Pointez la caméra vers le code-barres du colis
+          Mode démonstration - Simulation du scan
         </p>
       </div>
 
@@ -146,7 +115,7 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
           <div className="absolute bottom-24 left-0 right-0 text-center">
             <div className="inline-flex items-center space-x-2 bg-black bg-opacity-75 text-white px-4 py-2 rounded-lg">
               <Loader2 size={20} className="animate-spin" />
-              <span>Recherche de code-barres...</span>
+              <span>Simulation du scan en cours...</span>
             </div>
           </div>
         )}

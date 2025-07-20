@@ -1,5 +1,5 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { Camera, RotateCcw, Check, X, Loader2 } from 'lucide-react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
+import { Camera, RotateCcw, X, Loader2 } from 'lucide-react';
 
 interface CameraCaptureProps {
   onCapture: (imageData: string) => void;
@@ -22,14 +22,7 @@ export const CameraCapture: React.FC<CameraCaptureProps> = ({
   const [facingMode, setFacingMode] = useState<'user' | 'environment'>('environment');
   const [isReady, setIsReady] = useState(false);
 
-  useEffect(() => {
-    startCamera();
-    return () => {
-      stopCamera();
-    };
-  }, [facingMode]);
-
-  const startCamera = async () => {
+  const startCamera = useCallback(async () => {
     try {
       const constraints = {
         video: {
@@ -52,15 +45,24 @@ export const CameraCapture: React.FC<CameraCaptureProps> = ({
       console.error('Erreur d\'accès à la caméra:', error);
       alert('Impossible d\'accéder à la caméra. Vérifiez les permissions.');
     }
-  };
+  }, [facingMode]);
 
-  const stopCamera = () => {
+  const stopCamera = useCallback(() => {
     if (stream) {
       stream.getTracks().forEach(track => track.stop());
       setStream(null);
     }
     setIsReady(false);
-  };
+  }, [stream]);
+
+  useEffect(() => {
+    startCamera();
+    return () => {
+      stopCamera();
+    };
+  }, [startCamera, stopCamera]);
+
+
 
   const captureImage = () => {
     if (!videoRef.current || !canvasRef.current || !isReady) return;

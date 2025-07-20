@@ -48,7 +48,6 @@ export const AdvancedAddressSearch: React.FC<AdvancedAddressSearchProps> = ({
   postcode,
   maxResults = 8,
   enableManualEntry = true,
-  currentUser = "Utilisateur"
 }) => {
   const [query, setQuery] = useState(defaultQuery);
   const [suggestions, setSuggestions] = useState<AddressSearchSuggestion[]>([]);
@@ -77,38 +76,6 @@ export const AdvancedAddressSearch: React.FC<AdvancedAddressSearchProps> = ({
   useEffect(() => {
     BANApiService.isAvailable().then(setBanAvailable);
   }, []);
-
-  // Recherche d'adresses
-  useEffect(() => {
-    if (query.length < 2) {
-      setSuggestions([]);
-      setShowSuggestions(false);
-      setError('');
-      return;
-    }
-
-    if (manualMode) return;
-
-    setIsLoading(true);
-    setError('');
-    performSearch(query);
-  }, [query, postcode, manualMode, performSearch]);
-
-  // Recherche de villes pour le mode manuel
-  useEffect(() => {
-    if (manualMode && manualAddress.postal_code && manualAddress.postal_code.length >= 2) {
-      CSVAddressService.searchCitiesByPostcodeDebounced(manualAddress.postal_code)
-        .then(cities => {
-          setCitySuggestions(cities);
-          if (manualAddress.city && manualAddress.city.length >= 2) {
-            setShowCitySuggestions(true);
-          }
-        });
-    } else {
-      setCitySuggestions([]);
-      setShowCitySuggestions(false);
-    }
-  }, [manualAddress.postal_code, manualAddress.city, manualMode]);
 
   const performSearch = useCallback(async (searchQuery: string) => {
     try {
@@ -182,6 +149,38 @@ export const AdvancedAddressSearch: React.FC<AdvancedAddressSearchProps> = ({
       setIsLoading(false);
     }
   }, [maxResults, postcode, banAvailable]);
+
+  // Recherche d'adresses
+  useEffect(() => {
+    if (query.length < 2) {
+      setSuggestions([]);
+      setShowSuggestions(false);
+      setError('');
+      return;
+    }
+
+    if (manualMode) return;
+
+    setIsLoading(true);
+    setError('');
+    performSearch(query);
+  }, [query, postcode, manualMode, performSearch]);
+
+  // Recherche de villes pour le mode manuel
+  useEffect(() => {
+    if (manualMode && manualAddress.postal_code && manualAddress.postal_code.length >= 2) {
+      CSVAddressService.searchCitiesByPostcodeDebounced(manualAddress.postal_code)
+        .then(cities => {
+          setCitySuggestions(cities);
+          if (manualAddress.city && manualAddress.city.length >= 2) {
+            setShowCitySuggestions(true);
+          }
+        });
+    } else {
+      setCitySuggestions([]);
+      setShowCitySuggestions(false);
+    }
+  }, [manualAddress.postal_code, manualAddress.city, manualMode]);
 
   const handleSuggestionSelect = async (suggestion: AddressSearchSuggestion) => {
     try {
