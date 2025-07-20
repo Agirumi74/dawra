@@ -27,7 +27,8 @@ import { useRouteSettings } from '../hooks/useRouteSettings';
 import { RouteOptimizer } from '../services/routeOptimization';
 import { geocodeAddress } from '../services/geocoding';
 import { DEFAULT_DEPOT_ADDRESS } from '../constants/depot';
-import { StepByStepNavigation } from './StepByStepNavigation';
+import { TourProgressView } from './TourProgressView';
+import { NavigationModeSelector } from './NavigationModeSelector';
 import { RouteExportService } from '../services/routeExport';
 
 interface EnhancedRouteViewProps {
@@ -43,9 +44,9 @@ export const EnhancedRouteView: React.FC<EnhancedRouteViewProps> = ({ onNavigate
   const [error, setError] = useState<string>('');
   const [showSettings, setShowSettings] = useState(false);
   const [showExportMenu, setShowExportMenu] = useState(false);
-  const [currentStepIndex, setCurrentStepIndex] = useState(0);
+  const [showNavigationSelector, setShowNavigationSelector] = useState(false);
+  const [showTourProgress, setShowTourProgress] = useState(false);
   const [showNavigation, setShowNavigation] = useState(false);
-  const [navigationDestination, setNavigationDestination] = useState<DeliveryPoint | null>(null);
   const [tourStats, setTourStats] = useState<{
     totalTime: string;
     endTime: string;
@@ -176,7 +177,6 @@ export const EnhancedRouteView: React.FC<EnhancedRouteViewProps> = ({ onNavigate
       }
 
       setDeliveryPoints(optimized);
-      setCurrentStepIndex(0);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erreur d\'optimisation');
     } finally {
@@ -186,14 +186,6 @@ export const EnhancedRouteView: React.FC<EnhancedRouteViewProps> = ({ onNavigate
 
   const handlePackageStatusChange = (packageId: string, status: Package['status']) => {
     updatePackage(packageId, { status });
-    
-    // Recalculer l'index de l'étape courante
-    if (status === 'delivered') {
-      const nextPendingIndex = deliveryPoints.findIndex(point => 
-        point.packages.some(pkg => pkg.status === 'pending')
-      );
-      setCurrentStepIndex(nextPendingIndex !== -1 ? nextPendingIndex : currentStepIndex);
-    }
   };
 
   const removePackageFromRoute = async (packageId: string) => {
@@ -212,33 +204,46 @@ export const EnhancedRouteView: React.FC<EnhancedRouteViewProps> = ({ onNavigate
   const navigateToPoint = (point: DeliveryPoint) => {
     if (onNavigate) {
       onNavigate(point.address.full_address);
-    } else if (userPosition) {
-      // Ouvrir la navigation pas à pas intégrée
-      setNavigationDestination(point);
-      setShowNavigation(true);
     } else {
-      // Fallback: ouvrir dans Google Maps
-      const url = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(point.address.full_address)}`;
-      window.open(url, '_blank');
+      // Show navigation mode selector for this specific point
+      setShowNavigationSelector(true);
     }
   };
 
-  const handleNavigationArrived = () => {
-    setShowNavigation(false);
-    setNavigationDestination(null);
+  const startTourNavigation = () => {
+    if (deliveryPoints.length === 0) {
+      setError('Aucun point de livraison disponible');
+      return;
+    }
+    setShowTourProgress(true);
+  };
+
+  const handleNavigationModeSelect = (mode: 'dawra' | 'google' | 'waze') => {
+    setShowNavigationSelector(false);
     
-    // Marquer automatiquement comme étape courante
-    if (navigationDestination) {
-      const pointIndex = deliveryPoints.findIndex(p => p.id === navigationDestination.id);
-      if (pointIndex !== -1) {
-        setCurrentStepIndex(pointIndex);
-      }
+    if (mode === 'dawra') {
+      // Use internal navigation
+      startTourNavigation();
+    }
+    // External apps are already launched by the selector
+  };
+
+  const handleTourDeliveryComplete = (pointId: string) => {
+    const point = deliveryPoints.find(p => p.id === pointId);
+    if (point) {
+      point.packages.forEach(pkg => {
+        handlePackageStatusChange(pkg.id, 'delivered');
+      });
     }
   };
 
-  const handleNavigationCancel = () => {
-    setShowNavigation(false);
-    setNavigationDestination(null);
+  const handleTourDeliveryFailed = (pointId: string) => {
+    const point = deliveryPoints.find(p => p.id === pointId);
+    if (point) {
+      point.packages.forEach(pkg => {
+        handlePackageStatusChange(pkg.id, 'failed');
+      });
+    }
   };
 
   const exportRoute = async (format: 'pdf' | 'csv' | 'packages') => {
@@ -286,15 +291,6 @@ export const EnhancedRouteView: React.FC<EnhancedRouteViewProps> = ({ onNavigate
     return 'pending';
   };
 
-  const getCurrentStep = () => {
-    return deliveryPoints[currentStepIndex];
-  };
-
-  const getNextStep = () => {
-    const nextIndex = currentStepIndex + 1;
-    return nextIndex < deliveryPoints.length ? deliveryPoints[nextIndex] : null;
-  };
-
   if (packages.length === 0) {
     return (
       <div className="p-6 text-center">
@@ -306,13 +302,25 @@ export const EnhancedRouteView: React.FC<EnhancedRouteViewProps> = ({ onNavigate
 
   return (
     <div className="flex flex-col h-full">
-      {/* Navigation pas à pas */}
-      {showNavigation && navigationDestination && userPosition && (
-        <StepByStepNavigation
-          destination={navigationDestination}
+      {/* Navigation Mode Selector */}
+      {showNavigationSelector && (
+        <NavigationModeSelector
+          deliveryPoints={deliveryPoints}
+          onModeSelect={handleNavigationModeSelect}
+          onCancel={() => setShowNavigationSelector(false)}
+        />
+      )}
+
+      {/* Tour Progress View */}
+      {showTourProgress && (
+        <TourProgressView
+          deliveryPoints={deliveryPoints}
+          currentPointIndex={0}
           userPosition={userPosition}
-          onArrived={handleNavigationArrived}
-          onCancel={handleNavigationCancel}
+          onDeliveryComplete={handleTourDeliveryComplete}
+          onDeliveryFailed={handleTourDeliveryFailed}
+          onNext={() => {}}
+          onBack={() => setShowTourProgress(false)}
         />
       )}
 
@@ -454,7 +462,7 @@ export const EnhancedRouteView: React.FC<EnhancedRouteViewProps> = ({ onNavigate
           </div>
         )}
 
-        {/* Bouton d'optimisation */}
+        {/* Bouton d'optimisation et de navigation */}
         <div className="flex space-x-2">
           <button
             onClick={optimizeRoute}
@@ -475,15 +483,24 @@ export const EnhancedRouteView: React.FC<EnhancedRouteViewProps> = ({ onNavigate
           </button>
           
           {deliveryPoints.length > 0 && (
-            <button
-              onClick={() => {
-                setDeliveryPoints([]);
-                setCurrentStepIndex(0);
-              }}
-              className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
-            >
-              <RefreshCw size={20} />
-            </button>
+            <>
+              <button
+                onClick={() => setShowNavigationSelector(true)}
+                className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors flex items-center space-x-2"
+              >
+                <Navigation size={20} />
+                <span>Démarrer Navigation</span>
+              </button>
+              
+              <button
+                onClick={() => {
+                  setDeliveryPoints([]);
+                }}
+                className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
+              >
+                <RefreshCw size={20} />
+              </button>
+            </>
           )}
         </div>
 
@@ -493,49 +510,6 @@ export const EnhancedRouteView: React.FC<EnhancedRouteViewProps> = ({ onNavigate
           </div>
         )}
       </div>
-
-      {/* Guide étape par étape */}
-      {deliveryPoints.length > 0 && (
-        <div className="p-4 bg-blue-50 border-b">
-          <h3 className="font-semibold text-blue-900 mb-2 flex items-center">
-            <Navigation size={20} className="mr-2" />
-            Étape Actuelle
-          </h3>
-          
-          {getCurrentStep() && (
-            <div className="bg-white p-3 rounded-lg border-l-4 border-blue-500">
-              <div className="flex items-center justify-between">
-                <div className="flex-1">
-                  <div className="font-medium">
-                    Arrêt {getCurrentStep().order} - {getCurrentStep().estimatedTime}
-                  </div>
-                  <div className="text-sm text-gray-600">
-                    {getCurrentStep().address.full_address}
-                  </div>
-                  <div className="text-xs text-gray-500 mt-1">
-                    {getCurrentStep().packages.length} colis - {(getCurrentStep().distance || 0).toFixed(1)} km
-                  </div>
-                </div>
-                <button
-                  onClick={() => navigateToPoint(getCurrentStep())}
-                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-                >
-                  Y aller
-                </button>
-              </div>
-            </div>
-          )}
-
-          {getNextStep() && (
-            <div className="mt-2 p-2 bg-gray-100 rounded-lg">
-              <div className="text-sm text-gray-600 flex items-center">
-                <ArrowRight size={16} className="mr-1" />
-                Prochain: {getNextStep()!.address.full_address} ({getNextStep()!.estimatedTime})
-              </div>
-            </div>
-          )}
-        </div>
-      )}
 
       {/* Liste des points de livraison */}
       <div className="flex-1 overflow-y-auto">
@@ -548,13 +522,11 @@ export const EnhancedRouteView: React.FC<EnhancedRouteViewProps> = ({ onNavigate
           <div className="space-y-2 p-4">
             {deliveryPoints.map((point, index) => {
               const status = getStepStatus(point);
-              const isCurrent = index === currentStepIndex;
               
               return (
                 <div
                   key={point.id}
                   className={`border rounded-lg p-4 ${
-                    isCurrent ? 'border-blue-500 bg-blue-50' : 
                     status === 'completed' ? 'border-green-200 bg-green-50' : 
                     status === 'partial' ? 'border-orange-200 bg-orange-50' : 
                     'border-gray-200 bg-white'
@@ -566,7 +538,6 @@ export const EnhancedRouteView: React.FC<EnhancedRouteViewProps> = ({ onNavigate
                         <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
                           status === 'completed' ? 'bg-green-600 text-white' :
                           status === 'partial' ? 'bg-orange-600 text-white' :
-                          isCurrent ? 'bg-blue-600 text-white' :
                           'bg-gray-300 text-gray-700'
                         }`}>
                           {point.order}
