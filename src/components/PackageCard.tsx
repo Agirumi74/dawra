@@ -61,6 +61,21 @@ export const PackageCard: React.FC<PackageCardProps> = ({
   const handleNavigate = () => {
     if (onNavigate) {
       onNavigate(pkg.address.full_address);
+    } else {
+      // Fallback: open in default GPS app
+      if (pkg.address.coordinates) {
+        const { lat, lng } = pkg.address.coordinates;
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+        const isAndroid = /Android/.test(navigator.userAgent);
+
+        if (isIOS) {
+          window.open(`maps://maps.apple.com/?daddr=${lat},${lng}&dirflg=d`);
+        } else if (isAndroid) {
+          window.open(`google.navigation:q=${lat},${lng}`);
+        } else {
+          window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving`);
+        }
+      }
     }
   };
 

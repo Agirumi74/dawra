@@ -19,7 +19,7 @@ export interface Package {
   location: string;
   notes: string;
   type: 'particulier' | 'entreprise';
-  priority: 'standard' | 'express_midi' | 'premier';
+  priority?: 'standard' | 'express_midi' | 'premier';
   status: 'pending' | 'delivered' | 'failed';
   photo?: string;
   createdAt: Date;

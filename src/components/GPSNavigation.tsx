@@ -11,10 +11,12 @@ import {
   ArrowRight,
   RefreshCw,
   Plus,
-  Settings
+  Settings,
+  X
 } from 'lucide-react';
 import { DeliveryPoint, UserPosition } from '../types';
 import { RouteOptimizer } from '../services/routeOptimization';
+import { AddressDatabaseService } from '../services/addressDatabase';
 
 // Fix for default markers
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -32,6 +34,8 @@ interface GPSNavigationProps {
   onAddAddress: () => void;
   onRecalculateRoute: () => void;
   onBack: () => void;
+  updatePackage?: (id: string, updates: any) => void;
+  setCurrentPointIndex?: (index: number) => void;
 }
 
 const MapController: React.FC<{
@@ -54,7 +58,9 @@ export const GPSNavigation: React.FC<GPSNavigationProps> = ({
   onDeliveryComplete,
   onAddAddress,
   onRecalculateRoute,
-  onBack
+  onBack,
+  updatePackage,
+  setCurrentPointIndex
 }) => {
   const [routePolyline, setRoutePolyline] = useState<{ lat: number; lng: number }[]>([]);
   const [isLoadingRoute, setIsLoadingRoute] = useState(false);
@@ -111,6 +117,29 @@ export const GPSNavigation: React.FC<GPSNavigationProps> = ({
   const handleDeliveryComplete = () => {
     if (currentPoint) {
       onDeliveryComplete(currentPoint.id);
+    }
+  };
+
+  const handleFailedDelivery = () => {
+    if (currentPoint) {
+      // Mark packages as failed instead of delivered
+      currentPoint.packages.forEach(pkg => {
+        if (updatePackage) {
+          updatePackage(pkg.id, { status: 'failed' });
+        }
+        AddressDatabaseService.addDeliveryHistory(pkg.address.id, false, 'Chauffeur');
+      });
+      
+      // Move to next point
+      const nextIndex = currentPointIndex + 1;
+      if (nextIndex < deliveryPoints.length) {
+        if (setCurrentPointIndex) {
+          setCurrentPointIndex(nextIndex);
+        }
+      } else {
+        alert('Tournée terminée !');
+        onBack();
+      }
     }
   };
 
@@ -401,6 +430,14 @@ export const GPSNavigation: React.FC<GPSNavigationProps> = ({
           >
             <CheckCircle size={20} />
             <span>Colis livré</span>
+          </button>
+          
+          <button
+            onClick={handleFailedDelivery}
+            className="px-4 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors flex items-center justify-center space-x-2"
+          >
+            <X size={20} />
+            <span>Échec</span>
           </button>
         </div>
 

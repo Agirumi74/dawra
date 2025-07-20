@@ -1,5 +1,4 @@
 import { Address } from '../types';
-
 import { AddressDatabaseService } from './addressDatabase';
 
 export interface CSVAddress {
@@ -374,5 +373,10 @@ export class CSVAddressService {
     if (address.postal_code) parts.push(address.postal_code);
     if (address.city) parts.push(address.city);
     return parts.join(' ');
+  }
+
+  // Méthode pour normaliser une adresse complète
+  static normalizeFullAddress(address: Address): string {
+    return `${address.street_number || ''} ${address.street_name || ''}, ${address.postal_code || ''} ${address.city || ''}`.trim();
   }
 }

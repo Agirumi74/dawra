@@ -149,7 +149,7 @@ export const SmartAddressForm: React.FC<SmartAddressFormProps> = ({
     const address = CSVAddressService.parseCSVAddress(suggestion);
     setStreetNumber(address.street_number);
     setStreetName(address.street_name);
-    setStreetQuery(address.street_name);
+    setStreetQuery(`${address.street_number} ${address.street_name}`.trim());
     setPostcode(address.postal_code);
     setCity(address.city);
     setShowStreetSuggestions(false);

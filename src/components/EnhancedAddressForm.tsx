@@ -54,7 +54,7 @@ export const EnhancedAddressForm: React.FC<EnhancedAddressFormProps> = ({
 
   useEffect(() => {
     if (initialAddress) {
-      setQuery(CSVAddressService.formatAddress(initialAddress));
+      setQuery(CSVAddressService.normalizeFullAddress(initialAddress));
       const enhanced = AddressDatabaseService.findAddress(initialAddress);
       if (enhanced) {
         setSelectedAddress(enhanced);
@@ -98,7 +98,7 @@ export const EnhancedAddressForm: React.FC<EnhancedAddressFormProps> = ({
     if (suggestion.isLocal) {
       // Adresse de la base locale
       setSelectedAddress(suggestion);
-      setQuery(AddressService.formatAddress(suggestion));
+      setQuery(CSVAddressService.normalizeFullAddress(suggestion));
       setShowAddressDetails(true);
     } else {
       // Adresse en ligne
@@ -115,7 +115,7 @@ export const EnhancedAddressForm: React.FC<EnhancedAddressFormProps> = ({
         setShowAddressDetails(true);
       }
       
-      setQuery(CSVAddressService.formatAddress(address));
+      setQuery(CSVAddressService.normalizeFullAddress(address));
     }
     
     setShowSuggestions(false);
@@ -212,7 +212,7 @@ export const EnhancedAddressForm: React.FC<EnhancedAddressFormProps> = ({
       postal_code: manualAddress.postal_code || '',
       city: manualAddress.city || '',
       country: manualAddress.country || 'France',
-      full_address: AddressService.formatAddress(manualAddress as Address)
+      full_address: CSVAddressService.normalizeFullAddress(manualAddress as Address)
     };
 
     // Ajouter à la base de données

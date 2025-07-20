@@ -24,7 +24,7 @@ import {
 import { BrowserMultiFormatReader } from '@zxing/browser';
 import { usePackages } from './hooks/usePackages';
 import { useLocalStorage } from './hooks/useLocalStorage';
-import { AppView, TruckLocation, DeliveryPoint, Address } from './types';
+import { AppView, TruckLocation, DeliveryPoint, Address, UserPosition } from './types';
 import { DEFAULT_TRUCK_LOCATIONS } from './constants/locations';
 import { geminiOCR } from './services/geminiOCR';
 import { offlineStorage } from './services/offlineStorage';
@@ -34,7 +34,6 @@ import { CameraCapture } from './components/CameraCapture';
 import { PackageCard } from './components/PackageCard';
 import { StatsPanel } from './components/StatsPanel';
 import { SmartAddressForm } from './components/SmartAddressForm';
-import { DeliveryMap } from './components/DeliveryMap';
 import { GPSNavigation } from './components/GPSNavigation';
 import { AddressDatabaseService } from './services/addressDatabase';
 
@@ -57,6 +56,7 @@ function App() {
   const [newLocationName, setNewLocationName] = useState('');
   const [newLocationColor, setNewLocationColor] = useState('#3b82f6');
   const [showSmartAddressForm, setShowSmartAddressForm] = useState(false);
+  const [userPosition, setUserPosition] = useState<UserPosition | null>(null);
   
   const { packages, addPackage, updatePackage, removePackage, clearAllPackages, getPackagesByStatus } = usePackages();
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -84,6 +84,15 @@ function App() {
       window.removeEventListener('online', handleOnline);
       window.removeEventListener('offline', handleOffline);
     };
+  }, []);
+
+  // Get user position on mount
+  useEffect(() => {
+    RouteOptimizer.getCurrentPosition().then(position => {
+      if (position) {
+        setUserPosition(position);
+      }
+    });
   }, []);
 
   // Update delivery points when packages change
@@ -208,7 +217,6 @@ function App() {
       setCapturedAddress('');
       setSelectedAddress(null);
       setOcrConfidence(0);
-      setShowAddressForm(false);
       
       alert('Colis enregistré ! Prêt pour le suivant.');
     };
@@ -1067,13 +1075,15 @@ function App() {
       case 'gps':
         return (
           <GPSNavigation
-            points={deliveryPoints}
+            deliveryPoints={deliveryPoints}
             currentPointIndex={currentPointIndex}
             userPosition={userPosition}
-            onPointComplete={handlePointComplete}
+            onDeliveryComplete={handlePointComplete}
             onAddAddress={handleAddAddressTour}
             onRecalculateRoute={handleRecalculateRoute}
             onBack={() => setCurrentView('route')}
+            updatePackage={updatePackage}
+            setCurrentPointIndex={setCurrentPointIndex}
           />
         );
       case 'settings':
