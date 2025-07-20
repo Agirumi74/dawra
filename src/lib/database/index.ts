@@ -2,12 +2,49 @@ import { createClient } from '@libsql/client';
 import { drizzle } from 'drizzle-orm/libsql';
 import * as schema from './schema';
 
-// Configuration de la base de données
-const client = createClient({
-  url: 'file:./tournee-facile.db',
-});
+// Mock database for browser environment
+const createMockDb = () => {
+  // For browser environment, we'll create a mock that returns empty results
+  // This is a temporary solution to allow the app to load
+  const mockDb = {
+    select: () => ({
+      from: () => ({
+        where: () => ({
+          limit: () => Promise.resolve([]),
+        }),
+        limit: () => Promise.resolve([]),
+      }),
+    }),
+    insert: () => ({
+      values: () => Promise.resolve([]),
+    }),
+    update: () => ({
+      set: () => ({
+        where: () => Promise.resolve([]),
+      }),
+    }),
+    delete: () => ({
+      where: () => Promise.resolve([]),
+    }),
+  };
+  return mockDb as any;
+};
 
-export const db = drizzle(client, { schema });
+// Configuration de la base de données
+let db;
+
+if (typeof window !== 'undefined') {
+  // Browser environment - use mock database
+  db = createMockDb();
+} else {
+  // Node.js environment (for SSR or build)
+  const client = createClient({
+    url: 'file:./tournee-facile.db',
+  });
+  db = drizzle(client, { schema });
+}
+
+export { db };
 
 // Types dérivés du schéma
 export type User = typeof schema.users.$inferSelect;
