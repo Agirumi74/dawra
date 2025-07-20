@@ -26,7 +26,7 @@ import { usePackages } from '../hooks/usePackages';
 import { useRouteSettings } from '../hooks/useRouteSettings';
 import { RouteOptimizer } from '../services/routeOptimization';
 import { geocodeAddress } from '../services/geocoding';
-import { DEFAULT_DEPOT_ADDRESS } from '../constants/depot';
+import { DEFAULT_DEPOT_ADDRESS, UPS_DEPOT_ADDRESS } from '../constants/depot';
 import { TourProgressView } from './TourProgressView';
 import { NavigationModeSelector } from './NavigationModeSelector';
 import { RouteExportService } from '../services/routeExport';
@@ -134,25 +134,30 @@ export const EnhancedRouteView: React.FC<EnhancedRouteViewProps> = ({ onNavigate
       // Grouper par adresse
       const points = RouteOptimizer.groupPackagesByAddress(packagesWithCoords);
       
-      // Obtenir la matrice de distances
-      const coordinates = points
-        .filter(p => p.address.coordinates)
-        .map(p => p.address.coordinates!);
+      // Préparer les coordonnées pour la matrice de distances
+      // Inclure: dépôt de départ, tous les points de livraison, dépôt UPS
+      const allCoordinates = [
+        DEFAULT_DEPOT_ADDRESS.coordinates!, // Index 0: dépôt de départ
+        ...points
+          .filter(p => p.address.coordinates)
+          .map(p => p.address.coordinates!), // Index 1 à n: points de livraison
+        UPS_DEPOT_ADDRESS.coordinates! // Index n+1: dépôt UPS
+      ];
 
-      if (coordinates.length === 0) {
-        throw new Error('Aucune adresse géocodée trouvée');
+      if (allCoordinates.length < 3) { // Au moins dépôt + 1 point + UPS dépôt
+        throw new Error('Pas assez de points géocodés pour optimiser la route');
       }
 
-      const distanceMatrix = await RouteOptimizer.getDistanceMatrix(coordinates);
+      const distanceMatrix = await RouteOptimizer.getDistanceMatrix(allCoordinates);
 
-      // Optimiser
+      // Optimiser avec les deux dépôts
       const hasConstraints = points.some(p => p.priority !== 'standard');
       let optimized: DeliveryPoint[];
 
       if (hasConstraints) {
         optimized = RouteOptimizer.optimizeWithConstraints(
           points, 
-          userPosition!, 
+          DEFAULT_DEPOT_ADDRESS.coordinates!, // Commencer au dépôt principal
           distanceMatrix, 
           {},
           settings.startTime,
@@ -160,7 +165,11 @@ export const EnhancedRouteView: React.FC<EnhancedRouteViewProps> = ({ onNavigate
           settings.averageSpeedKmh
         );
       } else {
-        optimized = RouteOptimizer.optimizeSimple(points, userPosition!, distanceMatrix);
+        optimized = RouteOptimizer.optimizeSimple(
+          points, 
+          DEFAULT_DEPOT_ADDRESS.coordinates!, // Commencer au dépôt principal
+          distanceMatrix
+        );
         
         // Ajouter les temps estimés pour l'optimisation simple
         let cumulativeDistance = 0;
@@ -174,6 +183,39 @@ export const EnhancedRouteView: React.FC<EnhancedRouteViewProps> = ({ onNavigate
             settings.averageSpeedKmh
           );
         });
+      }
+
+      // Ajouter le point de fin au dépôt UPS si returnToDepot est activé
+      if (settings.returnToDepot && optimized.length > 0) {
+        // Calculer la distance du dernier point vers le dépôt UPS
+        const lastPoint = optimized[optimized.length - 1];
+        if (lastPoint.address.coordinates) {
+          const lastToUpsDistance = RouteOptimizer.calculateHaversineDistance(
+            lastPoint.address.coordinates,
+            UPS_DEPOT_ADDRESS.coordinates!
+          );
+          
+          // Créer un point virtuel pour le dépôt UPS
+          const upsDepotPoint: DeliveryPoint = {
+            id: 'ups-depot-final',
+            address: UPS_DEPOT_ADDRESS,
+            packages: [],
+            status: 'pending',
+            order: optimized.length + 1,
+            distance: lastToUpsDistance,
+            priority: 'standard',
+            estimatedTime: RouteOptimizer.calculateEstimatedTime(
+              optimized.length + 1,
+              settings.startTime,
+              settings.stopTimeMinutes,
+              cumulativeDistance + lastToUpsDistance,
+              settings.averageSpeedKmh
+            )
+          };
+          
+          // Ne pas l'ajouter comme point de livraison mais l'utiliser pour les calculs
+          // optimized.push(upsDepotPoint);
+        }
       }
 
       setDeliveryPoints(optimized);
@@ -228,11 +270,16 @@ export const EnhancedRouteView: React.FC<EnhancedRouteViewProps> = ({ onNavigate
     // External apps are already launched by the selector
   };
 
-  const handleTourDeliveryComplete = (pointId: string) => {
+  const handleTourDeliveryComplete = (pointId: string, status: 'delivered' | 'failed', deliveryStatus?: string, reason?: string) => {
     const point = deliveryPoints.find(p => p.id === pointId);
     if (point) {
       point.packages.forEach(pkg => {
-        handlePackageStatusChange(pkg.id, 'delivered');
+        updatePackage(pkg.id, { 
+          status,
+          deliveryStatus,
+          failureReason: reason,
+          deliveredAt: status === 'delivered' ? new Date() : undefined
+        });
       });
     }
   };
@@ -321,6 +368,7 @@ export const EnhancedRouteView: React.FC<EnhancedRouteViewProps> = ({ onNavigate
           onDeliveryFailed={handleTourDeliveryFailed}
           onNext={() => {}}
           onBack={() => setShowTourProgress(false)}
+          packages={packages}
         />
       )}
 

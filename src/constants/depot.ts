@@ -14,6 +14,20 @@ export const DEFAULT_DEPOT_ADDRESS: Address = {
   }
 };
 
+export const UPS_DEPOT_ADDRESS: Address = {
+  id: 'ups-depot',
+  street_number: '14',
+  street_name: 'rue du pré de challes',
+  postal_code: '74940',
+  city: 'Annecy-le-Vieux',
+  country: 'France',
+  full_address: '14 rue du pré de challes, 74940 Annecy-le-Vieux, France',
+  coordinates: {
+    lat: 45.9123,
+    lng: 6.1605
+  }
+};
+
 export const DEFAULT_ROUTE_SETTINGS = {
   stopTimeMinutes: 5, // Temps d'arrêt par défaut en minutes
   startTime: '08:00', // Heure de départ par défaut
