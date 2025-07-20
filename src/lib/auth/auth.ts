@@ -106,29 +106,36 @@ export class AuthService {
       );
 
       if (demoUser) {
-        // Create a token for demo user
-        const token = jwt.sign(
-          { userId: demoUser.id, email: demoUser.email, role: demoUser.role },
-          JWT_SECRET,
-          { expiresIn: '7d' }
-        );
-
-        return {
-          user: {
-            id: demoUser.id,
+        try {
+          // Create a simple token for demo user - avoid JWT complications in browser
+          const tokenData = {
+            userId: demoUser.id,
             email: demoUser.email,
-            firstName: demoUser.firstName,
-            lastName: demoUser.lastName,
             role: demoUser.role,
-          },
-          token,
-        };
+            exp: Math.floor(Date.now() / 1000) + (7 * 24 * 60 * 60) // 7 days
+          };
+          const token = btoa(JSON.stringify(tokenData)); // Simple base64 encoding for demo
+
+          return {
+            user: {
+              id: demoUser.id,
+              email: demoUser.email,
+              firstName: demoUser.firstName,
+              lastName: demoUser.lastName,
+              role: demoUser.role,
+            },
+            token,
+          };
+        } catch (error) {
+          console.error('Error creating demo token:', error);
+          throw new Error('Erreur lors de la création du token de démonstration');
+        }
       } else {
         throw new Error('Email ou mot de passe incorrect');
       }
     }
 
-    // Server environment - use database
+    // Server environment - use database and JWT
     const [user] = await db.select()
       .from(users)
       .where(and(
@@ -178,24 +185,37 @@ export class AuthService {
   // Vérification du token
   static async verifyToken(token: string): Promise<AuthUser | null> {
     try {
-      const decoded = jwt.verify(token, JWT_SECRET) as any;
-      
       // Browser environment - check if it's a demo account
       if (isBrowser) {
-        const demoUser = DEMO_ACCOUNTS.find(account => account.id === decoded.userId);
-        if (demoUser) {
-          return {
-            id: demoUser.id,
-            email: demoUser.email,
-            firstName: demoUser.firstName,
-            lastName: demoUser.lastName,
-            role: demoUser.role,
-          };
+        try {
+          // Try to decode demo token (base64)
+          const tokenData = JSON.parse(atob(token));
+          
+          // Check if token is expired
+          if (tokenData.exp && tokenData.exp < Math.floor(Date.now() / 1000)) {
+            return null;
+          }
+
+          const demoUser = DEMO_ACCOUNTS.find(account => account.id === tokenData.userId);
+          if (demoUser) {
+            return {
+              id: demoUser.id,
+              email: demoUser.email,
+              firstName: demoUser.firstName,
+              lastName: demoUser.lastName,
+              role: demoUser.role,
+            };
+          }
+        } catch (error) {
+          // If demo token decoding fails, return null
+          return null;
         }
         return null;
       }
 
-      // Server environment - verify against database
+      // Server environment - verify against database using JWT
+      const decoded = jwt.verify(token, JWT_SECRET) as any;
+      
       // Vérifier que la session existe et n'est pas expirée
       const [session] = await db.select()
         .from(userSessions)
