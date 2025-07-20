@@ -1,15 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  Users, 
   Truck, 
-  MapPin, 
-  Settings, 
   BarChart3, 
   Plus,
-  Edit,
-  Trash2,
   Shield,
-  User,
   Building2
 } from 'lucide-react';
 import { DepotService } from '../../lib/services/depotService';
@@ -21,7 +15,7 @@ interface AdminDashboardProps {
 }
 
 export const AdminDashboard: React.FC<AdminDashboardProps> = ({ user }) => {
-  const [activeTab, setActiveTab] = useState<'overview' | 'depots' | 'vehicles' | 'users' | 'settings'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'depots' | 'vehicles'>('overview');
   const [depots, setDepots] = useState<Depot[]>([]);
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [showDepotForm, setShowDepotForm] = useState(false);
@@ -273,7 +267,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ user }) => {
       case 'overview':
         return (
           <div className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="bg-white p-6 rounded-lg shadow-md">
                 <div className="flex items-center justify-between">
                   <div>
@@ -290,24 +284,6 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ user }) => {
                     <p className="text-2xl font-bold text-green-600">{vehicles.length}</p>
                   </div>
                   <Truck size={32} className="text-green-600" />
-                </div>
-              </div>
-              <div className="bg-white p-6 rounded-lg shadow-md">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-gray-600">Utilisateurs</p>
-                    <p className="text-2xl font-bold text-purple-600">0</p>
-                  </div>
-                  <Users size={32} className="text-purple-600" />
-                </div>
-              </div>
-              <div className="bg-white p-6 rounded-lg shadow-md">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-gray-600">Tournées</p>
-                    <p className="text-2xl font-bold text-orange-600">0</p>
-                  </div>
-                  <BarChart3 size={32} className="text-orange-600" />
                 </div>
               </div>
             </div>
@@ -342,14 +318,6 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ user }) => {
                       {depot.contactEmail && (
                         <p className="text-sm text-blue-600">✉️ {depot.contactEmail}</p>
                       )}
-                    </div>
-                    <div className="flex space-x-2">
-                      <button className="p-2 text-blue-600 hover:bg-blue-50 rounded">
-                        <Edit size={16} />
-                      </button>
-                      <button className="p-2 text-red-600 hover:bg-red-50 rounded">
-                        <Trash2 size={16} />
-                      </button>
                     </div>
                   </div>
                 </div>
@@ -387,14 +355,6 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ user }) => {
                       {vehicle.mileage && (
                         <p className="text-sm text-blue-600 mt-2">🛣️ {vehicle.mileage.toLocaleString()} km</p>
                       )}
-                    </div>
-                    <div className="flex space-x-2">
-                      <button className="p-2 text-blue-600 hover:bg-blue-50 rounded">
-                        <Edit size={16} />
-                      </button>
-                      <button className="p-2 text-red-600 hover:bg-red-50 rounded">
-                        <Trash2 size={16} />
-                      </button>
                     </div>
                   </div>
                 </div>
@@ -438,8 +398,6 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ user }) => {
               { id: 'overview', label: 'Vue d\'ensemble', icon: BarChart3 },
               { id: 'depots', label: 'Dépôts', icon: Building2 },
               { id: 'vehicles', label: 'Véhicules', icon: Truck },
-              { id: 'users', label: 'Utilisateurs', icon: Users },
-              { id: 'settings', label: 'Paramètres', icon: Settings },
             ].map((tab) => (
               <button
                 key={tab.id}
