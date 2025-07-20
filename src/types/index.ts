@@ -21,8 +21,11 @@ export interface Package {
   type: 'particulier' | 'entreprise';
   priority?: 'standard' | 'express_midi' | 'premier';
   status: 'pending' | 'delivered' | 'failed';
+  deliveryStatus?: 'delivered' | 'absent' | 'refused' | 'ups_relay' | 'address_incorrect' | 'access_denied' | 'damaged' | 'other';
+  failureReason?: string;
   photo?: string;
   createdAt: Date;
+  deliveredAt?: Date;
   timeWindow?: {
     start?: string; // Format HH:MM
     end?: string;   // Format HH:MM
@@ -93,4 +96,22 @@ export interface RouteConstraints {
 export interface OptimizationMode {
   type: 'simple' | 'constrained';
   constraints?: RouteConstraints;
+}
+
+export interface DeliverySummary {
+  totalPackages: number;
+  deliveredPackages: number;
+  failedPackages: number;
+  failureReasons: {
+    absent: number;
+    refused: number;
+    ups_relay: number;
+    address_incorrect: number;
+    access_denied: number;
+    damaged: number;
+    other: number;
+  };
+  tourDuration: string;
+  totalDistance: number;
+  endTime: string;
 }

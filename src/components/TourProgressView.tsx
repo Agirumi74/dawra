@@ -8,20 +8,25 @@ import {
   Clock,
   Package as PackageIcon,
   Home,
-  Building
+  Building,
+  Map
 } from 'lucide-react';
-import { DeliveryPoint, UserPosition } from '../types';
+import { DeliveryPoint, UserPosition, DeliverySummary } from '../types';
 import { NavigationModeSelector } from './NavigationModeSelector';
+import { EnhancedDeliveryMap } from './EnhancedDeliveryMap';
+import { TourSummary } from './TourSummary';
+import { FullRouteMapView } from './FullRouteMapView';
 
 interface TourProgressViewProps {
   deliveryPoints: DeliveryPoint[];
   currentPointIndex: number;
   userPosition: UserPosition | null;
-  onDeliveryComplete: (pointId: string) => void;
+  onDeliveryComplete: (pointId: string, status: 'delivered' | 'failed', deliveryStatus?: string, reason?: string) => void;
   onDeliveryFailed: (pointId: string) => void;
   onNext: () => void;
   onBack: () => void;
   setCurrentPointIndex?: (index: number) => void;
+  packages: any[];
 }
 
 export const TourProgressView: React.FC<TourProgressViewProps> = ({
@@ -32,10 +37,15 @@ export const TourProgressView: React.FC<TourProgressViewProps> = ({
   onDeliveryFailed,
   onNext,
   onBack,
-  setCurrentPointIndex
+  setCurrentPointIndex,
+  packages
 }) => {
   const [showNavigationSelector, setShowNavigationSelector] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [showMap, setShowMap] = useState(false);
+  const [showFullRoute, setShowFullRoute] = useState(false);
+  const [showSummary, setShowSummary] = useState(false);
+  const [tourSummary, setTourSummary] = useState<DeliverySummary | null>(null);
 
   const currentPoint = deliveryPoints[currentPointIndex];
   const totalPoints = deliveryPoints.length;
@@ -50,9 +60,60 @@ export const TourProgressView: React.FC<TourProgressViewProps> = ({
     return () => clearInterval(timer);
   }, []);
 
+  // Generate tour summary when tour is completed
+  useEffect(() => {
+    if (currentPointIndex >= totalPoints && !showSummary) {
+      generateTourSummary();
+    }
+  }, [currentPointIndex, totalPoints]);
+
+  const generateTourSummary = () => {
+    const deliveredPackages = packages.filter(pkg => pkg.status === 'delivered');
+    const failedPackages = packages.filter(pkg => pkg.status === 'failed');
+    
+    const failureReasons = {
+      absent: packages.filter(pkg => pkg.deliveryStatus === 'absent').length,
+      refused: packages.filter(pkg => pkg.deliveryStatus === 'refused').length,
+      ups_relay: packages.filter(pkg => pkg.deliveryStatus === 'ups_relay').length,
+      address_incorrect: packages.filter(pkg => pkg.deliveryStatus === 'address_incorrect').length,
+      access_denied: packages.filter(pkg => pkg.deliveryStatus === 'access_denied').length,
+      damaged: packages.filter(pkg => pkg.deliveryStatus === 'damaged').length,
+      other: packages.filter(pkg => pkg.deliveryStatus === 'other').length,
+    };
+
+    const summary: DeliverySummary = {
+      totalPackages: packages.length,
+      deliveredPackages: deliveredPackages.length,
+      failedPackages: failedPackages.length,
+      failureReasons,
+      tourDuration: calculateTourDuration(),
+      totalDistance: calculateTotalDistance(),
+      endTime: new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
+    };
+
+    setTourSummary(summary);
+    setShowSummary(true);
+  };
+
+  const calculateTourDuration = () => {
+    // This would typically use actual start time from route settings
+    // For now, using a placeholder calculation
+    const hours = Math.floor(totalPoints * 0.5);
+    const minutes = (totalPoints * 0.5 % 1) * 60;
+    return `${hours}h${minutes.toString().padStart(2, '0')}`;
+  };
+
+  const calculateTotalDistance = () => {
+    return deliveryPoints.reduce((total, point) => total + (point.distance || 0), 0);
+  };
+
+  const handleDeliveryStatusChange = (pointId: string, status: 'delivered' | 'failed', deliveryStatus?: string, reason?: string) => {
+    onDeliveryComplete(pointId, status, deliveryStatus, reason);
+  };
+
   const handleCompleteDelivery = () => {
     if (currentPoint) {
-      onDeliveryComplete(currentPoint.id);
+      handleDeliveryStatusChange(currentPoint.id, 'delivered', 'delivered');
       if (currentPointIndex < totalPoints - 1) {
         onNext();
       }
@@ -61,7 +122,7 @@ export const TourProgressView: React.FC<TourProgressViewProps> = ({
 
   const handleFailedDelivery = () => {
     if (currentPoint) {
-      onDeliveryFailed(currentPoint.id);
+      handleDeliveryStatusChange(currentPoint.id, 'failed', 'absent');
       if (currentPointIndex < totalPoints - 1) {
         onNext();
       }
@@ -72,7 +133,8 @@ export const TourProgressView: React.FC<TourProgressViewProps> = ({
     setShowNavigationSelector(false);
     
     if (mode === 'dawra') {
-      // Continue with internal navigation - just close the selector
+      // Use internal enhanced map navigation
+      setShowMap(true);
       return;
     }
     
@@ -89,6 +151,54 @@ export const TourProgressView: React.FC<TourProgressViewProps> = ({
   const getProgressPercentage = () => {
     return (completedPoints / totalPoints) * 100;
   };
+
+  // Show tour summary when all deliveries are complete
+  if (showSummary && tourSummary) {
+    return (
+      <TourSummary
+        summary={tourSummary}
+        packages={packages}
+        onBack={() => {
+          setShowSummary(false);
+          onBack();
+        }}
+        onExportReport={() => {
+          // Handle export functionality
+          console.log('Export tour summary');
+        }}
+      />
+    );
+  }
+
+  // Show full route overview
+  if (showFullRoute) {
+    return (
+      <FullRouteMapView
+        points={deliveryPoints}
+        userPosition={userPosition}
+        onBack={() => setShowFullRoute(false)}
+        onStartNavigation={() => {
+          setShowFullRoute(false);
+          setShowMap(true);
+        }}
+      />
+    );
+  }
+
+  // Show enhanced map navigation
+  if (showMap) {
+    return (
+      <EnhancedDeliveryMap
+        points={deliveryPoints}
+        currentPointIndex={currentPointIndex}
+        userPosition={userPosition}
+        onPointComplete={handleDeliveryStatusChange}
+        onNext={onNext}
+        onBack={() => setShowMap(false)}
+        showFullRoute={false}
+      />
+    );
+  }
 
   if (!currentPoint) {
     return (
@@ -178,13 +288,29 @@ export const TourProgressView: React.FC<TourProgressViewProps> = ({
             </div>
           </div>
           
-          <button
-            onClick={() => setShowNavigationSelector(true)}
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
-          >
-            <Navigation size={16} />
-            <span>Y aller</span>
-          </button>
+          <div className="flex space-x-2">
+            <button
+              onClick={() => setShowNavigationSelector(true)}
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
+            >
+              <Navigation size={16} />
+              <span>Y aller</span>
+            </button>
+            <button
+              onClick={() => setShowMap(true)}
+              className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors flex items-center space-x-2"
+            >
+              <Map size={16} />
+              <span>Carte</span>
+            </button>
+            <button
+              onClick={() => setShowFullRoute(true)}
+              className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors flex items-center space-x-2"
+            >
+              <MapPin size={16} />
+              <span>Vue d'ensemble</span>
+            </button>
+          </div>
         </div>
 
         <div className="bg-blue-50 p-3 rounded-lg">
