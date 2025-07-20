@@ -2,6 +2,59 @@ import { db, type Depot, type NewDepot } from '../database';
 import { depots } from '../database/schema';
 import { eq } from 'drizzle-orm';
 
+// Demo data for browser environment
+const DEMO_DEPOTS: Depot[] = [
+  {
+    id: 'demo-depot-001',
+    name: 'Dépôt Central Paris',
+    address: '123 Rue de la République',
+    city: 'Paris',
+    postalCode: '75001',
+    country: 'France',
+    latitude: 48.8566,
+    longitude: 2.3522,
+    contactPhone: '01 23 45 67 89',
+    contactEmail: 'contact@depot-paris.fr',
+    openingHours: JSON.stringify({ 
+      monday: { start: '08:00', end: '18:00' },
+      tuesday: { start: '08:00', end: '18:00' },
+      wednesday: { start: '08:00', end: '18:00' },
+      thursday: { start: '08:00', end: '18:00' },
+      friday: { start: '08:00', end: '18:00' },
+      saturday: { start: '09:00', end: '16:00' },
+      sunday: { closed: true }
+    }),
+    isActive: true,
+    createdAt: '2024-01-01T00:00:00Z'
+  },
+  {
+    id: 'demo-depot-002',
+    name: 'Dépôt Lyon',
+    address: '456 Avenue du Commerce',
+    city: 'Lyon',
+    postalCode: '69000',
+    country: 'France',
+    latitude: 45.7640,
+    longitude: 4.8357,
+    contactPhone: '04 78 90 12 34',
+    contactEmail: 'contact@depot-lyon.fr',
+    openingHours: JSON.stringify({ 
+      monday: { start: '08:00', end: '18:00' },
+      tuesday: { start: '08:00', end: '18:00' },
+      wednesday: { start: '08:00', end: '18:00' },
+      thursday: { start: '08:00', end: '18:00' },
+      friday: { start: '08:00', end: '18:00' },
+      saturday: { closed: true },
+      sunday: { closed: true }
+    }),
+    isActive: true,
+    createdAt: '2024-01-01T00:00:00Z'
+  }
+];
+
+// Check if we're in browser environment
+const isBrowser = typeof window !== 'undefined';
+
 export class DepotService {
   // Créer un nouveau dépôt
   static async createDepot(data: Omit<NewDepot, 'id' | 'createdAt'>): Promise<Depot> {
@@ -16,6 +69,12 @@ export class DepotService {
 
   // Obtenir tous les dépôts actifs
   static async getActiveDepots(): Promise<Depot[]> {
+    if (isBrowser) {
+      // Return demo data in browser environment
+      return Promise.resolve(DEMO_DEPOTS.filter(depot => depot.isActive));
+    }
+
+    // Server environment - use database
     return await db.select()
       .from(depots)
       .where(eq(depots.isActive, true))
@@ -24,6 +83,13 @@ export class DepotService {
 
   // Obtenir un dépôt par ID
   static async getDepotById(id: string): Promise<Depot | null> {
+    if (isBrowser) {
+      // Return demo data in browser environment
+      const depot = DEMO_DEPOTS.find(depot => depot.id === id);
+      return Promise.resolve(depot || null);
+    }
+
+    // Server environment - use database
     const [depot] = await db.select()
       .from(depots)
       .where(eq(depots.id, id))

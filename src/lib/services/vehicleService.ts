@@ -2,6 +2,56 @@ import { db, type Vehicle, type NewVehicle, type VehicleLocation, type NewVehicl
 import { vehicles, vehicleLocations } from '../database/schema';
 import { eq, and } from 'drizzle-orm';
 
+// Demo data for browser environment
+const DEMO_VEHICLES: Vehicle[] = [
+  {
+    id: 'demo-vehicle-001',
+    licensePlate: 'AB-123-CD',
+    brand: 'Mercedes',
+    model: 'Sprinter',
+    year: 2023,
+    fuelType: 'diesel',
+    maxWeight: 3500,
+    maxVolume: 14,
+    depotId: 'demo-depot-001',
+    currentDriverId: 'demo-driver-001',
+    isActive: true,
+    lastMaintenanceDate: '2024-01-15',
+    nextMaintenanceDate: '2024-07-15',
+    mileage: 45000,
+    createdAt: '2024-01-01T00:00:00Z'
+  },
+  {
+    id: 'demo-vehicle-002',
+    licensePlate: 'EF-456-GH',
+    brand: 'Iveco',
+    model: 'Daily',
+    year: 2022,
+    fuelType: 'diesel',
+    maxWeight: 3500,
+    maxVolume: 12,
+    depotId: 'demo-depot-002',
+    currentDriverId: null,
+    isActive: true,
+    lastMaintenanceDate: '2024-02-01',
+    nextMaintenanceDate: '2024-08-01',
+    mileage: 32000,
+    createdAt: '2024-01-01T00:00:00Z'
+  }
+];
+
+const DEMO_VEHICLE_LOCATIONS: VehicleLocation[] = [
+  { id: 'demo-loc-001', vehicleId: 'demo-vehicle-001', name: 'Avant Gauche', description: null, color: '#ef4444', position: JSON.stringify({x: 0, y: 0, z: 0}), maxWeight: null, maxVolume: null, isDefault: false, createdAt: '2024-01-01T00:00:00Z' },
+  { id: 'demo-loc-002', vehicleId: 'demo-vehicle-001', name: 'Avant Droite', description: null, color: '#f97316', position: JSON.stringify({x: 1, y: 0, z: 0}), maxWeight: null, maxVolume: null, isDefault: false, createdAt: '2024-01-01T00:00:00Z' },
+  { id: 'demo-loc-003', vehicleId: 'demo-vehicle-001', name: 'Milieu Gauche', description: null, color: '#eab308', position: JSON.stringify({x: 0, y: 1, z: 0}), maxWeight: null, maxVolume: null, isDefault: false, createdAt: '2024-01-01T00:00:00Z' },
+  { id: 'demo-loc-004', vehicleId: 'demo-vehicle-001', name: 'Milieu Droite', description: null, color: '#22c55e', position: JSON.stringify({x: 1, y: 1, z: 0}), maxWeight: null, maxVolume: null, isDefault: false, createdAt: '2024-01-01T00:00:00Z' },
+  { id: 'demo-loc-005', vehicleId: 'demo-vehicle-002', name: 'Avant Gauche', description: null, color: '#ef4444', position: JSON.stringify({x: 0, y: 0, z: 0}), maxWeight: null, maxVolume: null, isDefault: false, createdAt: '2024-01-01T00:00:00Z' },
+  { id: 'demo-loc-006', vehicleId: 'demo-vehicle-002', name: 'Avant Droite', description: null, color: '#f97316', position: JSON.stringify({x: 1, y: 0, z: 0}), maxWeight: null, maxVolume: null, isDefault: false, createdAt: '2024-01-01T00:00:00Z' },
+];
+
+// Check if we're in browser environment
+const isBrowser = typeof window !== 'undefined';
+
 export class VehicleService {
   // Créer un nouveau véhicule
   static async createVehicle(data: Omit<NewVehicle, 'id' | 'createdAt'>): Promise<Vehicle> {
@@ -43,6 +93,12 @@ export class VehicleService {
 
   // Obtenir tous les véhicules actifs
   static async getActiveVehicles(): Promise<Vehicle[]> {
+    if (isBrowser) {
+      // Return demo data in browser environment
+      return Promise.resolve(DEMO_VEHICLES.filter(vehicle => vehicle.isActive));
+    }
+
+    // Server environment - use database
     return await db.select()
       .from(vehicles)
       .where(eq(vehicles.isActive, true))
@@ -51,6 +107,13 @@ export class VehicleService {
 
   // Obtenir un véhicule par ID
   static async getVehicleById(id: string): Promise<Vehicle | null> {
+    if (isBrowser) {
+      // Return demo data in browser environment
+      const vehicle = DEMO_VEHICLES.find(vehicle => vehicle.id === id);
+      return Promise.resolve(vehicle || null);
+    }
+
+    // Server environment - use database
     const [vehicle] = await db.select()
       .from(vehicles)
       .where(eq(vehicles.id, id))
@@ -72,6 +135,13 @@ export class VehicleService {
 
   // Obtenir les emplacements d'un véhicule
   static async getVehicleLocations(vehicleId: string): Promise<VehicleLocation[]> {
+    if (isBrowser) {
+      // Return demo data in browser environment
+      const locations = DEMO_VEHICLE_LOCATIONS.filter(location => location.vehicleId === vehicleId);
+      return Promise.resolve(locations);
+    }
+
+    // Server environment - use database
     return await db.select()
       .from(vehicleLocations)
       .where(eq(vehicleLocations.vehicleId, vehicleId))

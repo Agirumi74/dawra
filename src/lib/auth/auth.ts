@@ -7,6 +7,37 @@ import { eq, and } from 'drizzle-orm';
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
 const SESSION_DURATION = 7 * 24 * 60 * 60 * 1000; // 7 jours
 
+// Demo accounts for browser environment
+const DEMO_ACCOUNTS = [
+  {
+    id: 'demo-admin-001',
+    email: 'admin@tournee.fr',
+    password: 'admin123',
+    firstName: 'Admin',
+    lastName: 'Système',
+    role: 'admin' as const,
+  },
+  {
+    id: 'demo-manager-001',
+    email: 'manager@tournee.fr',
+    password: 'manager123',
+    firstName: 'Jean',
+    lastName: 'Dupont',
+    role: 'manager' as const,
+  },
+  {
+    id: 'demo-driver-001',
+    email: 'chauffeur@tournee.fr',
+    password: 'chauffeur123',
+    firstName: 'Pierre',
+    lastName: 'Martin',
+    role: 'driver' as const,
+  },
+];
+
+// Check if we're in browser environment
+const isBrowser = typeof window !== 'undefined';
+
 export interface AuthUser {
   id: string;
   email: string;
@@ -68,6 +99,36 @@ export class AuthService {
 
   // Connexion
   static async login(credentials: LoginCredentials): Promise<{ user: AuthUser; token: string }> {
+    // Browser environment - check demo accounts first
+    if (isBrowser) {
+      const demoUser = DEMO_ACCOUNTS.find(account => 
+        account.email === credentials.email && account.password === credentials.password
+      );
+
+      if (demoUser) {
+        // Create a token for demo user
+        const token = jwt.sign(
+          { userId: demoUser.id, email: demoUser.email, role: demoUser.role },
+          JWT_SECRET,
+          { expiresIn: '7d' }
+        );
+
+        return {
+          user: {
+            id: demoUser.id,
+            email: demoUser.email,
+            firstName: demoUser.firstName,
+            lastName: demoUser.lastName,
+            role: demoUser.role,
+          },
+          token,
+        };
+      } else {
+        throw new Error('Email ou mot de passe incorrect');
+      }
+    }
+
+    // Server environment - use database
     const [user] = await db.select()
       .from(users)
       .where(and(
@@ -119,6 +180,22 @@ export class AuthService {
     try {
       const decoded = jwt.verify(token, JWT_SECRET) as any;
       
+      // Browser environment - check if it's a demo account
+      if (isBrowser) {
+        const demoUser = DEMO_ACCOUNTS.find(account => account.id === decoded.userId);
+        if (demoUser) {
+          return {
+            id: demoUser.id,
+            email: demoUser.email,
+            firstName: demoUser.firstName,
+            lastName: demoUser.lastName,
+            role: demoUser.role,
+          };
+        }
+        return null;
+      }
+
+      // Server environment - verify against database
       // Vérifier que la session existe et n'est pas expirée
       const [session] = await db.select()
         .from(userSessions)
@@ -158,6 +235,12 @@ export class AuthService {
 
   // Déconnexion
   static async logout(token: string): Promise<void> {
+    // In browser environment, just ignore logout for demo accounts
+    if (isBrowser) {
+      return;
+    }
+
+    // Server environment - remove session from database
     await db.delete(userSessions)
       .where(eq(userSessions.token, token));
   }
