@@ -39,7 +39,7 @@ export const SmartAddressForm: React.FC<SmartAddressFormProps> = ({
   scannedBarcode
 }) => {
   // États pour l'interface
-  const [showAddressSearch, setShowAddressSearch] = useState(false);
+  const [showAddressSearch, setShowAddressSearch] = useState(true);
   const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
   
   // États pour les champs d'adresse (mode manuel)
