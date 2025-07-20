@@ -21,6 +21,7 @@ import {
 import { Address, Package } from '../types';
 import { CSVAddressService, CSVAddress } from '../services/csvAddressService';
 import { AddressDatabaseService, EnhancedAddress } from '../services/addressDatabase';
+import { AdvancedAddressSearch } from './AdvancedAddressSearch';
 
 interface SmartAddressFormProps {
   onPackageComplete: (packageData: Omit<Package, 'id' | 'createdAt'>, duplicateCount?: number) => void;
@@ -37,20 +38,20 @@ export const SmartAddressForm: React.FC<SmartAddressFormProps> = ({
   currentUser = 'Chauffeur',
   scannedBarcode
 }) => {
-  // États pour les champs d'adresse
+  // États pour l'interface
+  const [showAddressSearch, setShowAddressSearch] = useState(false);
+  const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
+  
+  // États pour les champs d'adresse (mode manuel)
   const [streetNumber, setStreetNumber] = useState('');
   const [streetName, setStreetName] = useState('');
   const [postcode, setPostcode] = useState(defaultPostcode);
   const [city, setCity] = useState('');
   
-  // États pour la recherche
-  const [streetSuggestions, setStreetSuggestions] = useState<CSVAddress[]>([]);
+  // États pour la recherche (gardés pour compatibilité avec le mode manuel)
   const [citySuggestions, setCitySuggestions] = useState<CSVAddress[]>([]);
-  const [showStreetSuggestions, setShowStreetSuggestions] = useState(false);
   const [showCitySuggestions, setShowCitySuggestions] = useState(false);
-  const [isLoadingStreet, setIsLoadingStreet] = useState(false);
   const [isLoadingCity, setIsLoadingCity] = useState(false);
-  const [streetQuery, setStreetQuery] = useState('');
   
   // États pour les informations du colis
   const [location, setLocation] = useState('');
@@ -65,8 +66,6 @@ export const SmartAddressForm: React.FC<SmartAddressFormProps> = ({
   const [existingAddress, setExistingAddress] = useState<EnhancedAddress | null>(null);
   const [showExistingNotes, setShowExistingNotes] = useState(false);
   
-  const streetInputRef = useRef<HTMLInputElement>(null);
-  const cityInputRef = useRef<HTMLInputElement>(null);
   const photoInputRef = useRef<HTMLInputElement>(null);
 
   // Emplacements par défaut
@@ -81,30 +80,9 @@ export const SmartAddressForm: React.FC<SmartAddressFormProps> = ({
     { id: 'cab', name: 'Cabine', color: '#f59e0b' },
   ];
 
-  // Recherche dynamique dans le champ adresse
+  // Recherche de villes par code postal (pour le mode manuel)
   useEffect(() => {
-    if (streetQuery.length >= 2) {
-      setIsLoadingStreet(true);
-      CSVAddressService.searchAddressesDebounced(streetQuery, postcode || undefined)
-        .then(results => {
-          setStreetSuggestions(results);
-          setShowStreetSuggestions(true);
-          setIsLoadingStreet(false);
-        })
-        .catch(() => {
-          setIsLoadingStreet(false);
-          setStreetSuggestions([]);
-        });
-    } else {
-      setStreetSuggestions([]);
-      setShowStreetSuggestions(false);
-      setIsLoadingStreet(false);
-    }
-  }, [streetQuery, postcode]);
-
-  // Recherche de villes par code postal
-  useEffect(() => {
-    if (postcode.length >= 2) {
+    if (!selectedAddress && postcode.length >= 2) {
       setIsLoadingCity(true);
       CSVAddressService.searchCitiesByPostcodeDebounced(postcode)
         .then(results => {
@@ -123,37 +101,45 @@ export const SmartAddressForm: React.FC<SmartAddressFormProps> = ({
       setShowCitySuggestions(false);
       setIsLoadingCity(false);
     }
-  }, [postcode]);
+  }, [postcode, city, selectedAddress]);
 
   // Vérifier si l'adresse existe déjà dans la base
   useEffect(() => {
-    if (streetName && city && postcode) {
-      const tempAddress: Address = {
-        id: '',
-        street_number: streetNumber,
-        street_name: streetName,
-        postal_code: postcode,
-        city: city,
-        country: 'France',
-        full_address: `${streetNumber} ${streetName}, ${postcode} ${city}`.trim()
-      };
-      
-      const existing = AddressDatabaseService.findAddress(tempAddress);
+    const currentAddress = selectedAddress || (streetName && city && postcode ? {
+      id: '',
+      street_number: streetNumber,
+      street_name: streetName,
+      postal_code: postcode,
+      city: city,
+      country: 'France',
+      full_address: `${streetNumber} ${streetName}, ${postcode} ${city}`.trim()
+    } : null);
+    
+    if (currentAddress) {
+      const existing = AddressDatabaseService.findAddress(currentAddress);
       setExistingAddress(existing);
     } else {
       setExistingAddress(null);
     }
-  }, [streetNumber, streetName, postcode, city]);
+  }, [selectedAddress, streetNumber, streetName, postcode, city]);
 
-  const handleStreetSuggestionSelect = (suggestion: CSVAddress) => {
-    const address = CSVAddressService.parseCSVAddress(suggestion);
+  const handleAddressSelect = (address: Address) => {
+    setSelectedAddress(address);
     setStreetNumber(address.street_number);
     setStreetName(address.street_name);
-    setStreetQuery(`${address.street_number} ${address.street_name}`.trim());
     setPostcode(address.postal_code);
     setCity(address.city);
-    setShowStreetSuggestions(false);
-    setIsLoadingStreet(false);
+    setShowAddressSearch(false);
+    
+    // Rechercher l'adresse dans la base pour récupérer les notes
+    const existing = AddressDatabaseService.findAddress(address);
+    setExistingAddress(existing);
+  };
+
+  const handleManualAddressMode = () => {
+    setShowAddressSearch(false);
+    setSelectedAddress(null);
+    // Garder les champs actuels pour édition manuelle
   };
 
   const handleCitySuggestionSelect = (suggestion: CSVAddress) => {
@@ -176,12 +162,8 @@ export const SmartAddressForm: React.FC<SmartAddressFormProps> = ({
   };
 
   const handleSubmit = async () => {
-    if (!streetName || !city || !postcode || !location) {
-      alert('Veuillez remplir tous les champs obligatoires (rue, ville, code postal, emplacement)');
-      return;
-    }
-
-    const address: Address = {
+    // Utiliser l'adresse sélectionnée ou construire à partir des champs manuels
+    const finalAddress = selectedAddress || {
       id: Date.now().toString(),
       street_number: streetNumber,
       street_name: streetName,
@@ -191,21 +173,28 @@ export const SmartAddressForm: React.FC<SmartAddressFormProps> = ({
       full_address: `${streetNumber} ${streetName}, ${postcode} ${city}`.trim()
     };
 
-    // Géocoder l'adresse
-    const coords = await CSVAddressService.geocodeAddress(address);
-    if (coords) {
-      address.coordinates = coords;
+    if (!finalAddress.street_name || !finalAddress.city || !finalAddress.postal_code || !location) {
+      alert('Veuillez remplir tous les champs obligatoires (rue, ville, code postal, emplacement)');
+      return;
+    }
+
+    // Géocoder l'adresse si pas de coordonnées
+    if (!finalAddress.coordinates) {
+      const coords = await CSVAddressService.geocodeAddress(finalAddress);
+      if (coords) {
+        finalAddress.coordinates = coords;
+      }
     }
 
     // Ajouter à la base d'adresses si elle n'existe pas
     if (!existingAddress) {
-      AddressDatabaseService.addOrUpdateAddress(address);
+      AddressDatabaseService.addOrUpdateAddress(finalAddress);
     }
 
     // Ajouter une note si fournie
     if (note.trim()) {
-      const addressInDb = AddressDatabaseService.findAddress(address) || 
-                         AddressDatabaseService.addOrUpdateAddress(address);
+      const addressInDb = AddressDatabaseService.findAddress(finalAddress) || 
+                         AddressDatabaseService.addOrUpdateAddress(finalAddress);
       AddressDatabaseService.addNoteToAddress(
         addressInDb.id,
         note.trim(),
@@ -222,7 +211,7 @@ export const SmartAddressForm: React.FC<SmartAddressFormProps> = ({
 
     const packageData = {
       barcode: scannedBarcode || 'MANUAL_ENTRY',
-      address,
+      address: finalAddress,
       location,
       notes: note.trim(),
       type: packageType,
@@ -287,134 +276,157 @@ export const SmartAddressForm: React.FC<SmartAddressFormProps> = ({
         )}
       </div>
 
-      {/* Champs d'adresse */}
+      {/* Recherche d'adresse avancée ou champs manuels */}
       <div className="bg-white rounded-lg border-2 border-gray-200 p-4">
-        <h3 className="font-semibold mb-4 flex items-center space-x-2">
-          <MapPin size={18} className="text-blue-600" />
-          <span>Adresse de livraison</span>
-        </h3>
-        
-        <div className="space-y-3">
-          {/* Numéro de rue */}
-          <div>
-            <label className="block text-sm font-medium mb-1">Numéro</label>
-            <input
-              type="text"
-              value={streetNumber}
-              onChange={(e) => setStreetNumber(e.target.value)}
-              placeholder="123"
-              className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none"
-            />
-          </div>
-
-          {/* Nom de rue avec suggestions */}
-          <div className="relative">
-            <label className="block text-sm font-medium mb-1">Rue *</label>
-            <div className="relative">
-              <input
-                ref={streetInputRef}
-                type="text"
-                value={streetQuery}
-                onChange={(e) => {
-                  setStreetQuery(e.target.value);
-                  setShowStreetSuggestions(true);
-                }}
-                placeholder="38 Clos du nant ou juste Clos du nant"
-                className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none pr-10"
-                required
-              />
-              {isLoadingStreet && (
-                <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-600"></div>
-                </div>
-              )}
-            </div>
-            
-            {/* Suggestions de rues */}
-            {showStreetSuggestions && streetSuggestions.length > 0 && (
-              <div className="absolute z-10 w-full mt-1 bg-white border-2 border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto">
-                {streetSuggestions.map((suggestion, index) => (
-                  <button
-                    key={index}
-                    onClick={() => handleStreetSuggestionSelect(suggestion)}
-                    className="w-full p-3 text-left hover:bg-blue-50 border-b border-gray-100 last:border-b-0 flex items-start space-x-3"
-                  >
-                    <MapPin size={16} className="text-blue-600 mt-1 flex-shrink-0" />
-                    <div className="flex-1">
-                      <p className="font-medium text-gray-900">
-                        {suggestion.numero} {suggestion.nom_voie}, {suggestion.code_postal} {suggestion.nom_commune}
-                      </p>
-                      <p className="text-sm text-gray-600">
-                        {suggestion.libelle_acheminement}
-                      </p>
-                    </div>
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Code postal et ville */}
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className="block text-sm font-medium mb-1">Code postal *</label>
-              <input
-                type="text"
-                value={postcode}
-                onChange={(e) => setPostcode(e.target.value)}
-                placeholder="74000"
-                className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none"
-                required
-              />
-            </div>
-            
-            <div className="relative">
-              <label className="block text-sm font-medium mb-1">Ville *</label>
-              <div className="relative">
-                <input
-                  ref={cityInputRef}
-                  type="text"
-                  value={city}
-                  onChange={(e) => {
-                    setCity(e.target.value);
-                    if (e.target.value.length >= 2 && citySuggestions.length > 0) {
-                      setShowCitySuggestions(true);
-                    }
-                  }}
-                  placeholder="Annecy"
-                  className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none pr-10"
-                  required
-                />
-                {isLoadingCity && (
-                  <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-600"></div>
-                  </div>
-                )}
-              </div>
-              
-              {/* Suggestions de villes */}
-              {showCitySuggestions && citySuggestions.length > 0 && (
-                <div className="absolute z-10 w-full mt-1 bg-white border-2 border-gray-200 rounded-lg shadow-lg max-h-40 overflow-y-auto">
-                  {citySuggestions
-                    .filter(s => s.nom_commune.toLowerCase().includes(city.toLowerCase()))
-                    .map((suggestion, index) => (
-                    <button
-                      key={index}
-                      onClick={() => handleCitySuggestionSelect(suggestion)}
-                      className="w-full p-2 text-left hover:bg-blue-50 border-b border-gray-100 last:border-b-0"
-                    >
-                      <p className="font-medium text-sm">{suggestion.nom_commune}</p>
-                      <p className="text-xs text-gray-600">{suggestion.code_postal}</p>
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="font-semibold flex items-center space-x-2">
+            <MapPin size={18} className="text-blue-600" />
+            <span>Adresse de livraison</span>
+          </h3>
+          
+          {!showAddressSearch && !selectedAddress && (
+            <button
+              onClick={() => setShowAddressSearch(true)}
+              className="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center space-x-1"
+            >
+              <Search size={16} />
+              <span>Recherche auto</span>
+            </button>
+          )}
+          
+          {(showAddressSearch || selectedAddress) && (
+            <button
+              onClick={handleManualAddressMode}
+              className="text-gray-600 hover:text-gray-700 text-sm font-medium flex items-center space-x-1"
+            >
+              <Plus size={16} />
+              <span>Saisie manuelle</span>
+            </button>
+          )}
         </div>
 
+        {showAddressSearch ? (
+          <AdvancedAddressSearch
+            onAddressSelect={handleAddressSelect}
+            onCancel={() => setShowAddressSearch(false)}
+            postcode={defaultPostcode}
+            currentUser={currentUser}
+            placeholder="Rechercher l'adresse de livraison..."
+          />
+        ) : (
+          <>
+            {/* Adresse sélectionnée (lecture seule) */}
+            {selectedAddress && (
+              <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-medium text-green-800">{selectedAddress.full_address}</p>
+                    <p className="text-sm text-green-600">Adresse sélectionnée automatiquement</p>
+                  </div>
+                  <button
+                    onClick={() => {
+                      setSelectedAddress(null);
+                      setShowAddressSearch(true);
+                    }}
+                    className="text-green-600 hover:text-green-700"
+                  >
+                    <Search size={16} />
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Champs manuels (affichés si pas d'adresse sélectionnée) */}
+            {!selectedAddress && (
+              <div className="space-y-3">
+                {/* Numéro de rue */}
+                <div>
+                  <label className="block text-sm font-medium mb-1">Numéro</label>
+                  <input
+                    type="text"
+                    value={streetNumber}
+                    onChange={(e) => setStreetNumber(e.target.value)}
+                    placeholder="123"
+                    className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none"
+                  />
+                </div>
+
+                {/* Nom de rue */}
+                <div>
+                  <label className="block text-sm font-medium mb-1">Rue *</label>
+                  <input
+                    type="text"
+                    value={streetName}
+                    onChange={(e) => setStreetName(e.target.value)}
+                    placeholder="Nom de la rue"
+                    className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none"
+                    required
+                  />
+                </div>
+
+                {/* Code postal et ville */}
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-sm font-medium mb-1">Code postal *</label>
+                    <input
+                      type="text"
+                      value={postcode}
+                      onChange={(e) => setPostcode(e.target.value)}
+                      placeholder="74000"
+                      className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none"
+                      required
+                    />
+                  </div>
+                  
+                  <div className="relative">
+                    <label className="block text-sm font-medium mb-1">Ville *</label>
+                    <div className="relative">
+                      <input
+                        type="text"
+                        value={city}
+                        onChange={(e) => {
+                          setCity(e.target.value);
+                          if (e.target.value.length >= 2 && citySuggestions.length > 0) {
+                            setShowCitySuggestions(true);
+                          }
+                        }}
+                        placeholder="Nom de la ville"
+                        className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none pr-10"
+                        required
+                      />
+                      {isLoadingCity && (
+                        <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                          <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-600"></div>
+                        </div>
+                      )}
+                    </div>
+                    
+                    {/* Suggestions de villes */}
+                    {showCitySuggestions && citySuggestions.length > 0 && (
+                      <div className="absolute z-10 w-full mt-1 bg-white border-2 border-gray-200 rounded-lg shadow-lg max-h-40 overflow-y-auto">
+                        {citySuggestions
+                          .filter(s => s.nom_commune.toLowerCase().includes(city.toLowerCase()))
+                          .map((suggestion, index) => (
+                          <button
+                            key={index}
+                            onClick={() => handleCitySuggestionSelect(suggestion)}
+                            className="w-full p-2 text-left hover:bg-blue-50 border-b border-gray-100 last:border-b-0"
+                          >
+                            <p className="font-medium text-sm">{suggestion.nom_commune}</p>
+                            <p className="text-xs text-gray-600">{suggestion.code_postal}</p>
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
+          </>
+        )}
+
         {/* Adresse existante */}
-        {existingAddress && (
+        {existingAddress && !showAddressSearch && (
           <div className="mt-4 bg-green-50 border border-green-200 rounded-lg p-4">
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center space-x-2">
@@ -454,17 +466,6 @@ export const SmartAddressForm: React.FC<SmartAddressFormProps> = ({
               </div>
             )}
           </div>
-        )}
-
-        {/* Bouton pour ajouter à l'index si adresse inexistante */}
-        {!existingAddress && streetName && city && postcode && streetNumber && (
-          <button
-            onClick={addToIndex}
-            className="w-full mt-4 bg-blue-100 text-blue-700 py-2 px-4 rounded-lg hover:bg-blue-200 transition-colors flex items-center justify-center space-x-2"
-          >
-            <Plus size={16} />
-            <span>Ajouter cette adresse à l'index</span>
-          </button>
         )}
       </div>
 
@@ -682,7 +683,7 @@ export const SmartAddressForm: React.FC<SmartAddressFormProps> = ({
       <div className="flex space-x-3">
         <button
           onClick={handleSubmit}
-          disabled={!streetName || !city || !postcode || !location}
+          disabled={(!selectedAddress && (!streetName || !city || !postcode)) || !location}
           className="flex-1 bg-blue-600 text-white py-4 px-6 rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
         >
           <Save size={20} />

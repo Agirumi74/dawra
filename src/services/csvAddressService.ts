@@ -114,11 +114,12 @@ export class CSVAddressService {
     return lieuxDits;
   }
 
-  // Rechercher des adresses
+  // Rechercher des adresses avec recherche fuzzy améliorée
   static async searchAddresses(query: string, postcode?: string, limit: number = 10): Promise<CSVAddress[]> {
     await this.loadData();
 
     const normalizedQuery = this.normalizeText(query);
+    const queryWords = normalizedQuery.split(' ').filter(word => word.length > 0);
     let results: CSVAddress[] = [];
 
     // Recherche dans la base d'adresses locale d'abord
@@ -145,16 +146,10 @@ export class CSVAddressService {
       }
     }
 
-    // Recherche dans les adresses
+    // Recherche dans les adresses avec scoring de pertinence
+    const addressCandidates: Array<{ address: CSVAddress; score: number }> = [];
+
     for (const address of this.addresses) {
-      if (results.length >= limit) break;
-
-      // Recherche plus flexible : numéro + voie OU juste voie
-      const fullAddressText = this.normalizeText(`${address.numero} ${address.nom_voie} ${address.nom_commune}`);
-      const voieText = this.normalizeText(address.nom_voie);
-      const communeText = this.normalizeText(address.nom_commune);
-      const numeroVoieText = this.normalizeText(`${address.numero} ${address.nom_voie}`);
-
       // Filtrer par code postal si fourni
       if (postcode && !address.code_postal.startsWith(postcode)) {
         continue;
@@ -169,23 +164,24 @@ export class CSVAddressService {
       
       if (isDuplicate) continue;
 
-      // Vérifier si la requête correspond (recherche plus flexible)
-      if (fullAddressText.includes(normalizedQuery) || 
-          voieText.includes(normalizedQuery) || 
-          communeText.includes(normalizedQuery) ||
-          numeroVoieText.includes(normalizedQuery) ||
-          normalizedQuery.includes(voieText)) {
-        results.push(address);
+      // Calculer le score de pertinence
+      const score = this.calculateRelevanceScore(address, queryWords, normalizedQuery);
+      
+      if (score > 0) {
+        addressCandidates.push({ address, score });
       }
     }
 
-    // Recherche dans les lieux-dits
+    // Trier par score de pertinence et ajouter aux résultats
+    addressCandidates
+      .sort((a, b) => b.score - a.score)
+      .slice(0, limit - results.length)
+      .forEach(candidate => results.push(candidate.address));
+
+    // Recherche dans les lieux-dits avec scoring
+    const lieuxDitsCandidates: Array<{ lieuDit: CSVLieuDit; score: number }> = [];
+
     for (const lieuDit of this.lieuxDits) {
-      if (results.length >= limit) break;
-
-      const lieuDitText = this.normalizeText(`${lieuDit.nom_lieu_dit} ${lieuDit.nom_commune}`);
-      const nomText = this.normalizeText(lieuDit.nom_lieu_dit);
-
       // Filtrer par code postal si fourni
       if (postcode && !lieuDit.code_postal.startsWith(postcode)) {
         continue;
@@ -199,41 +195,108 @@ export class CSVAddressService {
       
       if (isDuplicate) continue;
 
-      // Vérifier si la requête correspond
-      if (lieuDitText.includes(normalizedQuery) || nomText.includes(normalizedQuery)) {
-        // Convertir le lieu-dit en format adresse
-        const addressFromLieuDit: CSVAddress = {
-          id: lieuDit.id,
-          numero: '',
-          nom_voie: lieuDit.nom_lieu_dit,
-          code_postal: lieuDit.code_postal,
-          nom_commune: lieuDit.nom_commune,
-          lon: lieuDit.lon,
-          lat: lieuDit.lat,
-          libelle_acheminement: lieuDit.nom_commune.toUpperCase(),
-          nom_afnor: lieuDit.nom_lieu_dit.toUpperCase()
-        };
-        results.push(addressFromLieuDit);
+      // Calculer le score pour les lieux-dits
+      const lieuDitText = this.normalizeText(`${lieuDit.nom_lieu_dit} ${lieuDit.nom_commune}`);
+      const nomText = this.normalizeText(lieuDit.nom_lieu_dit);
+      
+      let score = 0;
+      
+      // Score basé sur la correspondance des mots
+      for (const word of queryWords) {
+        if (nomText.includes(word)) score += 3;
+        else if (lieuDitText.includes(word)) score += 1;
+      }
+      
+      // Bonus pour correspondance exacte
+      if (nomText === normalizedQuery) score += 10;
+      else if (nomText.startsWith(normalizedQuery)) score += 5;
+      
+      if (score > 0) {
+        lieuxDitsCandidates.push({ lieuDit, score });
       }
     }
 
-    // Trier par pertinence (correspondance exacte en premier)
-    results.sort((a, b) => {
-      const aText = this.normalizeText(`${a.numero} ${a.nom_voie}`.trim());
-      const bText = this.normalizeText(`${b.numero} ${b.nom_voie}`.trim());
-      
-      // Priorité : correspondance exacte > commence par > contient
-      const aExact = aText === normalizedQuery ? 3 : 
-                    aText.startsWith(normalizedQuery) ? 2 : 
-                    aText.includes(normalizedQuery) ? 1 : 0;
-      const bExact = bText === normalizedQuery ? 3 : 
-                    bText.startsWith(normalizedQuery) ? 2 : 
-                    bText.includes(normalizedQuery) ? 1 : 0;
-      
-      return bExact - aExact;
-    });
+    // Ajouter les lieux-dits triés par score
+    lieuxDitsCandidates
+      .sort((a, b) => b.score - a.score)
+      .slice(0, limit - results.length)
+      .forEach(candidate => {
+        // Convertir le lieu-dit en format adresse
+        const addressFromLieuDit: CSVAddress = {
+          id: candidate.lieuDit.id,
+          numero: '',
+          nom_voie: candidate.lieuDit.nom_lieu_dit,
+          code_postal: candidate.lieuDit.code_postal,
+          nom_commune: candidate.lieuDit.nom_commune,
+          lon: candidate.lieuDit.lon,
+          lat: candidate.lieuDit.lat,
+          libelle_acheminement: candidate.lieuDit.nom_commune.toUpperCase(),
+          nom_afnor: candidate.lieuDit.nom_lieu_dit.toUpperCase()
+        };
+        results.push(addressFromLieuDit);
+      });
 
     return results.slice(0, limit);
+  }
+
+  /**
+   * Calcule un score de pertinence pour une adresse donnée
+   * @param address Adresse à évaluer
+   * @param queryWords Mots de la requête normalisés
+   * @param normalizedQuery Requête complète normalisée
+   * @returns Score de pertinence (plus élevé = plus pertinent)
+   */
+  private static calculateRelevanceScore(address: CSVAddress, queryWords: string[], normalizedQuery: string): number {
+    const fullAddressText = this.normalizeText(`${address.numero} ${address.nom_voie} ${address.nom_commune}`);
+    const voieText = this.normalizeText(address.nom_voie);
+    const communeText = this.normalizeText(address.nom_commune);
+    const numeroVoieText = this.normalizeText(`${address.numero} ${address.nom_voie}`);
+    
+    let score = 0;
+    
+    // Score basé sur la correspondance exacte
+    if (fullAddressText === normalizedQuery) score += 100;
+    else if (numeroVoieText === normalizedQuery) score += 80;
+    else if (voieText === normalizedQuery) score += 60;
+    
+    // Score basé sur le début de correspondance
+    if (fullAddressText.startsWith(normalizedQuery)) score += 50;
+    else if (numeroVoieText.startsWith(normalizedQuery)) score += 40;
+    else if (voieText.startsWith(normalizedQuery)) score += 30;
+    
+    // Score basé sur la correspondance des mots individuels
+    let wordMatches = 0;
+    for (const word of queryWords) {
+      if (word.length < 2) continue; // Ignorer les mots trop courts
+      
+      if (voieText.includes(word)) {
+        wordMatches++;
+        score += 5;
+      } else if (communeText.includes(word)) {
+        wordMatches++;
+        score += 3;
+      } else if (address.numero.includes(word)) {
+        wordMatches++;
+        score += 2;
+      }
+    }
+    
+    // Bonus si tous les mots correspondent
+    if (queryWords.length > 0 && wordMatches === queryWords.length) {
+      score += 20;
+    }
+    
+    // Score basé sur la correspondance partielle
+    if (fullAddressText.includes(normalizedQuery)) score += 10;
+    else if (numeroVoieText.includes(normalizedQuery)) score += 8;
+    else if (voieText.includes(normalizedQuery)) score += 6;
+    
+    // Malus pour les adresses très courtes qui matchent par accident
+    if (voieText.length < 4 && normalizedQuery.length > voieText.length) {
+      score -= 5;
+    }
+    
+    return score;
   }
 
   // Recherche avec debounce
@@ -378,5 +441,119 @@ export class CSVAddressService {
   // Méthode pour normaliser une adresse complète
   static normalizeFullAddress(address: Address): string {
     return `${address.street_number || ''} ${address.street_name || ''}, ${address.postal_code || ''} ${address.city || ''}`.trim();
+  }
+
+  /**
+   * Ajoute une adresse issue de BAN au fichier CSV local (en mémoire)
+   * @param address Adresse à ajouter
+   * @returns L'adresse CSV ajoutée
+   */
+  static addBANAddressToLocal(address: Address): CSVAddress {
+    const csvAddress: CSVAddress = {
+      id: address.id,
+      numero: address.street_number,
+      nom_voie: address.street_name,
+      code_postal: address.postal_code,
+      nom_commune: address.city,
+      lon: address.coordinates?.lng || 0,
+      lat: address.coordinates?.lat || 0,
+      libelle_acheminement: address.city.toUpperCase(),
+      nom_afnor: address.street_name.toUpperCase()
+    };
+
+    // Vérifier si l'adresse n'existe pas déjà
+    const exists = this.addresses.some(addr => 
+      addr.numero === csvAddress.numero &&
+      addr.nom_voie === csvAddress.nom_voie &&
+      addr.code_postal === csvAddress.code_postal
+    );
+
+    if (!exists) {
+      this.addresses.push(csvAddress);
+      console.log('Adresse BAN ajoutée au cache local:', csvAddress);
+    }
+
+    return csvAddress;
+  }
+
+  /**
+   * Recherche fuzzy améliorée avec support des abréviations communes
+   * @param query Requête de recherche
+   * @param text Texte à comparer
+   * @returns Score de correspondance (0-1)
+   */
+  static fuzzyMatch(query: string, text: string): number {
+    const normalizedQuery = this.normalizeText(query);
+    const normalizedText = this.normalizeText(text);
+    
+    // Correspondance exacte
+    if (normalizedText === normalizedQuery) return 1.0;
+    
+    // Correspondance au début
+    if (normalizedText.startsWith(normalizedQuery)) return 0.9;
+    
+    // Correspondance avec mots dans l'ordre
+    const queryWords = normalizedQuery.split(' ').filter(w => w.length > 1);
+    const textWords = normalizedText.split(' ');
+    
+    let matchedWords = 0;
+    let lastIndex = -1;
+    
+    for (const queryWord of queryWords) {
+      const found = textWords.findIndex((textWord, index) => 
+        index > lastIndex && (
+          textWord.includes(queryWord) || 
+          queryWord.includes(textWord) ||
+          this.isAbbreviation(queryWord, textWord)
+        )
+      );
+      
+      if (found !== -1) {
+        matchedWords++;
+        lastIndex = found;
+      }
+    }
+    
+    if (queryWords.length === 0) return 0;
+    
+    const wordMatchRatio = matchedWords / queryWords.length;
+    return wordMatchRatio * 0.8; // Score maximum de 0.8 pour correspondance partielle
+  }
+
+  /**
+   * Vérifie si un mot peut être une abréviation d'un autre
+   * @param short Mot potentiellement abrégé
+   * @param full Mot complet
+   * @returns true si c'est une abréviation valide
+   */
+  private static isAbbreviation(short: string, full: string): boolean {
+    if (short.length >= full.length) return false;
+    
+    // Abréviations communes
+    const commonAbbreviations: { [key: string]: string[] } = {
+      'av': ['avenue'],
+      'bd': ['boulevard'],
+      'pl': ['place'],
+      'r': ['rue'],
+      'imp': ['impasse'],
+      'all': ['allee', 'allée'],
+      'ch': ['chemin'],
+      'sq': ['square'],
+      'crs': ['cours'],
+      'qua': ['quartier'],
+      'res': ['residence', 'résidence'],
+      'lot': ['lotissement']
+    };
+    
+    const shortLower = short.toLowerCase();
+    const fullLower = full.toLowerCase();
+    
+    // Vérifier les abréviations communes
+    if (commonAbbreviations[shortLower]) {
+      return commonAbbreviations[shortLower].includes(fullLower);
+    }
+    
+    // Vérifier si le mot court est le début du mot long
+    return fullLower.startsWith(shortLower) && short.length >= 2;
   }
 }
