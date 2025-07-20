@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { BarcodeScanner } from '../BarcodeScanner';
 import { PackageForm } from '../PackageForm';
+import { RouteView } from '../RouteView';
 import { usePackages } from '../../hooks/usePackages';
 
 interface DriverDashboardProps {
@@ -287,7 +288,7 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
       case 'scan':
         return renderScanView();
       case 'route':
-        return <div className="text-center py-8 text-gray-500">Navigation en développement</div>;
+        return <RouteView />;
       case 'history':
         return <div className="text-center py-8 text-gray-500">Historique en développement</div>;
       default:
