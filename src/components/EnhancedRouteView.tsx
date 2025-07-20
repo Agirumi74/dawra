@@ -30,6 +30,7 @@ import { DEFAULT_DEPOT_ADDRESS, UPS_DEPOT_ADDRESS } from '../constants/depot';
 import { TourProgressView } from './TourProgressView';
 import { NavigationModeSelector } from './NavigationModeSelector';
 import { RouteExportService } from '../services/routeExport';
+import { FullRouteMapView } from './FullRouteMapView';
 
 interface EnhancedRouteViewProps {
   onNavigate?: (address: string) => void;
@@ -46,6 +47,7 @@ export const EnhancedRouteView: React.FC<EnhancedRouteViewProps> = ({ onNavigate
   const [showExportMenu, setShowExportMenu] = useState(false);
   const [showNavigationSelector, setShowNavigationSelector] = useState(false);
   const [showTourProgress, setShowTourProgress] = useState(false);
+  const [showFullRouteMap, setShowFullRouteMap] = useState(false);
   const [showNavigation, setShowNavigation] = useState(false);
   const [tourStats, setTourStats] = useState<{
     totalTime: string;
@@ -208,7 +210,7 @@ export const EnhancedRouteView: React.FC<EnhancedRouteViewProps> = ({ onNavigate
               optimized.length + 1,
               settings.startTime,
               settings.stopTimeMinutes,
-              cumulativeDistance + lastToUpsDistance,
+              optimized.reduce((total, point) => total + (point.distance || 0), 0) + lastToUpsDistance,
               settings.averageSpeedKmh
             )
           };
@@ -355,6 +357,19 @@ export const EnhancedRouteView: React.FC<EnhancedRouteViewProps> = ({ onNavigate
           deliveryPoints={deliveryPoints}
           onModeSelect={handleNavigationModeSelect}
           onCancel={() => setShowNavigationSelector(false)}
+        />
+      )}
+
+      {/* Full Route Map View */}
+      {showFullRouteMap && (
+        <FullRouteMapView
+          points={deliveryPoints}
+          userPosition={userPosition}
+          onBack={() => setShowFullRouteMap(false)}
+          onStartNavigation={() => {
+            setShowFullRouteMap(false);
+            setShowTourProgress(true);
+          }}
         />
       )}
 
@@ -542,6 +557,17 @@ export const EnhancedRouteView: React.FC<EnhancedRouteViewProps> = ({ onNavigate
               
               <button
                 onClick={() => {
+                  // Show full route overview with both depots
+                  setShowFullRouteMap(true);
+                }}
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
+              >
+                <Map size={20} />
+                <span>Vue d'ensemble</span>
+              </button>
+              
+              <button
+                onClick={() => {
                   setDeliveryPoints([]);
                 }}
                 className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
@@ -568,116 +594,164 @@ export const EnhancedRouteView: React.FC<EnhancedRouteViewProps> = ({ onNavigate
           </div>
         ) : (
           <div className="space-y-2 p-4">
+            {/* Point de départ - Dépôt principal */}
+            <div className="border-2 border-green-200 bg-green-50 rounded-lg p-4 mb-4">
+              <div className="flex items-center space-x-3">
+                <div className="w-8 h-8 bg-green-600 text-white rounded-full flex items-center justify-center font-bold text-sm">
+                  🏠
+                </div>
+                <div className="flex-1">
+                  <div className="font-semibold text-green-800">Point de départ</div>
+                  <div className="text-sm text-green-700">{DEFAULT_DEPOT_ADDRESS.full_address}</div>
+                  <div className="text-xs text-green-600 mt-1">
+                    Heure de départ: {settings.startTime}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Points de livraison */}
             {deliveryPoints.map((point, index) => {
               const status = getStepStatus(point);
               
               return (
-                <div
-                  key={point.id}
-                  className={`border rounded-lg p-4 ${
-                    status === 'completed' ? 'border-green-200 bg-green-50' : 
-                    status === 'partial' ? 'border-orange-200 bg-orange-50' : 
-                    'border-gray-200 bg-white'
-                  }`}
-                >
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-2 mb-2">
-                        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
-                          status === 'completed' ? 'bg-green-600 text-white' :
-                          status === 'partial' ? 'bg-orange-600 text-white' :
-                          'bg-gray-300 text-gray-700'
-                        }`}>
-                          {point.order}
+                <div key={point.id}>
+                  <div
+                    className={`border rounded-lg p-4 ${
+                      status === 'completed' ? 'border-green-200 bg-green-50' : 
+                      status === 'partial' ? 'border-orange-200 bg-orange-50' : 
+                      'border-gray-200 bg-white'
+                    }`}
+                  >
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <div className="flex items-center space-x-2 mb-2">
+                          <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
+                            status === 'completed' ? 'bg-green-600 text-white' :
+                            status === 'partial' ? 'bg-orange-600 text-white' :
+                            'bg-gray-300 text-gray-700'
+                          }`}>
+                            {point.order}
+                          </div>
+                          
+                          <div className="flex items-center space-x-1">
+                            {point.priority === 'premier' && (
+                              <span className="bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full">Premier</span>
+                            )}
+                            {point.priority === 'express_midi' && (
+                              <span className="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded-full">Express Midi</span>
+                            )}
+                            
+                            <Clock size={16} className="text-gray-500" />
+                            <span className="text-sm font-medium">{point.estimatedTime}</span>
+                          </div>
+                        </div>
+
+                        <div className="text-sm font-medium text-gray-900 mb-1">
+                          {point.address.full_address}
                         </div>
                         
-                        <div className="flex items-center space-x-1">
-                          {point.priority === 'premier' && (
-                            <span className="bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full">Premier</span>
-                          )}
-                          {point.priority === 'express_midi' && (
-                            <span className="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded-full">Express Midi</span>
-                          )}
-                          
-                          <Clock size={16} className="text-gray-500" />
-                          <span className="text-sm font-medium">{point.estimatedTime}</span>
+                        <div className="text-xs text-gray-500 mb-2">
+                          Distance: {(point.distance || 0).toFixed(1)} km
+                        </div>
+
+                        {/* Colis de ce point */}
+                        <div className="space-y-1">
+                          {point.packages.map(pkg => (
+                            <div key={pkg.id} className="flex items-center justify-between bg-gray-50 p-2 rounded text-xs">
+                              <div className="flex items-center space-x-2">
+                                {pkg.type === 'entreprise' ? <Building size={14} /> : <Home size={14} />}
+                                <span>{pkg.barcode || pkg.id}</span>
+                                <span className="text-gray-500">({pkg.location})</span>
+                                {pkg.status === 'delivered' && <CheckCircle size={14} className="text-green-600" />}
+                                {pkg.status === 'failed' && <AlertTriangle size={14} className="text-red-600" />}
+                              </div>
+                              
+                              <div className="flex space-x-1">
+                                {pkg.status === 'pending' && (
+                                  <>
+                                    <button
+                                      onClick={() => handlePackageStatusChange(pkg.id, 'delivered')}
+                                      className="text-green-600 hover:bg-green-100 p-1 rounded"
+                                      title="Marquer comme livré"
+                                    >
+                                      <CheckCircle size={14} />
+                                    </button>
+                                    <button
+                                      onClick={() => handlePackageStatusChange(pkg.id, 'failed')}
+                                      className="text-red-600 hover:bg-red-100 p-1 rounded"
+                                      title="Marquer comme échec"
+                                    >
+                                      <AlertTriangle size={14} />
+                                    </button>
+                                  </>
+                                )}
+                                <button
+                                  onClick={() => removePackageFromRoute(pkg.id)}
+                                  className="text-gray-500 hover:bg-gray-200 p-1 rounded"
+                                  title="Supprimer de la tournée"
+                                >
+                                  <Minus size={14} />
+                                </button>
+                              </div>
+                            </div>
+                          ))}
                         </div>
                       </div>
 
-                      <div className="text-sm font-medium text-gray-900 mb-1">
-                        {point.address.full_address}
+                      <div className="ml-4 flex space-x-2">
+                        <button
+                          onClick={() => navigateToPoint(point)}
+                          className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 text-sm flex items-center"
+                        >
+                          <Map size={16} className="mr-1" />
+                          Guide
+                        </button>
+                        <button
+                          onClick={() => {
+                            const url = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(point.address.full_address)}`;
+                            window.open(url, '_blank');
+                          }}
+                          className="bg-gray-600 text-white px-3 py-1 rounded hover:bg-gray-700 text-sm"
+                        >
+                          <Navigation size={16} />
+                        </button>
                       </div>
-                      
-                      <div className="text-xs text-gray-500 mb-2">
-                        Distance: {(point.distance || 0).toFixed(1)} km
-                      </div>
-
-                      {/* Colis de ce point */}
-                      <div className="space-y-1">
-                        {point.packages.map(pkg => (
-                          <div key={pkg.id} className="flex items-center justify-between bg-gray-50 p-2 rounded text-xs">
-                            <div className="flex items-center space-x-2">
-                              {pkg.type === 'entreprise' ? <Building size={14} /> : <Home size={14} />}
-                              <span>{pkg.barcode || pkg.id}</span>
-                              <span className="text-gray-500">({pkg.location})</span>
-                              {pkg.status === 'delivered' && <CheckCircle size={14} className="text-green-600" />}
-                              {pkg.status === 'failed' && <AlertTriangle size={14} className="text-red-600" />}
-                            </div>
-                            
-                            <div className="flex space-x-1">
-                              {pkg.status === 'pending' && (
-                                <>
-                                  <button
-                                    onClick={() => handlePackageStatusChange(pkg.id, 'delivered')}
-                                    className="text-green-600 hover:bg-green-100 p-1 rounded"
-                                    title="Marquer comme livré"
-                                  >
-                                    <CheckCircle size={14} />
-                                  </button>
-                                  <button
-                                    onClick={() => handlePackageStatusChange(pkg.id, 'failed')}
-                                    className="text-red-600 hover:bg-red-100 p-1 rounded"
-                                    title="Marquer comme échec"
-                                  >
-                                    <AlertTriangle size={14} />
-                                  </button>
-                                </>
-                              )}
-                              <button
-                                onClick={() => removePackageFromRoute(pkg.id)}
-                                className="text-gray-500 hover:bg-gray-200 p-1 rounded"
-                                title="Supprimer de la tournée"
-                              >
-                                <Minus size={14} />
-                              </button>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="ml-4 flex space-x-2">
-                      <button
-                        onClick={() => navigateToPoint(point)}
-                        className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 text-sm flex items-center"
-                      >
-                        <Map size={16} className="mr-1" />
-                        Guide
-                      </button>
-                      <button
-                        onClick={() => {
-                          const url = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(point.address.full_address)}`;
-                          window.open(url, '_blank');
-                        }}
-                        className="bg-gray-600 text-white px-3 py-1 rounded hover:bg-gray-700 text-sm"
-                      >
-                        <Navigation size={16} />
-                      </button>
                     </div>
                   </div>
+                  
+                  {/* Flèche de connexion */}
+                  {index < deliveryPoints.length - 1 && (
+                    <div className="flex justify-center py-2">
+                      <ArrowRight size={20} className="text-blue-500" />
+                    </div>
+                  )}
                 </div>
               );
             })}
+
+            {/* Point d'arrivée - Dépôt UPS */}
+            {settings.returnToDepot && deliveryPoints.length > 0 && (
+              <>
+                <div className="flex justify-center py-2">
+                  <ArrowRight size={20} className="text-blue-500" />
+                </div>
+                <div className="border-2 border-purple-200 bg-purple-50 rounded-lg p-4 mt-4">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold text-sm">
+                      🏢
+                    </div>
+                    <div className="flex-1">
+                      <div className="font-semibold text-purple-800">Point de fin - Dépôt UPS</div>
+                      <div className="text-sm text-purple-700">{UPS_DEPOT_ADDRESS.full_address}</div>
+                      <div className="text-xs text-purple-600 mt-1">
+                        Fin prévue: {tourStats.endTime}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         )}
       </div>

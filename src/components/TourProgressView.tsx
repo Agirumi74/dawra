@@ -15,6 +15,7 @@ import { DeliveryPoint, UserPosition, DeliverySummary } from '../types';
 import { NavigationModeSelector } from './NavigationModeSelector';
 import { EnhancedDeliveryMap } from './EnhancedDeliveryMap';
 import { TourSummary } from './TourSummary';
+import { FullRouteMapView } from './FullRouteMapView';
 
 interface TourProgressViewProps {
   deliveryPoints: DeliveryPoint[];
@@ -42,6 +43,7 @@ export const TourProgressView: React.FC<TourProgressViewProps> = ({
   const [showNavigationSelector, setShowNavigationSelector] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
   const [showMap, setShowMap] = useState(false);
+  const [showFullRoute, setShowFullRoute] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
   const [tourSummary, setTourSummary] = useState<DeliverySummary | null>(null);
 
@@ -168,6 +170,21 @@ export const TourProgressView: React.FC<TourProgressViewProps> = ({
     );
   }
 
+  // Show full route overview
+  if (showFullRoute) {
+    return (
+      <FullRouteMapView
+        points={deliveryPoints}
+        userPosition={userPosition}
+        onBack={() => setShowFullRoute(false)}
+        onStartNavigation={() => {
+          setShowFullRoute(false);
+          setShowMap(true);
+        }}
+      />
+    );
+  }
+
   // Show enhanced map navigation
   if (showMap) {
     return (
@@ -285,6 +302,13 @@ export const TourProgressView: React.FC<TourProgressViewProps> = ({
             >
               <Map size={16} />
               <span>Carte</span>
+            </button>
+            <button
+              onClick={() => setShowFullRoute(true)}
+              className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors flex items-center space-x-2"
+            >
+              <MapPin size={16} />
+              <span>Vue d'ensemble</span>
             </button>
           </div>
         </div>
