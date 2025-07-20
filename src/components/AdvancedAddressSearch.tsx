@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { 
   Search, 
   MapPin, 
@@ -92,7 +92,7 @@ export const AdvancedAddressSearch: React.FC<AdvancedAddressSearchProps> = ({
     setIsLoading(true);
     setError('');
     performSearch(query);
-  }, [query, postcode, manualMode]);
+  }, [query, postcode, manualMode, performSearch]);
 
   // Recherche de villes pour le mode manuel
   useEffect(() => {
@@ -110,7 +110,7 @@ export const AdvancedAddressSearch: React.FC<AdvancedAddressSearchProps> = ({
     }
   }, [manualAddress.postal_code, manualAddress.city, manualMode]);
 
-  const performSearch = async (searchQuery: string) => {
+  const performSearch = useCallback(async (searchQuery: string) => {
     try {
       const localLimit = Math.ceil(maxResults * 0.6); // 60% pour local
       const banLimit = maxResults - localLimit; // 40% pour BAN
@@ -181,7 +181,7 @@ export const AdvancedAddressSearch: React.FC<AdvancedAddressSearchProps> = ({
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [maxResults, postcode, banAvailable]);
 
   const handleSuggestionSelect = async (suggestion: AddressSearchSuggestion) => {
     try {

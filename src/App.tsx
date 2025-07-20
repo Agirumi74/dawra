@@ -2,14 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { LoginForm } from './components/auth/LoginForm';
 import { AdminDashboard } from './components/admin/AdminDashboard';
 import { DriverDashboard } from './components/driver/DriverDashboard';
+import { AddressSearchDemo } from './components/AddressSearchDemo';
 import { AuthService, type AuthUser } from './lib/auth/auth';
-import { Loader2, LogOut } from 'lucide-react';
+import { Loader2, LogOut, TestTube } from 'lucide-react';
 
 function App() {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string>('');
+  const [showDemo, setShowDemo] = useState(false);
 
   useEffect(() => {
     // Vérifier si l'utilisateur est déjà connecté
@@ -76,12 +78,41 @@ function App() {
   if (!user) {
     return (
       <div>
-        <LoginForm onLogin={handleLogin} onError={handleError} />
-        {error && (
-          <div className="fixed bottom-4 right-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg shadow-lg">
-            <p className="font-medium">Erreur</p>
-            <p className="text-sm">{error}</p>
+        {/* Bouton de démo pour tester sans authentification */}
+        {!showDemo && (
+          <div className="fixed top-4 left-4 z-50">
+            <button
+              onClick={() => setShowDemo(true)}
+              className="bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition-colors shadow-lg flex items-center space-x-2"
+              title="Tester la recherche d'adresses"
+            >
+              <TestTube size={20} />
+              <span>Demo</span>
+            </button>
           </div>
+        )}
+        
+        {showDemo ? (
+          <>
+            <button
+              onClick={() => setShowDemo(false)}
+              className="fixed top-4 right-4 bg-gray-600 text-white p-2 rounded-lg hover:bg-gray-700 transition-colors shadow-lg z-50"
+              title="Retour à l'authentification"
+            >
+              <LogOut size={20} />
+            </button>
+            <AddressSearchDemo />
+          </>
+        ) : (
+          <>
+            <LoginForm onLogin={handleLogin} onError={handleError} />
+            {error && (
+              <div className="fixed bottom-4 right-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg shadow-lg">
+                <p className="font-medium">Erreur</p>
+                <p className="text-sm">{error}</p>
+              </div>
+            )}
+          </>
         )}
       </div>
     );
