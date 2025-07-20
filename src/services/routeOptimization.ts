@@ -191,7 +191,10 @@ export class RouteOptimizer {
     points: DeliveryPoint[], 
     userPosition: UserPosition, 
     distanceMatrix: number[][], 
-    constraints: RouteConstraints
+    constraints: RouteConstraints,
+    startTime: string = '08:00',
+    stopTimeMinutes: number = 15,
+    averageSpeedKmh: number = 30
   ): DeliveryPoint[] {
     if (points.length === 0) return [];
 
@@ -222,9 +225,17 @@ export class RouteOptimizer {
     // 2. Traiter les points "express_midi" avant midi
     if (expressMidiPoints.length > 0) {
       const expressOptimized = this.optimizeSimple(expressMidiPoints, currentPosition, distanceMatrix);
-      expressOptimized.forEach(point => {
+      let cumulativeDistance = 0;
+      expressOptimized.forEach((point, index) => {
         point.order = order++;
-        point.estimatedTime = this.calculateEstimatedTime(point.order, 8); // Départ à 8h
+        cumulativeDistance += point.distance || 0;
+        point.estimatedTime = this.calculateEstimatedTime(
+          point.order, 
+          startTime, 
+          stopTimeMinutes, 
+          cumulativeDistance,
+          averageSpeedKmh
+        );
         optimized.push(point);
       });
       
@@ -238,9 +249,17 @@ export class RouteOptimizer {
     // 3. Traiter les points standard
     if (standardPoints.length > 0) {
       const standardOptimized = this.optimizeSimple(standardPoints, currentPosition, distanceMatrix);
-      standardOptimized.forEach(point => {
+      let cumulativeDistance = optimized.reduce((sum, p) => sum + (p.distance || 0), 0);
+      standardOptimized.forEach((point, index) => {
         point.order = order++;
-        point.estimatedTime = this.calculateEstimatedTime(point.order, 8); // Départ à 8h
+        cumulativeDistance += point.distance || 0;
+        point.estimatedTime = this.calculateEstimatedTime(
+          point.order, 
+          startTime, 
+          stopTimeMinutes, 
+          cumulativeDistance,
+          averageSpeedKmh
+        );
         optimized.push(point);
       });
     }
@@ -248,13 +267,78 @@ export class RouteOptimizer {
     return optimized;
   }
 
-  // Calculer l'heure estimée d'arrivée
-  private static calculateEstimatedTime(order: number, startHour: number): string {
-    const minutesPerStop = 15; // 15 minutes par arrêt en moyenne
-    const totalMinutes = startHour * 60 + (order - 1) * minutesPerStop;
+  // Calculer l'heure estimée d'arrivée avec paramètres configurables
+  static calculateEstimatedTime(
+    order: number, 
+    startTime: string, 
+    stopTimeMinutes: number = 15,
+    previousDistance: number = 0,
+    averageSpeedKmh: number = 30
+  ): string {
+    const [startHour, startMinute] = startTime.split(':').map(Number);
+    const startTotalMinutes = startHour * 60 + startMinute;
+    
+    // Temps de trajet pour arriver à ce point (en minutes)
+    const travelTime = previousDistance > 0 ? (previousDistance / averageSpeedKmh) * 60 : 0;
+    
+    // Temps total = début + (arrêts précédents * temps d'arrêt) + temps de trajet
+    const totalMinutes = startTotalMinutes + (order - 1) * stopTimeMinutes + travelTime;
+    
     const hours = Math.floor(totalMinutes / 60);
-    const minutes = totalMinutes % 60;
+    const minutes = Math.round(totalMinutes % 60);
     return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+  }
+
+  // Calculer le temps total de la tournée
+  static calculateTotalTourTime(
+    points: DeliveryPoint[],
+    startTime: string,
+    stopTimeMinutes: number = 15,
+    averageSpeedKmh: number = 30,
+    returnToDepot: boolean = true
+  ): { totalTime: string; endTime: string; totalDistance: number } {
+    if (points.length === 0) {
+      return { totalTime: '00:00', endTime: startTime, totalDistance: 0 };
+    }
+
+    const [startHour, startMinute] = startTime.split(':').map(Number);
+    const startTotalMinutes = startHour * 60 + startMinute;
+    
+    // Calculer le temps total de déplacement
+    const totalDistance = points.reduce((sum, point) => sum + (point.distance || 0), 0);
+    const travelTimeMinutes = (totalDistance / averageSpeedKmh) * 60;
+    
+    // Temps d'arrêt total
+    const stopTimeTotal = points.length * stopTimeMinutes;
+    
+    // Temps de retour au dépôt si nécessaire
+    let returnTime = 0;
+    if (returnToDepot && points.length > 0) {
+      const lastPoint = points[points.length - 1];
+      if (lastPoint.address.coordinates) {
+        // Estimation du retour (on pourrait améliorer avec une vraie distance)
+        const returnDistance = this.calculateHaversineDistance(
+          lastPoint.address.coordinates,
+          { lat: 45.9097, lng: 6.1588 } // Default depot
+        );
+        returnTime = (returnDistance / averageSpeedKmh) * 60;
+      }
+    }
+    
+    const totalMinutes = travelTimeMinutes + stopTimeTotal + returnTime;
+    const endTotalMinutes = startTotalMinutes + totalMinutes;
+    
+    const totalHours = Math.floor(totalMinutes / 60);
+    const totalMins = Math.round(totalMinutes % 60);
+    
+    const endHours = Math.floor(endTotalMinutes / 60);
+    const endMins = Math.round(endTotalMinutes % 60);
+    
+    return {
+      totalTime: `${totalHours.toString().padStart(2, '0')}:${totalMins.toString().padStart(2, '0')}`,
+      endTime: `${endHours.toString().padStart(2, '0')}:${endMins.toString().padStart(2, '0')}`,
+      totalDistance: Math.round(totalDistance * 100) / 100
+    };
   }
 
   // Ajouter dynamiquement des adresses à une tournée existante
