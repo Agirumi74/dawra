@@ -11,6 +11,9 @@ import {
   Camera,
   Settings
 } from 'lucide-react';
+import { SearchComponent } from '../SearchComponent';
+import { usePackages } from '../../hooks/usePackages';
+import { Package as PackageType } from '../../types';
 
 interface DriverDashboardProps {
   user: any;
@@ -20,17 +23,32 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
   const [activeTab, setActiveTab] = useState<'today' | 'scan' | 'route' | 'history'>('today');
   const [currentVehicle, setCurrentVehicle] = useState<any>(null);
   const [todayRoute, setTodayRoute] = useState<any>(null);
+  const [selectedPackage, setSelectedPackage] = useState<PackageType | null>(null);
+  const { packages, initializeDemoData } = usePackages();
 
   useEffect(() => {
     // Charger les données du chauffeur
     loadDriverData();
-  }, []);
+    // Initialize demo data if needed
+    initializeDemoData();
+  }, [initializeDemoData]);
 
   const loadDriverData = async () => {
     // TODO: Implémenter le chargement des données
     // - Véhicule assigné
     // - Tournée du jour
     // - Statistiques
+  };
+
+  const handlePackageSelect = (pkg: PackageType) => {
+    setSelectedPackage(pkg);
+    // Show package details in a modal or navigate to package view
+    alert(`Colis sélectionné: ${pkg.barcode || pkg.id}\nAdresse: ${pkg.address.full_address}\nEmplacement: ${pkg.location}`);
+  };
+
+  const handleLocationSelect = (location: string) => {
+    // Filter packages by location or navigate to location view
+    alert(`Emplacement sélectionné: ${location}\nColis dans cet emplacement: ${packages.filter(p => p.location.toLowerCase().includes(location.toLowerCase())).length}`);
   };
 
   const renderTodayView = () => (
@@ -246,6 +264,18 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* Search Component */}
+      <div className="bg-white border-b border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <SearchComponent 
+            packages={packages}
+            onSelectPackage={handlePackageSelect}
+            onSelectLocation={handleLocationSelect}
+            className="max-w-2xl mx-auto"
+          />
         </div>
       </div>
 
