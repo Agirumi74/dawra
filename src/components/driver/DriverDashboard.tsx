@@ -6,10 +6,15 @@ import {
   Clock, 
   AlertTriangle,
   Camera,
-  Settings
+  Settings,
+  Navigation,
+  Target,
+  Play
 } from 'lucide-react';
 import { BarcodeScanner } from '../BarcodeScanner';
 import { PackageForm } from '../PackageForm';
+import { EnhancedGPSManager } from '../EnhancedGPSManager';
+import { GPSDemo } from '../GPSDemo';
 import { usePackages } from '../../hooks/usePackages';
 
 interface DriverDashboardProps {
@@ -17,11 +22,13 @@ interface DriverDashboardProps {
 }
 
 export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
-  const [activeTab, setActiveTab] = useState<'today' | 'scan' | 'history'>('today');
+  const [activeTab, setActiveTab] = useState<'today' | 'scan' | 'gps' | 'demo' | 'history'>('today');
   const [currentVehicle, setCurrentVehicle] = useState<any>(null);
   const [todayRoute, setTodayRoute] = useState<any>(null);
   const [showBarcodeScanner, setShowBarcodeScanner] = useState(false);
   const [showPackageForm, setShowPackageForm] = useState(false);
+  const [showGPSManager, setShowGPSManager] = useState(false);
+  const [showGPSDemo, setShowGPSDemo] = useState(false);
   const [currentBarcode, setCurrentBarcode] = useState<string | undefined>(undefined);
   
   const { packages, addPackage, getPackagesByStatus } = usePackages();
@@ -130,7 +137,7 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
       </div>
 
       {/* Actions rapides */}
-      <div className="grid grid-cols-1 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <button
           onClick={() => setActiveTab('scan')}
           className="bg-blue-600 text-white p-6 rounded-xl hover:bg-blue-700 active:bg-blue-800 transition-colors flex flex-col items-center space-y-3 touch-manipulation"
@@ -138,6 +145,44 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
           <Camera size={32} />
           <span className="font-semibold text-lg">Scanner un colis</span>
         </button>
+        
+        <button
+          onClick={() => setShowGPSManager(true)}
+          className="bg-green-600 text-white p-6 rounded-xl hover:bg-green-700 active:bg-green-800 transition-colors flex flex-col items-center space-y-3 touch-manipulation"
+        >
+          <Navigation size={32} />
+          <span className="font-semibold text-lg">GPS Manager</span>
+        </button>
+      </div>
+
+      {/* Nouvelle section GPS */}
+      <div className="bg-gradient-to-r from-purple-50 to-blue-50 border border-purple-200 rounded-lg p-6">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center space-x-3">
+            <Target size={24} className="text-purple-600" />
+            <div>
+              <h3 className="font-semibold text-purple-900">GPS & Optimisation</h3>
+              <p className="text-sm text-purple-700">Gestion complète des tournées</p>
+            </div>
+          </div>
+        </div>
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <button
+            onClick={() => setShowGPSDemo(true)}
+            className="flex items-center justify-center space-x-2 bg-purple-600 text-white py-3 px-4 rounded-lg hover:bg-purple-700 transition-colors"
+          >
+            <Play size={16} />
+            <span>Voir la démo</span>
+          </button>
+          <button
+            onClick={() => setShowGPSManager(true)}
+            className="flex items-center justify-center space-x-2 bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            <Target size={16} />
+            <span>Optimiser tournée</span>
+          </button>
+        </div>
       </div>
 
       {/* Alertes et notifications */}
@@ -239,12 +284,120 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
         return renderTodayView();
       case 'scan':
         return renderScanView();
+      case 'gps':
+        return renderGPSView();
+      case 'demo':
+        return renderDemoView();
       case 'history':
         return <div className="text-center py-8 text-gray-500">Historique en développement</div>;
       default:
         return renderTodayView();
     }
   };
+
+  const renderGPSView = () => (
+    <div className="space-y-6">
+      <div className="text-center">
+        <h2 className="text-xl md:text-2xl font-bold mb-4">GPS Manager</h2>
+        <p className="text-gray-600 mb-8 px-4">
+          Optimisation intelligente des tournées avec export vers apps GPS
+        </p>
+      </div>
+
+      <div className="bg-white rounded-lg shadow-md p-4 md:p-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-4">
+            <h3 className="font-semibold text-lg">Fonctionnalités principales</h3>
+            <div className="space-y-3 text-sm">
+              <div className="flex items-center space-x-2">
+                <Target size={16} className="text-blue-600" />
+                <span>Algorithme TSP avec contraintes</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Navigation size={16} className="text-green-600" />
+                <span>Export Google Maps, Waze, Plans</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Clock size={16} className="text-orange-600" />
+                <span>Gestion priorités et fenêtres temporelles</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Route size={16} className="text-purple-600" />
+                <span>Optimisation temps réel</span>
+              </div>
+            </div>
+          </div>
+          
+          <div className="space-y-4">
+            <h3 className="font-semibold text-lg">Statistiques</h3>
+            <div className="grid grid-cols-2 gap-3 text-center">
+              <div className="p-3 bg-blue-50 rounded">
+                <div className="text-xl font-bold text-blue-600">{packages.length}</div>
+                <div className="text-xs text-gray-600">Colis scannés</div>
+              </div>
+              <div className="p-3 bg-green-50 rounded">
+                <div className="text-xl font-bold text-green-600">{deliveredPackages.length}</div>
+                <div className="text-xs text-gray-600">Livrés</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div className="border-t pt-6 mt-6">
+          <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
+            <button
+              onClick={() => setShowGPSDemo(true)}
+              className="flex-1 bg-purple-600 text-white py-3 px-4 rounded-lg hover:bg-purple-700 transition-colors flex items-center justify-center space-x-2"
+            >
+              <Play size={20} />
+              <span>Voir la démonstration</span>
+            </button>
+            <button
+              onClick={() => setShowGPSManager(true)}
+              className="flex-1 bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center space-x-2"
+            >
+              <Target size={20} />
+              <span>Lancer GPS Manager</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderDemoView = () => (
+    <div className="space-y-6">
+      <div className="text-center">
+        <h2 className="text-xl md:text-2xl font-bold mb-4">Démonstration GPS</h2>
+        <p className="text-gray-600 mb-8 px-4">
+          Découvrez toutes les fonctionnalités GPS en action
+        </p>
+      </div>
+
+      <div className="bg-white rounded-lg shadow-md p-4 md:p-6">
+        <div className="text-center space-y-4">
+          <div className="w-20 h-20 bg-purple-100 rounded-full flex items-center justify-center mx-auto">
+            <Play size={40} className="text-purple-600" />
+          </div>
+          <p className="text-gray-600">
+            La démonstration interactive vous permettra de découvrir :
+          </p>
+          <ul className="text-left space-y-2 max-w-md mx-auto text-sm">
+            <li>• Optimisation TSP avec contraintes</li>
+            <li>• Export vers GPS externes</li>
+            <li>• Gestion temps réel des colis</li>
+            <li>• Calcul d'itinéraires réels</li>
+          </ul>
+          <button
+            onClick={() => setShowGPSDemo(true)}
+            className="bg-purple-600 text-white py-3 px-6 rounded-lg hover:bg-purple-700 transition-colors"
+          >
+            Lancer la démonstration
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <div className="min-h-screen bg-gray-50 pb-20 md:pb-8">
@@ -263,6 +416,18 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
           onSave={handlePackageSaved}
           onCancel={handleCancelScanning}
         />
+      )}
+
+      {showGPSManager && (
+        <div className="fixed inset-0 z-50">
+          <EnhancedGPSManager onBack={() => setShowGPSManager(false)} />
+        </div>
+      )}
+
+      {showGPSDemo && (
+        <div className="fixed inset-0 z-50">
+          <GPSDemo onClose={() => setShowGPSDemo(false)} />
+        </div>
       )}
 
       {/* Header */}
@@ -297,6 +462,8 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
             {[
               { id: 'today', label: 'Aujourd\'hui', icon: Clock },
               { id: 'scan', label: 'Scanner', icon: Camera },
+              { id: 'gps', label: 'GPS', icon: Navigation },
+              { id: 'demo', label: 'Démo', icon: Play },
               { id: 'history', label: 'Historique', icon: Package },
             ].map((tab) => (
               <button
@@ -325,6 +492,8 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
           {[
             { id: 'today', label: 'Aujourd\'hui', icon: Clock },
             { id: 'scan', label: 'Scanner', icon: Camera },
+            { id: 'gps', label: 'GPS', icon: Navigation },
+            { id: 'demo', label: 'Démo', icon: Play },
             { id: 'history', label: 'Historique', icon: Package },
           ].map((tab) => (
             <button
@@ -336,7 +505,7 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
                   : 'text-gray-600'
               }`}
             >
-              <tab.icon size={24} className="mb-1" />
+              <tab.icon size={20} className="mb-1" />
               <span className="text-xs font-medium truncate">{tab.label}</span>
             </button>
           ))}
