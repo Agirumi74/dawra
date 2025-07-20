@@ -1,5 +1,3 @@
-import bcrypt from 'bcryptjs';
-
 const SESSION_DURATION = 7 * 24 * 60 * 60 * 1000; // 7 jours
 
 // Demo accounts for client-side authentication
@@ -147,7 +145,7 @@ export class AuthService {
         lastName: user.lastName,
         role: user.role,
       };
-    } catch (error) {
+    } catch {
       return null;
     }
   }
@@ -159,17 +157,19 @@ export class AuthService {
       if (decoded) {
         localStorage.removeItem(`session_${decoded.userId}`);
       }
-    } catch (error) {
+    } catch {
       // Ignorer les erreurs de décodage lors de la déconnexion
     }
   }
 
   // Inscription (non implémentée pour les comptes de démo)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   static async register(data: RegisterData): Promise<AuthUser> {
     throw new Error('L\'inscription n\'est pas disponible pour les comptes de démonstration');
   }
 
-  // Changer le mot de passe (non implémenté pour les comptes de démo)
+  // Changer le mot de passe (non implémenté pour les comptes de démo)  
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   static async changePassword(userId: string, oldPassword: string, newPassword: string): Promise<void> {
     throw new Error('Le changement de mot de passe n\'est pas disponible pour les comptes de démonstration');
   }
@@ -185,7 +185,7 @@ export class AuthService {
           if (new Date(session.expiresAt) < now) {
             localStorage.removeItem(`session_${user.id}`);
           }
-        } catch (error) {
+        } catch {
           localStorage.removeItem(`session_${user.id}`);
         }
       }

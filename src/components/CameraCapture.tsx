@@ -60,7 +60,7 @@ export const CameraCapture: React.FC<CameraCaptureProps> = ({
     return () => {
       stopCamera();
     };
-  }, [facingMode]);
+  }, [facingMode]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const captureImage = () => {
     if (!videoRef.current || !canvasRef.current || !isReady) return;

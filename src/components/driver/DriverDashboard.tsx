@@ -41,7 +41,7 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
   useEffect(() => {
     // Charger les données du chauffeur
     loadDriverData();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const loadDriverData = async () => {
     try {
@@ -70,8 +70,8 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
       // Tournée du jour (simulation)
       const mockRoute: TodayRoute = {
         totalPackages: packages.length || 0,
-        delivered: packages.filter(p => p.status === 'delivered').length,
-        remaining: packages.filter(p => p.status === 'pending').length,
+        delivered: deliveredPackages.length,
+        remaining: pendingPackages.length,
         estimatedTime: '4h 30min'
       };
       setTodayRoute(mockRoute);

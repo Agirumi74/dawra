@@ -3,7 +3,29 @@ import { drizzle } from 'drizzle-orm/libsql';
 import * as schema from './schema';
 
 // Mock database for browser environment
-const createMockDb = () => {
+interface MockDbResult {
+  select: () => {
+    from: () => {
+      where: () => {
+        limit: () => Promise<unknown[]>;
+      };
+      limit: () => Promise<unknown[]>;
+    };
+  };
+  insert: () => {
+    values: () => Promise<unknown[]>;
+  };
+  update: () => {
+    set: () => {
+      where: () => Promise<unknown[]>;
+    };
+  };
+  delete: () => {
+    where: () => Promise<unknown[]>;
+  };
+}
+
+const createMockDb = (): MockDbResult => {
   // For browser environment, we'll create a mock that returns empty results
   // This is a temporary solution to allow the app to load
   const mockDb = {
@@ -27,7 +49,7 @@ const createMockDb = () => {
       where: () => Promise.resolve([]),
     }),
   };
-  return mockDb as any;
+  return mockDb as MockDbResult;
 };
 
 // Configuration de la base de données

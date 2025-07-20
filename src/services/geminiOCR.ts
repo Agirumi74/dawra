@@ -5,7 +5,7 @@ interface OCRResult {
 
 export class GeminiOCRService {
   private apiKey: string | null = null;
-  private model: any = null;
+  private model: unknown = null;
 
   constructor() {
     // En production, l'API key serait configurée via les variables d'environnement
@@ -27,23 +27,25 @@ export class GeminiOCRService {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async extractAddressFromImage(imageData: string): Promise<OCRResult> {
     try {
       // Simulation de l'extraction d'adresse avec Gemini
       // Dans un environnement réel, vous enverriez l'image à Gemini avec ce prompt :
       
-      const prompt = `
-        Analyse cette image d'étiquette de colis et extrait UNIQUEMENT l'adresse de livraison.
-        
-        Instructions strictes :
-        1. Identifie l'adresse de destination (pas l'expéditeur)
-        2. Retourne SEULEMENT l'adresse complète : numéro, rue, code postal, ville
-        3. Format attendu : "123 Rue de la Paix, 75001 Paris"
-        4. Si l'adresse n'est pas claire, retourne "ERREUR_LECTURE"
-        5. Ignore tous les autres textes (codes, noms, etc.)
-        
-        Réponds uniquement avec l'adresse, rien d'autre.
-      `;
+      // Note: Ce prompt serait utilisé avec l'API Gemini en production
+      // const prompt = `
+      //   Analyse cette image d'étiquette de colis et extrait UNIQUEMENT l'adresse de livraison.
+      //   
+      //   Instructions strictes :
+      //   1. Identifie l'adresse de destination (pas l'expéditeur)
+      //   2. Retourne SEULEMENT l'adresse complète : numéro, rue, code postal, ville
+      //   3. Format attendu : "123 Rue de la Paix, 75001 Paris"
+      //   4. Si l'adresse n'est pas claire, retourne "ERREUR_LECTURE"
+      //   5. Ignore tous les autres textes (codes, noms, etc.)
+      //   
+      //   Réponds uniquement avec l'adresse, rien d'autre.
+      // `;
 
       // Simulation d'une réponse OCR réaliste
       await new Promise(resolve => setTimeout(resolve, 1500)); // Simule le temps de traitement

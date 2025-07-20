@@ -143,6 +143,7 @@ export class AddressDatabaseService {
       const note = address.notes.find(n => n.id === noteId);
       if (note) {
         note.note = newNote;
+        note.author = author; // Track who updated the note
         note.updatedAt = new Date();
         this.saveAddressDatabase(database);
         return;
@@ -323,7 +324,7 @@ export class AddressDatabaseService {
       }
       
       this.saveAddressDatabase(merged);
-    } catch (error) {
+    } catch {
       throw new Error('Format de données invalide');
     }
   }

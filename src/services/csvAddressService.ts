@@ -119,7 +119,7 @@ export class CSVAddressService {
     await this.loadData();
 
     const normalizedQuery = this.normalizeText(query);
-    let results: CSVAddress[] = [];
+    const results: CSVAddress[] = [];
 
     // Recherche dans la base d'adresses locale d'abord
     const localAddresses = AddressDatabaseService.searchAddresses(query);

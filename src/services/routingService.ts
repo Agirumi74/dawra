@@ -34,7 +34,7 @@ export function groupPackagesByAddress(packages: Package[]): DeliveryPoint[] {
     if (allDelivered) status = 'completed';
     else if (someDelivered) status = 'partial';
     points.push({
-      id: `point-${addressKey.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '')}`,
+      id: `point-${addressKey.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9-]/g, '')}`,
       address: firstPkg.address,
       packages: pkgs,
       status,

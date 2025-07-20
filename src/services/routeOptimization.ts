@@ -123,7 +123,7 @@ export class RouteOptimizer {
       }
 
       points.push({
-        id: `point-${addressKey.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '')}`,
+        id: `point-${addressKey.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9-]/g, '')}`,
         address: firstPkg.address,
         packages: pkgs,
         status,
@@ -191,7 +191,8 @@ export class RouteOptimizer {
     points: DeliveryPoint[], 
     userPosition: UserPosition, 
     distanceMatrix: number[][], 
-    constraints: RouteConstraints
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    constraints: RouteConstraints // Pour usage futur
   ): DeliveryPoint[] {
     if (points.length === 0) return [];
 
@@ -200,7 +201,7 @@ export class RouteOptimizer {
     const expressMidiPoints = points.filter(p => p.priority === 'express_midi');
     const standardPoints = points.filter(p => p.priority === 'standard');
 
-    let optimized: DeliveryPoint[] = [];
+    const optimized: DeliveryPoint[] = [];
     let currentPosition = userPosition;
     let order = 1;
 
