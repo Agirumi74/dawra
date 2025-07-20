@@ -79,9 +79,9 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
   const renderTodayView = () => (
     <div className="space-y-6">
       {/* Véhicule assigné */}
-      <div className="bg-white rounded-lg shadow-md p-6">
+      <div className="bg-white rounded-lg shadow-md p-4 md:p-6">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-semibold flex items-center space-x-2">
+          <h2 className="text-lg md:text-xl font-semibold flex items-center space-x-2">
             <Truck size={24} className="text-blue-600" />
             <span>Mon véhicule</span>
           </h2>
@@ -97,7 +97,7 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
               </span>
             </div>
             <p className="text-gray-600">{currentVehicle.brand} {currentVehicle.model}</p>
-            <div className="grid grid-cols-2 gap-4 text-sm">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
               <div>
                 <span className="text-gray-500">Kilométrage:</span>
                 <span className="ml-2 font-medium">{currentVehicle.mileage?.toLocaleString()} km</span>
@@ -118,13 +118,13 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
       </div>
 
       {/* Tournée du jour */}
-      <div className="bg-white rounded-lg shadow-md p-6">
+      <div className="bg-white rounded-lg shadow-md p-4 md:p-6">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-semibold flex items-center space-x-2">
+          <h2 className="text-lg md:text-xl font-semibold flex items-center space-x-2">
             <Route size={24} className="text-green-600" />
             <span>Tournée du jour</span>
           </h2>
-          <button className="text-blue-600 hover:text-blue-700 text-sm font-medium">
+          <button className="text-blue-600 hover:text-blue-700 text-sm font-medium touch-manipulation">
             Voir détails
           </button>
         </div>
@@ -162,7 +162,7 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
           <div className="text-center py-8 text-gray-500">
             <Route size={48} className="mx-auto mb-4 opacity-50" />
             <p>Aucune tournée planifiée</p>
-            <button className="mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+            <button className="mt-4 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 touch-manipulation">
               Créer une tournée
             </button>
           </div>
@@ -170,21 +170,21 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
       </div>
 
       {/* Actions rapides */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <button
           onClick={() => setActiveTab('scan')}
-          className="bg-blue-600 text-white p-6 rounded-lg hover:bg-blue-700 transition-colors flex flex-col items-center space-y-3"
+          className="bg-blue-600 text-white p-6 rounded-xl hover:bg-blue-700 active:bg-blue-800 transition-colors flex flex-col items-center space-y-3 touch-manipulation"
         >
           <Camera size={32} />
-          <span className="font-semibold">Scanner un colis</span>
+          <span className="font-semibold text-lg">Scanner un colis</span>
         </button>
         
         <button
           onClick={() => setActiveTab('route')}
-          className="bg-green-600 text-white p-6 rounded-lg hover:bg-green-700 transition-colors flex flex-col items-center space-y-3"
+          className="bg-green-600 text-white p-6 rounded-xl hover:bg-green-700 active:bg-green-800 transition-colors flex flex-col items-center space-y-3 touch-manipulation"
         >
           <Navigation size={32} />
-          <span className="font-semibold">Lancer navigation</span>
+          <span className="font-semibold text-lg">Lancer navigation</span>
         </button>
       </div>
 
@@ -206,17 +206,17 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
   const renderScanView = () => (
     <div className="space-y-6">
       <div className="text-center">
-        <h2 className="text-2xl font-bold mb-4">Scanner des colis</h2>
-        <p className="text-gray-600 mb-8">
+        <h2 className="text-xl md:text-2xl font-bold mb-4">Scanner des colis</h2>
+        <p className="text-gray-600 mb-8 px-4">
           Utilisez votre caméra pour scanner les codes-barres et capturer les adresses
         </p>
       </div>
 
-      <div className="bg-white rounded-lg shadow-md p-6">
+      <div className="bg-white rounded-lg shadow-md p-4 md:p-6">
         <div className="space-y-4">
           <button 
             onClick={startScanning}
-            className="w-full bg-blue-600 text-white py-6 px-6 rounded-lg text-xl font-semibold hover:bg-blue-700 transition-colors flex items-center justify-center space-x-3"
+            className="w-full bg-blue-600 text-white py-6 px-6 rounded-xl text-lg md:text-xl font-semibold hover:bg-blue-700 active:bg-blue-800 transition-colors flex items-center justify-center space-x-3 touch-manipulation"
           >
             <Camera size={32} />
             <span>Démarrer le scan</span>
@@ -228,7 +228,7 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
 
           <button 
             onClick={startManualEntry}
-            className="w-full bg-gray-600 text-white py-4 px-6 rounded-lg text-lg font-semibold hover:bg-gray-700 transition-colors"
+            className="w-full bg-gray-600 text-white py-4 px-6 rounded-xl text-lg font-semibold hover:bg-gray-700 active:bg-gray-800 transition-colors touch-manipulation"
           >
             Saisie manuelle
           </button>
@@ -236,7 +236,7 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
       </div>
 
       {/* Statistiques de scan */}
-      <div className="bg-white rounded-lg shadow-md p-6">
+      <div className="bg-white rounded-lg shadow-md p-4 md:p-6">
         <h3 className="text-lg font-semibold mb-4">Colis scannés aujourd'hui</h3>
         <div className="grid grid-cols-3 gap-4 text-center">
           <div>
@@ -256,16 +256,16 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
 
       {/* Liste des colis récents */}
       {packages.length > 0 && (
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="bg-white rounded-lg shadow-md p-4 md:p-6">
           <h3 className="text-lg font-semibold mb-4">Colis récents</h3>
           <div className="space-y-3">
             {packages.slice(-5).reverse().map((pkg) => (
               <div key={pkg.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                <div className="flex-1">
-                  <p className="font-medium text-sm">{pkg.address.full_address}</p>
-                  <p className="text-xs text-gray-600">{pkg.location}</p>
+                <div className="flex-1 min-w-0">
+                  <p className="font-medium text-sm truncate">{pkg.address.full_address}</p>
+                  <p className="text-xs text-gray-600 truncate">{pkg.location}</p>
                 </div>
-                <div className={`px-2 py-1 rounded text-xs font-medium ${
+                <div className={`px-2 py-1 rounded text-xs font-medium ml-2 whitespace-nowrap ${
                   pkg.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
                   pkg.status === 'delivered' ? 'bg-green-100 text-green-800' :
                   'bg-red-100 text-red-800'
@@ -297,7 +297,7 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 pb-20 md:pb-8">
       {/* Modals */}
       {showBarcodeScanner && (
         <BarcodeScanner
@@ -318,18 +318,18 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
       {/* Header */}
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
+          <div className="flex justify-between items-center py-3 md:py-4">
             <div className="flex items-center space-x-3">
               <Truck size={24} className="text-green-600" />
               <div>
-                <h1 className="text-xl font-semibold">Tableau de bord chauffeur</h1>
-                <p className="text-sm text-gray-600">
+                <h1 className="text-lg md:text-xl font-semibold">Tableau de bord chauffeur</h1>
+                <p className="text-xs md:text-sm text-gray-600">
                   Bonjour {user.firstName} ! Bonne journée de livraison.
                 </p>
               </div>
             </div>
-            <div className="flex items-center space-x-3">
-              <button className="p-2 text-gray-600 hover:text-gray-900">
+            <div className="flex items-center space-x-2 md:space-x-3">
+              <button className="p-2 text-gray-600 hover:text-gray-900 touch-manipulation">
                 <Settings size={20} />
               </button>
               <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
@@ -340,9 +340,9 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Navigation */}
-        <div className="mb-8">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-8">
+        {/* Desktop Navigation */}
+        <div className="mb-8 hidden md:block">
           <nav className="flex space-x-8">
             {[
               { id: 'today', label: 'Aujourd\'hui', icon: Clock },
@@ -368,6 +368,31 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
 
         {/* Content */}
         {renderContent()}
+      </div>
+
+      {/* Mobile Bottom Navigation */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 md:hidden">
+        <nav className="flex justify-around">
+          {[
+            { id: 'today', label: 'Aujourd\'hui', icon: Clock },
+            { id: 'scan', label: 'Scanner', icon: Camera },
+            { id: 'route', label: 'Navigation', icon: Navigation },
+            { id: 'history', label: 'Historique', icon: Package },
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id as any)}
+              className={`flex flex-col items-center justify-center py-3 px-2 min-w-0 flex-1 touch-manipulation ${
+                activeTab === tab.id
+                  ? 'text-green-600'
+                  : 'text-gray-600'
+              }`}
+            >
+              <tab.icon size={24} className="mb-1" />
+              <span className="text-xs font-medium truncate">{tab.label}</span>
+            </button>
+          ))}
+        </nav>
       </div>
     </div>
   );
