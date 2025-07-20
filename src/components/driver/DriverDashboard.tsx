@@ -4,16 +4,12 @@ import {
   Package, 
   Route, 
   Clock, 
-  CheckCircle,
   AlertTriangle,
-  Navigation,
   Camera,
   Settings
 } from 'lucide-react';
 import { BarcodeScanner } from '../BarcodeScanner';
 import { PackageForm } from '../PackageForm';
-import { EnhancedRouteView } from '../EnhancedRouteView';
-import { TourProgressView } from '../TourProgressView';
 import { usePackages } from '../../hooks/usePackages';
 
 interface DriverDashboardProps {
@@ -21,7 +17,7 @@ interface DriverDashboardProps {
 }
 
 export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
-  const [activeTab, setActiveTab] = useState<'today' | 'scan' | 'route' | 'history'>('today');
+  const [activeTab, setActiveTab] = useState<'today' | 'scan' | 'history'>('today');
   const [currentVehicle, setCurrentVehicle] = useState<any>(null);
   const [todayRoute, setTodayRoute] = useState<any>(null);
   const [showBarcodeScanner, setShowBarcodeScanner] = useState(false);
@@ -124,67 +120,23 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
             <Route size={24} className="text-green-600" />
             <span>Tournée du jour</span>
           </h2>
-          <button className="text-blue-600 hover:text-blue-700 text-sm font-medium touch-manipulation">
-            Voir détails
-          </button>
         </div>
         
-        {todayRoute ? (
-          <div className="space-y-4">
-            <div className="grid grid-cols-3 gap-4">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-blue-600">{todayRoute.totalPackages}</div>
-                <div className="text-sm text-gray-600">Colis total</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-green-600">{todayRoute.delivered}</div>
-                <div className="text-sm text-gray-600">Livrés</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-orange-600">{todayRoute.remaining}</div>
-                <div className="text-sm text-gray-600">Restants</div>
-              </div>
-            </div>
-            
-            <div className="w-full bg-gray-200 rounded-full h-2">
-              <div 
-                className="bg-green-500 h-2 rounded-full transition-all duration-300"
-                style={{ width: `${(todayRoute.delivered / todayRoute.totalPackages) * 100}%` }}
-              />
-            </div>
-            
-            <div className="flex justify-between text-sm text-gray-600">
-              <span>Progression: {Math.round((todayRoute.delivered / todayRoute.totalPackages) * 100)}%</span>
-              <span>Temps estimé: {todayRoute.estimatedTime}</span>
-            </div>
-          </div>
-        ) : (
-          <div className="text-center py-8 text-gray-500">
-            <Route size={48} className="mx-auto mb-4 opacity-50" />
-            <p>Aucune tournée planifiée</p>
-            <button className="mt-4 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 touch-manipulation">
-              Créer une tournée
-            </button>
-          </div>
-        )}
+        <div className="text-center py-8 text-gray-500">
+          <Route size={48} className="mx-auto mb-4 opacity-50" />
+          <p>Aucune tournée planifiée</p>
+          <p className="text-sm mt-2">Scannez vos colis pour commencer</p>
+        </div>
       </div>
 
       {/* Actions rapides */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4">
         <button
           onClick={() => setActiveTab('scan')}
           className="bg-blue-600 text-white p-6 rounded-xl hover:bg-blue-700 active:bg-blue-800 transition-colors flex flex-col items-center space-y-3 touch-manipulation"
         >
           <Camera size={32} />
           <span className="font-semibold text-lg">Scanner un colis</span>
-        </button>
-        
-        <button
-          onClick={() => setActiveTab('route')}
-          className="bg-green-600 text-white p-6 rounded-xl hover:bg-green-700 active:bg-green-800 transition-colors flex flex-col items-center space-y-3 touch-manipulation"
-        >
-          <Navigation size={32} />
-          <span className="font-semibold text-lg">Lancer navigation</span>
         </button>
       </div>
 
@@ -287,8 +239,6 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
         return renderTodayView();
       case 'scan':
         return renderScanView();
-      case 'route':
-        return <EnhancedRouteView />;
       case 'history':
         return <div className="text-center py-8 text-gray-500">Historique en développement</div>;
       default:
@@ -347,7 +297,6 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
             {[
               { id: 'today', label: 'Aujourd\'hui', icon: Clock },
               { id: 'scan', label: 'Scanner', icon: Camera },
-              { id: 'route', label: 'Navigation', icon: Navigation },
               { id: 'history', label: 'Historique', icon: Package },
             ].map((tab) => (
               <button
@@ -376,7 +325,6 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
           {[
             { id: 'today', label: 'Aujourd\'hui', icon: Clock },
             { id: 'scan', label: 'Scanner', icon: Camera },
-            { id: 'route', label: 'Navigation', icon: Navigation },
             { id: 'history', label: 'Historique', icon: Package },
           ].map((tab) => (
             <button
