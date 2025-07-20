@@ -3,6 +3,7 @@ import { Package, Address, TruckLocation } from '../types';
 import { DEFAULT_TRUCK_LOCATIONS } from '../constants/locations';
 import { geminiOCR } from '../services/geminiOCR';
 import { CameraCapture } from './CameraCapture';
+import { MultiFieldAddressForm } from './MultiFieldAddressForm';
 import { 
   MapPin, 
   Camera, 
@@ -28,11 +29,19 @@ export const PackageForm: React.FC<PackageFormProps> = ({
   onCancel
 }) => {
   const [formData, setFormData] = useState({
-    address: '',
     location: '',
     notes: '',
     type: 'particulier' as 'particulier' | 'entreprise',
     priority: 'standard' as 'standard' | 'express_midi' | 'premier'
+  });
+  
+  // État pour l'adresse composée de champs séparés
+  const [address, setAddress] = useState<Partial<Address>>({
+    street_number: '',
+    street_name: '',
+    postal_code: '74',
+    city: '',
+    country: 'France'
   });
   
   const [showCamera, setShowCamera] = useState(false);
@@ -41,16 +50,19 @@ export const PackageForm: React.FC<PackageFormProps> = ({
   const [customLocation, setCustomLocation] = useState('');
   const [showCustomLocation, setShowCustomLocation] = useState(false);
 
-  // Créer l'objet adresse depuis le texte
-  const createAddressFromText = (addressText: string): Address => {
+  // Créer l'objet adresse complet depuis l'adresse partielle
+  const createCompleteAddress = (partialAddress: Partial<Address>): Address => {
+    const fullAddress = `${partialAddress.street_number || ''} ${partialAddress.street_name || ''}, ${partialAddress.postal_code || ''} ${partialAddress.city || ''}`.trim();
+    
     return {
       id: Date.now().toString(),
-      street_number: '',
-      street_name: '',
-      postal_code: '',
-      city: '',
-      country: 'France',
-      full_address: addressText
+      street_number: partialAddress.street_number || '',
+      street_name: partialAddress.street_name || '',
+      postal_code: partialAddress.postal_code || '',
+      city: partialAddress.city || '',
+      country: partialAddress.country || 'France',
+      full_address: fullAddress,
+      coordinates: partialAddress.coordinates
     };
   };
 
@@ -65,9 +77,12 @@ export const PackageForm: React.FC<PackageFormProps> = ({
       if (result.address === 'ERREUR_LECTURE') {
         setOcrError('Impossible de lire l\'adresse. Veuillez réessayer ou saisir manuellement.');
       } else {
-        setFormData(prev => ({
+        // Parser l'adresse OCR pour remplir les champs séparés
+        // Pour l'instant, on met tout dans le champ full_address et on laisse l'utilisateur ajuster
+        setAddress(prev => ({
           ...prev,
-          address: result.address
+          full_address: result.address,
+          street_name: result.address // Temporaire, l'utilisateur peut ajuster
         }));
       }
     } catch (error) {
@@ -101,8 +116,8 @@ export const PackageForm: React.FC<PackageFormProps> = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.address.trim()) {
-      alert('Veuillez saisir une adresse');
+    if (!address.street_name?.trim() || !address.city?.trim() || !address.postal_code?.trim()) {
+      alert('Veuillez remplir tous les champs d\'adresse obligatoires (rue, ville, code postal)');
       return;
     }
     
@@ -113,7 +128,7 @@ export const PackageForm: React.FC<PackageFormProps> = ({
 
     const packageData: Omit<Package, 'id' | 'createdAt'> = {
       barcode,
-      address: createAddressFromText(formData.address),
+      address: createCompleteAddress(address),
       location: formData.location,
       notes: formData.notes,
       type: formData.type,
@@ -191,13 +206,11 @@ export const PackageForm: React.FC<PackageFormProps> = ({
               </div>
             )}
 
-            <textarea
-              value={formData.address}
-              onChange={(e) => setFormData(prev => ({ ...prev, address: e.target.value }))}
-              placeholder="Saisissez l'adresse ou utilisez le scanner caméra"
-              className="w-full p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              rows={3}
-              disabled={isProcessingOCR}
+            <MultiFieldAddressForm
+              onAddressChange={setAddress}
+              initialAddress={address}
+              placeholder="Ex: Clos du nant, nant, 38 nant..."
+              defaultPostcode="74"
             />
 
             {ocrError && (
