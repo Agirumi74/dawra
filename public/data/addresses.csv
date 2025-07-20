@@ -1,0 +1,8 @@
+id;id_fantoir;numero;rep;nom_voie;code_postal;code_insee;nom_commune;code_insee_ancienne_commune;nom_ancienne_commune;x;y;lon;lat;type_position;alias;nom_ld;libelle_acheminement;nom_afnor;source_position;source_nom_voie;certification_commune;cad_parcelles
+74002_nk74q8_00038;;38;;Clos du nant;74540;74002;Alby-sur-Chéran;;;933921.82;6528390.52;6.013124;45.814976;entrée;;;ALBY-SUR-CHERAN;CLOS DU NANT;commune;commune;0;
+74002_nk74q8_00062;;62;;Clos du nant;74540;74002;Alby-sur-Chéran;;;933934.52;6528418.34;6.013301;45.815222;entrée;;;ALBY-SUR-CHERAN;CLOS DU NANT;commune;commune;0;
+74003_0001_00001;;1;;Rue de la Mairie;74150;74003;Rumilly;;;945123.45;6532456.78;6.145678;45.867890;entrée;;;RUMILLY;RUE DE LA MAIRIE;commune;commune;0;
+74003_0002_00002;;2;;Avenue de la Gare;74150;74003;Rumilly;;;945234.56;6532567.89;6.146789;45.868901;entrée;;;RUMILLY;AVENUE DE LA GARE;commune;commune;0;
+74010_0001_00001;;1;;Place du Marché;74000;74010;Annecy;;;912345.67;6543210.98;5.912345;45.912345;entrée;;;ANNECY;PLACE DU MARCHE;commune;commune;0;
+74010_0002_00002;;2;;Rue Royale;74000;74010;Annecy;;;912456.78;6543321.09;5.913456;45.913456;entrée;;;ANNECY;RUE ROYALE;commune;commune;0;
+74010_0003_00003;;3;;Avenue de France;74000;74010;Annecy;;;912567.89;6543432.10;5.914567;45.914567;entrée;;;ANNECY;AVENUE DE FRANCE;commune;commune;0;

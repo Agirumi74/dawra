@@ -1,6 +1,7 @@
 import { Package, DeliveryPoint, UserPosition } from '../types';
-import { AddressService } from './addressService';
+import { CSVAddressService } from './csvAddressService';
 
+// Cette fonction est maintenant dépréciée, utilisez RouteOptimizer à la place
 export function calculateDistance(lat1: number, lng1: number, lat2: number, lng2: number): number {
   const R = 6371; // Earth's radius in km
   const dLat = (lat2 - lat1) * Math.PI / 180;
@@ -13,10 +14,11 @@ export function calculateDistance(lat1: number, lng1: number, lat2: number, lng2
   return R * c;
 }
 
+// Cette fonction est maintenant dépréciée, utilisez RouteOptimizer.groupPackagesByAddress à la place
 export function groupPackagesByAddress(packages: Package[]): DeliveryPoint[] {
   const addressGroups = new Map<string, Package[]>();
   packages.forEach(pkg => {
-    const addressKey = AddressService.formatAddress(pkg.address);
+    const addressKey = CSVAddressService.formatAddress(pkg.address);
     if (!addressGroups.has(addressKey)) {
       addressGroups.set(addressKey, []);
     }
@@ -37,12 +39,14 @@ export function groupPackagesByAddress(packages: Package[]): DeliveryPoint[] {
       packages: pkgs,
       status,
       order: order++,
-      distance: 0
+      distance: 0,
+      priority: 'standard'
     });
   });
   return points;
 }
 
+// Cette fonction est maintenant dépréciée, utilisez RouteOptimizer.optimizeSimple à la place
 export async function optimizeRoute(packages: Package[], userPosition: UserPosition): Promise<DeliveryPoint[]> {
   const points = groupPackagesByAddress(packages.filter(p => p.status === 'pending'));
   if (points.length === 0) return [];
@@ -50,7 +54,7 @@ export async function optimizeRoute(packages: Package[], userPosition: UserPosit
   const geocodedPoints = await Promise.all(
     points.map(async (point) => {
       if (!point.address.coordinates) {
-        const coords = await AddressService.geocodeAddress(point.address);
+        const coords = await CSVAddressService.geocodeAddress(point.address);
         if (coords) {
           point.address.coordinates = coords;
           point.packages.forEach(pkg => {
@@ -111,6 +115,7 @@ export async function optimizeRoute(packages: Package[], userPosition: UserPosit
   return optimized;
 }
 
+// Cette fonction est maintenant dépréciée, utilisez RouteOptimizer.getCurrentPosition à la place
 export async function getCurrentPosition(): Promise<UserPosition | null> {
   return new Promise<UserPosition | null>((resolve) => {
     if (!navigator.geolocation) {

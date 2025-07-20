@@ -19,8 +19,14 @@ export interface Package {
   location: string;
   notes: string;
   type: 'particulier' | 'entreprise';
+  priority?: 'standard' | 'express_midi' | 'premier';
   status: 'pending' | 'delivered' | 'failed';
+  photo?: string;
   createdAt: Date;
+  timeWindow?: {
+    start?: string; // Format HH:MM
+    end?: string;   // Format HH:MM
+  };
 }
 
 export interface DeliveryPoint {
@@ -30,6 +36,8 @@ export interface DeliveryPoint {
   status: 'pending' | 'completed' | 'partial';
   order: number;
   distance?: number;
+  priority: 'standard' | 'express_midi' | 'premier';
+  estimatedTime?: string; // Format HH:MM
 }
 
 export interface TruckLocation {
@@ -38,7 +46,7 @@ export interface TruckLocation {
   color: string;
 }
 
-export type AppView = 'home' | 'scan' | 'route' | 'map' | 'settings';
+export type AppView = 'home' | 'scan' | 'route' | 'map' | 'gps' | 'settings';
 
 export interface UserPosition {
   lat: number;
@@ -56,4 +64,33 @@ export interface AddressSuggestion {
     city?: string;
     country?: string;
   };
+}
+
+export interface BANSuggestion {
+  properties: {
+    label: string;
+    score: number;
+    housenumber?: string;
+    street?: string;
+    postcode: string;
+    city: string;
+    context: string;
+    type: string;
+    importance: number;
+  };
+  geometry: {
+    type: string;
+    coordinates: [number, number]; // [lng, lat]
+  };
+}
+
+export interface RouteConstraints {
+  timeWindows?: { [addressId: string]: { start: string; end: string } };
+  priorities?: { [addressId: string]: number }; // 1 = highest priority
+  maxDeliveryTime?: number; // minutes
+}
+
+export interface OptimizationMode {
+  type: 'simple' | 'constrained';
+  constraints?: RouteConstraints;
 }

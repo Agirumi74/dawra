@@ -9,6 +9,7 @@ export function usePackages() {
       ...packageData,
       id: Date.now().toString(),
       createdAt: new Date(),
+      priority: packageData.priority || 'standard',
     };
     setPackages([...packages, newPackage]);
     return newPackage;
