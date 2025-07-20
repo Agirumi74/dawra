@@ -50,8 +50,8 @@ export const NavigationModeSelector: React.FC<NavigationModeSelectorProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-end justify-center z-50 p-0 sm:items-center sm:p-4">
+      <div className="bg-white rounded-t-xl sm:rounded-lg shadow-xl w-full max-w-md sm:max-w-lg p-6 max-h-[90vh] overflow-y-auto">
         <div className="text-center mb-6">
           <Navigation size={48} className="mx-auto text-blue-600 mb-4" />
           <h2 className="text-xl font-bold text-gray-900 mb-2">
@@ -62,15 +62,15 @@ export const NavigationModeSelector: React.FC<NavigationModeSelectorProps> = ({
           </p>
         </div>
 
-        <div className="space-y-3">
+        <div className="space-y-4">
           {/* Google Maps Option */}
           <button
             onClick={handleLaunchGoogleMaps}
-            className="w-full bg-green-600 text-white p-4 rounded-lg hover:bg-green-700 transition-colors flex items-center space-x-3"
+            className="w-full bg-green-600 text-white p-5 rounded-xl hover:bg-green-700 active:bg-green-800 transition-colors flex items-center space-x-4 touch-manipulation"
           >
-            <ExternalLink size={24} />
-            <div className="text-left">
-              <div className="font-semibold">Google Maps</div>
+            <ExternalLink size={28} />
+            <div className="text-left flex-1">
+              <div className="font-semibold text-lg">Google Maps</div>
               <div className="text-sm opacity-90">Route complète avec tous les arrêts</div>
             </div>
           </button>
@@ -78,11 +78,11 @@ export const NavigationModeSelector: React.FC<NavigationModeSelectorProps> = ({
           {/* Waze Option */}
           <button
             onClick={handleLaunchWaze}
-            className="w-full bg-blue-600 text-white p-4 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-3"
+            className="w-full bg-blue-600 text-white p-5 rounded-xl hover:bg-blue-700 active:bg-blue-800 transition-colors flex items-center space-x-4 touch-manipulation"
           >
-            <Smartphone size={24} />
-            <div className="text-left">
-              <div className="font-semibold">Waze</div>
+            <Smartphone size={28} />
+            <div className="text-left flex-1">
+              <div className="font-semibold text-lg">Waze</div>
               <div className="text-sm opacity-90">Navigation intelligente et trafic en temps réel</div>
             </div>
           </button>
@@ -90,20 +90,20 @@ export const NavigationModeSelector: React.FC<NavigationModeSelectorProps> = ({
           {/* Dawra Internal Option */}
           <button
             onClick={handleUseDawra}
-            className="w-full bg-purple-600 text-white p-4 rounded-lg hover:bg-purple-700 transition-colors flex items-center space-x-3"
+            className="w-full bg-purple-600 text-white p-5 rounded-xl hover:bg-purple-700 active:bg-purple-800 transition-colors flex items-center space-x-4 touch-manipulation"
           >
-            <MapPin size={24} />
-            <div className="text-left">
-              <div className="font-semibold">Navigation Dawra</div>
+            <MapPin size={28} />
+            <div className="text-left flex-1">
+              <div className="font-semibold text-lg">Navigation Dawra</div>
               <div className="text-sm opacity-90">Interface intégrée avec suivi des livraisons</div>
             </div>
           </button>
         </div>
 
-        <div className="mt-6">
+        <div className="mt-8">
           <button
             onClick={onCancel}
-            className="w-full bg-gray-200 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-300 transition-colors"
+            className="w-full bg-gray-200 text-gray-700 py-4 px-4 rounded-xl hover:bg-gray-300 active:bg-gray-400 transition-colors font-medium touch-manipulation"
           >
             Annuler
           </button>

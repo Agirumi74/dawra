@@ -61,8 +61,8 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
   return (
     <div className="fixed inset-0 bg-black z-50 flex flex-col">
       {/* Header */}
-      <div className="bg-white p-4 text-center">
-        <h2 className="text-xl font-bold text-gray-900">Scanner le code-barres</h2>
+      <div className="bg-white p-4 safe-area-top text-center">
+        <h2 className="text-lg md:text-xl font-bold text-gray-900">Scanner le code-barres</h2>
         <p className="text-gray-600 text-sm mt-1">
           Mode démonstration - Simulation du scan
         </p>
@@ -79,8 +79,8 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
         />
 
         {/* Overlay pour guider le scan */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="border-2 border-red-500 rounded-lg w-80 h-32">
+        <div className="absolute inset-0 flex items-center justify-center p-4">
+          <div className="border-2 border-red-500 rounded-lg w-full max-w-sm h-32 md:h-40">
             <div className="absolute inset-0 border-2 border-transparent rounded-lg"
                  style={{
                    background: `
@@ -98,8 +98,8 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
         </div>
 
         {/* Ligne de scan animée */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-80 h-32 relative overflow-hidden">
+        <div className="absolute inset-0 flex items-center justify-center p-4">
+          <div className="w-full max-w-sm h-32 md:h-40 relative overflow-hidden">
             <div 
               className="absolute w-full h-0.5 bg-red-500 animate-pulse"
               style={{
@@ -112,8 +112,8 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
 
         {/* Messages d'état */}
         {isScanning && (
-          <div className="absolute bottom-24 left-0 right-0 text-center">
-            <div className="inline-flex items-center space-x-2 bg-black bg-opacity-75 text-white px-4 py-2 rounded-lg">
+          <div className="absolute bottom-32 left-4 right-4 text-center">
+            <div className="inline-flex items-center space-x-2 bg-black bg-opacity-75 text-white px-4 py-3 rounded-lg">
               <Loader2 size={20} className="animate-spin" />
               <span>Simulation du scan en cours...</span>
             </div>
@@ -121,8 +121,8 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
         )}
 
         {error && (
-          <div className="absolute bottom-24 left-0 right-0 text-center">
-            <div className="inline-block bg-red-600 text-white px-4 py-2 rounded-lg">
+          <div className="absolute bottom-32 left-4 right-4 text-center">
+            <div className="inline-block bg-red-600 text-white px-4 py-3 rounded-lg max-w-sm mx-auto">
               {error}
             </div>
           </div>
@@ -130,11 +130,12 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
       </div>
 
       {/* Controls */}
-      <div className="bg-white p-4">
+      <div className="bg-white p-6 safe-area-bottom">
         <div className="flex items-center justify-center">
           <button
             onClick={onCancel}
-            className="p-4 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors"
+            className="p-4 bg-gray-100 rounded-full hover:bg-gray-200 active:bg-gray-300 transition-colors touch-manipulation"
+            style={{ minWidth: '60px', minHeight: '60px' }}
           >
             <X size={24} className="text-gray-700" />
           </button>
@@ -152,6 +153,14 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
           0% { top: 0; }
           50% { top: calc(100% - 2px); }
           100% { top: 0; }
+        }
+        
+        .safe-area-top {
+          padding-top: env(safe-area-inset-top, 1rem);
+        }
+        
+        .safe-area-bottom {
+          padding-bottom: env(safe-area-inset-bottom, 1.5rem);
         }
       `}</style>
     </div>
