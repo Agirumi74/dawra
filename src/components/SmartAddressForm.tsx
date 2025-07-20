@@ -11,12 +11,10 @@ import {
   Globe,
   User,
   Save,
-  Search,
   Building2,
   Home,
   Zap,
-  Star,
-  AlertTriangle
+  Star
 } from 'lucide-react';
 import { Address, Package } from '../types';
 import { CSVAddressService, CSVAddress } from '../services/csvAddressService';
@@ -123,7 +121,7 @@ export const SmartAddressForm: React.FC<SmartAddressFormProps> = ({
       setShowCitySuggestions(false);
       setIsLoadingCity(false);
     }
-  }, [postcode]);
+  }, [postcode, city]);
 
   // Vérifier si l'adresse existe déjà dans la base
   useEffect(() => {

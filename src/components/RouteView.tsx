@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Package, DeliveryPoint, UserPosition } from '../types';
+import { DeliveryPoint, UserPosition } from '../types';
 import { usePackages } from '../hooks/usePackages';
 import { RouteOptimizer } from '../services/routeOptimization';
 import { geocodeAddress } from '../services/geocoding';
@@ -319,7 +319,7 @@ export const RouteView: React.FC<RouteViewProps> = ({ onNavigate }) => {
             <span>Tournée optimisée</span>
           </h3>
 
-          {deliveryPoints.map((point, index) => (
+          {deliveryPoints.map((point) => (
             <div
               key={point.id}
               className={`border-2 rounded-lg p-4 transition-colors ${getStatusColor(point.status)}`}

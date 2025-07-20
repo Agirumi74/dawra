@@ -3,9 +3,7 @@ import {
   Truck, 
   Package, 
   Route, 
-  MapPin, 
   Clock, 
-  CheckCircle,
   AlertTriangle,
   Navigation,
   Camera,
@@ -15,15 +13,25 @@ import { BarcodeScanner } from '../BarcodeScanner';
 import { PackageForm } from '../PackageForm';
 import { RouteView } from '../RouteView';
 import { usePackages } from '../../hooks/usePackages';
+import type { AuthUser } from '../../lib/auth/auth';
+import type { Vehicle } from '../../lib/database';
+import type { Package } from '../../types';
 
 interface DriverDashboardProps {
-  user: any;
+  user: AuthUser;
+}
+
+interface TodayRoute {
+  totalPackages: number;
+  delivered: number;
+  remaining: number;
+  estimatedTime: string;
 }
 
 export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
   const [activeTab, setActiveTab] = useState<'today' | 'scan' | 'route' | 'history'>('today');
-  const [currentVehicle, setCurrentVehicle] = useState<any>(null);
-  const [todayRoute, setTodayRoute] = useState<any>(null);
+  const [currentVehicle, setCurrentVehicle] = useState<Vehicle | null>(null);
+  const [todayRoute, setTodayRoute] = useState<TodayRoute | null>(null);
   const [showBarcodeScanner, setShowBarcodeScanner] = useState(false);
   const [showPackageForm, setShowPackageForm] = useState(false);
   const [currentBarcode, setCurrentBarcode] = useState<string | undefined>(undefined);
@@ -36,10 +44,41 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
   }, []);
 
   const loadDriverData = async () => {
-    // TODO: Implémenter le chargement des données
-    // - Véhicule assigné
-    // - Tournée du jour
-    // - Statistiques
+    try {
+      // Simuler le chargement des données du chauffeur
+      // En production, ceci ferait des appels API réels
+      
+      // Véhicule assigné (simulation)
+      const mockVehicle: Vehicle = {
+        id: '1',
+        licensePlate: 'AB-123-CD',
+        brand: 'Mercedes',
+        model: 'Sprinter',
+        year: 2022,
+        fuelType: 'diesel',
+        maxWeight: 3500,
+        maxVolume: 15.5,
+        depotId: 'depot-1',
+        currentDriverId: user.id,
+        isActive: true,
+        mileage: 45000,
+        lastMaintenanceDate: '2024-01-15',
+        createdAt: '2023-01-01'
+      };
+      setCurrentVehicle(mockVehicle);
+
+      // Tournée du jour (simulation)
+      const mockRoute: TodayRoute = {
+        totalPackages: packages.length || 0,
+        delivered: packages.filter(p => p.status === 'delivered').length,
+        remaining: packages.filter(p => p.status === 'pending').length,
+        estimatedTime: '4h 30min'
+      };
+      setTodayRoute(mockRoute);
+      
+    } catch (error) {
+      console.error('Erreur lors du chargement des données du chauffeur:', error);
+    }
   };
 
   const handleBarcodeScanned = (barcode: string) => {
@@ -48,7 +87,7 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
     setShowPackageForm(true);
   };
 
-  const handlePackageSaved = (packageData: any) => {
+  const handlePackageSaved = (packageData: Omit<Package, 'id' | 'createdAt'>) => {
     addPackage(packageData);
     setShowPackageForm(false);
     setCurrentBarcode(undefined);
@@ -352,7 +391,7 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
             ].map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id as any)}
+                onClick={() => setActiveTab(tab.id as 'today' | 'scan' | 'route' | 'history')}
                 className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors ${
                   activeTab === tab.id
                     ? 'bg-green-100 text-green-700'

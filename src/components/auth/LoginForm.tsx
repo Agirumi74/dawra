@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { LogIn, Eye, EyeOff, Truck, User, Shield } from 'lucide-react';
-import { AuthService, type LoginCredentials } from '../../lib/auth/auth';
+import { AuthService, type LoginCredentials, type AuthUser } from '../../lib/auth/auth';
 
 interface LoginFormProps {
-  onLogin: (user: any, token: string) => void;
+  onLogin: (user: AuthUser, token: string) => void;
   onError: (error: string) => void;
 }
 

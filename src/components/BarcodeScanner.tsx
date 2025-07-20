@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { BrowserMultiFormatReader, Result } from '@zxing/browser';
-import { X, Camera, Loader2 } from 'lucide-react';
+import { X, Loader2 } from 'lucide-react';
 
 interface BarcodeScannerProps {
   onScan: (barcode: string) => void;
@@ -19,71 +19,71 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
   const readerRef = useRef<BrowserMultiFormatReader | null>(null);
 
   useEffect(() => {
-    if (isActive) {
-      startScanning();
-    } else {
-      stopScanning();
-    }
+    const handleStartScanning = async () => {
+      try {
+        setIsScanning(true);
+        setError('');
 
-    return () => stopScanning();
-  }, [isActive]);
+        // Initialiser le lecteur de code-barres
+        if (!readerRef.current) {
+          readerRef.current = new BrowserMultiFormatReader();
+        }
 
-  const startScanning = async () => {
-    try {
-      setIsScanning(true);
-      setError('');
+        const reader = readerRef.current;
 
-      // Initialiser le lecteur de code-barres
-      if (!readerRef.current) {
-        readerRef.current = new BrowserMultiFormatReader();
-      }
+        // Obtenir la liste des caméras disponibles
+        const videoInputDevices = await reader.listVideoInputDevices();
+        
+        if (videoInputDevices.length === 0) {
+          throw new Error('Aucune caméra disponible');
+        }
 
-      const reader = readerRef.current;
+        // Utiliser la caméra arrière par défaut, ou la première disponible
+        const selectedDeviceId = videoInputDevices.find(device => 
+          device.label.toLowerCase().includes('back') || 
+          device.label.toLowerCase().includes('rear')
+        )?.deviceId || videoInputDevices[0].deviceId;
 
-      // Obtenir la liste des caméras disponibles
-      const videoInputDevices = await reader.listVideoInputDevices();
-      
-      if (videoInputDevices.length === 0) {
-        throw new Error('Aucune caméra disponible');
-      }
-
-      // Utiliser la caméra arrière par défaut, ou la première disponible
-      const selectedDeviceId = videoInputDevices.find(device => 
-        device.label.toLowerCase().includes('back') || 
-        device.label.toLowerCase().includes('rear')
-      )?.deviceId || videoInputDevices[0].deviceId;
-
-      // Commencer le scan
-      await reader.decodeFromVideoDevice(
-        selectedDeviceId,
-        videoRef.current,
-        (result: Result | null, error?: Error) => {
-          if (result) {
-            const barcodeText = result.getText();
-            if (barcodeText) {
-              onScan(barcodeText);
-              stopScanning();
+        // Commencer le scan
+        await reader.decodeFromVideoDevice(
+          selectedDeviceId,
+          videoRef.current,
+          (result: Result | null, error?: Error) => {
+            if (result) {
+              const barcodeText = result.getText();
+              if (barcodeText) {
+                onScan(barcodeText);
+                handleStopScanning();
+              }
+            }
+            if (error && error.name !== 'NotFoundException') {
+              console.warn('Erreur de scan:', error);
             }
           }
-          if (error && error.name !== 'NotFoundException') {
-            console.warn('Erreur de scan:', error);
-          }
-        }
-      );
+        );
 
-    } catch (error) {
-      console.error('Erreur lors de l\'initialisation du scanner:', error);
-      setError(error instanceof Error ? error.message : 'Erreur inconnue');
+      } catch (error) {
+        console.error('Erreur lors de l\'initialisation du scanner:', error);
+        setError(error instanceof Error ? error.message : 'Erreur inconnue');
+        setIsScanning(false);
+      }
+    };
+
+    const handleStopScanning = () => {
+      if (readerRef.current) {
+        readerRef.current.reset();
+      }
       setIsScanning(false);
-    }
-  };
+    };
 
-  const stopScanning = () => {
-    if (readerRef.current) {
-      readerRef.current.reset();
+    if (isActive) {
+      handleStartScanning();
+    } else {
+      handleStopScanning();
     }
-    setIsScanning(false);
-  };
+
+    return () => handleStopScanning();
+  }, [isActive, onScan]);
 
   if (!isActive) {
     return null;

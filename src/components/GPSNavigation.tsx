@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Polyline, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -7,19 +7,17 @@ import {
   MapPin, 
   Clock, 
   Route as RouteIcon, 
-  CheckCircle, 
-  ArrowRight,
+  CheckCircle,
   RefreshCw,
   Plus,
-  Settings,
   X
 } from 'lucide-react';
-import { DeliveryPoint, UserPosition } from '../types';
+import { DeliveryPoint, UserPosition, Package } from '../types';
 import { RouteOptimizer } from '../services/routeOptimization';
 import { AddressDatabaseService } from '../services/addressDatabase';
 
 // Fix for default markers
-delete (L.Icon.Default.prototype as any)._getIconUrl;
+delete (L.Icon.Default.prototype as unknown)._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
   iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
@@ -34,7 +32,7 @@ interface GPSNavigationProps {
   onAddAddress: () => void;
   onRecalculateRoute: () => void;
   onBack: () => void;
-  updatePackage?: (id: string, updates: any) => void;
+  updatePackage?: (id: string, updates: Partial<Package>) => void;
   setCurrentPointIndex?: (index: number) => void;
 }
 
@@ -147,7 +145,6 @@ export const GPSNavigation: React.FC<GPSNavigationProps> = ({
     if (!currentPoint?.address.coordinates) return;
 
     const { lat, lng } = currentPoint.address.coordinates;
-    const address = encodeURIComponent(currentPoint.address.full_address);
 
     // Détecter le système et ouvrir l'app GPS appropriée
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);

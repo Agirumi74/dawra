@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Package, Address, TruckLocation } from '../types';
+import React, { useState } from 'react';
+import { Package, Address } from '../types';
 import { DEFAULT_TRUCK_LOCATIONS } from '../constants/locations';
 import { geminiOCR } from '../services/geminiOCR';
 import { CameraCapture } from './CameraCapture';
@@ -70,7 +70,7 @@ export const PackageForm: React.FC<PackageFormProps> = ({
           address: result.address
         }));
       }
-    } catch (error) {
+    } catch {
       setOcrError('Erreur lors de l\'analyse de l\'image');
     } finally {
       setIsProcessingOCR(false);

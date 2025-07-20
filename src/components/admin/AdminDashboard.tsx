@@ -2,22 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { 
   Users, 
   Truck, 
-  MapPin, 
   Settings, 
   BarChart3, 
   Plus,
   Edit,
   Trash2,
   Shield,
-  User,
   Building2
 } from 'lucide-react';
 import { DepotService } from '../../lib/services/depotService';
 import { VehicleService } from '../../lib/services/vehicleService';
 import type { Depot, Vehicle } from '../../lib/database';
+import type { AuthUser } from '../../lib/auth/auth';
 
 interface AdminDashboardProps {
-  user: any;
+  user: AuthUser;
 }
 
 export const AdminDashboard: React.FC<AdminDashboardProps> = ({ user }) => {
@@ -61,7 +60,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ user }) => {
         setShowDepotForm(false);
         loadData();
         alert('Dépôt créé avec succès !');
-      } catch (error) {
+      } catch {
         alert('Erreur lors de la création du dépôt');
       }
     };
@@ -159,7 +158,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ user }) => {
         setShowVehicleForm(false);
         loadData();
         alert('Véhicule créé avec succès !');
-      } catch (error) {
+      } catch {
         alert('Erreur lors de la création du véhicule');
       }
     };
@@ -207,7 +206,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ user }) => {
               />
               <select
                 value={formData.fuelType}
-                onChange={(e) => setFormData({ ...formData, fuelType: e.target.value as any })}
+                onChange={(e) => setFormData({ ...formData, fuelType: e.target.value as 'diesel' | 'gasoline' | 'electric' | 'hybrid' })}
                 className="p-3 border border-gray-300 rounded-lg"
               >
                 <option value="diesel">Diesel</option>
@@ -443,7 +442,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ user }) => {
             ].map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id as any)}
+                onClick={() => setActiveTab(tab.id as 'overview' | 'depots' | 'vehicles' | 'users' | 'settings')}
                 className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors ${
                   activeTab === tab.id
                     ? 'bg-blue-100 text-blue-700'

@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { Camera, RotateCcw, Check, X, Loader2 } from 'lucide-react';
+import { Camera, RotateCcw, X, Loader2 } from 'lucide-react';
 
 interface CameraCaptureProps {
   onCapture: (imageData: string) => void;
@@ -21,13 +21,6 @@ export const CameraCapture: React.FC<CameraCaptureProps> = ({
   const [stream, setStream] = useState<MediaStream | null>(null);
   const [facingMode, setFacingMode] = useState<'user' | 'environment'>('environment');
   const [isReady, setIsReady] = useState(false);
-
-  useEffect(() => {
-    startCamera();
-    return () => {
-      stopCamera();
-    };
-  }, [facingMode]);
 
   const startCamera = async () => {
     try {
@@ -61,6 +54,13 @@ export const CameraCapture: React.FC<CameraCaptureProps> = ({
     }
     setIsReady(false);
   };
+
+  useEffect(() => {
+    startCamera();
+    return () => {
+      stopCamera();
+    };
+  }, [facingMode]);
 
   const captureImage = () => {
     if (!videoRef.current || !canvasRef.current || !isReady) return;
