@@ -3,7 +3,6 @@ import {
   Truck, 
   Package, 
   Route, 
-  MapPin, 
   Clock, 
   CheckCircle,
   AlertTriangle,
@@ -13,7 +12,7 @@ import {
 } from 'lucide-react';
 import { BarcodeScanner } from '../BarcodeScanner';
 import { PackageForm } from '../PackageForm';
-import { RouteView } from '../RouteView';
+import { EnhancedRouteView } from '../EnhancedRouteView';
 import { usePackages } from '../../hooks/usePackages';
 
 interface DriverDashboardProps {
@@ -288,7 +287,7 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
       case 'scan':
         return renderScanView();
       case 'route':
-        return <RouteView />;
+        return <EnhancedRouteView />;
       case 'history':
         return <div className="text-center py-8 text-gray-500">Historique en développement</div>;
       default:
