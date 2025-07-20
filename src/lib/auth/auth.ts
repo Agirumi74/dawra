@@ -1,11 +1,57 @@
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import { db, type User, type NewUser } from '../database';
-import { users, userSessions } from '../database/schema';
-import { eq, and } from 'drizzle-orm';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
 const SESSION_DURATION = 7 * 24 * 60 * 60 * 1000; // 7 jours
+
+// Demo accounts for client-side authentication
+const DEMO_USERS = [
+  {
+    id: 'admin-1',
+    email: 'admin@tournee.fr',
+    password: 'admin123',
+    firstName: 'Jean',
+    lastName: 'Administrateur',
+    role: 'admin' as const,
+  },
+  {
+    id: 'manager-1', 
+    email: 'manager@tournee.fr',
+    password: 'manager123',
+    firstName: 'Marie',
+    lastName: 'Responsable',
+    role: 'manager' as const,
+  },
+  {
+    id: 'driver-1',
+    email: 'chauffeur@tournee.fr', 
+    password: 'chauffeur123',
+    firstName: 'Pierre',
+    lastName: 'Chauffeur',
+    role: 'driver' as const,
+  },
+];
+
+// Fonction pour générer un token simple
+function generateSimpleToken(userId: string): string {
+  const timestamp = Date.now();
+  const randomPart = Math.random().toString(36).substring(2);
+  return btoa(`${userId}:${timestamp}:${randomPart}`);
+}
+
+// Fonction pour décoder le token simple
+function decodeSimpleToken(token: string): { userId: string; timestamp: number } | null {
+  try {
+    const decoded = atob(token);
+    const parts = decoded.split(':');
+    if (parts.length !== 3) return null;
+    
+    return {
+      userId: parts[0],
+      timestamp: parseInt(parts[1]),
+    };
+  } catch {
+    return null;
+  }
+}
 
 export interface AuthUser {
   id: string;
@@ -31,76 +77,32 @@ export interface RegisterData {
 }
 
 export class AuthService {
-  // Inscription d'un nouvel utilisateur
-  static async register(data: RegisterData): Promise<AuthUser> {
-    const existingUser = await db.select()
-      .from(users)
-      .where(eq(users.email, data.email))
-      .limit(1);
-
-    if (existingUser.length > 0) {
-      throw new Error('Un utilisateur avec cet email existe déjà');
-    }
-
-    const hashedPassword = await bcrypt.hash(data.password, 12);
-    
-    const newUser: NewUser = {
-      id: crypto.randomUUID(),
-      email: data.email,
-      password: hashedPassword,
-      firstName: data.firstName,
-      lastName: data.lastName,
-      role: data.role,
-      licenseNumber: data.licenseNumber,
-      phoneNumber: data.phoneNumber,
-    };
-
-    const [createdUser] = await db.insert(users).values(newUser).returning();
-    
-    return {
-      id: createdUser.id,
-      email: createdUser.email,
-      firstName: createdUser.firstName,
-      lastName: createdUser.lastName,
-      role: createdUser.role,
-    };
-  }
-
-  // Connexion
+  // Connexion avec validation client-side
   static async login(credentials: LoginCredentials): Promise<{ user: AuthUser; token: string }> {
-    const [user] = await db.select()
-      .from(users)
-      .where(and(
-        eq(users.email, credentials.email),
-        eq(users.isActive, true)
-      ))
-      .limit(1);
-
+    // Chercher l'utilisateur dans les comptes de démonstration
+    const user = DEMO_USERS.find(u => u.email === credentials.email);
+    
     if (!user) {
       throw new Error('Email ou mot de passe incorrect');
     }
 
-    const isPasswordValid = await bcrypt.compare(credentials.password, user.password);
-    if (!isPasswordValid) {
+    // Vérifier le mot de passe (simple comparaison pour les comptes de demo)
+    if (user.password !== credentials.password) {
       throw new Error('Email ou mot de passe incorrect');
     }
 
-    // Créer un token JWT
-    const token = jwt.sign(
-      { userId: user.id, email: user.email, role: user.role },
-      JWT_SECRET,
-      { expiresIn: '7d' }
-    );
+    // Créer un token simple
+    const token = generateSimpleToken(user.id);
 
-    // Enregistrer la session
-    await db.insert(userSessions).values({
-      id: crypto.randomUUID(),
+    // Stocker la session localement
+    const sessionData = {
       userId: user.id,
       token,
       expiresAt: new Date(Date.now() + SESSION_DURATION).toISOString(),
       deviceInfo: navigator.userAgent,
-      ipAddress: 'unknown', // À implémenter côté serveur
-    });
+    };
+    
+    localStorage.setItem(`session_${user.id}`, JSON.stringify(sessionData));
 
     return {
       user: {
@@ -117,29 +119,23 @@ export class AuthService {
   // Vérification du token
   static async verifyToken(token: string): Promise<AuthUser | null> {
     try {
-      const decoded = jwt.verify(token, JWT_SECRET) as any;
+      const decoded = decodeSimpleToken(token);
+      if (!decoded) return null;
       
       // Vérifier que la session existe et n'est pas expirée
-      const [session] = await db.select()
-        .from(userSessions)
-        .where(and(
-          eq(userSessions.token, token),
-          eq(userSessions.userId, decoded.userId)
-        ))
-        .limit(1);
-
-      if (!session || new Date(session.expiresAt) < new Date()) {
+      const sessionData = localStorage.getItem(`session_${decoded.userId}`);
+      if (!sessionData) {
         return null;
       }
 
-      const [user] = await db.select()
-        .from(users)
-        .where(and(
-          eq(users.id, decoded.userId),
-          eq(users.isActive, true)
-        ))
-        .limit(1);
+      const session = JSON.parse(sessionData);
+      if (session.token !== token || new Date(session.expiresAt) < new Date()) {
+        localStorage.removeItem(`session_${decoded.userId}`);
+        return null;
+      }
 
+      // Trouver l'utilisateur dans les comptes de démo
+      const user = DEMO_USERS.find(u => u.id === decoded.userId);
       if (!user) {
         return null;
       }
@@ -158,39 +154,41 @@ export class AuthService {
 
   // Déconnexion
   static async logout(token: string): Promise<void> {
-    await db.delete(userSessions)
-      .where(eq(userSessions.token, token));
+    try {
+      const decoded = decodeSimpleToken(token);
+      if (decoded) {
+        localStorage.removeItem(`session_${decoded.userId}`);
+      }
+    } catch (error) {
+      // Ignorer les erreurs de décodage lors de la déconnexion
+    }
   }
 
-  // Changer le mot de passe
+  // Inscription (non implémentée pour les comptes de démo)
+  static async register(data: RegisterData): Promise<AuthUser> {
+    throw new Error('L\'inscription n\'est pas disponible pour les comptes de démonstration');
+  }
+
+  // Changer le mot de passe (non implémenté pour les comptes de démo)
   static async changePassword(userId: string, oldPassword: string, newPassword: string): Promise<void> {
-    const [user] = await db.select()
-      .from(users)
-      .where(eq(users.id, userId))
-      .limit(1);
-
-    if (!user) {
-      throw new Error('Utilisateur non trouvé');
-    }
-
-    const isOldPasswordValid = await bcrypt.compare(oldPassword, user.password);
-    if (!isOldPasswordValid) {
-      throw new Error('Ancien mot de passe incorrect');
-    }
-
-    const hashedNewPassword = await bcrypt.hash(newPassword, 12);
-    
-    await db.update(users)
-      .set({ 
-        password: hashedNewPassword,
-        updatedAt: new Date().toISOString()
-      })
-      .where(eq(users.id, userId));
+    throw new Error('Le changement de mot de passe n\'est pas disponible pour les comptes de démonstration');
   }
 
   // Nettoyer les sessions expirées
   static async cleanExpiredSessions(): Promise<void> {
-    await db.delete(userSessions)
-      .where(eq(userSessions.expiresAt, new Date().toISOString()));
+    const now = new Date();
+    DEMO_USERS.forEach(user => {
+      const sessionData = localStorage.getItem(`session_${user.id}`);
+      if (sessionData) {
+        try {
+          const session = JSON.parse(sessionData);
+          if (new Date(session.expiresAt) < now) {
+            localStorage.removeItem(`session_${user.id}`);
+          }
+        } catch (error) {
+          localStorage.removeItem(`session_${user.id}`);
+        }
+      }
+    });
   }
 }

@@ -23,7 +23,11 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onError }) => {
       const { user, token } = await AuthService.login(credentials);
       onLogin(user, token);
     } catch (error) {
-      onError(error instanceof Error ? error.message : 'Erreur de connexion');
+      console.error('Login error:', error);
+      const errorMessage = error && typeof error === 'object' && 'message' in error 
+        ? (error as Error).message 
+        : 'Erreur de connexion';
+      onError(errorMessage);
     } finally {
       setIsLoading(false);
     }
