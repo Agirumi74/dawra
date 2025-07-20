@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { BrowserMultiFormatReader, Result } from '@zxing/browser';
-import { X, Camera, Loader2 } from 'lucide-react';
+import { X, Loader2 } from 'lucide-react';
 
 interface BarcodeScannerProps {
   onScan: (barcode: string) => void;
@@ -18,17 +18,7 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
   const [error, setError] = useState<string>('');
   const readerRef = useRef<BrowserMultiFormatReader | null>(null);
 
-  useEffect(() => {
-    if (isActive) {
-      startScanning();
-    } else {
-      stopScanning();
-    }
-
-    return () => stopScanning();
-  }, [isActive]);
-
-  const startScanning = async () => {
+  const startScanning = useCallback(async () => {
     try {
       setIsScanning(true);
       setError('');
@@ -76,14 +66,26 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
       setError(error instanceof Error ? error.message : 'Erreur inconnue');
       setIsScanning(false);
     }
-  };
+  }, [onScan]);
 
-  const stopScanning = () => {
+  const stopScanning = useCallback(() => {
     if (readerRef.current) {
       readerRef.current.reset();
     }
     setIsScanning(false);
-  };
+  }, []);
+
+  useEffect(() => {
+    if (isActive) {
+      startScanning();
+    } else {
+      stopScanning();
+    }
+
+    return () => stopScanning();
+  }, [isActive, startScanning, stopScanning]);
+
+
 
   if (!isActive) {
     return null;

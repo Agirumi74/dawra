@@ -6,27 +6,20 @@ import { MapPin, Search, Settings } from 'lucide-react';
 
 export const AddressSearchDemo: React.FC = () => {
   const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
-  const [showAdvanced, setShowAdvanced] = useState(false);
-  const [showSmart, setShowSmart] = useState(false);
   const [demoMode, setDemoMode] = useState<'advanced' | 'smart' | 'none'>('none');
 
   const handleAddressSelect = (address: Address) => {
     setSelectedAddress(address);
-    setShowAdvanced(false);
-    setShowSmart(false);
     setDemoMode('none');
   };
 
   const handleCancel = () => {
-    setShowAdvanced(false);
-    setShowSmart(false);
     setDemoMode('none');
   };
 
-  const handlePackageComplete = (packageData: any, duplicateCount?: number) => {
+  const handlePackageComplete = (packageData: Address, duplicateCount?: number) => {
     console.log('Package completed:', packageData, 'Duplicates:', duplicateCount);
-    setSelectedAddress(packageData.address);
-    setShowSmart(false);
+    setSelectedAddress(packageData);
     setDemoMode('none');
   };
 

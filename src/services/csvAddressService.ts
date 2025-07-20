@@ -120,7 +120,7 @@ export class CSVAddressService {
 
     const normalizedQuery = this.normalizeText(query);
     const queryWords = normalizedQuery.split(' ').filter(word => word.length > 0);
-    let results: CSVAddress[] = [];
+    const results: CSVAddress[] = [];
 
     // Recherche dans la base d'adresses locale d'abord
     const localAddresses = AddressDatabaseService.searchAddresses(query);
