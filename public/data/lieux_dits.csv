@@ -5,6 +5,1887 @@ id;nom_lieu_dit;code_postal;code_insee;nom_commune;code_insee_ancienne_commune;n
 74293_25tz13;Impasse de la Bévière;74140;74293;Veigy-Foncenex;;;951700.16;6579672.95;6.269208;46.270037;bal;bal
 74293_50vuon;La Planche;74140;74293;Veigy-Foncenex;;;951700.16;6579672.95;6.269208;46.270037;bal;bal
 74293_b2xqon;La Tuilière;74140;74293;Veigy-Foncenex;;;951700.16;6579672.95;6.269208;46.270037;bal;bal
-74010_LD001;Les Marquisats;74000;74010;Annecy;;;912678.90;6543543.21;5.915678;45.915678;bal;bal
-74010_LD002;Seynod;74600;74010;Annecy;;;913789.01;6544654.32;5.926789;45.926789;bal;bal
-74002_LD001;Le Château;74540;74002;Alby-sur-Chéran;;;933800.00;6528300.00;6.012000;45.814000;bal;bal
+74293_1watle;Le Marais;74140;74293;Veigy-Foncenex;;;951700.16;6579672.95;6.269208;46.270037;bal;bal
+74293_mh4oef;Lotissement la Pierre Verte;74140;74293;Veigy-Foncenex;;;950757.98;6581152.92;6.257777;46.283703;bal;bal
+74293_evuqno;Lotissement la Vue du Jura;74140;74293;Veigy-Foncenex;;;951700.16;6579672.95;6.269208;46.270037;bal;bal
+74293_8byg8i;Lotissement le Bedon;74140;74293;Veigy-Foncenex;;;951700.16;6579672.95;6.269208;46.270037;bal;bal
+74293_A016;Lotissement Les Cabrettes;74140;74293;Veigy-Foncenex;;;950749.13;6581201.24;6.257688;46.284141;bal;bal
+74293_7n74fp;Lotissement les Nuirates;74140;74293;Veigy-Foncenex;;;951700.16;6579672.95;6.269208;46.270037;bal;bal
+74293_iw21n7;Lotissement les Places;74140;74293;Veigy-Foncenex;;;951700.16;6579672.95;6.269208;46.270037;bal;bal
+74293_A110;Lotissement les Préludes;74140;74293;Veigy-Foncenex;;;951700.16;6579672.95;6.269208;46.270037;bal;bal
+74293_iymc7a;Lotissement Pavillon Sud A;74140;74293;Veigy-Foncenex;;;951700.16;6579672.95;6.269208;46.270037;bal;bal
+74293_d3j7ok;Lotissement Pavillon Sud B;74140;74293;Veigy-Foncenex;;;951700.16;6579672.95;6.269208;46.270037;bal;bal
+74293_j6tylu;Lotissement Plein Sud;74140;74293;Veigy-Foncenex;;;951700.16;6579672.95;6.269208;46.270037;bal;bal
+74293_g5xlme;Lotissement Pré Paccot;74140;74293;Veigy-Foncenex;;;951700.16;6579672.95;6.269208;46.270037;bal;bal
+74293_dxognz;Lotissement Saint Hubert 1;74140;74293;Veigy-Foncenex;;;951700.16;6579672.95;6.269208;46.270037;bal;bal
+74293_iscp8s;Lotissement Saint Hubert 2;74140;74293;Veigy-Foncenex;;;951700.16;6579672.95;6.269208;46.270037;bal;bal
+74293_tu4oot;Lotissement Saint Hubert 3;74140;74293;Veigy-Foncenex;;;951700.16;6579672.95;6.269208;46.270037;bal;bal
+74285_8627l6;Benoz;74910;74285;Usinens;;;919157.77;6549080.02;5.832674;46.006076;bal;bal
+74285_hakef3;Bovinens;74910;74285;Usinens;;;920511.95;6550763.05;5.850947;46.020783;bal;bal
+74285_c9y1rf;Chatel;74910;74285;Usinens;;;920544.53;6547575.11;5.849881;45.992084;bal;bal
+74285_o0b7bx;Chef-Lieu;74910;74285;Usinens;;;919839.4;6549577.79;5.841708;46.010335;bal;bal
+74285_2gzj83;Lovanel;74910;74285;Usinens;;;920718.78;6549692.97;5.853119;46.011086;bal;bal
+74285_a873dg;Pont Rouge;74910;74285;Usinens;;;921825.35;6550352.25;5.86772;46.016658;bal;bal
+74285_dinayt;Tanay;74910;74285;Usinens;;;920939.59;6550106.22;5.856164;46.014733;bal;bal
+74285_B139;Vers Croix;74910;74285;Usinens;;;920472.92;6549912.22;5.850046;46.013139;bal;bal
+74282_6j28qx;Aviernoz;74570;74282;Fillière;74022;Aviernoz;949425.41;6547093.29;6.222436;45.977751;bal;bal
+74282_yxkowb;Évires;74570;74282;Fillière;74120;Évires;949318.48;6553744.17;6.224563;46.037631;bal;bal
+74282_qi6ie2;Les Ollières;74570;74282;Fillière;74204;Les Ollières;946289.89;6547079.88;6.181964;45.978775;bal;bal
+74282_bmtnss;Saint-Martin-Bellevue;74570;74282;Fillière;74245;Saint-Martin-Bellevue;943771.41;6545223.31;6.148505;45.962979;bal;bal
+74282_B535;Thorens-Glières;74570;74282;Fillière;74282;Thorens-Glières;951205.22;6549484.7;6.246674;45.998611;bal;bal
+74273_B009;Balme Dessous;74740;74273;Sixt-Fer-à-Cheval;;;990251.81;6557732.74;6.755685;46.057226;bal;bal
+74273_B010;Balme Dessus;74740;74273;Sixt-Fer-à-Cheval;;;990003.54;6558042.89;6.752668;46.060122;bal;bal
+74273_B060;Combe Rateau;74740;74273;Sixt-Fer-à-Cheval;;;991263.76;6556654.66;6.768094;46.047095;bal;bal
+74273_B067;Communal du Déchargeux;74740;74273;Sixt-Fer-à-Cheval;;;991544.33;6555178.51;6.770807;46.033697;bal;bal
+74273_B066;Communal du Praz;74740;74273;Sixt-Fer-à-Cheval;;;991658.34;6555361.07;6.772392;46.03529;bal;bal
+74273_B088;Crêt de la Chapelle;74740;74273;Sixt-Fer-à-Cheval;;;991493.36;6556969.14;6.771254;46.049825;bal;bal
+74273_B099;Demi Journeaux;74740;74273;Sixt-Fer-à-Cheval;;;991282.27;6557020.76;6.768559;46.05038;bal;bal
+74273_u5x4wm;Englène;74740;74273;Sixt-Fer-à-Cheval;;;990725.09;6556163.02;6.760833;46.042904;bal;bal
+74273_B161;Granges de Bovère;74740;74273;Sixt-Fer-à-Cheval;;;991484.19;6556645.84;6.770936;46.046921;bal;bal
+74273_egubdk;Hauterive;74740;74273;Sixt-Fer-à-Cheval;;;991156.21;6556929.13;6.766874;46.04961;bal;bal
+74273_1exbun;la Chalettaz;74740;74273;Sixt-Fer-à-Cheval;;;991642.45;6557670.02;6.773613;46.056065;bal;bal
+74273_ap70cn;la Chapelle;74740;74273;Sixt-Fer-à-Cheval;;;991523.17;6557190.81;6.771776;46.051806;bal;bal
+74273_eea4i8;Lachat;74740;74273;Sixt-Fer-à-Cheval;;;991616.08;6557574.14;6.773213;46.055214;bal;bal
+74273_B147;la Glière d'En bas;74740;74273;Sixt-Fer-à-Cheval;;;991344.56;6557363.27;6.769575;46.053434;bal;bal
+74273_B148;la Glière d'En Haut;74740;74273;Sixt-Fer-à-Cheval;;;991591.88;6557448.91;6.772823;46.054098;bal;bal
+74273_B172;la Joux de Salles;74740;74273;Sixt-Fer-à-Cheval;;;991438.22;6553742.7;6.768551;46.020828;bal;bal
+74273_rl111u;la Riolle;74740;74273;Sixt-Fer-à-Cheval;;;991283.81;6556581.68;6.768308;46.04643;bal;bal
+74273_hqxhgp;Lavoisière;74740;74273;Sixt-Fer-à-Cheval;;;991688.06;6556417;6.773428;46.044775;bal;bal
+74273_qvz7jx;le Brairet;74740;74273;Sixt-Fer-à-Cheval;;;993307.46;6558500.67;6.79564;46.062818;bal;bal
+74273_vamr82;le Brairet;74740;74273;Sixt-Fer-à-Cheval;;;993303.14;6558495.57;6.795581;46.062774;bal;bal
+74273_hu2ymr;l'Écharny;74740;74273;Sixt-Fer-à-Cheval;;;992902.45;6558225.26;6.790236;46.060516;bal;bal
+74273_903smg;le Crot;74740;74273;Sixt-Fer-à-Cheval;;;992845.68;6558142.38;6.789451;46.059795;bal;bal
+74273_1p4ndl;le Fay;74740;74273;Sixt-Fer-à-Cheval;;;991086.74;6556658.88;6.76581;46.047209;bal;bal
+74273_7n5bdi;le Frenalay;74740;74273;Sixt-Fer-à-Cheval;;;997059.2;6560423.2;6.845325;46.078476;bal;bal
+74273_lha4w5;le Lochet;74740;74273;Sixt-Fer-à-Cheval;;;993349.58;6558744.84;6.796336;46.064996;bal;bal
+74273_s0f49e;le Molliet;74740;74273;Sixt-Fer-à-Cheval;;;994004.16;6559141.15;6.805041;46.068277;bal;bal
+74273_i79bmt;le Mont;74740;74273;Sixt-Fer-à-Cheval;;;990443.27;6558277.62;6.758494;46.062045;bal;bal
+74273_33y2cl;le Pelly;74740;74273;Sixt-Fer-à-Cheval;;;996550.88;6559880.23;6.838414;46.073815;bal;bal
+74273_B247;le Pied du Plan;74740;74273;Sixt-Fer-à-Cheval;;;989886.06;6557756.37;6.750974;46.057595;bal;bal
+74273_dowc8r;le Planay;74740;74273;Sixt-Fer-à-Cheval;;;991927.7;6556807.81;6.776765;46.048187;bal;bal
+74273_wor8rw;les Bouchets;74740;74273;Sixt-Fer-à-Cheval;;;991962.54;6556563.55;6.777064;46.045975;bal;bal
+74273_hzn3gr;les Curtets;74740;74273;Sixt-Fer-à-Cheval;;;992698.56;6558013.13;6.78747;46.058696;bal;bal
+74273_wbvpl3;les Faux;74740;74273;Sixt-Fer-à-Cheval;;;991638.77;6557122.18;6.773227;46.051139;bal;bal
+74273_wsh1t7;les Frasses;74740;74273;Sixt-Fer-à-Cheval;;;991797.83;6554524.79;6.773677;46.027708;bal;bal
+74273_B157;les Grandes Vernes;74740;74273;Sixt-Fer-à-Cheval;;;996703.25;6560384.07;6.8407;46.07828;bal;bal
+74273_x2b4az;les Matelons;74740;74273;Sixt-Fer-à-Cheval;;;993008.05;6558163.52;6.791562;46.059915;bal;bal
+74273_wugkps;le Sougey;74740;74273;Sixt-Fer-à-Cheval;;;989495.62;6557978.85;6.746066;46.059763;bal;bal
+74273_m1dn5i;les Parchières;74740;74273;Sixt-Fer-à-Cheval;;;994736.56;6559574.65;6.814776;46.071858;bal;bal
+74273_B245;les Petites Charny;74740;74273;Sixt-Fer-à-Cheval;;;992984.13;6558397.07;6.791398;46.062026;bal;bal
+74273_smozqx;les Raffourds;74740;74273;Sixt-Fer-à-Cheval;;;990706;6557614.07;6.76148;46.055964;bal;bal
+74273_3st6kc;le Vivier;74740;74273;Sixt-Fer-à-Cheval;;;992219.87;6557670.09;6.781073;46.055817;bal;bal
+74273_B210;Mollards du Plan du Clos;74740;74273;Sixt-Fer-à-Cheval;;;991006.66;6556335.09;6.764576;46.044331;bal;bal
+74273_vy3gi5;Nambride;74740;74273;Sixt-Fer-à-Cheval;;;994531.4;6559498.36;6.812077;46.071261;bal;bal
+74273_heonsl;Passy;74740;74273;Sixt-Fer-à-Cheval;;;992181.45;6556929.14;6.780118;46.049169;bal;bal
+74273_vhbk17;Penoutlay;74740;74273;Sixt-Fer-à-Cheval;;;991530.19;6556564.55;6.77148;46.04617;bal;bal
+74273_B254;Plan de la Chapelle;74740;74273;Sixt-Fer-à-Cheval;;;991418.98;6557108.12;6.770379;46.051107;bal;bal
+74273_B259;Plan du Clos;74740;74273;Sixt-Fer-à-Cheval;;;996670;6560324.75;6.840233;46.077761;bal;bal
+74273_erngfe;Salmoiry;74740;74273;Sixt-Fer-à-Cheval;;;990134.84;6557869.81;6.754258;46.058509;bal;bal
+74273_ghan84;Salvagny;74740;74273;Sixt-Fer-à-Cheval;;;991594.03;6556034.06;6.771977;46.041371;bal;bal
+74273_8lgp7i;Sixt;74740;74273;Sixt-Fer-à-Cheval;;;991779.85;6557514.6;6.775292;46.054608;bal;bal
+74273_nsay4m;sous le Saix;74740;74273;Sixt-Fer-à-Cheval;;;991220.69;6557571.03;6.768103;46.055356;bal;bal
+74273_B198;sous Maison Neuve;74740;74273;Sixt-Fer-à-Cheval;;;991353.51;6556796.69;6.769341;46.048334;bal;bal
+74273_yux42q;sur Maison Neuve;74740;74273;Sixt-Fer-à-Cheval;;;991466.45;6556672.12;6.770723;46.047165;bal;bal
+74273_2thaqi;Turchebise;74740;74273;Sixt-Fer-à-Cheval;;;991741.7;6556502.95;6.774174;46.045525;bal;bal
+74273_B350;Vers les Faix;74740;74273;Sixt-Fer-à-Cheval;;;989440.98;6557815.83;6.74526;46.05832;bal;bal
+74273_B351;Vers Saint Ponce;74740;74273;Sixt-Fer-à-Cheval;;;992014.86;6557747.1;6.778472;46.056598;bal;bal
+74275_d6yq64;Parking Carle;74290;74275;Talloires-Montmin;74275;Talloires;950180.75;6530206.63;6.223283;45.825537;bal;bal
+74275_182d6w;Parking décollage Planfait;74290;74275;Talloires-Montmin;74275;Talloires;950137.42;6533197.5;6.224298;45.852463;bal;bal
+74275_wzqzkn;Parking de la Mairie;74290;74275;Talloires-Montmin;74275;Talloires;949513.66;6531730.53;6.215497;45.839493;bal;bal
+74275_0xs3gs;Parking de la plage;74290;74275;Talloires-Montmin;74275;Talloires;949279.03;6531660.62;6.21244;45.83895;bal;bal
+74275_g0si54;Parking du Golf;74290;74275;Talloires-Montmin;74275;Talloires;948539.19;6532951.92;6.203591;45.850839;bal;bal
+74275_9tzwe5;Parking du Jardin Public;74290;74275;Talloires-Montmin;74275;Talloires;949266.14;6531675.66;6.212282;45.83909;bal;bal
+74275_6rhlz8;Parking Jean Excoffier;74290;74275;Talloires-Montmin;74275;Talloires;949365.84;6531758.85;6.213609;45.839802;bal;bal
+74275_2w7hjz;Parking plage d'Angon;74290;74275;Talloires-Montmin;74275;Talloires;950129.68;6530096.62;6.222568;45.824566;bal;bal
+74275_lchqxe;Parkings Col de la Forclaz Départementale 42;74290;74275;Talloires-Montmin;74187;Montmin;952061.8;6528327.16;6.246496;45.807933;bal;bal
+74267_1tdgh3;Cimetière des Provendes;74320;74267;Sevrier;;;943381.95;6532362.87;6.136885;45.847403;bal;bal
+74267_sitddf;Cimetière des Provendes;74320;74267;Sevrier;;;943366.46;6532355.81;6.136682;45.847345;bal;bal
+74267_ilq943;Cimetière du Chef-lieu;74320;74267;Sevrier;;;943754.81;6534284.84;6.142671;45.864563;bal;bal
+74267_tbxcg4;Cimetière du Chef-lieu;74320;74267;Sevrier;;;943771.88;6534211.17;6.142853;45.863894;bal;bal
+74267_12grbl;Place Colonel Raymond Dorade;74320;74267;Sevrier;;;943732.52;6534214.82;6.142348;45.863941;bal;bal
+74267_s4t3np;Place du Marché;74320;74267;Sevrier;;;943599.49;6534285.55;6.140671;45.864625;bal;bal
+74267_9gcsar;Place Henri Gour;74320;74267;Sevrier;;;943524.72;6534307.02;6.139719;45.864845;bal;bal
+74267_25gena;Plage du Clos Berthet;74320;74267;Sevrier;;;944084.35;6533378.85;6.14645;45.856293;bal;bal
+74267_o39n82;Plage municipale;74320;74267;Sevrier;;;943869.69;6534086.92;6.144049;45.862741;bal;bal
+74267_9sebe3;Ponton communal de la Cale Sèche;74320;74267;Sevrier;;;943968.49;6533788;6.145168;45.860016;bal;bal
+74267_a7y98i;Ponton communal de Létraz;74320;74267;Sevrier;;;943775.66;6535356.04;6.143489;45.874194;bal;bal
+74267_jtz7j1;Ponton communal des Borenges;74320;74267;Sevrier;;;943743.07;6535741.4;6.143267;45.877673;bal;bal
+74267_ewq3y2;Ponton communal des Côtes;74320;74267;Sevrier;;;943789.01;6535293.67;6.143629;45.873628;bal;bal
+74267_uqirgb;Ponton communal des Écolés;74320;74267;Sevrier;;;943723.66;6535850.87;6.143073;45.878665;bal;bal
+74267_3wvnsq;Ponton communal des Mongets;74320;74267;Sevrier;;;944691.86;6532603.46;6.153874;45.849098;bal;bal
+74267_v58dtl;Ponton communal des Roseaux;74320;74267;Sevrier;;;943820.65;6533877.47;6.14331;45.860874;bal;bal
+74267_npriap;Ponton communal des Seines;74320;74267;Sevrier;;;943795.82;6534859.61;6.143494;45.86972;bal;bal
+74267_q2nwdt;Ponton communal des Seines 2;74320;74267;Sevrier;;;943808.98;6534885.81;6.143677;45.869951;bal;bal
+74267_hnm6xj;Ponton communal du Brouillet;74320;74267;Sevrier;;;944674.88;6532573.55;6.15364;45.848835;bal;bal
+74267_447ch5;Ponton communal du Port;74320;74267;Sevrier;;;943932.21;6533741.66;6.144677;45.859612;bal;bal
+74256_i2oaxe;A Bellevue;74700;74256;Sallanches;;;;;;;bal;bal
+74256_4h40b1;Aigue Potaz;74700;74256;Sallanches;;;;;;;bal;bal
+74256_b1n353;Arvay;74700;74256;Sallanches;;;;;;;bal;bal
+74256_dxoe5v;Au Beranger;74700;74256;Sallanches;;;;;;;bal;bal
+74256_46bv75;Au Bovy;74700;74256;Sallanches;;;;;;;bal;bal
+74256_84j7aw;Au Premont;74700;74256;Sallanches;;;;;;;bal;bal
+74256_9lzihb;Bardet;74700;74256;Sallanches;;;;;;;bal;bal
+74256_9uh2mp;Bellegarde;74700;74256;Sallanches;;;;;;;bal;bal
+74256_qojxue;Belle Tour;74700;74256;Sallanches;;;;;;;bal;bal
+74256_vq0puy;Besseray;74700;74256;Sallanches;;;;;;;bal;bal
+74256_dgr1o6;Biolley;74700;74256;Sallanches;;;;;;;bal;bal
+74256_vlxpjl;Blancheville;74700;74256;Sallanches;;;;;;;bal;bal
+74256_hjhz37;Boccard - Est;74700;74256;Sallanches;;;;;;;bal;bal
+74256_d7dnka;Bocqueny;74700;74256;Sallanches;;;;;;;bal;bal
+74256_vr6oz3;Bois de la Crusaz;74700;74256;Sallanches;;;;;;;bal;bal
+74256_kujcvq;Bossenet;74700;74256;Sallanches;;;;;;;bal;bal
+74256_flyzx1;Burzier;74700;74256;Sallanches;;;;;;;bal;bal
+74256_c1xrep;Burzier-Devant;74700;74256;Sallanches;;;;;;;bal;bal
+74256_691xqh;Cayenne;74700;74256;Sallanches;;;;;;;bal;bal
+74256_f1s5me;Champ Derriere;74700;74256;Sallanches;;;;;;;bal;bal
+74256_w65cz5;Champ Devant;74700;74256;Sallanches;;;;;;;bal;bal
+74256_ucbfe5;Champ Moulin;74700;74256;Sallanches;;;;;;;bal;bal
+74256_t036ob;Champs des Mollards;74700;74256;Sallanches;;;;;;;bal;bal
+74256_vr62y5;Champs des Pierres;74700;74256;Sallanches;;;;;;;bal;bal
+74256_n2xz0o;Champs Louvier;74700;74256;Sallanches;;;;;;;bal;bal
+74256_st6tzx;Champ Vieux;74700;74256;Sallanches;;;;;;;bal;bal
+74256_21owl0;Chantemerle;74700;74256;Sallanches;;;;;;;bal;bal
+74256_klvrml;Clos Batard;74700;74256;Sallanches;;;;;;;bal;bal
+74256_z6zlc1;Clos des Baz;74700;74256;Sallanches;;;;;;;bal;bal
+74256_6x5545;Clos du Nant;74700;74256;Sallanches;;;;;;;bal;bal
+74256_d0er1e;Clos l’Angrenaz;74700;74256;Sallanches;;;;;;;bal;bal
+74256_aydi0o;Clos l’Heritier;74700;74256;Sallanches;;;;;;;bal;bal
+74256_mby421;Clos Nicoud;74700;74256;Sallanches;;;;;;;bal;bal
+74256_v7eyc1;Clos Pernoud;74700;74256;Sallanches;;;;;;;bal;bal
+74256_dmzud5;Cohendys-d’En-Bas;74700;74256;Sallanches;;;;;;;bal;bal
+74256_nai8ha;Cohendys-En-Haut;74700;74256;Sallanches;;;;;;;bal;bal
+74256_m67w8h;Cornillon;74700;74256;Sallanches;;;;;;;bal;bal
+74256_sfmsub;Covagnet;74700;74256;Sallanches;;;;;;;bal;bal
+74256_vwjqox;Cusin;74700;74256;Sallanches;;;;;;;bal;bal
+74256_tzrr4b;Devant-Diere;74700;74256;Sallanches;;;;;;;bal;bal
+74256_u2fqpe;Fessy;74700;74256;Sallanches;;;;;;;bal;bal
+74256_2etitb;Fessy-Ouest;74700;74256;Sallanches;;;;;;;bal;bal
+74256_iaxh61;Fond de Vouilloux;74700;74256;Sallanches;;;;;;;bal;bal
+74256_yd477e;Fontanet;74700;74256;Sallanches;;;;;;;bal;bal
+74256_y65imr;Fontani;74700;74256;Sallanches;;;;;;;bal;bal
+74256_pynn5g;Gadon;74700;74256;Sallanches;;;;;;;bal;bal
+74256_0dq91y;Gaillard;74700;74256;Sallanches;;;;;;;bal;bal
+74256_s2soy4;Grand Essert;74700;74256;Sallanches;;;;;;;bal;bal
+74256_bk28q1;Grand-Pre;74700;74256;Sallanches;;;;;;;bal;bal
+74256_63w0el;Haute Rive;74700;74256;Sallanches;;;;;;;bal;bal
+74256_a6vv9l;Ile Commune;74700;74256;Sallanches;;;;;;;bal;bal
+74256_8ltgjm;La Balme;74700;74256;Sallanches;;;;;;;bal;bal
+74256_39knye;La Becoire;74700;74256;Sallanches;;;;;;;bal;bal
+74256_ouc0pc;La Bougne;74700;74256;Sallanches;;;;;;;bal;bal
+74256_5vwu06;La Charlotte;74700;74256;Sallanches;;;;;;;bal;bal
+74256_5ux7qz;La Charmette;74700;74256;Sallanches;;;;;;;bal;bal
+74256_316ujs;Lachat;74700;74256;Sallanches;;;;;;;bal;bal
+74256_jvgifj;La Combe;74700;74256;Sallanches;;;;;;;bal;bal
+74256_48upl3;La Cote;74700;74256;Sallanches;;;;;;;bal;bal
+74256_ahj9h8;La Crotte;74700;74256;Sallanches;;;;;;;bal;bal
+74256_xiekbw;La Ferme;74700;74256;Sallanches;;;;;;;bal;bal
+74256_d9dquq;La Flaix;74700;74256;Sallanches;;;;;;;bal;bal
+74256_2yilm7;La Fley;74700;74256;Sallanches;;;;;;;bal;bal
+74256_esbj3p;La Follieu;74700;74256;Sallanches;;;;;;;bal;bal
+74256_aby0hm;La Frasse;74700;74256;Sallanches;;;;;;;bal;bal
+74256_9uwlb3;La Grange;74700;74256;Sallanches;;;;;;;bal;bal
+74256_ophhd5;La Maladiere;74700;74256;Sallanches;;;;;;;bal;bal
+74256_z63w1y;La Mouille;74700;74256;Sallanches;;;;;;;bal;bal
+74256_2su1r6;La Paccoterie;74700;74256;Sallanches;;;;;;;bal;bal
+74256_rhbmq6;La Perriere;74700;74256;Sallanches;;;;;;;bal;bal
+74256_z1d0mn;La Pesse;74700;74256;Sallanches;;;;;;;bal;bal
+74256_td1xn6;La Pierre;74700;74256;Sallanches;;;;;;;bal;bal
+74256_bfuk13;La Plagne;74700;74256;Sallanches;;;;;;;bal;bal
+74256_s40c4y;La Plantee;74700;74256;Sallanches;;;;;;;bal;bal
+74256_wsezh3;La Provence;74700;74256;Sallanches;;;;;;;bal;bal
+74256_40wb4d;La Ripaz;74700;74256;Sallanches;;;;;;;bal;bal
+74256_o3ryfk;La Torche;74700;74256;Sallanches;;;;;;;bal;bal
+74256_dz6dhn;La Vigne;74700;74256;Sallanches;;;;;;;bal;bal
+74256_skkexa;Le Bosson;74700;74256;Sallanches;;;;;;;bal;bal
+74256_iznj1h;Le Bouloz;74700;74256;Sallanches;;;;;;;bal;bal
+74256_s22c1d;Lechat;74700;74256;Sallanches;;;;;;;bal;bal
+74256_g2m44i;Le Clos;74700;74256;Sallanches;;;;;;;bal;bal
+74256_4818dc;Le Coudray;74700;74256;Sallanches;;;;;;;bal;bal
+74256_5te4ad;Le Cret;74700;74256;Sallanches;;;;;;;bal;bal
+74256_2f0rvv;Le Crot;74700;74256;Sallanches;;;;;;;bal;bal
+74256_fs4ohc;Le Cugnet;74700;74256;Sallanches;;;;;;;bal;bal
+74256_hiid7f;Le Freney;74700;74256;Sallanches;;;;;;;bal;bal
+74256_n5io0s;Le Grand Champ;74700;74256;Sallanches;;;;;;;bal;bal
+74256_h9bnn6;Le Grand-Clos-Est;74700;74256;Sallanches;;;;;;;bal;bal
+74256_z8djtf;Le Grand Clos-Ouest;74700;74256;Sallanches;;;;;;;bal;bal
+74256_e5hw2x;Le Miroir;74700;74256;Sallanches;;;;;;;bal;bal
+74256_hoq4fb;Le Mot-Sud;74700;74256;Sallanches;;;;;;;bal;bal
+74256_bcmuar;Le Plan;74700;74256;Sallanches;;;;;;;bal;bal
+74256_8b3dic;Le Plan-Verney;74700;74256;Sallanches;;;;;;;bal;bal
+74256_0lvpxl;Le Psot;74700;74256;Sallanches;;;;;;;bal;bal
+74256_h9yo38;Le Rosay;74700;74256;Sallanches;;;;;;;bal;bal
+74256_ay9t1h;Les Abepins;74700;74256;Sallanches;;;;;;;bal;bal
+74256_7jyfaz;Les Bottolliers;74700;74256;Sallanches;;;;;;;bal;bal
+74256_tfgmnm;Les Caches;74700;74256;Sallanches;;;;;;;bal;bal
+74256_c0vu8p;Les Champs des Pres;74700;74256;Sallanches;;;;;;;bal;bal
+74256_a76888;Les Cheneys;74700;74256;Sallanches;;;;;;;bal;bal
+74256_py88x5;Les Chesney;74700;74256;Sallanches;;;;;;;bal;bal
+74256_g5grnd;Les Choseaux;74700;74256;Sallanches;;;;;;;bal;bal
+74256_hhwcyb;Les Clodras;74700;74256;Sallanches;;;;;;;bal;bal
+74256_vma5b2;Les Combes;74700;74256;Sallanches;;;;;;;bal;bal
+74256_5kk25i;Les Communaux;74700;74256;Sallanches;;;;;;;bal;bal
+74256_vaqkm2;Les Communs;74700;74256;Sallanches;;;;;;;bal;bal
+74256_4q1oyn;Les Contamines;74700;74256;Sallanches;;;;;;;bal;bal
+74256_5m7hww;Les Creulets;74700;74256;Sallanches;;;;;;;bal;bal
+74256_h8qfpj;Les Cugnets;74700;74256;Sallanches;;;;;;;bal;bal
+74256_leztt9;Les Cusins;74700;74256;Sallanches;;;;;;;bal;bal
+74256_uqut3m;Les Enversins;74700;74256;Sallanches;;;;;;;bal;bal
+74256_twd8ig;Les Golettes;74700;74256;Sallanches;;;;;;;bal;bal
+74256_2zaj9b;Les Grands Champs;74700;74256;Sallanches;;;;;;;bal;bal
+74256_1kqtlr;Les Granges;74700;74256;Sallanches;;;;;;;bal;bal
+74256_4qabrl;Les Granges d’En Bas;74700;74256;Sallanches;;;;;;;bal;bal
+74256_c3tphs;Les Granges d’En Haut;74700;74256;Sallanches;;;;;;;bal;bal
+74256_9sc29c;Les Grangettes;74700;74256;Sallanches;;;;;;;bal;bal
+74256_ldjmod;Les Greppons;74700;74256;Sallanches;;;;;;;bal;bal
+74256_al3g91;Les Houches;74700;74256;Sallanches;;;;;;;bal;bal
+74256_d549jy;Les Iles-Nord;74700;74256;Sallanches;;;;;;;bal;bal
+74256_rardps;Les Iles sous Vouilloux;74700;74256;Sallanches;;;;;;;bal;bal
+74256_07csrm;Les Iles sous Vouilloux - Sud;74700;74256;Sallanches;;;;;;;bal;bal
+74256_1ubcbg;Les Iles-Sud;74700;74256;Sallanches;;;;;;;bal;bal
+74256_vbm7gj;Les Ilettes-Sud;74700;74256;Sallanches;;;;;;;bal;bal
+74256_88bdji;Les Jaillets;74700;74256;Sallanches;;;;;;;bal;bal
+74256_hto9od;Les Maisons;74700;74256;Sallanches;;;;;;;bal;bal
+74256_5xpwf1;Les Millieres;74700;74256;Sallanches;;;;;;;bal;bal
+74256_muscd2;Les Mollieres;74700;74256;Sallanches;;;;;;;bal;bal
+74256_gfwyva;Les Mouilles;74700;74256;Sallanches;;;;;;;bal;bal
+74256_iu9ksl;Les Moulins;74700;74256;Sallanches;;;;;;;bal;bal
+74256_0wsirb;Les Murets;74700;74256;Sallanches;;;;;;;bal;bal
+74256_c9ash3;Les Normands;74700;74256;Sallanches;;;;;;;bal;bal
+74256_9cowwp;Les Paccots;74700;74256;Sallanches;;;;;;;bal;bal
+74256_aw01ge;Les Pacots;74700;74256;Sallanches;;;;;;;bal;bal
+74256_nzyox3;Les Placettes;74700;74256;Sallanches;;;;;;;bal;bal
+74256_h9bpoe;Les Plagnes;74700;74256;Sallanches;;;;;;;bal;bal
+74256_tavoob;Les Poses;74700;74256;Sallanches;;;;;;;bal;bal
+74256_gsog8p;Les Poulets;74700;74256;Sallanches;;;;;;;bal;bal
+74256_dvkcer;Les Quoix;74700;74256;Sallanches;;;;;;;bal;bal
+74256_mjrf6o;Les Raches de Cornillon;74700;74256;Sallanches;;;;;;;bal;bal
+74256_vx6z6k;Les Rambochons;74700;74256;Sallanches;;;;;;;bal;bal
+74256_l9tjey;Les Rapilles;74700;74256;Sallanches;;;;;;;bal;bal
+74256_hhwwu5;Les Rassettes;74700;74256;Sallanches;;;;;;;bal;bal
+74256_wju701;Les Rubins;74700;74256;Sallanches;;;;;;;bal;bal
+74256_cs19p7;Les Ruthieux;74700;74256;Sallanches;;;;;;;bal;bal
+74256_degwae;L’Essert;74700;74256;Sallanches;;;;;;;bal;bal
+74256_3jdb8i;Les Tattes;74700;74256;Sallanches;;;;;;;bal;bal
+74256_4vmaka;Les Tronchets d’En Bas;74700;74256;Sallanches;;;;;;;bal;bal
+74256_41j7zq;Les Tronchets d’En-Haut;74700;74256;Sallanches;;;;;;;bal;bal
+74256_v1fjx3;Les Vannais;74700;74256;Sallanches;;;;;;;bal;bal
+74256_gwvq76;Les Vergers;74700;74256;Sallanches;;;;;;;bal;bal
+74256_9d2pcx;Les Vernays;74700;74256;Sallanches;;;;;;;bal;bal
+74256_iccy4j;Les Viberts;74700;74256;Sallanches;;;;;;;bal;bal
+74256_xm2oln;Les Vorziers;74700;74256;Sallanches;;;;;;;bal;bal
+74256_1099wl;Le Tampieu;74700;74256;Sallanches;;;;;;;bal;bal
+74256_jls3q1;Le Taumont;74700;74256;Sallanches;;;;;;;bal;bal
+74256_znwvoc;Le Teu;74700;74256;Sallanches;;;;;;;bal;bal
+74256_hrtmt4;Le Tombey-Nord;74700;74256;Sallanches;;;;;;;bal;bal
+74256_4ghi47;Levaux;74700;74256;Sallanches;;;;;;;bal;bal
+74256_bzkpl8;Le Verney;74700;74256;Sallanches;;;;;;;bal;bal
+74256_qa3k02;L’Ile a Gerfaut;74700;74256;Sallanches;;;;;;;bal;bal
+74256_urr370;L’Ile Roche;74700;74256;Sallanches;;;;;;;bal;bal
+74256_rg1yq3;Lintre;74700;74256;Sallanches;;;;;;;bal;bal
+74256_md55lr;Luzier;74700;74256;Sallanches;;;;;;;bal;bal
+74256_5jvm1g;Mabert;74700;74256;Sallanches;;;;;;;bal;bal
+74256_8ihu8q;Malsain;74700;74256;Sallanches;;;;;;;bal;bal
+74256_12p46b;Meribel;74700;74256;Sallanches;;;;;;;bal;bal
+74256_muct6v;Mernex;74700;74256;Sallanches;;;;;;;bal;bal
+74256_hc7pen;Monargue;74700;74256;Sallanches;;;;;;;bal;bal
+74256_a5oc2m;Montagny;74700;74256;Sallanches;;;;;;;bal;bal
+74256_q43ub2;Montavus;74700;74256;Sallanches;;;;;;;bal;bal
+74256_40yole;Mont-Rosset;74700;74256;Sallanches;;;;;;;bal;bal
+74256_bn6s3l;Mot - d’En - Bas;74700;74256;Sallanches;;;;;;;bal;bal
+74256_swpdbe;Mot - d’En - Haut;74700;74256;Sallanches;;;;;;;bal;bal
+74256_d8ap49;Nant-Cruy;74700;74256;Sallanches;;;;;;;bal;bal
+74256_jb0xhc;Outrediere;74700;74256;Sallanches;;;;;;;bal;bal
+74256_1bljmp;Paccotet;74700;74256;Sallanches;;;;;;;bal;bal
+74256_pmnw4j;Phiterne;74700;74256;Sallanches;;;;;;;bal;bal
+74256_lm3v4x;Planchamp;74700;74256;Sallanches;;;;;;;bal;bal
+74256_u3dyce;Plan Chevallier;74700;74256;Sallanches;;;;;;;bal;bal
+74256_e5xse6;Planchon;74700;74256;Sallanches;;;;;;;bal;bal
+74256_d5olcz;Plan de Chisse;74700;74256;Sallanches;;;;;;;bal;bal
+74256_n7liva;Plan de la Mouille;74700;74256;Sallanches;;;;;;;bal;bal
+74256_2i7s0e;Raccard;74700;74256;Sallanches;;;;;;;bal;bal
+74256_efvyrv;Remeruz;74700;74256;Sallanches;;;;;;;bal;bal
+74256_76ct1z;Reninge;74700;74256;Sallanches;;;;;;;bal;bal
+74256_5sofzm;Rochy;74700;74256;Sallanches;;;;;;;bal;bal
+74256_23p2lx;Rue Devant;74700;74256;Sallanches;;;;;;;bal;bal
+74256_swtky8;Sainte-Anne;74700;74256;Sallanches;;;;;;;bal;bal
+74256_4hne28;Saint-Joseph-Nord;74700;74256;Sallanches;;;;;;;bal;bal
+74256_gki3yn;Saint-Joseph-Sud;74700;74256;Sallanches;;;;;;;bal;bal
+74256_zgqev4;Saint-Martin;74700;74256;Sallanches;;;;;;;bal;bal
+74256_9iktud;Sallanches;74700;74256;Sallanches;;;;;;;bal;bal
+74256_ihdqg7;Sallanches-Ouest;74700;74256;Sallanches;;;;;;;bal;bal
+74256_p7zu8h;Soumot;74700;74256;Sallanches;;;;;;;bal;bal
+74256_dco657;Sous le Rocher;74700;74256;Sallanches;;;;;;;bal;bal
+74256_8gf4bb;Sous le Saix;74700;74256;Sallanches;;;;;;;bal;bal
+74256_23q8sy;Sous Villy;74700;74256;Sallanches;;;;;;;bal;bal
+74256_qctjfo;Sur le Mot;74700;74256;Sallanches;;;;;;;bal;bal
+74256_d8o4gg;Terret;74700;74256;Sallanches;;;;;;;bal;bal
+74256_tods1e;Tour de Chisse;74700;74256;Sallanches;;;;;;;bal;bal
+74256_8kjm8i;Tour de Servoz;74700;74256;Sallanches;;;;;;;bal;bal
+74256_dnhgyd;Tremot;74700;74256;Sallanches;;;;;;;bal;bal
+74256_cdq0za;Vers le Battoir;74700;74256;Sallanches;;;;;;;bal;bal
+74256_hmqzgq;Vouilloux-Nord;74700;74256;Sallanches;;;;;;;bal;bal
+74256_qh3soe;Vouilloux - Sud;74700;74256;Sallanches;;;;;;;bal;bal
+74254_9x31iz;Champollier;74540;74254;Saint-Sylvestre;;;934563.89;6531690.79;6.023013;45.844452;bal;bal
+74254_idouje;Collavin;74540;74254;Saint-Sylvestre;;;933679.01;6531597.17;6.011574;45.843914;bal;bal
+74254_qczyue;Lachat;74540;74254;Saint-Sylvestre;;;933806.17;6531041.48;6.012938;45.83887;bal;bal
+74254_i9a53w;La Gruy;74540;74254;Saint-Sylvestre;;;933896.95;6531951.22;6.014554;45.847025;bal;bal
+74254_sr81pu;Le Crêt;74540;74254;Saint-Sylvestre;;;934300.1;6530993.12;6.019273;45.838265;bal;bal
+74254_raydlm;Le Pissieux;74540;74254;Saint-Sylvestre;;;934547.76;6530156.66;6.022049;45.830653;bal;bal
+74254_ebmdcq;Marcelette;74540;74254;Saint-Sylvestre;;;933319.47;6530871.78;6.006589;45.83751;bal;bal
+74254_0do1e5;Muret;74540;74254;Saint-Sylvestre;;;934128.78;6532540.07;6.017829;45.852244;bal;bal
+74254_pr4qzh;Riondy;74540;74254;Saint-Sylvestre;;;933151.09;6531377.12;6.004669;45.842115;bal;bal
+74254_0at4bf;Songy;74540;74254;Saint-Sylvestre;;;933641.27;6530562.65;6.01058;45.834618;bal;bal
+74254_yqrc3q;Vouchy;74540;74254;Saint-Sylvestre;;;933222.23;6531917.71;6.00585;45.846955;bal;bal
+74249_B010;Champ Querbay;74500;74249;Saint-Paul-en-Chablais;;;980117.92;6592229.07;6.645339;46.371793;bal;bal
+74249_B022;Chez Bochet;74500;74249;Saint-Paul-en-Chablais;;;979479.48;6590698.91;6.636126;46.358294;bal;bal
+74249_B024;Chez Burquier;74500;74249;Saint-Paul-en-Chablais;;;977380.75;6592739.69;6.610072;46.377518;bal;bal
+74249_vw4d58;La Beunaz;74500;74249;Saint-Paul-en-Chablais;;;981298.29;6591550.76;6.660269;46.3652;bal;bal
+74249_wga0ez;La Gottetaz;74500;74249;Saint-Paul-en-Chablais;;;981147.15;6591650.14;6.658365;46.366157;bal;bal
+74249_uszvty;Les Faverges;74500;74249;Saint-Paul-en-Chablais;;;981267.51;6590805.58;6.65942;46.35851;bal;bal
+74249_ea2da2;Lotissement des Cerisiers;74500;74249;Saint-Paul-en-Chablais;;;979488.94;6592670.86;6.63743;46.376028;bal;bal
+74249_paz6vy;Lotissement des Mollardiers;74500;74249;Saint-Paul-en-Chablais;;;979399.09;6592683.84;6.63627;46.376182;bal;bal
+74249_u77mxf;Lotissement du Hameau de Gavot;74500;74249;Saint-Paul-en-Chablais;;;979576.93;6592604.99;6.638534;46.375399;bal;bal
+74249_a18q9p;Lyonnet;74500;74249;Saint-Paul-en-Chablais;;;978334.2;6591280.03;6.621593;46.363995;bal;bal
+74249_B087;Pierre Grosse;74500;74249;Saint-Paul-en-Chablais;;;977777.78;6593219.89;6.615518;46.381674;bal;bal
+74249_rqdcw7;Poëse;74500;74249;Saint-Paul-en-Chablais;;;978466.61;6593117.42;6.62441;46.380468;bal;bal
+74249_plepzv;Praubert;74500;74249;Saint-Paul-en-Chablais;;;980092.77;6592571.99;6.645218;46.374888;bal;bal
+74244_waumh6;Chef-Lieu;74800;74244;Saint-Laurent;;;960039.07;6554761.73;6.363614;46.04276;bal;bal
+74237_n1pi8p;Brêt;74500;74237;Saint-Gingolph;;;989337.41;6595611.3;6.767237;46.39832;bal;bal
+74237_k9ez59;Esplanade des Voiles;74500;74237;Saint-Gingolph;;;991984.66;6595249.29;6.801425;46.393922;bal;bal
+74237_13v4en;La Chéniaz;74500;74237;Saint-Gingolph;;;989935.2;6595502.89;6.774941;46.397088;bal;bal
+74237_t5jb48;La Ruppe;74500;74237;Saint-Gingolph;;;988596.37;6595950.41;6.757813;46.401688;bal;bal
+74237_goh4t0;Le Plan de Brêt;74500;74237;Saint-Gingolph;;;989580.59;6594879.67;6.769944;46.391635;bal;bal
+74237_29qjjo;Les Noirettes;74500;74237;Saint-Gingolph;;;988828.69;6595773.81;6.760724;46.4;bal;bal
+74237_B049;L'Homme Fort;74500;74237;Saint-Gingolph;;;988583.48;6595093.61;6.757115;46.393987;bal;bal
+74237_rfhkdf;Place Charles de Gaulle;74500;74237;Saint-Gingolph;;;992103.54;6595144.95;6.802905;46.392932;bal;bal
+74237_q0gyct;Place Jean Moulin;74500;74237;Saint-Gingolph;;;992186.97;6595305.4;6.80409;46.394339;bal;bal
+74237_mps73k;Séchaud;74500;74237;Saint-Gingolph;;;990635.4;6595213.01;6.783863;46.394179;bal;bal
+74236_sg3po6;Au Champ;74170;74236;Saint-Gervais-les-Bains;;;987937.14;6538552.27;6.714114;45.885686;bal;bal
+74236_B012;Beaulieu d'en Bas;74170;74236;Saint-Gervais-les-Bains;;;987648.8;6538713.8;6.710498;45.887261;bal;bal
+74236_B013;Beaulieu d'en Haut;74170;74236;Saint-Gervais-les-Bains;;;987524.61;6538519.97;6.708781;45.88557;bal;bal
+74236_q88ux1;Bécreton;74170;74236;Saint-Gervais-les-Bains;;;989585.92;6537597.62;6.734768;45.876399;bal;bal
+74236_C002;Bécrey d'en-Bas;74170;74236;Saint-Gervais-les-Bains;;;985395.04;6532507.61;6.677742;45.832385;bal;bal
+74236_C003;Bécrey d'en-Haut;74170;74236;Saint-Gervais-les-Bains;;;986133.81;6531962.99;6.686921;45.827176;bal;bal
+74236_26mxy5;Bellegarde;74170;74236;Saint-Gervais-les-Bains;;;987010.38;6537019.23;6.701251;45.872288;bal;bal
+74236_zupue5;Bettez;74170;74236;Saint-Gervais-les-Bains;;;991966.1;6536655.68;6.76484;45.866909;bal;bal
+74236_1rnz9n;Bionnasset;74170;74236;Saint-Gervais-les-Bains;;;991271.54;6536451.26;6.755772;45.865368;bal;bal
+74236_1d2doh;Bionnay;74170;74236;Saint-Gervais-les-Bains;;;989093.07;6536343.06;6.727658;45.865324;bal;bal
+74236_cns9jp;Bionnay;74170;74236;Saint-Gervais-les-Bains;;;989085.56;6536613.75;6.727726;45.867762;bal;bal
+74236_4ikpyh;Bocancey;74170;74236;Saint-Gervais-les-Bains;;;989012.98;6536862.9;6.726943;45.870034;bal;bal
+74236_mlgdwg;Bocqueney;74170;74236;Saint-Gervais-les-Bains;;;988472.47;6538423.85;6.720931;45.884304;bal;bal
+74236_B039;Bois de Combe;74170;74236;Saint-Gervais-les-Bains;;;987554.16;6537660.1;6.708641;45.877823;bal;bal
+74236_B041;Bois de la Charme;74170;74236;Saint-Gervais-les-Bains;;;989910.85;6537323.4;6.738785;45.873794;bal;bal
+74236_B042;Bois de la Chat;74170;74236;Saint-Gervais-les-Bains;;;987497.7;6538126.04;6.708196;45.882038;bal;bal
+74236_B043;Bois de la Christaz;74170;74236;Saint-Gervais-les-Bains;;;986153.45;6537412.32;6.690453;45.876185;bal;bal
+74236_y6dp75;Bois de la Côte des Amerans;74170;74236;Saint-Gervais-les-Bains;;;986194.48;6539418;6.69219;45.894209;bal;bal
+74236_C009;Bois de la Crête;74170;74236;Saint-Gervais-les-Bains;;;986714.05;6535580.33;6.696567;45.85947;bal;bal
+74236_B046;Bois de la Grange;74170;74236;Saint-Gervais-les-Bains;;;986755.03;6539631.59;6.69954;45.895894;bal;bal
+74236_B047;Bois de la Joux;74170;74236;Saint-Gervais-les-Bains;;;990586.2;6535812.99;6.746558;45.85992;bal;bal
+74236_B048;Bois de la Mouillette;74170;74236;Saint-Gervais-les-Bains;;;988487.13;6539278.58;6.721639;45.891986;bal;bal
+74236_B049;Bois de la Pierre;74170;74236;Saint-Gervais-les-Bains;;;991852.24;6536328.39;6.763173;45.864014;bal;bal
+74236_B040;Bois de l'Ormey;74170;74236;Saint-Gervais-les-Bains;;;991194.34;6536113.27;6.754571;45.862361;bal;bal
+74236_B050;Bois de Mont-Paccard;74170;74236;Saint-Gervais-les-Bains;;;988289.97;6539971.34;6.71952;45.898301;bal;bal
+74236_B064;Bois de Prarion;74170;74236;Saint-Gervais-les-Bains;;;989364.23;6539842.53;6.733281;45.896686;bal;bal
+74236_u4lpa5;Bois des Amerans d'en-Bas;74170;74236;Saint-Gervais-les-Bains;;;986359.81;6539642.31;6.694455;45.896157;bal;bal
+74236_76t3jp;Bois des Amerans d'en-Haut;74170;74236;Saint-Gervais-les-Bains;;;986315.28;6539489.03;6.693789;45.894797;bal;bal
+74236_B053;Bois des Bains-Est;74170;74236;Saint-Gervais-les-Bains;;;987380.44;6539894.51;6.707756;45.897995;bal;bal
+74236_B054;Bois des Bains-Ouest;74170;74236;Saint-Gervais-les-Bains;;;987135.03;6539687.21;6.704469;45.896234;bal;bal
+74236_B055;Bois des Combes;74170;74236;Saint-Gervais-les-Bains;;;986101.03;6539988.61;6.69133;45.899381;bal;bal
+74236_B056;Bois des Combettes;74170;74236;Saint-Gervais-les-Bains;;;989624.42;6539195.25;6.736238;45.890753;bal;bal
+74236_B057;Bois des Mélèzes;74170;74236;Saint-Gervais-les-Bains;;;989565.06;6539443.91;6.735625;45.893015;bal;bal
+74236_B059;Bois des Quarts;74170;74236;Saint-Gervais-les-Bains;;;986185.62;6537041.63;6.690644;45.872837;bal;bal
+74236_awe6xi;Bois des Toilles;74170;74236;Saint-Gervais-les-Bains;;;988710.81;6540040.89;6.724984;45.898748;bal;bal
+74236_B061;Bois des Troncs;74170;74236;Saint-Gervais-les-Bains;;;985570.17;6539468.87;6.684178;45.894929;bal;bal
+74236_B038;Bois d'Hermance;74170;74236;Saint-Gervais-les-Bains;;;985065.33;6532261.57;6.673352;45.83031;bal;bal
+74236_B062;Bois du Bettey;74170;74236;Saint-Gervais-les-Bains;;;985796.93;6537010.67;6.68562;45.872722;bal;bal
+74236_B063;Bois du Perrey;74170;74236;Saint-Gervais-les-Bains;;;985771.04;6539208.44;6.686609;45.892502;bal;bal
+74236_C011;Bonnant-Sud;74170;74236;Saint-Gervais-les-Bains;;;989191.64;6534429.29;6.727763;45.848068;bal;bal
+74236_B083;Chaffeux-Est;74170;74236;Saint-Gervais-les-Bains;;;985227.71;6538576.08;6.67923;45.887042;bal;bal
+74236_B084;Chaffeux-Ouest;74170;74236;Saint-Gervais-les-Bains;;;984941.19;6538597.08;6.675552;45.887351;bal;bal
+74236_B089;Champ du Moulin;74170;74236;Saint-Gervais-les-Bains;;;985384.82;6539310.36;6.681695;45.893581;bal;bal
+74236_xb7qm4;Champlong;74170;74236;Saint-Gervais-les-Bains;;;986084.44;6539168.39;6.690622;45.89201;bal;bal
+74236_jnbfit;Champoutant;74170;74236;Saint-Gervais-les-Bains;;;986677.93;6537368.95;6.697181;45.875574;bal;bal
+74236_iztcf3;Chantelet;74170;74236;Saint-Gervais-les-Bains;;;989749.89;6534023.33;6.734701;45.844179;bal;bal
+74236_6xgggy;Chanton;74170;74236;Saint-Gervais-les-Bains;;;991449.82;6536379.03;6.758023;45.864642;bal;bal
+74236_w5cj69;Chatetuy;74170;74236;Saint-Gervais-les-Bains;;;985143.3;6536150.62;6.676687;45.86526;bal;bal
+74236_yvem1r;Chosalet;74170;74236;Saint-Gervais-les-Bains;;;985801.03;6536237.67;6.685208;45.865767;bal;bal
+74236_0eksb7;Colliard;74170;74236;Saint-Gervais-les-Bains;;;986542.79;6538803.3;6.696306;45.888533;bal;bal
+74236_B134;Communal des Creuses;74170;74236;Saint-Gervais-les-Bains;;;991877.95;6536515.62;6.763619;45.865687;bal;bal
+74236_B136;Communal des Rolles;74170;74236;Saint-Gervais-les-Bains;;;985866.66;6536019.84;6.685922;45.86378;bal;bal
+74236_B137;Communal du Nant Ferney;74170;74236;Saint-Gervais-les-Bains;;;987976.5;6540316.55;6.715691;45.901539;bal;bal
+74236_etbvji;Coterat;74170;74236;Saint-Gervais-les-Bains;;;986856.87;6538830.47;6.700368;45.888645;bal;bal
+74236_B161;Crêt-Mortet;74170;74236;Saint-Gervais-les-Bains;;;985268.65;6536520.44;6.678523;45.868534;bal;bal
+74236_C039;Crey du Tour;74170;74236;Saint-Gervais-les-Bains;;;987054.83;6535662.78;6.701004;45.860068;bal;bal
+74236_6x0j1o;Cupelin;74170;74236;Saint-Gervais-les-Bains;;;986675.49;6538918.91;6.698085;45.889517;bal;bal
+74236_B179;Derrière le Char;74170;74236;Saint-Gervais-les-Bains;;;986566.12;6537542.81;6.695846;45.877185;bal;bal
+74236_B182;Derrière les Morets;74170;74236;Saint-Gervais-les-Bains;;;986494.26;6539126.65;6.695876;45.891462;bal;bal
+74236_B183;Derrière les Pratz;74170;74236;Saint-Gervais-les-Bains;;;987781.9;6538092.6;6.711836;45.881617;bal;bal
+74236_B180;Derrière les Rey;74170;74236;Saint-Gervais-les-Bains;;;986198.05;6538996.72;6.691982;45.890418;bal;bal
+74236_4s0av8;Derrière les Toilles;74170;74236;Saint-Gervais-les-Bains;;;988763.65;6539860.5;6.725555;45.897103;bal;bal
+74236_B181;Derrière le Village;74170;74236;Saint-Gervais-les-Bains;;;989098.24;6537844.38;6.728638;45.878826;bal;bal
+74236_B185;Devant le Gollet;74170;74236;Saint-Gervais-les-Bains;;;987107.5;6537160.63;6.702587;45.873519;bal;bal
+74236_B186;Devant le Nant;74170;74236;Saint-Gervais-les-Bains;;;986648.81;6536684.32;6.696393;45.869428;bal;bal
+74236_B187;Devant les Communailles;74170;74236;Saint-Gervais-les-Bains;;;986134.73;6535942.76;6.689327;45.862974;bal;bal
+74236_B188;Devant les Granges;74170;74236;Saint-Gervais-les-Bains;;;985714.89;6538319.78;6.685351;45.884532;bal;bal
+74236_B189;Devant les Morets;74170;74236;Saint-Gervais-les-Bains;;;986702.71;6539164.54;6.698584;45.891715;bal;bal
+74236_4mguhr;En Arbois;74170;74236;Saint-Gervais-les-Bains;;;984553.78;6534169.8;6.667911;45.847689;bal;bal
+74236_B265;En Haut de la Comtesse;74170;74236;Saint-Gervais-les-Bains;;;987915.34;6539140.9;6.71419;45.89099;bal;bal
+74236_B386;En Praton;74170;74236;Saint-Gervais-les-Bains;;;985923.88;6538652.38;6.688243;45.887436;bal;bal
+74236_C049;Entre Deux Nants d'en-Bas;74170;74236;Saint-Gervais-les-Bains;;;988624.91;6534346.07;6.720418;45.84756;bal;bal
+74236_C050;Entre Deux Nants d'en-Haut;74170;74236;Saint-Gervais-les-Bains;;;988367.64;6534288.92;6.717072;45.847155;bal;bal
+74236_dkflwx;Gare du Fayet-Saint-Gervais;74170;74236;Saint-Gervais-les-Bains;;;986573.81;6540821.64;6.697924;45.906675;bal;bal
+74236_96u7ai;Gleret;74170;74236;Saint-Gervais-les-Bains;;;989482.64;6536785.16;6.732943;45.869135;bal;bal
+74236_B267;Haute-Tour;74170;74236;Saint-Gervais-les-Bains;;;987770.02;6539333.73;6.712435;45.892786;bal;bal
+74236_p2egoi;Hermance;74170;74236;Saint-Gervais-les-Bains;;;984348.43;6535288.64;6.665937;45.857839;bal;bal
+74236_ewnahe;La Barme;74170;74236;Saint-Gervais-les-Bains;;;989886.15;6534143.74;6.736528;45.845204;bal;bal
+74236_e6twgh;La Bergère;74170;74236;Saint-Gervais-les-Bains;;;987361.36;6536041.04;6.705179;45.863341;bal;bal
+74236_1qv0xu;La Bouchère;74170;74236;Saint-Gervais-les-Bains;;;986331.17;6537751.38;6.692946;45.87916;bal;bal
+74236_9c4i2t;La Boutaz;74170;74236;Saint-Gervais-les-Bains;;;985043.1;6538039.3;6.67653;45.882291;bal;bal
+74236_s85wj0;La Bramière;74170;74236;Saint-Gervais-les-Bains;;;990866.47;6536703.37;6.750711;45.867809;bal;bal
+74236_vjkr4t;La Bramière;74170;74236;Saint-Gervais-les-Bains;;;989242.12;6536099.74;6.729429;45.863072;bal;bal
+74236_t0wnww;La Chacuise;74170;74236;Saint-Gervais-les-Bains;;;985059.96;6536319.05;6.675715;45.86681;bal;bal
+74236_8odibu;La Chaine;74170;74236;Saint-Gervais-les-Bains;;;991555.56;6537476.93;6.760058;45.874472;bal;bal
+74236_6e7y0y;La Chapiot;74170;74236;Saint-Gervais-les-Bains;;;992359.05;6536908.8;6.770055;45.869017;bal;bal
+74236_jdfiw3;La Charme;74170;74236;Saint-Gervais-les-Bains;;;990101.31;6537708.87;6.741473;45.87718;bal;bal
+74236_xj2xd3;La Chat;74170;74236;Saint-Gervais-les-Bains;;;985855.51;6533573.88;6.684308;45.841783;bal;bal
+74236_jdp0aa;La Chat;74170;74236;Saint-Gervais-les-Bains;;;987459.77;6538280.68;6.707801;45.883445;bal;bal
+74236_wri5dz;La Chât;74170;74236;Saint-Gervais-les-Bains;;;987587.11;6536686.44;6.708476;45.869051;bal;bal
+74236_B279;Lachat des Creux;74170;74236;Saint-Gervais-les-Bains;;;988089.52;6540128.43;6.717033;45.899799;bal;bal
+74236_n5bh0c;La Chaudanne;74170;74236;Saint-Gervais-les-Bains;;;987008.09;6539277.36;6.702586;45.892601;bal;bal
+74236_3pjqqy;La Chavannette;74170;74236;Saint-Gervais-les-Bains;;;990346.73;6536001.07;6.74359;45.861714;bal;bal
+74236_B280;Lachaz-Nord;74170;74236;Saint-Gervais-les-Bains;;;986439.7;6537879.52;6.694421;45.880267;bal;bal
+74236_B281;Lachaz-Sud;74170;74236;Saint-Gervais-les-Bains;;;986457.13;6537654.88;6.69451;45.878239;bal;bal
+74236_l9t80v;La  Christaz;74170;74236;Saint-Gervais-les-Bains;;;986208.21;6537276.03;6.691076;45.874936;bal;bal
+74236_rs1ymr;La Combe;74170;74236;Saint-Gervais-les-Bains;;;985228;6538343.41;6.679094;45.884949;bal;bal
+74236_fd76ee;La Combe;74170;74236;Saint-Gervais-les-Bains;;;987347.36;6536979.23;6.705566;45.871786;bal;bal
+74236_B128;La Combe de Champ Long;74170;74236;Saint-Gervais-les-Bains;;;986307.48;6539163.26;6.693492;45.89187;bal;bal
+74236_B129;La Combe du Foug;74170;74236;Saint-Gervais-les-Bains;;;986558.26;6538312.31;6.696209;45.88411;bal;bal
+74236_b2vfrt;La Comtesse;74170;74236;Saint-Gervais-les-Bains;;;987721.99;6539138.59;6.711698;45.891051;bal;bal
+74236_uh9evt;La Côte;74170;74236;Saint-Gervais-les-Bains;;;990512.21;6536448.73;6.745994;45.86567;bal;bal
+74236_B145;La Côte du Parc;74170;74236;Saint-Gervais-les-Bains;;;988016.96;6538852.3;6.715324;45.888351;bal;bal
+74236_B146;La Côte Giroux;74170;74236;Saint-Gervais-les-Bains;;;985437.17;6538895.46;6.68212;45.889827;bal;bal
+74236_82sqfo;La Coutette;74170;74236;Saint-Gervais-les-Bains;;;987621.23;6535436.46;6.708159;45.857793;bal;bal
+74236_69my39;La Crête;74170;74236;Saint-Gervais-les-Bains;;;986595.94;6535571.13;6.695041;45.859437;bal;bal
+74236_C036;La Crête Derrière;74170;74236;Saint-Gervais-les-Bains;;;986733.03;6535808.45;6.696949;45.861514;bal;bal
+74236_qjdok3;La Croix;74170;74236;Saint-Gervais-les-Bains;;;987985.11;6535425.89;6.712837;45.857544;bal;bal
+74236_B168;La Croix des Lanches;74170;74236;Saint-Gervais-les-Bains;;;985739.72;6536860.37;6.684793;45.871394;bal;bal
+74236_6xhzjh;La Cry;74170;74236;Saint-Gervais-les-Bains;;;985993.83;6538331.92;6.688951;45.884524;bal;bal
+74236_B175;La Cry d'en-Bas;74170;74236;Saint-Gervais-les-Bains;;;986024.27;6538504.55;6.689447;45.886064;bal;bal
+74236_B264;La Cry d'en-Haut;74170;74236;Saint-Gervais-les-Bains;;;985912.66;6538145.03;6.687793;45.882877;bal;bal
+74236_2ymgfm;La Darblaz;74170;74236;Saint-Gervais-les-Bains;;;986277.25;6537552.97;6.692132;45.877398;bal;bal
+74236_y15jnb;L'Adrey;74170;74236;Saint-Gervais-les-Bains;;;988998.32;6534052.84;6.725046;45.844764;bal;bal
+74236_fmtcl1;La Flavière;74170;74236;Saint-Gervais-les-Bains;;;986884.89;6540027.22;6.701452;45.899398;bal;bal
+74236_wql1i3;La Fontaine;74170;74236;Saint-Gervais-les-Bains;;;990682.4;6536332.3;6.748114;45.86455;bal;bal
+74236_76q6l2;La Fontanette;74170;74236;Saint-Gervais-les-Bains;;;988356.05;6535110.5;6.717421;45.85455;bal;bal
+74236_B219;La Forêt d'en-Haut;74170;74236;Saint-Gervais-les-Bains;;;987858.45;6539857.96;6.713892;45.897464;bal;bal
+74236_B220;La Forêt Derrière;74170;74236;Saint-Gervais-les-Bains;;;987572.75;6539986.05;6.710289;45.898737;bal;bal
+74236_B221;La Forêt des Jours-Nord;74170;74236;Saint-Gervais-les-Bains;;;986165.09;6535537.73;6.689474;45.859318;bal;bal
+74236_B222;La Forêt des Jours-Sud;74170;74236;Saint-Gervais-les-Bains;;;986106.9;6535385.04;6.688633;45.857969;bal;bal
+74236_B223;La Forêt Devant;74170;74236;Saint-Gervais-les-Bains;;;987579.92;6539503.45;6.710089;45.894393;bal;bal
+74236_B224;La Forêt du Milieu;74170;74236;Saint-Gervais-les-Bains;;;987590.73;6539805.01;6.710411;45.897101;bal;bal
+74236_rbdunl;La Gorge;74170;74236;Saint-Gervais-les-Bains;;;988607.83;6540223.13;6.723768;45.900431;bal;bal
+74236_B246;La Grande Combe;74170;74236;Saint-Gervais-les-Bains;;;986863.55;6540189.2;6.701275;45.900864;bal;bal
+74236_C062;La Grande Côte;74170;74236;Saint-Gervais-les-Bains;;;985936.66;6534293.5;6.685785;45.848222;bal;bal
+74236_B247;La Grande Roche;74170;74236;Saint-Gervais-les-Bains;;;988736.87;6537521.69;6.723788;45.876077;bal;bal
+74236_B242;La Grand' Montaz;74170;74236;Saint-Gervais-les-Bains;;;985852.34;6535012.62;6.685132;45.854726;bal;bal
+74236_B250;La Grange de Champ Long;74170;74236;Saint-Gervais-les-Bains;;;985912.64;6539397.71;6.688547;45.894145;bal;bal
+74236_B251;La Grange des Bernard;74170;74236;Saint-Gervais-les-Bains;;;988297.88;6537917.56;6.718375;45.879824;bal;bal
+74236_B252;La Grange du Châtelet;74170;74236;Saint-Gervais-les-Bains;;;986915.35;6539556.61;6.70156;45.895152;bal;bal
+74236_b6n5p1;La Grangette;74170;74236;Saint-Gervais-les-Bains;;;988902.15;6533790.71;6.723649;45.842447;bal;bal
+74236_58me7u;La Joux;74170;74236;Saint-Gervais-les-Bains;;;990346.95;6535700.02;6.743409;45.859006;bal;bal
+74236_x1fq64;La Lécherie;74170;74236;Saint-Gervais-les-Bains;;;985547.32;6537094.29;6.682456;45.873579;bal;bal
+74236_vq98xu;La Mollaz;74170;74236;Saint-Gervais-les-Bains;;;989463.3;6535354.99;6.731823;45.856279;bal;bal
+74236_B307;La Mollaz d'en-Bas;74170;74236;Saint-Gervais-les-Bains;;;988071.7;6539176.84;6.716226;45.891247;bal;bal
+74236_B308;La Mollaz d'en-Haut;74170;74236;Saint-Gervais-les-Bains;;;988218.7;6539172.65;6.718117;45.891147;bal;bal
+74236_yw8aen;La Montaz;74170;74236;Saint-Gervais-les-Bains;;;985899.91;6535494.44;6.686034;45.85904;bal;bal
+74236_B318;La Montaz-Derrière;74170;74236;Saint-Gervais-les-Bains;;;985632.32;6535472.6;6.682576;45.858956;bal;bal
+74236_njsc70;La Mouillette;74170;74236;Saint-Gervais-les-Bains;;;988565.55;6539140.08;6.722565;45.890707;bal;bal
+74236_gcvc65;La Panse;74170;74236;Saint-Gervais-les-Bains;;;985952.66;6532643.35;6.684999;45.833372;bal;bal
+74236_wdluqo;La Perrette;74170;74236;Saint-Gervais-les-Bains;;;987734.67;6538545.41;6.711502;45.88571;bal;bal
+74236_1yqk0u;La Picherie;74170;74236;Saint-Gervais-les-Bains;;;987549.38;6536449.76;6.707847;45.866938;bal;bal
+74236_d3wmma;La Pierre;74170;74236;Saint-Gervais-les-Bains;;;991966.52;6536039.78;6.764467;45.861369;bal;bal
+74236_algu6f;La Pierre;74170;74236;Saint-Gervais-les-Bains;;;988235.28;6538158.52;6.717715;45.882018;bal;bal
+74236_yibdr2;La Pierre;74170;74236;Saint-Gervais-les-Bains;;;989827.3;6534439.79;6.735951;45.847892;bal;bal
+74236_B355;La Pierre au Fou;74170;74236;Saint-Gervais-les-Bains;;;990081.98;6533800.26;6.738839;45.842031;bal;bal
+74236_kvw61l;La Plagne;74170;74236;Saint-Gervais-les-Bains;;;987894.1;6538384.59;6.713458;45.884196;bal;bal
+74236_6p4yi6;La Planchette;74170;74236;Saint-Gervais-les-Bains;;;986997.16;6538501.09;6.701976;45.885623;bal;bal
+74236_B373;La Planchette-Les-Crottes;74170;74236;Saint-Gervais-les-Bains;;;987276.18;6538279.95;6.705436;45.883516;bal;bal
+74236_i6il9l;Larare;74170;74236;Saint-Gervais-les-Bains;;;988491.85;6538646.66;6.721316;45.8863;bal;bal
+74236_C116;La Sâge d'en-Bas;74170;74236;Saint-Gervais-les-Bains;;;987124.86;6536421.48;6.702364;45.866863;bal;bal
+74236_C117;La Sâge d'en-Haut;74170;74236;Saint-Gervais-les-Bains;;;987130.99;6536133.61;6.702269;45.864271;bal;bal
+74236_sqi2ex;La Séjaz;74170;74236;Saint-Gervais-les-Bains;;;986032.02;6535690.71;6.687853;45.86075;bal;bal
+74236_jj2e3w;La Tassenière;74170;74236;Saint-Gervais-les-Bains;;;988636.69;6537628.81;6.722563;45.877083;bal;bal
+74236_C128;La Tête du Truz;74170;74236;Saint-Gervais-les-Bains;;;988135.66;6535663.21;6.714919;45.859615;bal;bal
+74236_jsfhux;La Teurnaz;74170;74236;Saint-Gervais-les-Bains;;;985370.31;6538679.67;6.681129;45.887914;bal;bal
+74236_emavtx;La Toile;74170;74236;Saint-Gervais-les-Bains;;;988157.41;6538397.21;6.716857;45.884198;bal;bal
+74236_4ebd54;La Tour;74170;74236;Saint-Gervais-les-Bains;;;987221.71;6538639.59;6.704952;45.886774;bal;bal
+74236_B452;La Turche Derrière;74170;74236;Saint-Gervais-les-Bains;;;991156.06;6534860.61;6.753311;45.85111;bal;bal
+74236_B453;La Turche-Devant;74170;74236;Saint-Gervais-les-Bains;;;991877.18;6534753.21;6.762527;45.849835;bal;bal
+74236_ylt93u;La Venaz;74170;74236;Saint-Gervais-les-Bains;;;984947.12;6536403.96;6.674313;45.867621;bal;bal
+74236_xy09mu;La Venaz;74170;74236;Saint-Gervais-les-Bains;;;985122.43;6536605.12;6.676691;45.869357;bal;bal
+74236_06heed;La Venaz Dessous;74170;74236;Saint-Gervais-les-Bains;;;985118.93;6537170.14;6.676985;45.874441;bal;bal
+74236_B459;La Venaz Devant;74170;74236;Saint-Gervais-les-Bains;;;985059.61;6536809.97;6.676005;45.871226;bal;bal
+74236_8mh07c;La Vignette;74170;74236;Saint-Gervais-les-Bains;;;987899.01;6539497.67;6.714196;45.894206;bal;bal
+74236_B471;La Villette d'en-Bas;74170;74236;Saint-Gervais-les-Bains;;;989521.78;6534745.85;6.732205;45.850775;bal;bal
+74236_B472;La Villette Derrière;74170;74236;Saint-Gervais-les-Bains;;;989580.81;6535104.06;6.733183;45.853972;bal;bal
+74236_B473;La Villette Devant;74170;74236;Saint-Gervais-les-Bains;;;989700.85;6534790.23;6.734537;45.851098;bal;bal
+74236_yfw1hl;La Vorjon;74170;74236;Saint-Gervais-les-Bains;;;985511.04;6539652.87;6.683527;45.896609;bal;bal
+74236_B010;Le Bas de la Gruvaz;74170;74236;Saint-Gervais-les-Bains;;;989833.14;6534304.88;6.735944;45.846676;bal;bal
+74236_70oned;Le Berchat;74170;74236;Saint-Gervais-les-Bains;;;987421;6540332.89;6.708544;45.901921;bal;bal
+74236_lct3ui;Le Bétasset;74170;74236;Saint-Gervais-les-Bains;;;987702.11;6535171.78;6.70904;45.855378;bal;bal
+74236_1bzkkg;Le Bétasset;74170;74236;Saint-Gervais-les-Bains;;;990236.46;6533401.79;6.740584;45.838381;bal;bal
+74236_B025;Le Bettey d'en-Bas;74170;74236;Saint-Gervais-les-Bains;;;985961.1;6537281.26;6.687897;45.875087;bal;bal
+74236_B026;Le Bettey d'en-Haut;74170;74236;Saint-Gervais-les-Bains;;;985713.87;6537096.4;6.684602;45.873528;bal;bal
+74236_B027;Le Bettey Devant;74170;74236;Saint-Gervais-les-Bains;;;985956.86;6537076.29;6.687719;45.873245;bal;bal
+74236_vo12df;Le Biollay;74170;74236;Saint-Gervais-les-Bains;;;990190.61;6534803.42;6.740849;45.851008;bal;bal
+74236_ngy0ww;Le Biollay;74170;74236;Saint-Gervais-les-Bains;;;988395.86;6536927.73;6.719036;45.870879;bal;bal
+74236_B032;Le Biollay - les Mouillées;74170;74236;Saint-Gervais-les-Bains;;;989862.89;6534628.36;6.736524;45.849573;bal;bal
+74236_oa5f16;Le Biolley;74170;74236;Saint-Gervais-les-Bains;;;988430.28;6536452.75;6.719191;45.866592;bal;bal
+74236_2mqe7b;Le Biot;74170;74236;Saint-Gervais-les-Bains;;;988972.8;6537735.06;6.726956;45.877896;bal;bal
+74236_B058;Le Bois des Nants;74170;74236;Saint-Gervais-les-Bains;;;985634.38;6538871.76;6.684646;45.889531;bal;bal
+74236_0aotw7;Le Bouchat;74170;74236;Saint-Gervais-les-Bains;;;988796;6536341.26;6.723832;45.865434;bal;bal
+74236_oy5eed;Le Brettey;74170;74236;Saint-Gervais-les-Bains;;;986892.06;6537795.33;6.700196;45.879319;bal;bal
+74236_B074;Le Brey d'en-Bas;74170;74236;Saint-Gervais-les-Bains;;;987655.6;6540221.51;6.711499;45.90082;bal;bal
+74236_B075;Le Brey d'en-Haut;74170;74236;Saint-Gervais-les-Bains;;;987846.72;6540169.92;6.71393;45.900275;bal;bal
+74236_69d76e;Le Bulle;74170;74236;Saint-Gervais-les-Bains;;;986426.2;6538602.4;6.694683;45.886775;bal;bal
+74236_tuepcn;Le Carteyron;74170;74236;Saint-Gervais-les-Bains;;;988607.67;6533421.29;6.719635;45.839249;bal;bal
+74236_xy7h5e;Le Cey;74170;74236;Saint-Gervais-les-Bains;;;990128.34;6535087.75;6.740221;45.853592;bal;bal
+74236_abge8m;Le Chalère;74170;74236;Saint-Gervais-les-Bains;;;992309.89;6536154.45;6.768958;45.862253;bal;bal
+74236_ww4mth;Le Champel;74170;74236;Saint-Gervais-les-Bains;;;989748.32;6535706;6.735706;45.859315;bal;bal
+74236_tks9np;Le Champley;74170;74236;Saint-Gervais-les-Bains;;;989187.14;6538020.34;6.72989;45.880371;bal;bal
+74236_253yyl;Le Chappey;74170;74236;Saint-Gervais-les-Bains;;;986602.74;6538025.9;6.696609;45.881515;bal;bal
+74236_oifycd;Le Château;74170;74236;Saint-Gervais-les-Bains;;;989645.92;6535250.12;6.73411;45.855258;bal;bal
+74236_B101;Le Châtelet Dessous;74170;74236;Saint-Gervais-les-Bains;;;987379.82;6539352.52;6.70742;45.89312;bal;bal
+74236_B102;Le Châtelet Dessus;74170;74236;Saint-Gervais-les-Bains;;;987255.17;6539211.7;6.705729;45.891906;bal;bal
+74236_syxclm;Le Châtelleret;74170;74236;Saint-Gervais-les-Bains;;;988827.11;6538207.34;6.725367;45.882206;bal;bal
+74236_fswf78;Le Chosal;74170;74236;Saint-Gervais-les-Bains;;;989989.79;6533960.2;6.73775;45.843509;bal;bal
+74236_C019;Le Clos de la Meule;74170;74236;Saint-Gervais-les-Bains;;;987832.87;6534705.33;6.710441;45.851127;bal;bal
+74236_C020;Le Clos du Reban;74170;74236;Saint-Gervais-les-Bains;;;987778.26;6535646.95;6.710308;45.85962;bal;bal
+74236_C026;Le Communal de Bonnant-Nord;74170;74236;Saint-Gervais-les-Bains;;;989295.64;6535258.34;6.729606;45.855481;bal;bal
+74236_C027;Le Communal de Bonnant-Sud;74170;74236;Saint-Gervais-les-Bains;;;989077.81;6534668.16;6.726443;45.850265;bal;bal
+74236_B135;Le Communal des Pratz;74170;74236;Saint-Gervais-les-Bains;;;988491.16;6538103.33;6.720977;45.881413;bal;bal
+74236_C028;Le Communal du Laÿs;74170;74236;Saint-Gervais-les-Bains;;;986377.73;6534255.09;6.691439;45.847691;bal;bal
+74236_C029;Le Communal du Mottey;74170;74236;Saint-Gervais-les-Bains;;;986780.17;6532389;6.695494;45.830736;bal;bal
+74236_ewp9jz;Le Coula;74170;74236;Saint-Gervais-les-Bains;;;984797.58;6532561.05;6.670086;45.833116;bal;bal
+74236_jpg86d;L' Ecoulaz;74170;74236;Saint-Gervais-les-Bains;;;986927.76;6535132.31;6.699048;45.85535;bal;bal
+74236_ournha;Le Coulet;74170;74236;Saint-Gervais-les-Bains;;;984978.22;6538878.73;6.676198;45.889869;bal;bal
+74236_9qsg7k;Le Crêt;74170;74236;Saint-Gervais-les-Bains;;;989833.17;6533747.89;6.735605;45.841666;bal;bal
+74236_h818oa;Le Crêt;74170;74236;Saint-Gervais-les-Bains;;;989186.29;6538394.85;6.730107;45.88374;bal;bal
+74236_B159;Le Crêt de Bionnay;74170;74236;Saint-Gervais-les-Bains;;;989259.23;6536541.35;6.729918;45.867037;bal;bal
+74236_B160;Le Crêt des Bots;74170;74236;Saint-Gervais-les-Bains;;;985333.19;6537018.38;6.679653;45.872986;bal;bal
+74236_wkggc9;Le Crétet;74170;74236;Saint-Gervais-les-Bains;;;987252.65;6536778.34;6.704225;45.870019;bal;bal
+74236_8ptzvz;Le Crêtet;74170;74236;Saint-Gervais-les-Bains;;;988827.66;6536565.66;6.724376;45.867439;bal;bal
+74236_B162;Le Crêt Perret;74170;74236;Saint-Gervais-les-Bains;;;989653.91;6533480.37;6.733135;45.839336;bal;bal
+74236_C040;Le Crey Gérat;74170;74236;Saint-Gervais-les-Bains;;;988347.67;6534833.17;6.717145;45.852059;bal;bal
+74236_k9b5sh;Le Crintey;74170;74236;Saint-Gervais-les-Bains;;;986723.15;6534714.5;6.696162;45.851678;bal;bal
+74236_ruak2w;Le Crosat;74170;74236;Saint-Gervais-les-Bains;;;989484.84;6538361.61;6.733932;45.883314;bal;bal
+74236_yn7ayo;Le Crosaz;74170;74236;Saint-Gervais-les-Bains;;;991645.36;6536607.92;6.760681;45.866617;bal;bal
+74236_B171;Le Crouet Derrière;74170;74236;Saint-Gervais-les-Bains;;;990880.94;6533961.79;6.74922;45.843143;bal;bal
+74236_B172;Le Crouet Devant la Côte;74170;74236;Saint-Gervais-les-Bains;;;990613.01;6533523.49;6.745504;45.839315;bal;bal
+74236_wd5jd2;Le Crozat;74170;74236;Saint-Gervais-les-Bains;;;988544.33;6535720.6;6.720215;45.859958;bal;bal
+74236_mkjpwg;Le Déchappieux;74170;74236;Saint-Gervais-les-Bains;;;987439.27;6534985.77;6.705544;45.853816;bal;bal
+74236_C046;Le Déchappieux d'en-Bas;74170;74236;Saint-Gervais-les-Bains;;;987525.29;6535269.53;6.706823;45.856332;bal;bal
+74236_C047;Le Déchappieux-Devant;74170;74236;Saint-Gervais-les-Bains;;;987664.6;6534976.46;6.708439;45.853637;bal;bal
+74236_B207;Le Fayet d'en Haut;74170;74236;Saint-Gervais-les-Bains;;;986675.01;6539937.67;6.698694;45.898681;bal;bal
+74236_B208;Le Fayet du Milieu;74170;74236;Saint-Gervais-les-Bains;;;986514.15;6540311.12;6.696847;45.902108;bal;bal
+74236_B209;Le Fayet-Est;74170;74236;Saint-Gervais-les-Bains;;;987039.54;6540588.79;6.703784;45.904384;bal;bal
+74236_B210;Le Fayet-Ouest;74170;74236;Saint-Gervais-les-Bains;;;986620.95;6540638.86;6.698421;45.905011;bal;bal
+74236_czc3dm;Le Fételet;74170;74236;Saint-Gervais-les-Bains;;;989339.83;6536999.87;6.731235;45.871127;bal;bal
+74236_js5lpg;Le Fiollage;74170;74236;Saint-Gervais-les-Bains;;;989348.56;6537271.88;6.731513;45.87357;bal;bal
+74236_6pa7eo;Le Fiot;74170;74236;Saint-Gervais-les-Bains;;;989247.14;6537411.5;6.730292;45.874869;bal;bal
+74236_otzapn;Le Fontaney;74170;74236;Saint-Gervais-les-Bains;;;988344.68;6535351.88;6.717421;45.856726;bal;bal
+74236_xo6dmp;Le Frêne;74170;74236;Saint-Gervais-les-Bains;;;988406.25;6534633.7;6.717778;45.85024;bal;bal
+74236_B227;Le Fréney d'en-Bas;74170;74236;Saint-Gervais-les-Bains;;;985457.98;6539060.19;6.682487;45.8913;bal;bal
+74236_B228;Le Fréney d'en-Haut;74170;74236;Saint-Gervais-les-Bains;;;985209.07;6538841.02;6.679149;45.889433;bal;bal
+74236_rpcuxu;Le Gérat;74170;74236;Saint-Gervais-les-Bains;;;989613.23;6537123.86;6.734831;45.872126;bal;bal
+74236_uh8uyq;Le Gerdil;74170;74236;Saint-Gervais-les-Bains;;;989654.56;6534453.51;6.733736;45.848089;bal;bal
+74236_B236;Le Gollet d'en-Bas;74170;74236;Saint-Gervais-les-Bains;;;987136.47;6537489.84;6.703159;45.876468;bal;bal
+74236_B237;Le Gollet d'en-Haut;74170;74236;Saint-Gervais-les-Bains;;;986879.57;6537218.87;6.699687;45.874139;bal;bal
+74236_B238;Le Gollet du Milieu;74170;74236;Saint-Gervais-les-Bains;;;987041.97;6537357.45;6.701862;45.875317;bal;bal
+74236_ew0qb1;Le Goy;74170;74236;Saint-Gervais-les-Bains;;;987055.28;6534429.01;6.700265;45.84897;bal;bal
+74236_C059;Le Goy d'en-Bas;74170;74236;Saint-Gervais-les-Bains;;;987071;6534884.11;6.700742;45.853057;bal;bal
+74236_C061;Le Goy-Devant;74170;74236;Saint-Gervais-les-Bains;;;987166.61;6534624.45;6.701816;45.850681;bal;bal
+74236_B241;Le Grand Champ;74170;74236;Saint-Gervais-les-Bains;;;986622.35;6540198.46;6.698173;45.901049;bal;bal
+74236_B243;Le Grand Plan d'en-Bas;74170;74236;Saint-Gervais-les-Bains;;;990238.72;6535215.72;6.74172;45.854696;bal;bal
+74236_B245;Le Grand Plan Devant;74170;74236;Saint-Gervais-les-Bains;;;990306.97;6535509.68;6.742778;45.857311;bal;bal
+74236_B261;Le Grattague d'en-Bas;74170;74236;Saint-Gervais-les-Bains;;;986499.28;6536227.18;6.694192;45.865379;bal;bal
+74236_B483;Le Grattague d'en-Haut;74170;74236;Saint-Gervais-les-Bains;;;986507.9;6536043.04;6.694192;45.863719;bal;bal
+74236_B266;Le Haut de la Gruvaz;74170;74236;Saint-Gervais-les-Bains;;;990015.57;6534395.12;6.738347;45.84741;bal;bal
+74236_ocnfgm;Le Laÿs;74170;74236;Saint-Gervais-les-Bains;;;986460.8;6535132.67;6.693037;45.85555;bal;bal
+74236_84s6b1;Le Macherey;74170;74236;Saint-Gervais-les-Bains;;;990518.33;6532631.7;6.743741;45.831334;bal;bal
+74236_uk54ie;Le Mellerey;74170;74236;Saint-Gervais-les-Bains;;;988291.96;6538652.58;6.718745;45.886438;bal;bal
+74236_rxkcti;L'Emey;74170;74236;Saint-Gervais-les-Bains;;;986279.66;6535756.88;6.691081;45.861241;bal;bal
+74236_kdi5y2;Le Molliet;74170;74236;Saint-Gervais-les-Bains;;;988580.76;6535107.86;6.720312;45.854431;bal;bal
+74236_57np5j;Le Monneray;74170;74236;Saint-Gervais-les-Bains;;;990582.31;6536066.62;6.746663;45.862203;bal;bal
+74236_B314;Le Mont Forchet;74170;74236;Saint-Gervais-les-Bains;;;989825.34;6536890.66;6.73742;45.869938;bal;bal
+74236_B319;Le Monthieux-Sous la Roche;74170;74236;Saint-Gervais-les-Bains;;;990620.98;6534255.85;6.746054;45.845899;bal;bal
+74236_c0x6fa;Le Nant Blanchet;74170;74236;Saint-Gervais-les-Bains;;;988688.07;6535418.54;6.721882;45.85718;bal;bal
+74236_B332;Le Nérey d'en Bas;74170;74236;Saint-Gervais-les-Bains;;;987438.29;6539002.07;6.707961;45.889943;bal;bal
+74236_B333;Le Nérey d'en Haut;74170;74236;Saint-Gervais-les-Bains;;;987313.64;6538818.11;6.706244;45.888341;bal;bal
+74236_vgb5nq;Le Panellet Devant;74170;74236;Saint-Gervais-les-Bains;;;988136.31;6534307.93;6.714106;45.847424;bal;bal
+74236_3p77pq;Le Parc;74170;74236;Saint-Gervais-les-Bains;;;988257.63;6538914.89;6.718462;45.888812;bal;bal
+74236_3dvq94;Le Parchy;74170;74236;Saint-Gervais-les-Bains;;;;;;;bal;bal
+74236_q52zw8;Le Parchy;74170;74236;Saint-Gervais-les-Bains;;;988582.74;6534815.34;6.72016;45.851799;bal;bal
+74236_wn6t70;Le Perchery;74170;74236;Saint-Gervais-les-Bains;;;985725.01;6536405.43;6.68433;45.867308;bal;bal
+74236_r374al;Le Perrey;74170;74236;Saint-Gervais-les-Bains;;;986460.18;6540462.45;6.696243;45.903492;bal;bal
+74236_19qhmo;Le Perrey;74170;74236;Saint-Gervais-les-Bains;;;985946.52;6539006.86;6.688748;45.890615;bal;bal
+74236_0d3h8t;L'Épine;74170;74236;Saint-Gervais-les-Bains;;;989561.11;6535555.06;6.733204;45.858037;bal;bal
+74236_00oish;Le Plan;74170;74236;Saint-Gervais-les-Bains;;;984981.65;6538353.5;6.675927;45.885143;bal;bal
+74236_9tik9x;Le Plan;74170;74236;Saint-Gervais-les-Bains;;;989025.05;6538645.71;6.728183;45.886065;bal;bal
+74236_nxdoep;Le Plancert;74170;74236;Saint-Gervais-les-Bains;;;989053.74;6539191.93;6.728885;45.890966;bal;bal
+74236_B367;Le Plan de Crosat;74170;74236;Saint-Gervais-les-Bains;;;989518.58;6538072.04;6.73419;45.880695;bal;bal
+74236_B362;Le Plan de la Gruvaz;74170;74236;Saint-Gervais-les-Bains;;;990145.28;6534096.09;6.739834;45.844665;bal;bal
+74236_B364;Le Plan Derrière;74170;74236;Saint-Gervais-les-Bains;;;989010.79;6538806.13;6.728097;45.887514;bal;bal
+74236_B365;Le Plan Devant;74170;74236;Saint-Gervais-les-Bains;;;988995.03;6538428.28;6.727664;45.884122;bal;bal
+74236_C093;Le Plan d'Osier;74170;74236;Saint-Gervais-les-Bains;;;987642.54;6535893.6;6.70871;45.861896;bal;bal
+74236_B366;Le Plan du Crêt;74170;74236;Saint-Gervais-les-Bains;;;989260.57;6538840.28;6.731335;45.887715;bal;bal
+74236_B369;Le Plan Duzour;74170;74236;Saint-Gervais-les-Bains;;;990387.27;6533951.03;6.74286;45.843257;bal;bal
+74236_B374;Le Plane-Nord;74170;74236;Saint-Gervais-les-Bains;;;986006.14;6536972.2;6.688291;45.872288;bal;bal
+74236_B375;Le Plane-Sud;74170;74236;Saint-Gervais-les-Bains;;;985984.31;6536867.9;6.687947;45.871359;bal;bal
+74236_2fu7cq;Le Planet;74170;74236;Saint-Gervais-les-Bains;;;989982.9;6535514.22;6.738609;45.85749;bal;bal
+74236_mmvp1w;Le Planet;74170;74236;Saint-Gervais-les-Bains;;;992638.82;6537048.14;6.773743;45.87015;bal;bal
+74236_71pkyz;Le Planey;74170;74236;Saint-Gervais-les-Bains;;;986687.61;6540433.76;6.699156;45.903138;bal;bal
+74236_C104;Le Planey d'en-Bas;74170;74236;Saint-Gervais-les-Bains;;;988763.18;6533719.01;6.721817;45.841861;bal;bal
+74236_sruzcc;Le Planey d'en-Haut;74170;74236;Saint-Gervais-les-Bains;;;988606.68;6533664.93;6.71977;45.841441;bal;bal
+74236_s6qyuk;Le Poirier;74170;74236;Saint-Gervais-les-Bains;;;988424.77;6537546.66;6.719784;45.876434;bal;bal
+74236_72li54;Le Pontet;74170;74236;Saint-Gervais-les-Bains;;;985844.87;6538427.57;6.68709;45.885447;bal;bal
+74236_8j0q2n;Le Pralet;74170;74236;Saint-Gervais-les-Bains;;;989502.32;6538835.6;6.734446;45.88757;bal;bal
+74236_B389;Le Praz du Foug;74170;74236;Saint-Gervais-les-Bains;;;986159.85;6537592.72;6.690644;45.877805;bal;bal
+74236_8l7xg3;Le Quart;74170;74236;Saint-Gervais-les-Bains;;;989855.65;6534746.86;6.736503;45.850642;bal;bal
+74236_tbi3gf;Le Quy;74170;74236;Saint-Gervais-les-Bains;;;989114.67;6533828.32;6.726407;45.842695;bal;bal
+74236_B198;L'Erney d'en-Bas;74170;74236;Saint-Gervais-les-Bains;;;986982.69;6537609.59;6.701251;45.87761;bal;bal
+74236_B269;L'Erney d'en Haut;74170;74236;Saint-Gervais-les-Bains;;;986842.27;6537444.58;6.699343;45.876185;bal;bal
+74236_l5syp2;Le Rocher;74170;74236;Saint-Gervais-les-Bains;;;989019.87;6537540.73;6.727444;45.876128;bal;bal
+74236_xthnin;Le Rosay;74170;74236;Saint-Gervais-les-Bains;;;987079.3;6539111.61;6.703403;45.89108;bal;bal
+74236_B001;Les Amerans d'en-Bas;74170;74236;Saint-Gervais-les-Bains;;;985886.77;6539746.8;6.688424;45.897296;bal;bal
+74236_B002;Les Amerans d'en-Haut;74170;74236;Saint-Gervais-les-Bains;;;986243.97;6539738.94;6.693021;45.897075;bal;bal
+74236_B003;Les Amerans-Ouest;74170;74236;Saint-Gervais-les-Bains;;;986132.54;6539610.44;6.691508;45.895966;bal;bal
+74236_40ecv7;Le Sangle;74170;74236;Saint-Gervais-les-Bains;;;990234.43;6536105.47;6.742208;45.862701;bal;bal
+74236_gb9g9c;Les Arraz;74170;74236;Saint-Gervais-les-Bains;;;986459.63;6539925.69;6.695912;45.898664;bal;bal
+74236_anluay;Le Sassey;74170;74236;Saint-Gervais-les-Bains;;;987266.72;6535530.53;6.703652;45.858789;bal;bal
+74236_5xzvok;Le Sautet;74170;74236;Saint-Gervais-les-Bains;;;987129.07;6535858.37;6.702078;45.861796;bal;bal
+74236_B006;Les Avenières-Crêt-Mortet;74170;74236;Saint-Gervais-les-Bains;;;985596.16;6536267.46;6.682588;45.866121;bal;bal
+74236_B007;Les Bains de Saint-Gervais;74170;74236;Saint-Gervais-les-Bains;;;987249.86;6539790.77;6.706011;45.897117;bal;bal
+74236_y3kwf3;Les Bernard;74170;74236;Saint-Gervais-les-Bains;;;988131.57;6537627.12;6.716057;45.877282;bal;bal
+74236_B019;Les Bernard d'en-Haut;74170;74236;Saint-Gervais-les-Bains;;;988479.42;6537169.91;6.720259;45.873022;bal;bal
+74236_7lz5p2;Les Bétasses;74170;74236;Saint-Gervais-les-Bains;;;985955.45;6536420.09;6.687306;45.867343;bal;bal
+74236_c6fwlw;Les Bêtasses;74170;74236;Saint-Gervais-les-Bains;;;986245.72;6535056.02;6.690222;45.854951;bal;bal
+74236_ts8mtq;Les Bétassey;74170;74236;Saint-Gervais-les-Bains;;;988080.63;6539902;6.716781;45.897766;bal;bal
+74236_ybfo7r;Les Bettières;74170;74236;Saint-Gervais-les-Bains;;;991945.27;6536864.36;6.7647;45.868795;bal;bal
+74236_8hvfpa;Les Beuchères;74170;74236;Saint-Gervais-les-Bains;;;987268.13;6537168.17;6.70466;45.873519;bal;bal
+74236_excwws;Les Bois de la Combe;74170;74236;Saint-Gervais-les-Bains;;;985546.62;6538634.76;6.683373;45.887436;bal;bal
+74236_B065;Les Bois Sous le Cey;74170;74236;Saint-Gervais-les-Bains;;;989866.77;6534941.72;6.736765;45.85239;bal;bal
+74236_tznzd4;Les Bornettes;74170;74236;Saint-Gervais-les-Bains;;;987814.02;6534316.56;6.709963;45.847638;bal;bal
+74236_yfdyqw;Les Bouchères;74170;74236;Saint-Gervais-les-Bains;;;989235.21;6537138.22;6.729972;45.872416;bal;bal
+74236_rgnht0;Les Bougney;74170;74236;Saint-Gervais-les-Bains;;;989787.73;6535126.2;6.73586;45.854083;bal;bal
+74236_b0ddeo;Les Boyeuses;74170;74236;Saint-Gervais-les-Bains;;;987476.94;6537369.98;6.707471;45.875246;bal;bal
+74236_5e4mbg;Les Briques;74170;74236;Saint-Gervais-les-Bains;;;988594.45;6537851.05;6.722154;45.8791;bal;bal
+74236_nfdv9u;Les Bussières;74170;74236;Saint-Gervais-les-Bains;;;991210.93;6534336.03;6.753696;45.846368;bal;bal
+74236_dnazp1;Les Châtelets;74170;74236;Saint-Gervais-les-Bains;;;988344.63;6534008.79;6.716606;45.844645;bal;bal
+74236_3d93al;Les Chattrix;74170;74236;Saint-Gervais-les-Bains;;;988350;6535860.41;6.717798;45.861298;bal;bal
+74236_cjfo6l;Les Chavannes;74170;74236;Saint-Gervais-les-Bains;;;990170.59;6534350.44;6.740315;45.846942;bal;bal
+74236_wel33g;Les Chavannes;74170;74236;Saint-Gervais-les-Bains;;;989529.25;6537876.1;6.734208;45.878928;bal;bal
+74236_B107;Les Chavannes-Est;74170;74236;Saint-Gervais-les-Bains;;;985965.81;6538795.09;6.688869;45.888702;bal;bal
+74236_B108;Les Chavannes-Ouest;74170;74236;Saint-Gervais-les-Bains;;;985724.46;6538924.44;6.685838;45.889967;bal;bal
+74236_ffxws5;Les Chenas;74170;74236;Saint-Gervais-les-Bains;;;987957.67;6537122.99;6.713512;45.872821;bal;bal
+74236_9hxx7k;Les Chilles;74170;74236;Saint-Gervais-les-Bains;;;988504.77;6539979.14;6.722292;45.89828;bal;bal
+74236_7b7vmj;Les Chosalets;74170;74236;Saint-Gervais-les-Bains;;;990652.17;6534502.14;6.746606;45.848101;bal;bal
+74236_0zrn1j;Les Choseaux;74170;74236;Saint-Gervais-les-Bains;;;988680.41;6538553.61;6.723688;45.885383;bal;bal
+74236_B117;Les Choseaux d'en-Bas;74170;74236;Saint-Gervais-les-Bains;;;986853.79;6537009.99;6.699229;45.872271;bal;bal
+74236_B118;Les Choseaux d'en-Haut;74170;74236;Saint-Gervais-les-Bains;;;986656.17;6536989.83;6.696672;45.872173;bal;bal
+74236_B122;Les Clos Derrière;74170;74236;Saint-Gervais-les-Bains;;;985401.05;6538317.02;6.681307;45.884639;bal;bal
+74236_B124;Les Coins - les Bossenets;74170;74236;Saint-Gervais-les-Bains;;;990099.25;6534667.13;6.73959;45.849821;bal;bal
+74236_C021;Les Combaz Feney;74170;74236;Saint-Gervais-les-Bains;;;987591.11;6534503.63;6.707207;45.849415;bal;bal
+74236_C023;Les Combes d'en-Bas;74170;74236;Saint-Gervais-les-Bains;;;988115.12;6536744.63;6.71531;45.869351;bal;bal
+74236_C024;Les Combes d'en-Haut;74170;74236;Saint-Gervais-les-Bains;;;988168.82;6536489.79;6.715847;45.867036;bal;bal
+74236_B130;Les Combes Derrière;74170;74236;Saint-Gervais-les-Bains;;;986403.86;6540115.4;6.695308;45.900394;bal;bal
+74236_C025;Les Combes Vivier;74170;74236;Saint-Gervais-les-Bains;;;988991.44;6535291.11;6.72571;45.855905;bal;bal
+74236_B131;Les Combettes-Nord;74170;74236;Saint-Gervais-les-Bains;;;989287.59;6539211.21;6.731909;45.89104;bal;bal
+74236_B132;Les Combettes-Sud;74170;74236;Saint-Gervais-les-Bains;;;989332.38;6539050.46;6.732388;45.889575;bal;bal
+74236_27w6b3;Les Communailles;74170;74236;Saint-Gervais-les-Bains;;;986049.71;6536130;6.688345;45.864694;bal;bal
+74236_B138;Les Communaux de la Gruvaz;74170;74236;Saint-Gervais-les-Bains;;;990568.9;6534095.84;6.745286;45.844482;bal;bal
+74236_B139;Les Communaux du Fayet;74170;74236;Saint-Gervais-les-Bains;;;986588.49;6541056.68;6.698255;45.908783;bal;bal
+74236_B141;Les Corbassières d'en-Bas;74170;74236;Saint-Gervais-les-Bains;;;988692.15;6539337.72;6.724316;45.892431;bal;bal
+74236_B142;Les Corbassières  d'en-Haut;74170;74236;Saint-Gervais-les-Bains;;;988851.98;6539216.42;6.726301;45.891272;bal;bal
+74236_kuxq8z;Les Cornières;74170;74236;Saint-Gervais-les-Bains;;;985386.79;6536052.25;6.679763;45.864273;bal;bal
+74236_oq4iex;Les Côtes;74170;74236;Saint-Gervais-les-Bains;;;990026.67;6536020.02;6.739481;45.862021;bal;bal
+74236_B149;Les Côtes d'en-Bas;74170;74236;Saint-Gervais-les-Bains;;;987982.88;6539651.92;6.71537;45.895558;bal;bal
+74236_B150;Les Côtes d'en-Haut;74170;74236;Saint-Gervais-les-Bains;;;988418.48;6539455.11;6.720862;45.893603;bal;bal
+74236_C030;Les Côtes Derrière;74170;74236;Saint-Gervais-les-Bains;;;988636.78;6536089.16;6.721629;45.863234;bal;bal
+74236_C031;Les Côtes Devant;74170;74236;Saint-Gervais-les-Bains;;;988656.66;6535891.77;6.721765;45.86145;bal;bal
+74236_B151;Les Côtes du Milieu;74170;74236;Saint-Gervais-les-Bains;;;988178.35;6539531.39;6.717815;45.894391;bal;bal
+74236_B152;Les Côtes du Planet;74170;74236;Saint-Gervais-les-Bains;;;993002.97;6537014.43;6.778411;45.86969;bal;bal
+74236_ct01lb;Les Côtes Leschat;74170;74236;Saint-Gervais-les-Bains;;;986945.16;6539877.52;6.702138;45.898026;bal;bal
+74236_wcg1n7;Les Courus;74170;74236;Saint-Gervais-les-Bains;;;990891;6536455.39;6.750875;45.865568;bal;bal
+74236_9xu2z4;Les Crêtons;74170;74236;Saint-Gervais-les-Bains;;;990418.15;6534603.76;6.743656;45.849115;bal;bal
+74236_pd7qe4;Les Crêts;74170;74236;Saint-Gervais-les-Bains;;;986627.24;6539709.75;6.697941;45.896651;bal;bal
+74236_0egfc2;Les Creusaz;74170;74236;Saint-Gervais-les-Bains;;;985577.76;6539219.86;6.684126;45.892686;bal;bal
+74236_B167;Les Creux d'Orsin;74170;74236;Saint-Gervais-les-Bains;;;987296.84;6537840.01;6.705436;45.87955;bal;bal
+74236_B170;Les Crottes Cuplonet;74170;74236;Saint-Gervais-les-Bains;;;987272.2;6538427.4;6.705474;45.884844;bal;bal
+74236_qgxce8;Les Cry;74170;74236;Saint-Gervais-les-Bains;;;991059.95;6536745.48;6.753228;45.868105;bal;bal
+74236_26jhko;Les Drays;74170;74236;Saint-Gervais-les-Bains;;;990129.81;6533578.17;6.739319;45.840013;bal;bal
+74236_azp0p0;Les Econdus;74170;74236;Saint-Gervais-les-Bains;;;985985.78;6535884.21;6.687374;45.86251;bal;bal
+74236_bqrdi9;Les Envers;74170;74236;Saint-Gervais-les-Bains;;;986488.65;6536424.46;6.694174;45.867158;bal;bal
+74236_4qd1g1;Les Epinettes;74170;74236;Saint-Gervais-les-Bains;;;990452.25;6534777.48;6.744201;45.850663;bal;bal
+74236_ewwzty;Les Esserts;74170;74236;Saint-Gervais-les-Bains;;;990064.09;6535699.06;6.739767;45.859118;bal;bal
+74236_pdcfrm;Les Esserts;74170;74236;Saint-Gervais-les-Bains;;;988963.21;6534944.58;6.725136;45.8528;bal;bal
+74236_sfin32;Les Esserts;74170;74236;Saint-Gervais-les-Bains;;;989009.64;6537224.62;6.72712;45.873289;bal;bal
+74236_fsr5zg;Les Etroits;74170;74236;Saint-Gervais-les-Bains;;;989043.32;6536168.05;6.726911;45.863771;bal;bal
+74236_sawbq0;Les Favets;74170;74236;Saint-Gervais-les-Bains;;;989578.14;6535723.74;6.733526;45.859547;bal;bal
+74236_8qu77o;Les Folliets;74170;74236;Saint-Gervais-les-Bains;;;988133.65;6533489.46;6.713576;45.840063;bal;bal
+74236_hmxjw3;Les Fontaines;74170;74236;Saint-Gervais-les-Bains;;;986635.88;6537127.74;6.696494;45.873422;bal;bal
+74236_B225;Les Forêts des Monts Rosset;74170;74236;Saint-Gervais-les-Bains;;;992418.07;6537203.02;6.770996;45.871638;bal;bal
+74236_B226;Les Forêts du Planet;74170;74236;Saint-Gervais-les-Bains;;;992667.85;6537288.78;6.774265;45.872302;bal;bal
+74236_2x9b58;Les Forneys;74170;74236;Saint-Gervais-les-Bains;;;988374.44;6533413.97;6.716629;45.839282;bal;bal
+74236_9u4hzx;Les Gerats;74170;74236;Saint-Gervais-les-Bains;;;987101.76;6537872.09;6.702943;45.879921;bal;bal
+74236_o2lnta;Les Gérets;74170;74236;Saint-Gervais-les-Bains;;;987130.08;6538926.23;6.703945;45.889391;bal;bal
+74236_b92lx0;Les Glaciers;74170;74236;Saint-Gervais-les-Bains;;;994774.96;6534347.74;6.799573;45.844939;bal;bal
+74236_B249;Les Grands Bois;74170;74236;Saint-Gervais-les-Bains;;;988854.23;6537351.8;6.725196;45.874499;bal;bal
+74236_C063;Les Grands Fonds;74170;74236;Saint-Gervais-les-Bains;;;984361.06;6529387.09;6.662573;45.804748;bal;bal
+74236_B253;Les Granges d'en Bas;74170;74236;Saint-Gervais-les-Bains;;;985677.88;6538543.84;6.685009;45.886563;bal;bal
+74236_B254;Les Granges d'en-Haut;74170;74236;Saint-Gervais-les-Bains;;;986363.54;6537122.88;6.692984;45.873493;bal;bal
+74236_B255;Les Granges Derrière;74170;74236;Saint-Gervais-les-Bains;;;987606.7;6536999.87;6.708918;45.871862;bal;bal
+74236_C065;Les Granges des Chattrix;74170;74236;Saint-Gervais-les-Bains;;;988461.26;6536055.87;6.719349;45.863009;bal;bal
+74236_C066;Les Granges Devant;74170;74236;Saint-Gervais-les-Bains;;;987894.86;6536959.28;6.712604;45.871375;bal;bal
+74236_B256;Les Granges Devant d'en Bas;74170;74236;Saint-Gervais-les-Bains;;;987549.13;6537976.82;6.708768;45.880674;bal;bal
+74236_r2ym0x;Les Granges Devant d'en Haut;74170;74236;Saint-Gervais-les-Bains;;;987469.75;6537774.2;6.707623;45.878885;bal;bal
+74236_B258;Les Granges du Gerdil;74170;74236;Saint-Gervais-les-Bains;;;989474.71;6534499.26;6.731449;45.848577;bal;bal
+74236_B259;Les Granges du Meilly;74170;74236;Saint-Gervais-les-Bains;;;986446.83;6537327.55;6.69418;45.875299;bal;bal
+74236_jed712;Les Grangettes;74170;74236;Saint-Gervais-les-Bains;;;988610.4;6534604.42;6.720388;45.84989;bal;bal
+74236_vmcbvi;Les Grangettes;74170;74236;Saint-Gervais-les-Bains;;;986271.63;6536097.91;6.691183;45.864312;bal;bal
+74236_7qdm24;Les Grevettes;74170;74236;Saint-Gervais-les-Bains;;;991133.19;6534188.13;6.752605;45.845071;bal;bal
+74236_4k2aum;Les Gruves;74170;74236;Saint-Gervais-les-Bains;;;991208.57;6536304.06;6.754871;45.864071;bal;bal
+74236_C070;Les Hochettes d'en-Bas;74170;74236;Saint-Gervais-les-Bains;;;988906.79;6534187.82;6.72395;45.846017;bal;bal
+74236_C071;Les Hochettes d'en-Haut;74170;74236;Saint-Gervais-les-Bains;;;988734.94;6534194.28;6.721742;45.846148;bal;bal
+74236_B271;Les Huit Tours d'en-Bas;74170;74236;Saint-Gervais-les-Bains;;;986299.76;6538462.3;6.69297;45.885568;bal;bal
+74236_B270;Les Huit Tours d'en-Haut;74170;74236;Saint-Gervais-les-Bains;;;986257.71;6538284.12;6.692321;45.883983;bal;bal
+74236_5gquu9;Les Jorettes;74170;74236;Saint-Gervais-les-Bains;;;991334.6;6537616.05;6.757298;45.875818;bal;bal
+74236_d94x3n;Les Jours;74170;74236;Saint-Gervais-les-Bains;;;987888.76;6533533.41;6.710451;45.840562;bal;bal
+74236_B275;Les Joux Bornier;74170;74236;Saint-Gervais-les-Bains;;;990245.72;6533857.16;6.740981;45.842473;bal;bal
+74236_B277;Les Joux Derrière;74170;74236;Saint-Gervais-les-Bains;;;990415.61;6533376.6;6.742874;45.838078;bal;bal
+74236_B276;Les Joux de Tresse;74170;74236;Saint-Gervais-les-Bains;;;989782.75;6533306.25;6.734687;45.837715;bal;bal
+74236_B278;Les Joux Devant;74170;74236;Saint-Gervais-les-Bains;;;990442.84;6533251.37;6.743148;45.83694;bal;bal
+74236_pwosht;Les Lanchers;74170;74236;Saint-Gervais-les-Bains;;;986692.71;6533584.45;6.695089;45.841526;bal;bal
+74236_39v4bz;Les Lanchers;74170;74236;Saint-Gervais-les-Bains;;;993397;6536995.84;6.783473;45.869353;bal;bal
+74236_gdubmr;Les Lanches;74170;74236;Saint-Gervais-les-Bains;;;987019.16;6533815.87;6.69943;45.84347;bal;bal
+74236_6monnh;Les Lanches;74170;74236;Saint-Gervais-les-Bains;;;990604.54;6533935.88;6.745647;45.843028;bal;bal
+74236_kg2ytf;Les Lanches;74170;74236;Saint-Gervais-les-Bains;;;986409.81;6533569.32;6.691439;45.841509;bal;bal
+74236_B284;Les Lanches d'en-Bas;74170;74236;Saint-Gervais-les-Bains;;;985533.39;6536583.92;6.68197;45.868994;bal;bal
+74236_B286;Les Lanches d'en Haut;74170;74236;Saint-Gervais-les-Bains;;;985493.75;6536797.75;6.681588;45.870934;bal;bal
+74236_C075;Les Lanches du Mont Joly;74170;74236;Saint-Gervais-les-Bains;;;985760.18;6531009.26;6.681541;45.818754;bal;bal
+74236_t0xvic;Les Lèches;74170;74236;Saint-Gervais-les-Bains;;;990665.76;6535465.78;6.74737;45.856763;bal;bal
+74236_B289;Les Lots du Fayet-Est;74170;74236;Saint-Gervais-les-Bains;;;986377.74;6541064.26;6.695544;45.90894;bal;bal
+74236_B290;Les Lots du Fayet-Nord;74170;74236;Saint-Gervais-les-Bains;;;986198.19;6541033.84;6.693212;45.908742;bal;bal
+74236_B291;Les Lots du Fayet-Sud;74170;74236;Saint-Gervais-les-Bains;;;986252.04;6540609.57;6.69365;45.904903;bal;bal
+74236_6ks20u;Les Maisonnettes;74170;74236;Saint-Gervais-les-Bains;;;989276.77;6537837.47;6.730933;45.878688;bal;bal
+74236_narbkk;Les Maisons;74170;74236;Saint-Gervais-les-Bains;;;991370.85;6536978.84;6.757374;45.870071;bal;bal
+74236_B300;Les Margagnes Derrière;74170;74236;Saint-Gervais-les-Bains;;;987790.32;6537680.99;6.711695;45.877911;bal;bal
+74236_774omg;Les Margagnes Devant;74170;74236;Saint-Gervais-les-Bains;;;987935.19;6537335.05;6.713351;45.874738;bal;bal
+74236_stz7el;Les Margagnes du Milieu;74170;74236;Saint-Gervais-les-Bains;;;987897.86;6537542.52;6.712996;45.87662;bal;bal
+74236_lo8y0e;Les Marilières;74170;74236;Saint-Gervais-les-Bains;;;986330.37;6538125.21;6.693161;45.882523;bal;bal
+74236_B301;Les Marillières d'en-Bas;74170;74236;Saint-Gervais-les-Bains;;;988760.26;6539537.72;6.725315;45.894201;bal;bal
+74236_B302;Les Marillières d'en-Haut;74170;74236;Saint-Gervais-les-Bains;;;989077.07;6539550.68;6.729404;45.894183;bal;bal
+74236_B330;Les Monts-Rosset d'en-Bas;74170;74236;Saint-Gervais-les-Bains;;;985304.99;6538082.53;6.679929;45.88257;bal;bal
+74236_B323;Les Monts-Rosset-Derrière;74170;74236;Saint-Gervais-les-Bains;;;985044.02;6537907.94;6.676463;45.881109;bal;bal
+74236_ks680p;Les Mortenets;74170;74236;Saint-Gervais-les-Bains;;;988528;6534181.85;6.719071;45.846124;bal;bal
+74236_zcqnv9;Les Mouilles;74170;74236;Saint-Gervais-les-Bains;;;989239.63;6538245.28;6.730703;45.882372;bal;bal
+74236_21tzdo;Les Mouilles-Gauttes;74170;74236;Saint-Gervais-les-Bains;;;985337.18;6537390.77;6.679928;45.876334;bal;bal
+74236_8cb6ja;Les Mourets;74170;74236;Saint-Gervais-les-Bains;;;990666.56;6536516.88;6.748023;45.866217;bal;bal
+74236_p7vpw6;Les Nais;74170;74236;Saint-Gervais-les-Bains;;;990962.62;6536286.8;6.751694;45.864021;bal;bal
+74236_w2l8sb;Les Ordons;74170;74236;Saint-Gervais-les-Bains;;;989928.8;6535819.94;6.738099;45.860263;bal;bal
+74236_clk3in;Les Orgères;74170;74236;Saint-Gervais-les-Bains;;;985777.99;6535803.02;6.68465;45.861867;bal;bal
+74236_fnzhx7;Les Pacheux;74170;74236;Saint-Gervais-les-Bains;;;990024.75;6534507.95;6.738534;45.848421;bal;bal
+74236_B344;Les Pâturages de Miage;74170;74236;Saint-Gervais-les-Bains;;;992073.5;6533093.7;6.764035;45.834824;bal;bal
+74236_B345;Les Pâturages du Truc;74170;74236;Saint-Gervais-les-Bains;;;991415.68;6533093.26;6.75557;45.835102;bal;bal
+74236_7tbnvx;Les Pendues;74170;74236;Saint-Gervais-les-Bains;;;989468.89;6536213.74;6.732418;45.864001;bal;bal
+74236_e9pf1c;Les Perrières;74170;74236;Saint-Gervais-les-Bains;;;991261.95;6536652.69;6.755772;45.867184;bal;bal
+74236_B351;Les Perriers-Vers-Le Nant;74170;74236;Saint-Gervais-les-Bains;;;986393.29;6536908.6;6.693238;45.871553;bal;bal
+74236_C090;Les Pierres Blanches;74170;74236;Saint-Gervais-les-Bains;;;988347.58;6536236.51;6.717995;45.864682;bal;bal
+74236_tlpf9n;Les Placeaux;74170;74236;Saint-Gervais-les-Bains;;;990357.9;6533502.27;6.742208;45.839233;bal;bal
+74236_6tqvm3;Les Places;74170;74236;Saint-Gervais-les-Bains;;;986528.68;6536801.76;6.694917;45.870535;bal;bal
+74236_C091;Les Places d'en-Bas;74170;74236;Saint-Gervais-les-Bains;;;987893.39;6536067.71;6.712045;45.863356;bal;bal
+74236_C092;Les Places d'en-Haut;74170;74236;Saint-Gervais-les-Bains;;;987885.4;6535772.06;6.711763;45.8607;bal;bal
+74236_C105;Les Plans Champs;74170;74236;Saint-Gervais-les-Bains;;;988160.68;6536143.21;6.715532;45.863922;bal;bal
+74236_C106;Les Plans d'en-Bas;74170;74236;Saint-Gervais-les-Bains;;;988033.7;6536360.69;6.714029;45.865932;bal;bal
+74236_C107;Les Plans d'en-Haut;74170;74236;Saint-Gervais-les-Bains;;;987747.04;6536192.12;6.710236;45.864537;bal;bal
+74236_B380;Les Ponthieux d'en-Bas;74170;74236;Saint-Gervais-les-Bains;;;986747.67;6538536.64;6.698784;45.886048;bal;bal
+74236_B381;Les Ponthieux d'en Haut;74170;74236;Saint-Gervais-les-Bains;;;986768.6;6538322.06;6.698924;45.884109;bal;bal
+74236_ded1mm;Les Pratz;74170;74236;Saint-Gervais-les-Bains;;;988059.59;6538133.35;6.715437;45.881866;bal;bal
+74236_B388;Les Praz-Druz;74170;74236;Saint-Gervais-les-Bains;;;992099.99;6537815.75;6.767277;45.877286;bal;bal
+74236_bqvay4;Les Quarts;74170;74236;Saint-Gervais-les-Bains;;;991279.4;6534523.39;6.754692;45.848024;bal;bal
+74236_5l5gmm;Les Rasses;74170;74236;Saint-Gervais-les-Bains;;;986707.22;6537840.8;6.697843;45.879806;bal;bal
+74236_bszfmb;Les Ravières;74170;74236;Saint-Gervais-les-Bains;;;985294.86;6535241.86;6.678093;45.857022;bal;bal
+74236_mluu5q;Les Recourbes;74170;74236;Saint-Gervais-les-Bains;;;987010.04;6536539.72;6.700957;45.867975;bal;bal
+74236_8v7zjh;Les Rey;74170;74236;Saint-Gervais-les-Bains;;;986378.39;6538897.21;6.694245;45.889447;bal;bal
+74236_7k0x49;Les Rolles;74170;74236;Saint-Gervais-les-Bains;;;985518.49;6535779.68;6.681295;45.861766;bal;bal
+74236_ej664p;Les Ruppes;74170;74236;Saint-Gervais-les-Bains;;;990000.96;6535305.17;6.738714;45.855602;bal;bal
+74236_B403;Les Ruttiaux-Vers le Nant;74170;74236;Saint-Gervais-les-Bains;;;986420.51;6536707.09;6.693467;45.869729;bal;bal
+74236_7x63aj;Les Saugers;74170;74236;Saint-Gervais-les-Bains;;;988594.04;6533993.97;6.719807;45.844406;bal;bal
+74236_asy9mc;Les Sellières;74170;74236;Saint-Gervais-les-Bains;;;989725.06;6537355.29;6.736412;45.87416;bal;bal
+74236_B409;Les Sellières d'en-Haut;74170;74236;Saint-Gervais-les-Bains;;;989767.26;6537475.8;6.737029;45.875226;bal;bal
+74236_cjtf6f;Les Senards;74170;74236;Saint-Gervais-les-Bains;;;988833.27;6534529.21;6.723211;45.849119;bal;bal
+74236_zz2r2z;L'Essert;74170;74236;Saint-Gervais-les-Bains;;;992546.87;6536762.13;6.772383;45.867617;bal;bal
+74236_wylji9;L'Essert;74170;74236;Saint-Gervais-les-Bains;;;989470.88;6537468.55;6.733208;45.875287;bal;bal
+74236_p7k7rw;Les Seuilleux;74170;74236;Saint-Gervais-les-Bains;;;988826.93;6538850.81;6.725756;45.887994;bal;bal
+74236_sh86v3;L'Essey;74170;74236;Saint-Gervais-les-Bains;;;985910.64;6536669.46;6.686879;45.869605;bal;bal
+74236_zawv1m;Les Sojats;74170;74236;Saint-Gervais-les-Bains;;;989828.41;6535377.71;6.736537;45.856328;bal;bal
+74236_wiyg39;Les Tappes;74170;74236;Saint-Gervais-les-Bains;;;985974.43;6535251.01;6.686847;45.856819;bal;bal
+74236_hs26wr;Les Thoilles;74170;74236;Saint-Gervais-les-Bains;;;989975.6;6536519;6.739128;45.866531;bal;bal
+74236_nxysyz;Les Thovex;74170;74236;Saint-Gervais-les-Bains;;;991233.48;6537417.23;6.755874;45.874073;bal;bal
+74236_B435;Les Toilles d'en-Bas;74170;74236;Saint-Gervais-les-Bains;;;988572.88;6539718.53;6.723011;45.895907;bal;bal
+74236_B436;Les Toilles d'en-Haut;74170;74236;Saint-Gervais-les-Bains;;;988757.73;6539701.47;6.725382;45.895675;bal;bal
+74236_f83z0w;Les Traits;74170;74236;Saint-Gervais-les-Bains;;;991166.29;6536524.96;6.754462;45.866076;bal;bal
+74236_weayee;Les Trombères;74170;74236;Saint-Gervais-les-Bains;;;988879.72;6536285.29;6.724876;45.864895;bal;bal
+74236_C130;Les Truz d'en-Bas;74170;74236;Saint-Gervais-les-Bains;;;987358.68;6536413.89;6.70537;45.866696;bal;bal
+74236_C131;Les Truz d'en-Haut;74170;74236;Saint-Gervais-les-Bains;;;987344.05;6536252.56;6.705084;45.865251;bal;bal
+74236_ii2nwr;Les Vannets;74170;74236;Saint-Gervais-les-Bains;;;990888.17;6533741.01;6.749178;45.841154;bal;bal
+74236_B456;Les Vannets-Martelets;74170;74236;Saint-Gervais-les-Bains;;;990922.01;6534431.8;6.750036;45.847353;bal;bal
+74236_t2dg7f;Les Vincents;74170;74236;Saint-Gervais-les-Bains;;;987792.04;6536439.15;6.710965;45.86674;bal;bal
+74236_b6mm8w;Les Vorets;74170;74236;Saint-Gervais-les-Bains;;;989047;6539750.15;6.729138;45.89599;bal;bal
+74236_0nlsjf;Les Vorets;74170;74236;Saint-Gervais-les-Bains;;;988852.08;6537002.39;6.724956;45.871357;bal;bal
+74236_kxx6jt;Les Vrets;74170;74236;Saint-Gervais-les-Bains;;;993064.1;6536728.85;6.779022;45.867095;bal;bal
+74236_4h78pe;Les Vuargnes;74170;74236;Saint-Gervais-les-Bains;;;989628.31;6536071.86;6.734384;45.862657;bal;bal
+74236_C126;Le Tarchet d'en-Bas;74170;74236;Saint-Gervais-les-Bains;;;987492.21;6537175.59;6.70755;45.873491;bal;bal
+74236_cyo805;Le Térey;74170;74236;Saint-Gervais-les-Bains;;;987014.79;6535332.17;6.700289;45.857111;bal;bal
+74236_kpf5id;Le Thovex;74170;74236;Saint-Gervais-les-Bains;;;987391.06;6536513.36;6.705847;45.867577;bal;bal
+74236_y8ak70;Le Tranchet;74170;74236;Saint-Gervais-les-Bains;;;990625.66;6535135.69;6.746652;45.853811;bal;bal
+74236_B440;Le Tremblay d'en-Bas;74170;74236;Saint-Gervais-les-Bains;;;988758.43;6537992.75;6.724352;45.880305;bal;bal
+74236_B441;Le Tremblay d'en-Haut;74170;74236;Saint-Gervais-les-Bains;;;988968.57;6537988.89;6.727056;45.880181;bal;bal
+74236_B446;Le Tronchet d'en-Bas;74170;74236;Saint-Gervais-les-Bains;;;986151.68;6537984.78;6.690775;45.881335;bal;bal
+74236_B448;Le Tronchet Devant d'en-Bas;74170;74236;Saint-Gervais-les-Bains;;;985834.43;6537504.36;6.6864;45.877147;bal;bal
+74236_eibvhp;Le Tronchet Devant d'en-Haut;74170;74236;Saint-Gervais-les-Bains;;;985711.12;6537311.5;6.684696;45.875464;bal;bal
+74236_B450;Le Tronchet du Milieu;74170;74236;Saint-Gervais-les-Bains;;;985886.73;6537885.79;6.687303;45.880556;bal;bal
+74236_xn7i6n;Le Truc;74170;74236;Saint-Gervais-les-Bains;;;991149.49;6533365.09;6.752311;45.837661;bal;bal
+74236_00rd6w;Le Véleray;74170;74236;Saint-Gervais-les-Bains;;;984846.91;6530220.32;6.66932;45.81204;bal;bal
+74236_6iccan;Le Vernet;74170;74236;Saint-Gervais-les-Bains;;;988067.15;6538622.42;6.715831;45.886262;bal;bal
+74236_bq7g69;Le Verney;74170;74236;Saint-Gervais-les-Bains;;;987025.61;6538063.52;6.702078;45.881675;bal;bal
+74236_C137;Le Vivier-Nord;74170;74236;Saint-Gervais-les-Bains;;;988863.4;6535953.22;6.724464;45.861915;bal;bal
+74236_C138;Le Vivier Sud;74170;74236;Saint-Gervais-les-Bains;;;989063.03;6535727.73;6.726897;45.859802;bal;bal
+74236_9enqhd;Le Voracet;74170;74236;Saint-Gervais-les-Bains;;;992183.59;6535511.6;6.766937;45.856525;bal;bal
+74236_B272;L'Île de Brey;74170;74236;Saint-Gervais-les-Bains;;;987482.38;6540582.46;6.709486;45.90414;bal;bal
+74236_C078;Longemalle Devant;74170;74236;Saint-Gervais-les-Bains;;;987269.17;6535201.91;6.703485;45.855832;bal;bal
+74236_hvq40r;L'Ormey;74170;74236;Saint-Gervais-les-Bains;;;991319.16;6535831.05;6.756005;45.859769;bal;bal
+74236_fitokk;Louge;74170;74236;Saint-Gervais-les-Bains;;;985111.08;6539169.41;6.678084;45.892428;bal;bal
+74236_sod170;L'Uche;74170;74236;Saint-Gervais-les-Bains;;;986837.17;6539108.26;6.700282;45.891152;bal;bal
+74236_B294;Maison Neuve d'en-Bas;74170;74236;Saint-Gervais-les-Bains;;;989904.16;6533504.11;6.73637;45.839443;bal;bal
+74236_B295;Maison Neuve d'en-Haut;74170;74236;Saint-Gervais-les-Bains;;;990081.29;6533349.19;6.738555;45.837974;bal;bal
+74236_kobk6x;Miage;74170;74236;Saint-Gervais-les-Bains;;;991777.17;6533619;6.760544;45.839676;bal;bal
+74236_axrs8t;Mollesule;74170;74236;Saint-Gervais-les-Bains;;;985707.55;6539632.03;6.686046;45.896339;bal;bal
+74236_B312;Mont d'Arbois;74170;74236;Saint-Gervais-les-Bains;;;983875.67;6535096.72;6.659736;45.85631;bal;bal
+74236_izr032;Montivon;74170;74236;Saint-Gervais-les-Bains;;;989149.25;6537635.89;6.729168;45.876929;bal;bal
+74236_B315;Mont-Lachat;74170;74236;Saint-Gervais-les-Bains;;;993639.58;6537479.1;6.786895;45.873595;bal;bal
+74236_s0n9l9;Montoire;74170;74236;Saint-Gervais-les-Bains;;;989826.2;6536013.31;6.736896;45.862046;bal;bal
+74236_B316;Mont-Paccard;74170;74236;Saint-Gervais-les-Bains;;;988279.07;6539720.02;6.719227;45.896045;bal;bal
+74236_hjnm59;Morneau;74170;74236;Saint-Gervais-les-Bains;;;988077.81;6539422.93;6.716454;45.893458;bal;bal
+74236_tv2fby;Ombraz;74170;74236;Saint-Gervais-les-Bains;;;988208.24;6537042.85;6.71669;45.871994;bal;bal
+74236_B335;Ombraz-Vers les Ney;74170;74236;Saint-Gervais-les-Bains;;;988121.71;6537193.41;6.715667;45.873385;bal;bal
+74236_B339;Orsin Derrière;74170;74236;Saint-Gervais-les-Bains;;;987221.99;6537646.5;6.704355;45.877841;bal;bal
+74236_B340;Orsin Devant;74170;74236;Saint-Gervais-les-Bains;;;987345.3;6537480.97;6.705843;45.8763;bal;bal
+74236_C085;Palengeard-Derrière;74170;74236;Saint-Gervais-les-Bains;;;987328.85;6533852.52;6.703438;45.843669;bal;bal
+74236_q1ixaa;Panloup;74170;74236;Saint-Gervais-les-Bains;;;987850.36;6538801.1;6.713147;45.887961;bal;bal
+74236_gpu79l;Pétrizon;74170;74236;Saint-Gervais-les-Bains;;;986521.32;6539387.5;6.696382;45.893797;bal;bal
+74236_mtnm1a;Piedchat;74170;74236;Saint-Gervais-les-Bains;;;988300.92;6538798.53;6.718949;45.887747;bal;bal
+74236_B356;Pierre Plate;74170;74236;Saint-Gervais-les-Bains;;;985983.05;6537642.26;6.688397;45.878325;bal;bal
+74236_B371;Planche-Quart;74170;74236;Saint-Gervais-les-Bains;;;985754.59;6537986.89;6.685662;45.881521;bal;bal
+74236_B363;Plan de la Mercellerie;74170;74236;Saint-Gervais-les-Bains;;;985091.84;6539052.67;6.677766;45.891386;bal;bal
+74236_C095;Plan du Clos;74170;74236;Saint-Gervais-les-Bains;;;986505.08;6535295.39;6.693705;45.856995;bal;bal
+74236_C097;Plan du Clos Devant;74170;74236;Saint-Gervais-les-Bains;;;986699.33;6535302.6;6.69621;45.856978;bal;bal
+74236_C098;Plan du Laÿs Derrière;74170;74236;Saint-Gervais-les-Bains;;;986726.9;6534951.14;6.696353;45.853805;bal;bal
+74236_C099;Plan du Laÿs Devant;74170;74236;Saint-Gervais-les-Bains;;;986804.65;6534873.51;6.697307;45.853074;bal;bal
+74236_B368;Plan du Nérey;74170;74236;Saint-Gervais-les-Bains;;;987655.47;6538856.08;6.71067;45.888538;bal;bal
+74236_ytq5rn;Poiset;74170;74236;Saint-Gervais-les-Bains;;;987498.16;6533483.59;6.705394;45.840279;bal;bal
+74236_3oq1tn;Porcherey;74170;74236;Saint-Gervais-les-Bains;;;987574.72;6533984.13;6.706682;45.844749;bal;bal
+74236_C110;Porcherey-Derrière;74170;74236;Saint-Gervais-les-Bains;;;987610.4;6534250.07;6.707302;45.847126;bal;bal
+74236_C111;Porcherey-Devant;74170;74236;Saint-Gervais-les-Bains;;;987694.71;6533757.08;6.708089;45.842656;bal;bal
+74236_B382;Poue-Blanche;74170;74236;Saint-Gervais-les-Bains;;;985660.69;6537714.81;6.684289;45.879113;bal;bal
+74236_byaffz;Pracondu;74170;74236;Saint-Gervais-les-Bains;;;988229.62;6537380.38;6.71717;45.875021;bal;bal
+74236_5ofa8v;Prarion;74170;74236;Saint-Gervais-les-Bains;;;990339.72;6533674.17;6.742079;45.840787;bal;bal
+74236_B390;Pré de la Tête;74170;74236;Saint-Gervais-les-Bains;;;990905.18;6535521.41;6.750486;45.857161;bal;bal
+74236_h27ys2;Presbert;74170;74236;Saint-Gervais-les-Bains;;;990851.42;6535951.22;6.750057;45.86105;bal;bal
+74236_B405;Saint-Martin;74170;74236;Saint-Gervais-les-Bains;;;986854.7;6539403.13;6.700686;45.893797;bal;bal
+74236_C118;Saint-Nicolas;74170;74236;Saint-Gervais-les-Bains;;;988808.07;6535125.81;6.723249;45.854496;bal;bal
+74236_wtoefy;Sous Bionnay;74170;74236;Saint-Gervais-les-Bains;;;988721.38;6536813.23;6.723158;45.869711;bal;bal
+74236_rvmgx7;Sous la Joux;74170;74236;Saint-Gervais-les-Bains;;;990374.28;6535865.74;6.743862;45.860485;bal;bal
+74236_qqjxld;Sous la Roche;74170;74236;Saint-Gervais-les-Bains;;;987519.83;6535704.95;6.707016;45.860251;bal;bal
+74236_yg3m85;Sous le Bois;74170;74236;Saint-Gervais-les-Bains;;;988558.81;6536780.77;6.721045;45.869488;bal;bal
+74236_j7he6m;Sous le Crey;74170;74236;Saint-Gervais-les-Bains;;;987744.17;6536771.64;6.71055;45.869751;bal;bal
+74236_ra1qjx;Sous le Crozat;74170;74236;Saint-Gervais-les-Bains;;;988819.94;6535712.14;6.723758;45.859765;bal;bal
+74236_etg66x;Sous le Fioux;74170;74236;Saint-Gervais-les-Bains;;;991557.71;6537162.96;6.759893;45.871647;bal;bal
+74236_0nzc6g;Sous le Glacier de Bionnasset;74170;74236;Saint-Gervais-les-Bains;;;992832.44;6536387.56;6.775829;45.864125;bal;bal
+74236_vzl02b;Sous les Frênes;74170;74236;Saint-Gervais-les-Bains;;;988656.34;6537212.28;6.722563;45.873328;bal;bal
+74236_80byoi;Sous les Mollaz-L'Echeney;74170;74236;Saint-Gervais-les-Bains;;;989442.33;6535077.28;6.731384;45.85379;bal;bal
+74236_B420;Sous les Mollaz-L'Eculaz;74170;74236;Saint-Gervais-les-Bains;;;989412.24;6534770.46;6.73081;45.851043;bal;bal
+74236_yh2te7;Sous les Pierres;74170;74236;Saint-Gervais-les-Bains;;;989742.35;6535889.49;6.735741;45.860968;bal;bal
+74236_sv2r9k;Sous les Pratz;74170;74236;Saint-Gervais-les-Bains;;;987706.19;6538277.81;6.710973;45.883315;bal;bal
+74236_m1tdnn;Sous le Truc;74170;74236;Saint-Gervais-les-Bains;;;990784.31;6533494.93;6.747691;45.838985;bal;bal
+74236_7yfi18;Sous le Verney;74170;74236;Saint-Gervais-les-Bains;;;987138.77;6538155.43;6.703591;45.882454;bal;bal
+74236_4v999k;St Gervais-Les-Bains;74170;74236;Saint-Gervais-les-Bains;;;987629.95;6539266.67;6.71059;45.892242;bal;bal
+74236_nsf422;Sur Bonnant;74170;74236;Saint-Gervais-les-Bains;;;986871.2;6540476.27;6.701547;45.903443;bal;bal
+74236_w7cbes;Sur Geroux;74170;74236;Saint-Gervais-les-Bains;;;991064.2;6535272.93;6.752381;45.854858;bal;bal
+74236_m0ebs5;Sur le Cart;74170;74236;Saint-Gervais-les-Bains;;;991623.01;6536993.75;6.76063;45.870097;bal;bal
+74236_sqhh7m;Sur le Cey;74170;74236;Saint-Gervais-les-Bains;;;991341.53;6537222.59;6.757146;45.872276;bal;bal
+74236_60slxq;Sur le Ciel;74170;74236;Saint-Gervais-les-Bains;;;990920.49;6534672.86;6.750164;45.849522;bal;bal
+74236_jo0pt6;Sur le Plane;74170;74236;Saint-Gervais-les-Bains;;;987484.52;6534660.61;6.70593;45.850872;bal;bal
+74236_ffqua3;Sur le Rocher;74170;74236;Saint-Gervais-les-Bains;;;988346.12;6534145.38;6.716708;45.845873;bal;bal
+74236_red8m0;Sur les Bétasses;74170;74236;Saint-Gervais-les-Bains;;;985654.66;6536072.3;6.683224;45.864341;bal;bal
+74236_u698x8;Sur les Bey;74170;74236;Saint-Gervais-les-Bains;;;989440.63;6535990.17;6.731918;45.862002;bal;bal
+74236_vn4dd8;Sur les Fieux;74170;74236;Saint-Gervais-les-Bains;;;986980.66;6536810.16;6.700742;45.87042;bal;bal
+74236_kark5i;Sur les Maures;74170;74236;Saint-Gervais-les-Bains;;;992561.92;6536611.32;6.772484;45.866254;bal;bal
+74236_B203;Sur L'Etraz-Les Boures;74170;74236;Saint-Gervais-les-Bains;;;989393.33;6534541.1;6.730427;45.848988;bal;bal
+74236_B399;Sur Rocher Blanc;74170;74236;Saint-Gervais-les-Bains;;;990496.29;6533689.05;6.744103;45.840854;bal;bal
+74236_4cn8iu;Taborin;74170;74236;Saint-Gervais-les-Bains;;;987014.53;6540221.97;6.70324;45.901095;bal;bal
+74236_B425;Tague d'en-Bas;74170;74236;Saint-Gervais-les-Bains;;;987702.94;6537551.03;6.710491;45.876779;bal;bal
+74236_B426;Tague d'en-Haut;74170;74236;Saint-Gervais-les-Bains;;;987689.99;6537317.85;6.710183;45.874687;bal;bal
+74236_ly4yq8;Taguy;74170;74236;Saint-Gervais-les-Bains;;;986198.8;6536456.14;6.690461;45.867565;bal;bal
+74236_ttxz48;Tarchet;74170;74236;Saint-Gervais-les-Bains;;;987177.02;6536978.24;6.703372;45.871849;bal;bal
+74236_B432;Terre Noire;74170;74236;Saint-Gervais-les-Bains;;;991650.51;6536872.99;6.76091;45.868999;bal;bal
+74236_B442;Tresse d'en Bas;74170;74236;Saint-Gervais-les-Bains;;;989577.07;6534036.94;6.732485;45.844375;bal;bal
+74236_B443;Tresse d'en Haut;74170;74236;Saint-Gervais-les-Bains;;;989601.37;6534191.74;6.732892;45.845757;bal;bal
+74236_1udsdh;Tricot;74170;74236;Saint-Gervais-les-Bains;;;992610.86;6535178.36;6.772232;45.853344;bal;bal
+74236_9ak8lo;Véroce;74170;74236;Saint-Gervais-les-Bains;;;988788.41;6534770.23;6.72278;45.851306;bal;bal
+74236_C135;Vers la Grange;74170;74236;Saint-Gervais-les-Bains;;;988569.44;6536329.68;6.720908;45.865426;bal;bal
+74236_B463;Vers le Clus;74170;74236;Saint-Gervais-les-Bains;;;988050.67;6537839.54;6.715144;45.879227;bal;bal
+74236_B464;Vers le Crêt;74170;74236;Saint-Gervais-les-Bains;;;986777.08;6537634.41;6.698618;45.87792;bal;bal
+74236_B465;Vers le Creux;74170;74236;Saint-Gervais-les-Bains;;;987749.29;6537899.62;6.711299;45.879895;bal;bal
+74236_B466;Vers le Feu d'en-Bas;74170;74236;Saint-Gervais-les-Bains;;;986911.95;6538064.97;6.700615;45.881736;bal;bal
+74236_B467;Vers le Feu d'en-Haut;74170;74236;Saint-Gervais-les-Bains;;;986763.29;6537993.07;6.698657;45.881152;bal;bal
+74236_B468;Vers le Nant;74170;74236;Saint-Gervais-les-Bains;;;986210.08;6536771.07;6.690796;45.870393;bal;bal
+74236_nqvcem;Verzolet;74170;74236;Saint-Gervais-les-Bains;;;991152.68;6536934.88;6.754538;45.869769;bal;bal
+74236_v7u9u7;Voza;74170;74236;Saint-Gervais-les-Bains;;;992024.96;6538099.12;6.766485;45.879867;bal;bal
+74233_s75sfb;Arandons;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_smaaoe;Au Clus;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_6mtpgx;Aux Esserts;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_mayzeh;Barbellaud;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_320zlp;Blanly;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_faqkhi;Bois Du Seigneur;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_y7gwhz;Brolliet-Vers Pont Le;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_80jdo9;Bruyere - Dessous;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_hf19s4;Bruyere-Dessus;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_5mknkn;Chamossat;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_8chsbd;Champ Bechard;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_zxu8mz;Champ Chardon;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_fvd2xc;Champ - Colomb;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_e86c2g;Champ D'Avignon;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_l1s0rw;Champ De La Pierre;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_4c1o3m;Champ De L'Herse;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_po8cuk;Champ Devant;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_degm4z;Champ-Dordan;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_0hut6r;Champ Sous Les Vignes;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_76681a;Champs Pourry;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_4g2c83;Chenet;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_uf8s7u;Chez Favrin;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_0s6wun;Chez Guers;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_73b16z;Chez Guichard;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_j2n1gn;Chez Mallinjoud;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_86gi5s;Chez Moiroux;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_k3chkq;Chez Pessel;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_ifi8lt;Chez Vagneux;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_5xm099;Chindreusaz De Crosagny;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_abtlwe;Corty-Chantenefan;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_kiydtc;Derriere La Grange;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_c6xq32;Derriere La Maison;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_5j6zt0;Gratteloup-Sud;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_hobvfs;Hameau De Mercy;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_3rtn2l;La Caille;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_thy4c0;La Chapelle;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_6cvzfb;La Gagere - Nord;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_t4g7o8;La Gagere - Sud;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_jviui0;La Piece;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_2mtz1b;La Pinsire-Sud;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_vjcztq;Le Beule;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_jqug4q;Le Biollay - Nord;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_cm137z;Le Club;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_gg9tn5;L ' Ecule;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_080gch;Le Devin;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_0l2qiv;Le Pontet;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_7nf3ke;Les Croix;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_qr5ujk;Les Fins;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_gxdgyi;Les Teppes;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_steadq;Les Vuages - Nord;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_ivhz8q;Les Vuages - Sud;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_am58q5;Ligniere;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_s134jn;Maladiere-Est;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_cvbbgo;Maladiere-Ouest;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_qgvgdo;Malagny-Nord;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_hpld7r;Malesset-Hutins;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_gcz05l;Maraichais Des Combes;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_52ch2e;Maure Champ;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_5gnt4w;Moine;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_58tixg;Pattu D`En Bas;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_c4o6uc;Pattu-D'En-Haut;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_65qk44;Pelloset;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_824fy0;Platet;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_33tkrj;Pommerieux-Dessous;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_4izsyl;Pre Poly;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_tkgec9;Pres D'Avignon;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_qsjcy1;Pres De La Marquise;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_5g4afx;Prés De Lignière;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_o7j7i3;Rafour;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_upb1ns;Rathiaux;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_mlvdn1;Riondet;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_vsg59z;Ruttet-Est;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_lo5wre;Ruttet-Ouest;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_jvmmvc;Saint-Felix;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_4is1zq;Sauffaz;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_tl6r29;Touviere La;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_a3frfg;Vers Le Martinet;74540;74233;Saint-Félix;;;;;;;bal;bal
+74233_skqyc3;Villard;74540;74233;Saint-Félix;;;;;;;bal;bal
+74183_t6d4gn;Andeliay;74440;74183;Mieussy;;;972538.13;6567673.06;6.532546;46.154001;bal;bal
+74183_yhstyc;Anglay;74440;74183;Mieussy;;;972447.31;6567648.21;6.531356;46.153814;bal;bal
+74183_8aiqh0;Anthon;74440;74183;Mieussy;;;970702.2;6565033.45;6.507262;46.130992;bal;bal
+74183_B011;Asnières d'en Bas;74440;74183;Mieussy;;;969962.29;6568278.06;6.49955;46.160476;bal;bal
+74183_B012;Asnières d'en Haut;74440;74183;Mieussy;;;970136.97;6568364.28;6.501861;46.161182;bal;bal
+74183_dem1l9;Ballon;74440;74183;Mieussy;;;969561.84;6566111.37;6.493124;46.141144;bal;bal
+74183_wxsbxe;Barbey;74440;74183;Mieussy;;;972029.98;6566017.48;6.525011;46.139312;bal;bal
+74183_ou3b24;Bellecombe;74440;74183;Mieussy;;;973007.52;6563344.3;6.536111;46.114871;bal;bal
+74183_127h2x;Bieugey;74440;74183;Mieussy;;;971049.49;6568337.15;6.513659;46.160573;bal;bal
+74183_hcyj99;Bieuilly;74440;74183;Mieussy;;;970817.65;6564736.56;6.508585;46.128275;bal;bal
+74183_B054;Boche d'en Bas;74440;74183;Mieussy;;;974097.92;6563197.62;6.55013;46.113111;bal;bal
+74183_B055;Boche d'en Haut;74440;74183;Mieussy;;;974110.65;6562899.38;6.550121;46.110423;bal;bal
+74183_67hv21;Boisriond;74440;74183;Mieussy;;;971554.38;6568443.8;6.520257;46.16133;bal;bal
+74183_u3926g;Brand;74440;74183;Mieussy;;;971167.15;6566992.56;6.514407;46.14843;bal;bal
+74183_00zlcs;Chalon;74440;74183;Mieussy;;;971601.6;6565909.54;6.519405;46.138513;bal;bal
+74183_z5xehd;Champachoud;74440;74183;Mieussy;;;974115.57;6564324.16;6.551014;46.123238;bal;bal
+74183_B118;Chez Besson;74440;74183;Mieussy;;;970989.86;6567323.6;6.512303;46.151479;bal;bal
+74183_B119;Chez Jorat;74440;74183;Mieussy;;;972613.98;6565512.57;6.532276;46.134535;bal;bal
+74183_232xmt;Chozallets;74440;74183;Mieussy;;;973668.82;6565101.11;6.545686;46.130408;bal;bal
+74183_lv9wfi;Cloiset;74440;74183;Mieussy;;;972216.49;6565898.86;6.527356;46.13817;bal;bal
+74183_apwfhr;Colloté;74440;74183;Mieussy;;;971171.56;6567354.92;6.514673;46.151688;bal;bal
+74183_B155;Côte du Pont;74440;74183;Mieussy;;;971524.43;6564960.78;6.517859;46.130009;bal;bal
+74183_gnzcn7;Créan;74440;74183;Mieussy;;;972393.2;6564762.35;6.528985;46.127875;bal;bal
+74183_sztbgq;Déchamp;74440;74183;Mieussy;;;973628.67;6564534.27;6.544837;46.125325;bal;bal
+74183_0e32u9;Dessy;74440;74183;Mieussy;;;971718.28;6564622.6;6.520172;46.126889;bal;bal
+74183_tiz91u;Drevy;74440;74183;Mieussy;;;970515.68;6567625.65;6.506339;46.154386;bal;bal
+74183_ydfmm8;Écherus;74440;74183;Mieussy;;;972911.17;6566678.97;6.536798;46.144908;bal;bal
+74183_rb1shb;Farquet;74440;74183;Mieussy;;;974563.44;6568836.13;6.559441;46.163645;bal;bal
+74183_mvl4g1;Fartaz;74440;74183;Mieussy;;;973451.2;6565603.24;6.543162;46.135013;bal;bal
+74183_B254;Forêt d'Ima;74440;74183;Mieussy;;;973627.26;6568054.63;6.546866;46.156994;bal;bal
+74183_l8uqpa;Fromeson;74440;74183;Mieussy;;;971325.5;6566195.59;6.515997;46.141197;bal;bal
+74183_ijb309;Geblu;74440;74183;Mieussy;;;973163.09;6565856.77;6.539581;46.13741;bal;bal
+74183_1smfm6;Gremelly;74440;74183;Mieussy;;;971933.31;6564040.71;6.522618;46.121568;bal;bal
+74183_amdeti;Guillard;74440;74183;Mieussy;;;972929.76;6565208.9;6.536186;46.131676;bal;bal
+74183_kturos;Ivoray;74440;74183;Mieussy;;;972302.46;6563363.55;6.527002;46.115328;bal;bal
+74183_7tznf8;La Challe;74440;74183;Mieussy;;;974032.74;6564967.74;6.550317;46.129061;bal;bal
+74183_c79b06;La Combe;74440;74183;Mieussy;;;971516.03;6567556.25;6.519248;46.153361;bal;bal
+74183_gw8rzm;La Coutaz;74440;74183;Mieussy;;;971503.6;6567161.18;6.518859;46.149812;bal;bal
+74183_p0xmpf;La Ferme;74440;74183;Mieussy;;;972077.72;6565116.75;6.525108;46.13119;bal;bal
+74183_bu4pw9;La Forêt;74440;74183;Mieussy;;;968507.02;6567861.76;6.480472;46.15731;bal;bal
+74183_6rxmvq;La Gauchettaz;74440;74183;Mieussy;;;972257.6;6565553.32;6.527688;46.135045;bal;bal
+74183_nlzsen;La Glioude;74440;74183;Mieussy;;;973876.29;6563532.48;6.547458;46.116213;bal;bal
+74183_dfm85a;La Grange;74440;74183;Mieussy;;;971138.14;6567760.06;6.514474;46.155346;bal;bal
+74183_x5g2re;La Grange des Vagnys;74440;74183;Mieussy;;;973470.99;6564263.95;6.54264;46.122957;bal;bal
+74183_6pq2ql;La Grangette;74440;74183;Mieussy;;;973261.83;6565602.3;6.540711;46.135081;bal;bal
+74183_7op676;La Léchère;74440;74183;Mieussy;;;970724.51;6567788.67;6.509136;46.155769;bal;bal
+74183_m2mca7;La Mouille;74440;74183;Mieussy;;;973608.99;6564901.77;6.544796;46.128639;bal;bal
+74183_rsd3iq;La Mouilllette;74440;74183;Mieussy;;;971925.4;6565234.23;6.523205;46.132308;bal;bal
+74183_r3nzmc;La Platière;74440;74183;Mieussy;;;973690.78;6566909.61;6.547022;46.146668;bal;bal
+74183_5bpth9;La Pose;74440;74183;Mieussy;;;971974.8;6563904.5;6.523076;46.120326;bal;bal
+74183_oacw2g;Lapraz;74440;74183;Mieussy;;;970473.39;6568266.17;6.50616;46.160165;bal;bal
+74183_ibcun3;La Praz;74440;74183;Mieussy;;;971698.43;6566242;6.52085;46.141465;bal;bal
+74183_ceb575;La Rache;74440;74183;Mieussy;;;971620.18;6565172.37;6.51922;46.131874;bal;bal
+74183_eud3qa;L'Arly;74440;74183;Mieussy;;;971643.67;6566501.35;6.520291;46.14382;bal;bal
+74183_j3luie;La Seuchat;74440;74183;Mieussy;;;973845.02;6563382.11;6.546966;46.114873;bal;bal
+74183_ev1b9b;La Trouvière;74440;74183;Mieussy;;;971722.27;6567603.58;6.521945;46.153704;bal;bal
+74183_mbscg1;La Vernaz;74440;74183;Mieussy;;;971404.07;6567799.25;6.517939;46.155592;bal;bal
+74183_wlttft;La Vieille Gare;74440;74183;Mieussy;;;971472.37;6565046.72;6.517235;46.130803;bal;bal
+74183_B048;Le Bois Gervaz;74440;74183;Mieussy;;;971801.14;6563241.78;6.520447;46.114434;bal;bal
+74183_6u2azh;Le Chable;74440;74183;Mieussy;;;972042.22;6567096.18;6.525793;46.149011;bal;bal
+74183_h64gjk;Le Charjou;74440;74183;Mieussy;;;972933;6563185.56;6.535055;46.113473;bal;bal
+74183_pb5r8r;Léchat;74440;74183;Mieussy;;;973437.37;6564470.43;6.542325;46.124828;bal;bal
+74183_B129;Le Clos Galattaz;74440;74183;Mieussy;;;973951.76;6568755.65;6.551475;46.163169;bal;bal
+74183_toonm6;Le Coin;74440;74183;Mieussy;;;974643.4;6569855.78;6.561072;46.172785;bal;bal
+74183_p444rn;Le Cretz Rôti;74440;74183;Mieussy;;;973955.33;6568678;6.551476;46.162469;bal;bal
+74183_0k8lms;Le Crot;74440;74183;Mieussy;;;970242.96;6567861.21;6.502944;46.156614;bal;bal
+74183_pchvm2;Le Féteux;74440;74183;Mieussy;;;970754.92;6567377.4;6.509293;46.152057;bal;bal
+74183_nvgcpb;Le Fleury;74440;74183;Mieussy;;;973687.16;6568206.94;6.54773;46.15834;bal;bal
+74183_ymgsm6;Le Foliet;74440;74183;Mieussy;;;973475.78;6565494.74;6.543417;46.134027;bal;bal
+74183_t2r4hv;Le Jourdy;74440;74183;Mieussy;;;972134.65;6566333.07;6.526548;46.142109;bal;bal
+74183_x2fqmy;Le Jourdy;74440;74183;Mieussy;;;969144.81;6569274.09;6.489537;46.169762;bal;bal
+74183_70hdyi;Le Marais;74440;74183;Mieussy;;;972074.02;6563661.26;6.524219;46.118098;bal;bal
+74183_i01nlj;Le Mary;74440;74183;Mieussy;;;973914.87;6568899.06;6.551081;46.164474;bal;bal
+74183_1nq6oy;Le Petou;74440;74183;Mieussy;;;974196.79;6564568.37;6.552207;46.125402;bal;bal
+74183_apy9xh;Le Planet;74440;74183;Mieussy;;;972888.67;6569619.1;6.538213;46.171366;bal;bal
+74183_ki2jjr;Le Platy;74440;74183;Mieussy;;;972091.91;6563977.09;6.524633;46.120932;bal;bal
+74183_B446;Le Pré Magnin;74440;74183;Mieussy;;;973252.71;6563038.26;6.539105;46.112019;bal;bal
+74183_bohfkm;Le Revenaz;74440;74183;Mieussy;;;971649.8;6563558.4;6.518672;46.117343;bal;bal
+74183_192jtl;Les Briffes;74440;74183;Mieussy;;;974542.57;6564198.88;6.556465;46.121938;bal;bal
+74183_chpnrs;Les Brons;74440;74183;Mieussy;;;971581.4;6567452;6.520034;46.152397;bal;bal
+74183_jfqr7d;Les Charmettes;74440;74183;Mieussy;;;974424.78;6564435.35;6.555079;46.124113;bal;bal
+74183_kay0nw;Les Charmettes;74440;74183;Mieussy;;;973107.58;6569606.24;6.54104;46.171162;bal;bal
+74183_B127;Les Clos d'en bas;74440;74183;Mieussy;;;972223.97;6567850.31;6.528582;46.155722;bal;bal
+74183_B128;Les Clos d'en haut;74440;74183;Mieussy;;;972062.36;6567936.91;6.52654;46.156566;bal;bal
+74183_s5cbaz;Les Cudutrons;74440;74183;Mieussy;;;973512.53;6563565.82;6.542772;46.11666;bal;bal
+74183_0pltmu;Les Éterpées;74440;74183;Mieussy;;;972425.77;6563180.09;6.528491;46.113628;bal;bal
+74183_dhcdk1;Les Évaux;74440;74183;Mieussy;;;968951.88;6567480.78;6.486013;46.153706;bal;bal
+74183_n4gk4h;Les Feux;74440;74183;Mieussy;;;972046.82;6566655.96;6.525598;46.145049;bal;bal
+74183_sormwr;Les Gaudins;74440;74183;Mieussy;;;973676.14;6564318.85;6.545326;46.123368;bal;bal
+74183_6lddmd;Les Geais;74440;74183;Mieussy;;;973912.87;6564613.51;6.54856;46.125923;bal;bal
+74183_zlbmao;Les Granges;74440;74183;Mieussy;;;973132.92;6566101.97;6.539333;46.139628;bal;bal
+74183_rly86j;Les Grangettes;74440;74183;Mieussy;;;969718.06;6568089.37;6.49628;46.158876;bal;bal
+74183_udxil6;Les Lanchy;74440;74183;Mieussy;;;973091.15;6562539.23;6.536726;46.107595;bal;bal
+74183_trvk8p;Les Lapiaz;74440;74183;Mieussy;;;969907.92;6566814.11;6.498006;46.147328;bal;bal
+74183_gjul76;Les Meis;74440;74183;Mieussy;;;971648.77;6568845.42;6.521711;46.164905;bal;bal
+74183_09vkku;Les Metz;74440;74183;Mieussy;;;971619.62;6567282.74;6.520431;46.150859;bal;bal
+74183_9z4xo2;Les Michons;74440;74183;Mieussy;;;974076.87;6564485.16;6.550607;46.124702;bal;bal
+74183_fl5h0h;Les Montagnyres;74440;74183;Mieussy;;;969958.81;6566628.28;6.498558;46.145636;bal;bal
+74183_h60bzu;Les Monts;74440;74183;Mieussy;;;969010.67;6567038.41;6.486521;46.149703;bal;bal
+74183_2wp2je;Les Mouilles;74440;74183;Mieussy;;;973787.51;6562881.18;6.545931;46.11039;bal;bal
+74183_d5kd0l;Les Mouilles;74440;74183;Mieussy;;;974387.85;6568661.8;6.557066;46.162148;bal;bal
+74183_dfx96j;Les Munes;74440;74183;Mieussy;;;976603.52;6569369.16;6.586166;46.167609;bal;bal
+74183_levmb6;Les Places;74440;74183;Mieussy;;;973516.92;6563042.89;6.542525;46.111954;bal;bal
+74183_9lvh5i;Les Rasses;74440;74183;Mieussy;;;972228.49;6565646.17;6.527365;46.135892;bal;bal
+74183_nwwzq6;Les Sachets;74440;74183;Mieussy;;;974265.06;6564180.15;6.552864;46.121882;bal;bal
+74183_7l9zwu;Les Seujets;74440;74183;Mieussy;;;973561.94;6562635.94;6.542871;46.108275;bal;bal
+74183_wwnfie;Les Têtes;74440;74183;Mieussy;;;974933.9;6569518.17;6.564636;46.16963;bal;bal
+74183_k3qfkd;Les Tonchets;74440;74183;Mieussy;;;971710.31;6565729.75;6.520708;46.136852;bal;bal
+74183_4bjp3j;Les Trouvières;74440;74183;Mieussy;;;971488.98;6564609.93;6.517198;46.126867;bal;bal
+74183_tl3lw0;Les Vagny;74440;74183;Mieussy;;;973832.09;6564073.85;6.547201;46.121101;bal;bal
+74183_1c1rc3;Les Vernay;74440;74183;Mieussy;;;973452.5;6565104.29;6.542889;46.130524;bal;bal
+74183_bp9ein;Le Trembley;74440;74183;Mieussy;;;973919.87;6564308.24;6.548473;46.123174;bal;bal
+74183_3pc47k;Ley;74440;74183;Mieussy;;;970090.53;6566422.92;6.500145;46.143736;bal;bal
+74183_1j8xo0;Maillet;74440;74183;Mieussy;;;973722.03;6563245.97;6.545296;46.113698;bal;bal
+74183_jahiuz;Matringes;74440;74183;Mieussy;;;973174.45;6564588.47;6.538992;46.125996;bal;bal
+74183_vgrxis;Messy;74440;74183;Mieussy;;;971035.42;6566730.36;6.512551;46.146124;bal;bal
+74183_B387;Pégnat d'en bas;74440;74183;Mieussy;;;971575.4;6568097.47;6.520329;46.158206;bal;bal
+74183_B388;Pégnat d'en haut;74440;74183;Mieussy;;;971759.06;6568208.94;6.522771;46.159135;bal;bal
+74183_cum610;Pertuiset;74440;74183;Mieussy;;;973678.59;6566452.07;6.546598;46.142557;bal;bal
+74183_v0c2yb;Quincy;74440;74183;Mieussy;;;969551.54;6567453.83;6.49376;46.153225;bal;bal
+74183_3afz0x;Ramaz;74440;74183;Mieussy;;;974921.93;6569029.06;6.564195;46.165235;bal;bal
+74183_vnyfh0;Ranchy;74440;74183;Mieussy;;;971376.2;6567147.16;6.517202;46.149737;bal;bal
+74183_oz0l1t;Ranne;74440;74183;Mieussy;;;971260.29;6566998.6;6.515616;46.148447;bal;bal
+74183_B480;Roche Palud d'en Bas;74440;74183;Mieussy;;;973252.97;6566736.43;6.541255;46.145287;bal;bal
+74183_lww9f4;Roche Palud d'en Haut;74440;74183;Mieussy;;;973213.21;6567028.56;6.54091;46.147931;bal;bal
+74183_kcf5c7;Rogin;74440;74183;Mieussy;;;973505.44;6565341.89;6.543712;46.13264;bal;bal
+74183_nluttv;Rosset;74440;74183;Mieussy;;;970977.49;6568229.68;6.512665;46.159635;bal;bal
+74183_qxhnly;Rovagne;74440;74183;Mieussy;;;973896.89;6568442.15;6.550582;46.160371;bal;bal
+74183_B492;Saint-Denis;74440;74183;Mieussy;;;969378.36;6568420.48;6.492072;46.16199;bal;bal
+74183_hdnszb;Serravaz;74440;74183;Mieussy;;;969186.12;6568960;6.489892;46.16692;bal;bal
+74183_gri6sm;Sommand;74440;74183;Mieussy;;;974040.11;6568512.29;6.552477;46.160944;bal;bal
+74183_k8os37;Sous Châtel;74440;74183;Mieussy;;;974242.02;6563697.67;6.552285;46.117551;bal;bal
+74183_tfbgi6;Sous la Côte;74440;74183;Mieussy;;;972250.19;6565368.13;6.527485;46.133382;bal;bal
+74183_cgr1oq;Sous la Côte;74440;74183;Mieussy;;;972083.87;6565773.1;6.525567;46.137092;bal;bal
+74183_t5nevv;Sous Les Barmes;74440;74183;Mieussy;;;972374.39;6565167.59;6.528976;46.131528;bal;bal
+74183_bxejxb;Sous les Prèses;74440;74183;Mieussy;;;976426.88;6569142.91;6.583746;46.165646;bal;bal
+74183_5odwxb;Station de ski de Sommand;74440;74183;Mieussy;;;974167.49;6568587.62;6.55417;46.16157;bal;bal
+74183_4kmck1;Sur le Crêt;74440;74183;Mieussy;;;970785.55;6566961.57;6.50945;46.148304;bal;bal
+74183_nz338e;Sur le Mont;74440;74183;Mieussy;;;971151.84;6564073.35;6.512527;46.122175;bal;bal
+74183_B542;Terres Blanches;74440;74183;Mieussy;;;972098.38;6565204.38;6.525426;46.13197;bal;bal
+74183_sbnzj7;Trebiet;74440;74183;Mieussy;;;971565.91;6566758.22;6.519433;46.146162;bal;bal
+74183_6pbucm;Varly;74440;74183;Mieussy;;;971609.35;6565479.35;6.519257;46.13464;bal;bal
+74183_6n51c8;Vérage;74440;74183;Mieussy;;;971330.96;6568690.73;6.517507;46.163641;bal;bal
+74183_tli17o;Verasson;74440;74183;Mieussy;;;969152.11;6566720.74;6.48817;46.146789;bal;bal
+74183_xignw4;Verny;74440;74183;Mieussy;;;970612.45;6567261.23;6.507382;46.151069;bal;bal
+74183_B578;Vers Ange;74440;74183;Mieussy;;;971637.93;6565004.86;6.519353;46.13036;bal;bal
+74183_B580;Vers Boche;74440;74183;Mieussy;;;974079.27;6563421.44;6.550019;46.115132;bal;bal
+74183_B589;Vers la Grange;74440;74183;Mieussy;;;971706.56;6567112.54;6.521458;46.149293;bal;bal
+74183_m1fhz8;Vervanne;74440;74183;Mieussy;;;970838.44;6567955.7;6.510707;46.157226;bal;bal
+74183_xcnpvc;Vivier;74440;74183;Mieussy;;;971305.49;6565652.78;6.515425;46.136322;bal;bal
+74173_miq30i;Allard;74120;74173;Megève;;;980590.23;6536279.78;6.618138;45.868315;bal;bal
+74173_iygv5x;Alloz;74120;74173;Megève;;;980947.39;6535229.18;6.622116;45.858717;bal;bal
+74173_tivukg;Arbois;74120;74173;Megève;;;983728;6534625.85;6.657554;45.852136;bal;bal
+74173_ijrcec;Arly;74120;74173;Megève;;;980274.09;6535150.06;6.613401;45.858283;bal;bal
+74173_rwyt21;Aux Tiers;74120;74173;Megève;;;982431.75;6533553.71;6.640231;45.843031;bal;bal
+74173_6zd0kz;Bacré;74120;74173;Megève;;;983330.36;6532064.87;6.65091;45.829265;bal;bal
+74173_ex59d6;Barriaz;74120;74173;Megève;;;983915.4;6530846.31;6.657711;45.81806;bal;bal
+74173_B018;Bas de Lady;74120;74173;Megève;;;980204.86;6534035.78;6.611853;45.848288;bal;bal
+74173_2vy5n2;Boby;74120;74173;Megève;;;981567.68;6534840.92;6.629872;45.854968;bal;bal
+74173_B025;Bois de Cornery;74120;74173;Megève;;;981686.4;6535895.25;6.632025;45.864403;bal;bal
+74173_3y3t30;Bois de Lady Est;74120;74173;Megève;;;980651.69;6533449.95;6.617259;45.842834;bal;bal
+74173_B029;Bois de Lady Ouest;74120;74173;Megève;;;980192.87;6533143.34;6.611173;45.840265;bal;bal
+74173_B026;Bois de la Foge;74120;74173;Megève;;;983382.9;6533408.01;6.652386;45.841325;bal;bal
+74173_B027;Bois de la Fontaine;74120;74173;Megève;;;979384.04;6532484.19;6.600376;45.834668;bal;bal
+74173_B030;Bois de Loutaz Dessus;74120;74173;Megève;;;984023.19;6533219.34;6.660514;45.839361;bal;bal
+74173_B032;Bois des Chiens;74120;74173;Megève;;;981784.07;6534360.62;6.632373;45.850558;bal;bal
+74173_aqjneg;Bois des Covagnes;74120;74173;Megève;;;983847.59;6531269.4;6.657091;45.821894;bal;bal
+74173_B034;Bois des Meuniers;74120;74173;Megève;;;983309.05;6533030.95;6.651211;45.837964;bal;bal
+74173_B035;Bois des Mouillettes;74120;74173;Megève;;;981201.4;6531789.87;6.623353;45.827674;bal;bal
+74173_B031;Bois de Villaret;74120;74173;Megève;;;978669.41;6534848.9;6.592565;45.856233;bal;bal
+74173_B036;Bois du Chon;74120;74173;Megève;;;982321.82;6530755.42;6.637156;45.817905;bal;bal
+74173_B037;Bois du Sallanglaz;74120;74173;Megève;;;981845.99;6530969.07;6.631161;45.820024;bal;bal
+74173_B038;Bois du Tour;74120;74173;Megève;;;980883.74;6533257.49;6.620132;45.841007;bal;bal
+74173_wk6nm0;Bonnapoux;74120;74173;Megève;;;982757.93;6534147.29;6.644782;45.848235;bal;bal
+74173_B040;Borne Nord;74120;74173;Megève;;;979466.53;6532881.48;6.601671;45.838208;bal;bal
+74173_B041;Borne Sud;74120;74173;Megève;;;979582.07;6532641.52;6.603017;45.836002;bal;bal
+74173_djvvg9;Braille;74120;74173;Megève;;;980379.73;6536204.32;6.615383;45.867723;bal;bal
+74173_xgpeza;Brunet;74120;74173;Megève;;;979780.8;6532610.13;6.605556;45.835638;bal;bal
+74173_z8xjh6;Brusson;74120;74173;Megève;;;982581.1;6532457.36;6.641502;45.833107;bal;bal
+74173_B048;Buisson Char;74120;74173;Megève;;;981475.7;6535391.86;6.629014;45.859962;bal;bal
+74173_B054;Canton de Cassioz;74120;74173;Megève;;;978603.32;6532100.11;6.590104;45.831533;bal;bal
+74173_B055;Canton des Frasses;74120;74173;Megève;;;977779.57;6536566.75;6.582113;45.87205;bal;bal
+74173_B056;Canton du Pautrait;74120;74173;Megève;;;978028.2;6534703.58;6.584225;45.855188;bal;bal
+74173_B057;Cassioz Est;74120;74173;Megève;;;978628.57;6533013.7;6.590964;45.839741;bal;bal
+74173_B058;Cassioz Ouest;74120;74173;Megève;;;978871.25;6533033.65;6.594099;45.839821;bal;bal
+74173_B060;Champ de Corps;74120;74173;Megève;;;980951.24;6535549.52;6.622355;45.861597;bal;bal
+74173_mo0bzg;Champlat;74120;74173;Megève;;;980313.64;6535056.49;6.613855;45.857425;bal;bal
+74173_B062;Champs de la Croix;74120;74173;Megève;;;981683.93;6535523.61;6.631773;45.861061;bal;bal
+74173_B063;Champs des Pettoreaux;74120;74173;Megève;;;982310.89;6535427.55;6.639788;45.859937;bal;bal
+74173_B064;Champs Longs;74120;74173;Megève;;;982162.59;6535215.94;6.637753;45.858095;bal;bal
+74173_B065;Champs Loquets;74120;74173;Megève;;;982644.23;6533821.76;6.643125;45.845354;bal;bal
+74173_ckthnu;Châtel;74120;74173;Megève;;;978555.66;6531905.85;6.589377;45.829805;bal;bal
+74173_B075;Combe Marin;74120;74173;Megève;;;983618.14;6532923.97;6.655125;45.836873;bal;bal
+74173_B080;Communal des Frasses;74120;74173;Megève;;;977358.27;6536008.93;6.576362;45.867204;bal;bal
+74173_B081;Communal du Tour;74120;74173;Megève;;;980714.61;6532677.55;6.617613;45.83586;bal;bal
+74173_99wnff;Cornery;74120;74173;Megève;;;981549.23;6536052.35;6.630352;45.865873;bal;bal
+74173_B085;Cote de la Rée;74120;74173;Megève;;;982111.96;6533158.99;6.635881;45.839613;bal;bal
+74173_B088;Côtes du Planay;74120;74173;Megève;;;984070.69;6532800.21;6.660875;45.835571;bal;bal
+74173_bipcwg;Covagnet;74120;74173;Megève;;;977458.33;6535211.75;6.577185;45.859992;bal;bal
+74173_B095;Crêt Bonne Eau;74120;74173;Megève;;;980528.63;6536041.28;6.617204;45.866195;bal;bal
+74173_B096;Cret des Chiens;74120;74173;Megève;;;978556.37;6534373.31;6.590831;45.852001;bal;bal
+74173_B097;Crêt du Lait;74120;74173;Megève;;;982358.39;6532937.45;6.638921;45.837518;bal;bal
+74173_B098;Crêt Steudan;74120;74173;Megève;;;980605.52;6534546.94;6.617312;45.852721;bal;bal
+74173_nhjtqk;Culleron;74120;74173;Megève;;;982647.82;6532067.46;6.642129;45.829572;bal;bal
+74173_6u9dyu;Darbe;74120;74173;Megève;;;982918.47;6534509.56;6.647064;45.851427;bal;bal
+74173_rlz3x5;Darbelet;74120;74173;Megève;;;982455.23;6535595.29;6.641746;45.861386;bal;bal
+74173_B114;Dessous la Croix;74120;74173;Megève;;;983522.89;6532295.9;6.653525;45.831263;bal;bal
+74173_B115;Dessous le Calvaire;74120;74173;Megève;;;981043.74;6535091.31;6.623275;45.857437;bal;bal
+74173_B116;Dessous le Vorasset;74120;74173;Megève;;;982781.3;6535062.29;6.645627;45.856456;bal;bal
+74173_B117;Dessous Stepan;74120;74173;Megève;;;982356.01;6534361.86;6.639736;45.850332;bal;bal
+74173_B118;Dessus la Croix;74120;74173;Megève;;;983569.64;6532531.52;6.654267;45.833363;bal;bal
+74173_g81plu;Fabord;74120;74173;Megève;;;980329.33;6534903.91;6.613967;45.856046;bal;bal
+74173_B128;Fontaine Froide;74120;74173;Megève;;;978420.02;6535452.85;6.589708;45.861768;bal;bal
+74173_lhjq3i;Glaiga;74120;74173;Megève;;;980314.42;6534272.8;6.613403;45.850375;bal;bal
+74173_B134;Glaise Est;74120;74173;Megève;;;980219.79;6534491.92;6.612314;45.852385;bal;bal
+74173_B135;Glaise Nord;74120;74173;Megève;;;980106.07;6534556.19;6.610888;45.85301;bal;bal
+74173_B136;Glaise Ouest;74120;74173;Megève;;;980121.14;6534272.74;6.610915;45.850454;bal;bal
+74173_B143;Grande Pièce;74120;74173;Megève;;;978380.3;6532966.5;6.587741;45.839418;bal;bal
+74173_B142;Grand Rozenay;74120;74173;Megève;;;978330.93;6533657.6;6.58751;45.845655;bal;bal
+74173_B150;Grenand d'en Bas;74120;74173;Megève;;;979126.5;6532005.54;6.596781;45.830468;bal;bal
+74173_B151;Grenand d'en Haut;74120;74173;Megève;;;979188.17;6531772.68;6.597438;45.828348;bal;bal
+74173_B153;Javen d'en Bas;74120;74173;Megève;;;982134.97;6532823.21;6.635978;45.836583;bal;bal
+74173_B154;Javen d'en Haut;74120;74173;Megève;;;982333.69;6532354.01;6.638257;45.83228;bal;bal
+74173_3jzw05;La Barme;74120;74173;Megève;;;979713.42;6532196.96;6.604446;45.831949;bal;bal
+74173_vv326a;La Biollaise;74120;74173;Megève;;;982290.45;6533657.47;6.638474;45.844023;bal;bal
+74173_xsty6f;La Chantaz;74120;74173;Megève;;;982919.34;6531346.06;6.645194;45.82297;bal;bal
+74173_h8y432;La Combe;74120;74173;Megève;;;979841.11;6534241.7;6.607292;45.85029;bal;bal
+74173_uj3rrd;La Combe;74120;74173;Megève;;;979255.59;6534921.42;6.600154;45.856645;bal;bal
+74173_6kul5d;La Combe;74120;74173;Megève;;;980973.87;6534885.78;6.622254;45.855617;bal;bal
+74173_3f2rvr;La Combe;74120;74173;Megève;;;981149.56;6534811.8;6.624472;45.854879;bal;bal
+74173_3xwmns;La Contamine;74120;74173;Megève;;;981212.12;6536261.41;6.626135;45.867893;bal;bal
+74173_n9r4um;La Coula;74120;74173;Megève;;;984760.11;6532802;6.669748;45.835299;bal;bal
+74173_kks1vx;La Crépinière;74120;74173;Megève;;;984677.4;6532344.69;6.66841;45.83122;bal;bal
+74173_vebkvp;La Croix;74120;74173;Megève;;;981722.34;6535409.65;6.6322;45.86002;bal;bal
+74173_n18x5j;La Crusaz;74120;74173;Megève;;;981031.96;6534356.4;6.622689;45.850831;bal;bal
+74173_cwaswi;La Cry;74120;74173;Megève;;;982591.44;6533963.84;6.64253;45.846654;bal;bal
+74173_haax8n;La Culaz;74120;74173;Megève;;;981538.17;6534239.59;6.629136;45.849571;bal;bal
+74173_dvftk7;L'Adroit;74120;74173;Megève;;;983440.01;6531529.33;6.652002;45.824402;bal;bal
+74173_ih4br9;Lady;74120;74173;Megève;;;980293.53;6533602.29;6.612739;45.844352;bal;bal
+74173_jtzbey;La Fabianne;74120;74173;Megève;;;982645.99;6534717.42;6.64368;45.85341;bal;bal
+74173_h7vw4s;La Farquettaz;74120;74173;Megève;;;983490.65;6532063.95;6.652972;45.82919;bal;bal
+74173_gioo88;La Fley;74120;74173;Megève;;;982118.39;6531543.57;6.635006;45.825079;bal;bal
+74173_969zd4;La Foge;74120;74173;Megève;;;983016.8;6533412.53;6.647677;45.841518;bal;bal
+74173_B129;La Fontaine Nord;74120;74173;Megève;;;981946.55;6532807.64;6.633544;45.836521;bal;bal
+74173_B130;La Fontaine Sud;74120;74173;Megève;;;981875.47;6531954.71;6.632124;45.828878;bal;bal
+74173_3sk55p;La Glermaz;74120;74173;Megève;;;982698.36;6532649.2;6.643125;45.834784;bal;bal
+74173_64ntd7;La Glière;74120;74173;Megève;;;980645.97;6535763.63;6.618551;45.863649;bal;bal
+74173_B139;La Gouna Nord;74120;74173;Megève;;;982223.06;6534562.94;6.638144;45.852196;bal;bal
+74173_B140;La Gouna Sud;74120;74173;Megève;;;982032.75;6534289.59;6.635532;45.849816;bal;bal
+74173_B141;La Grand' Fontaine;74120;74173;Megève;;;979881.82;6534933.13;6.608223;45.856493;bal;bal
+74173_dv34z7;La Grange;74120;74173;Megève;;;980217.71;6536226.91;6.61331;45.867993;bal;bal
+74173_0oqib3;La Grange;74120;74173;Megève;;;981749.52;6532096.1;6.630587;45.830202;bal;bal
+74173_B147;La Grange Nord;74120;74173;Megève;;;980030.15;6536457.89;6.611031;45.870148;bal;bal
+74173_fmfhho;La Lanchette;74120;74173;Megève;;;982073.57;6530113.55;6.633582;45.812234;bal;bal
+74173_wbx7jp;La Leutaz;74120;74173;Megève;;;979486.9;6531297.85;6.601003;45.823954;bal;bal
+74173_55kx5l;La Livraz;74120;74173;Megève;;;982489.5;6533015.98;6.640655;45.83817;bal;bal
+74173_B164;La Livraz Est;74120;74173;Megève;;;982475.15;6532655.02;6.640256;45.834929;bal;bal
+74173_B165;La Livraz Ouest;74120;74173;Megève;;;982395.17;6532754.83;6.639286;45.83586;bal;bal
+74173_p8lpxl;La Molettaz;74120;74173;Megève;;;980251.26;6535234.84;6.613157;45.859055;bal;bal
+74173_i5bpp1;La Molliette;74120;74173;Megève;;;978323.89;6533945.75;6.587588;45.84825;bal;bal
+74173_B191;La Montagne d'Arbois;74120;74173;Megève;;;983526.91;6534853.21;6.655101;45.854265;bal;bal
+74173_tsmag9;La Mottaz;74120;74173;Megève;;;979678.04;6534918.48;6.605591;45.856445;bal;bal
+74173_h9pil5;La Mouille;74120;74173;Megève;;;979064.54;6534380.67;6.597377;45.851859;bal;bal
+74173_e4ikf4;L'Angne;74120;74173;Megève;;;982102;6533531.83;6.635974;45.842971;bal;bal
+74173_B223;La Petite Fontaine;74120;74173;Megève;;;981989.47;6532393.74;6.633851;45.83278;bal;bal
+74173_6y0278;La Pige;74120;74173;Megève;;;981469.14;6533919.58;6.628058;45.846721;bal;bal
+74173_hs7xrc;La Place;74120;74173;Megève;;;983838.53;6531646.06;6.657199;45.825286;bal;bal
+74173_ppjw78;La Prise;74120;74173;Megève;;;982638.54;6533371.04;6.642784;45.841302;bal;bal
+74173_9tf2t3;La Rare;74120;74173;Megève;;;984088.14;6533733.74;6.661657;45.843961;bal;bal
+74173_glc2nq;La Raverette;74120;74173;Megève;;;980330.88;6531557.64;6.612015;45.825944;bal;bal
+74173_wzsnyg;La Rée;74120;74173;Megève;;;981881.31;6533558.02;6.633149;45.843298;bal;bal
+74173_4dfskh;La Ribaz;74120;74173;Megève;;;982979.06;6533618.89;6.647314;45.84339;bal;bal
+74173_z8xjyj;La Rochette;74120;74173;Megève;;;981602.21;6535157.44;6.630504;45.857801;bal;bal
+74173_gdq4hi;La Rosière;74120;74173;Megève;;;981733.2;6532452.42;6.630588;45.833414;bal;bal
+74173_cqe9g0;La Sasse;74120;74173;Megève;;;985151.76;6531506.96;6.674012;45.823486;bal;bal
+74173_033p8j;La Touvassière;74120;74173;Megève;;;979604.82;6531913.64;6.602882;45.829445;bal;bal
+74173_B010;L'Auguille Nord;74120;74173;Megève;;;979893.58;6535569.31;6.608749;45.862211;bal;bal
+74173_B011;L'Auguille Sud;74120;74173;Megève;;;979659.1;6535402.74;6.605632;45.860809;bal;bal
+74173_o3f0bt;La Varde;74120;74173;Megève;;;979010.5;6535095.78;6.597101;45.858314;bal;bal
+74173_khjo8s;Le Bacon;74120;74173;Megève;;;980136.2;6535294.72;6.611711;45.859641;bal;bal
+74173_36lf7m;Le Bandu;74120;74173;Megève;;;979789.05;6534537.69;6.606796;45.852974;bal;bal
+74173_wmg3ks;Le Betex;74120;74173;Megève;;;982317.96;6534049.83;6.639061;45.847541;bal;bal
+74173_739xlk;Le Biollaz;74120;74173;Megève;;;979773.6;6535201.98;6.606988;45.858956;bal;bal
+74173_0zq22e;Le Bouchet;74120;74173;Megève;;;979299.66;6533485.39;6.599878;45.843709;bal;bal
+74173_m8s49d;Le Calvaire;74120;74173;Megève;;;980270.36;6534714.12;6.613096;45.854363;bal;bal
+74173_ag8hrv;Le Chevaly;74120;74173;Megève;;;979539.88;6532280.64;6.602262;45.832773;bal;bal
+74173_rpbx2i;Le Chon;74120;74173;Megève;;;982577.18;6530622.12;6.640362;45.8166;bal;bal
+74173_e38w66;Le Cicles;74120;74173;Megève;;;982843.31;6533575.6;6.645541;45.843057;bal;bal
+74173_20w946;Le Coin;74120;74173;Megève;;;980456.5;6535542.61;6.615981;45.861739;bal;bal
+74173_6v1g07;Le Cret;74120;74173;Megève;;;981088.31;6535519.57;6.624102;45.861271;bal;bal
+74173_x4tf82;Le Crétet;74120;74173;Megève;;;981261.82;6533575.44;6.625186;45.843711;bal;bal
+74173_2hbxi2;Le Cros;74120;74173;Megève;;;982279.63;6535704.47;6.63955;45.862441;bal;bal
+74173_dxfu9q;Le Crosaz;74120;74173;Megève;;;980973.96;6533641.6;6.62152;45.844425;bal;bal
+74173_w7hwp9;Le Crouty;74120;74173;Megève;;;982284.33;6535095.82;6.639249;45.856964;bal;bal
+74173_33jflf;Le Cruet;74120;74173;Megève;;;978150.55;6533940.98;6.585354;45.848278;bal;bal
+74173_5yx1xf;Le Cruet;74120;74173;Megève;;;980073.97;6535082.87;6.610785;45.857761;bal;bal
+74173_qsaan2;Le Culederey;74120;74173;Megève;;;980140.29;6535851.74;6.612092;45.86465;bal;bal
+74173_43jdh7;Le Dard;74120;74173;Megève;;;984659.3;6531881.27;6.6679;45.827059;bal;bal
+74173_roojee;Le Fornay;74120;74173;Megève;;;982409.79;6533367.82;6.639838;45.841368;bal;bal
+74173_ijzusj;Le Gollet;74120;74173;Megève;;;981355.81;6535294.74;6.627413;45.859138;bal;bal
+74173_zya1oo;Le Lait;74120;74173;Megève;;;982982.63;6532287.36;6.646568;45.831411;bal;bal
+74173_x2f612;Le Leutelet;74120;74173;Megève;;;984490.55;6530996.73;6.6652;45.819173;bal;bal
+74173_m1tuvo;Le Maz;74120;74173;Megève;;;981925.93;6533808.87;6.633872;45.845536;bal;bal
+74173_ywpxi2;Le Milieu;74120;74173;Megève;;;983344.71;6533200.69;6.651771;45.839476;bal;bal
+74173_B206;Le Nant Valais;74120;74173;Megève;;;979160.5;6532250.1;6.597362;45.832654;bal;bal
+74173_B119;L'Envers du Planay;74120;74173;Megève;;;984119.07;6532020.49;6.661032;45.828537;bal;bal
+74173_53sqng;Le Passage;74120;74173;Megève;;;982819.38;6534418.04;6.645734;45.850645;bal;bal
+74173_uxu3v8;Le Perray;74120;74173;Megève;;;980651.25;6533747.74;6.617429;45.845513;bal;bal
+74173_B222;Le Petit Lait;74120;74173;Megève;;;983139.2;6531928.3;6.648369;45.828116;bal;bal
+74173_5owsmw;Le Plan;74120;74173;Megève;;;981204.05;6534119.4;6.624764;45.848628;bal;bal
+74173_9krsax;Le Planay;74120;74173;Megève;;;983937.92;6532462.65;6.658965;45.83259;bal;bal
+74173_osplnv;Le Planellet;74120;74173;Megève;;;982415.29;6533742.05;6.640131;45.844732;bal;bal
+74173_pl2j4e;Le Platon;74120;74173;Megève;;;979067.89;6535901.68;6.598313;45.86554;bal;bal
+74173_kbppyd;Le Prellet;74120;74173;Megève;;;980486.4;6535793.44;6.616514;45.863983;bal;bal
+74173_c6fb11;Le Purgatoire;74120;74173;Megève;;;980324.99;6535671.88;6.614364;45.862956;bal;bal
+74173_d8pgj9;Le Radat;74120;74173;Megève;;;983206.98;6530166.51;6.648193;45.81224;bal;bal
+74173_3yvftn;Le Replat;74120;74173;Megève;;;980428.92;6534837.55;6.61521;45.855408;bal;bal
+74173_va3c27;Le Rosay;74120;74173;Megève;;;983958.6;6534156.17;6.660242;45.847815;bal;bal
+74173_udyo59;Les Ally;74120;74173;Megève;;;979115.68;6534792.31;6.598277;45.855541;bal;bal
+74173_a9e1s3;Les Anes;74120;74173;Megève;;;979006.8;6534885.51;6.59693;45.856424;bal;bal
+74173_62627h;Les Avenières;74120;74173;Megève;;;979175.96;6533030.86;6.598019;45.839671;bal;bal
+74173_wdrfpl;Les Bès;74120;74173;Megève;;;977793;6534395.53;6.581017;45.852513;bal;bal
+74173_30dacq;Les Blancs;74120;74173;Megève;;;984456.55;6532282.51;6.665531;45.830753;bal;bal
+74173_vgd8nh;Les Boubioz;74120;74173;Megève;;;981923.98;6534999.95;6.634553;45.856251;bal;bal
+74173_x6w75p;Les Bridans;74120;74173;Megève;;;982113.8;6535880.03;6.637519;45.864089;bal;bal
+74173_cq7gy2;Les Chambrettes;74120;74173;Megève;;;980604.16;6530588.44;6.61496;45.817113;bal;bal
+74173_cznmr0;Les Chiens;74120;74173;Megève;;;981902.57;6534172.76;6.633787;45.848819;bal;bal
+74173_ie68v9;Le Scion;74120;74173;Megève;;;981556.26;6531341.83;6.627654;45.823497;bal;bal
+74173_bg2yd8;Les Combes;74120;74173;Megève;;;979405.47;6536308.5;6.602899;45.869061;bal;bal
+74173_rmtz8y;Les Combettes;74120;74173;Megève;;;978987.37;6533856.23;6.596076;45.847173;bal;bal
+74173_chtzsh;Les Cornes;74120;74173;Megève;;;979749.64;6533429.89;6.605637;45.843025;bal;bal
+74173_yso17k;Les Cotelettes;74120;74173;Megève;;;981670.89;6534073.49;6.630746;45.848022;bal;bal
+74173_B087;Les Cotes de la Mottaz;74120;74173;Megève;;;979554.76;6535119.5;6.604122;45.858304;bal;bal
+74173_6lx26v;Les Coudrettes;74120;74173;Megève;;;979543.12;6534032.32;6.603333;45.848529;bal;bal
+74173_r776nq;Les Couttets;74120;74173;Megève;;;982555.67;6535495.87;6.64298;45.86045;bal;bal
+74173_arw4p3;Les Epennis;74120;74173;Megève;;;979895.31;6533985.6;6.607839;45.847964;bal;bal
+74173_x3czdf;Les Esserts;74120;74173;Megève;;;982999.3;6533804.7;6.647685;45.845053;bal;bal
+74173_yghy95;Les Follières;74120;74173;Megève;;;983170.66;6534065.76;6.650046;45.84733;bal;bal
+74173_ixuqad;Les Fontanettes;74120;74173;Megève;;;979876.39;6531360.21;6.606051;45.824355;bal;bal
+74173_B144;Les Grands Champs;74120;74173;Megève;;;980612.2;6534004.64;6.617078;45.84784;bal;bal
+74173_B145;Les Grands Prés;74120;74173;Megève;;;978705.74;6535888.07;6.593642;45.865566;bal;bal
+74173_l9bzoq;Les Granges;74120;74173;Megève;;;982568.28;6534765.19;6.642708;45.853872;bal;bal
+74173_o0ghq7;Les Granges;74120;74173;Megève;;;979736.56;6533139.71;6.605298;45.84042;bal;bal
+74173_B149;Les Granges Sud;74120;74173;Megève;;;982338.81;6534674.22;6.6397;45.853149;bal;bal
+74173_t5qp41;Les Guers;74120;74173;Megève;;;983627.18;6534201.4;6.656003;45.84836;bal;bal
+74173_1l543s;Les Jorettes;74120;74173;Megève;;;978776.69;6535709.99;6.594451;45.863935;bal;bal
+74173_6k6ig1;Les Lanches;74120;74173;Megève;;;983199.99;6534546.7;6.65071;45.851644;bal;bal
+74173_B159;Les Lanches d'Arbois;74120;74173;Megève;;;983972.05;6534362.02;6.660538;45.849661;bal;bal
+74173_jrcx1o;Les Lots;74120;74173;Megève;;;981181.56;6535380.01;6.62522;45.859977;bal;bal
+74173_nxi8ue;Les Meuniers;74120;74173;Megève;;;982943.93;6532960.15;6.64647;45.837479;bal;bal
+74173_0fts6z;Les Mouchenettes;74120;74173;Megève;;;982521.78;6535092.55;6.642304;45.856836;bal;bal
+74173_r3apay;Les Mouilles;74120;74173;Megève;;;980805.47;6534799.23;6.620035;45.854908;bal;bal
+74173_yi9rsf;Les Mourets;74120;74173;Megève;;;980928.24;6535982.91;6.622315;45.865505;bal;bal
+74173_dwpf89;Le Sommard;74120;74173;Megève;;;982219.55;6533275.9;6.637335;45.84062;bal;bal
+74173_ch1vg9;Les Pates;74120;74173;Megève;;;980722.69;6535957.02;6.619653;45.865357;bal;bal
+74173_oag9g6;Les Perchets;74120;74173;Megève;;;982919.55;6534079.38;6.646822;45.847557;bal;bal
+74173_h8hxp6;Les Perchets;74120;74173;Megève;;;980814.92;6534405.36;6.619924;45.851361;bal;bal
+74173_B219;Les Perchets Nord;74120;74173;Megève;;;980685.29;6534232.1;6.618153;45.849856;bal;bal
+74173_B220;Les Perchets Sud;74120;74173;Megève;;;980905.37;6533900.36;6.62079;45.846781;bal;bal
+74173_B224;Les Petites Frasses;74120;74173;Megève;;;978702.53;6536656.07;6.594051;45.872476;bal;bal
+74173_21m8ed;Les Pettoreaux;74120;74173;Megève;;;982092.78;6535576.02;6.637068;45.861363;bal;bal
+74173_B226;Les Pièces des Granges;74120;74173;Megève;;;982326.19;6534917.43;6.639682;45.855342;bal;bal
+74173_3lbgdj;Les Poches;74120;74173;Megève;;;979645.96;6533734.98;6.604482;45.845812;bal;bal
+74173_bu1ygh;Les Raverots;74120;74173;Megève;;;981863.18;6533084.28;6.632635;45.839044;bal;bal
+74173_i5t7if;Les Retornes;74120;74173;Megève;;;981472.05;6536224.23;6.62946;45.867451;bal;bal
+74173_B269;Les Rosières Nord;74120;74173;Megève;;;981878;6534490.24;6.633659;45.851685;bal;bal
+74173_B270;Les Rosières Sud;74120;74173;Megève;;;982026.71;6534729.32;6.635715;45.853774;bal;bal
+74173_duw924;Les Traits;74120;74173;Megève;;;983026.67;6529113.63;6.645248;45.802844;bal;bal
+74173_2mzoi7;Les Traversailles;74120;74173;Megève;;;982680.69;6534344.38;6.643905;45.85004;bal;bal
+74173_1vattd;Les Tuiles;74120;74173;Megève;;;982782.88;6534644.7;6.645399;45.852699;bal;bal
+74173_xtklpe;Les Vargnes;74120;74173;Megève;;;978748.19;6532331.81;6.592104;45.833558;bal;bal
+74173_5b32sl;Les Vernay;74120;74173;Megève;;;977970.23;6534037.07;6.583089;45.849216;bal;bal
+74173_B304;Les Vernay Est;74120;74173;Megève;;;978078.87;6533796.88;6.584347;45.847011;bal;bal
+74173_4dsszd;Les Vieilles;74120;74173;Megève;;;980775.96;6529855.61;6.616738;45.81045;bal;bal
+74173_xpllqf;Le Talon;74120;74173;Megève;;;983512.88;6534371.08;6.654633;45.849934;bal;bal
+74173_x6i580;Le Thelevey;74120;74173;Megève;;;981527.64;6534578.39;6.629201;45.852623;bal;bal
+74173_dk59l1;Le Tornay;74120;74173;Megève;;;983197.35;6533844.77;6.650258;45.845331;bal;bal
+74173_ngi50o;Le Tour;74120;74173;Megève;;;981633.52;6533396.21;6.629864;45.841945;bal;bal
+74173_B295;Le Tour sur Cassioz;74120;74173;Megève;;;979135.89;6532834.38;6.597388;45.83792;bal;bal
+74173_B305;Le Vernay Nord;74120;74173;Megève;;;981912.44;6535179.62;6.634511;45.857872;bal;bal
+74173_B306;Le Vernay Sud;74120;74173;Megève;;;981739.81;6535153.44;6.632273;45.857708;bal;bal
+74173_B309;Le Villard Nord;74120;74173;Megève;;;978691.78;6534023.18;6.592369;45.848796;bal;bal
+74173_B310;Le Villard Sud;74120;74173;Megève;;;978489.28;6533788.75;6.589625;45.84677;bal;bal
+74173_n6zlsd;Le Vorasset;74120;74173;Megève;;;983233.98;6535224.07;6.651551;45.857723;bal;bal
+74173_B167;Loutaz-Dessus;74120;74173;Megève;;;983687.46;6533188.66;6.656175;45.839225;bal;bal
+74173_B168;Marais de Lady;74120;74173;Megève;;;980066.31;6533790.21;6.609925;45.846136;bal;bal
+74173_B170;Marais des Rosières;74120;74173;Megève;;;981443.03;6535049.85;6.628391;45.856899;bal;bal
+74173_B171;Marais du Planay;74120;74173;Megève;;;983354.55;6532477.65;6.651467;45.832968;bal;bal
+74173_B172;Marais du Planellet;74120;74173;Megève;;;982647.64;6533594.69;6.643034;45.84331;bal;bal
+74173_B169;Marais du Villard;74120;74173;Megève;;;978715.1;6533731.1;6.592498;45.846159;bal;bal
+74173_b76vzp;Mavarin;74120;74173;Megève;;;979307.32;6534824.29;6.600763;45.85575;bal;bal
+74173_syg2ay;Mavarin;74120;74173;Megève;;;979353.19;6534586.82;6.601214;45.853595;bal;bal
+74173_vxhmtq;Megève;74120;74173;Megève;;;980633.48;6534991;6.617934;45.856704;bal;bal
+74173_wqqm1h;Milly;74120;74173;Megève;;;978553.18;6534576.59;6.590909;45.853831;bal;bal
+74173_B192;Montagne du Sapin;74120;74173;Megève;;;983751.44;6533716.23;6.657313;45.843944;bal;bal
+74173_B193;Montagne du Tornay;74120;74173;Megève;;;983407.81;6533762.68;6.652918;45.844505;bal;bal
+74173_B194;Montagnes de l'Hospice;74120;74173;Megève;;;981005.17;6532392.51;6.621184;45.833176;bal;bal
+74173_B195;Montagnes du Tour;74120;74173;Megève;;;981384.07;6532884.82;6.626351;45.837448;bal;bal
+74173_B185;Mont de la Mottaz Est;74120;74173;Megève;;;979448.31;6535344.75;6.602884;45.860374;bal;bal
+74173_B186;Mont de la Mottaz Nord;74120;74173;Megève;;;979253.05;6535955.81;6.600729;45.865951;bal;bal
+74173_B187;Mont de la Mottaz Ouest;74120;74173;Megève;;;979240.31;6535608.62;6.600361;45.862833;bal;bal
+74173_g9qejp;Mont de Villard;74120;74173;Megève;;;978230.54;6534348.37;6.586622;45.85191;bal;bal
+74173_B189;Mont du Villard Sud;74120;74173;Megève;;;978319.7;6534220.69;6.587695;45.850725;bal;bal
+74173_c2zqfk;Montplaisant;74120;74173;Megève;;;979962.65;6532868.12;6.608048;45.837884;bal;bal
+74173_B190;Mont Platard;74120;74173;Megève;;;978780.29;6535175.67;6.594184;45.859127;bal;bal
+74173_B199;Mouille Biaux;74120;74173;Megève;;;980688.84;6533095.47;6.617528;45.83963;bal;bal
+74173_B200;Mouille Plaine;74120;74173;Megève;;;978182.23;6535867.47;6.586889;45.865595;bal;bal
+74173_B203;Moulin Contents;74120;74173;Megève;;;983093.18;6532484.91;6.648108;45.833142;bal;bal
+74173_B202;Moulin Neuf;74120;74173;Megève;;;978365.64;6533353.69;6.587779;45.842907;bal;bal
+74173_m1d1vc;Moutely;74120;74173;Megève;;;981137.21;6533886.43;6.623766;45.84656;bal;bal
+74173_B207;Palaz Dessus;74120;74173;Megève;;;977671.56;6534695.72;6.579629;45.855263;bal;bal
+74173_B208;Pallaz d'Amont;74120;74173;Megève;;;981363.17;6534810.28;6.627221;45.854777;bal;bal
+74173_B209;Pallaz d'Aval;74120;74173;Megève;;;981195.19;6534968.2;6.625152;45.856267;bal;bal
+74173_85iezd;Parajaven;74120;74173;Megève;;;982434.78;6531963.36;6.639326;45.828724;bal;bal
+74173_n4g42f;Parrin;74120;74173;Megève;;;980327.44;6530707.39;6.61147;45.818297;bal;bal
+74173_B212;Pas de Scion;74120;74173;Megève;;;982434.49;6529844.14;6.638065;45.809661;bal;bal
+74173_f2i3dz;Pautex;74120;74173;Megève;;;978649.65;6533494.68;6.591517;45.844059;bal;bal
+74173_7fwods;Pautrait;74120;74173;Megève;;;978324.2;6534868.32;6.588132;45.856549;bal;bal
+74173_B227;Pierre Croche;74120;74173;Megève;;;980601.58;6535954.25;6.618092;45.865382;bal;bal
+74173_B230;Plaine d'Arly;74120;74173;Megève;;;980699.74;6535407.58;6.619033;45.860424;bal;bal
+74173_B231;Plaine de Glaise;74120;74173;Megève;;;980180.96;6534907.46;6.612059;45.856139;bal;bal
+74173_B232;Plaine Joux;74120;74173;Megève;;;983245.17;6531463.62;6.649456;45.823892;bal;bal
+74173_B233;Plaine Saint Michel;74120;74173;Megève;;;980960.71;6535840.77;6.622649;45.864213;bal;bal
+74173_czww2e;Planchamp;74120;74173;Megève;;;979000.01;6535651.13;6.597292;45.863314;bal;bal
+74173_n78guw;Planchamp;74120;74173;Megève;;;982900.17;6532472.54;6.645617;45.833111;bal;bal
+74173_B235;Plan Coutil;74120;74173;Megève;;;978494.63;6532389.98;6.588875;45.834185;bal;bal
+74173_B236;Plan de l'Eau;74120;74173;Megève;;;981907.05;6533334.76;6.633348;45.841279;bal;bal
+74173_B237;Plan Ponet;74120;74173;Megève;;;984416.87;6532840.63;6.665354;45.83579;bal;bal
+74173_moijlq;Praille;74120;74173;Megève;;;981151.05;6535981.47;6.625183;45.8654;bal;bal
+74173_bf3qu3;Prariand;74120;74173;Megève;;;979295.2;6534160.41;6.600217;45.849783;bal;bal
+74173_B245;Pré Rosset;74120;74173;Megève;;;981799.68;6529595.01;6.629752;45.807683;bal;bal
+74173_B246;Pré Sérac;74120;74173;Megève;;;978285.73;6535177.95;6.587818;45.85935;bal;bal
+74173_vfe9ka;Ravetans;74120;74173;Megève;;;982929.12;6533875.72;6.646824;45.845721;bal;bal
+74173_9dl54e;Reguo;74120;74173;Megève;;;980102.98;6530910.79;6.608702;45.820219;bal;bal
+74173_B261;Riglard Est;74120;74173;Megève;;;979992.49;6536023.4;6.61029;45.866255;bal;bal
+74173_B262;Riglard Ouest;74120;74173;Megève;;;979780.34;6536160.43;6.607639;45.867575;bal;bal
+74173_vujm21;Rochebrune;74120;74173;Megève;;;980242.05;6531978.79;6.61112;45.829769;bal;bal
+74173_9grjdi;Rosaland;74120;74173;Megève;;;983255.99;6534337.07;6.651306;45.849735;bal;bal
+74173_1fj1bp;Rossettachey;74120;74173;Megève;;;978043.17;6534358.64;6.584216;45.852079;bal;bal
+74173_B284;Saint Georges;74120;74173;Megève;;;980585.64;6534868.75;6.617246;45.855624;bal;bal
+74173_25kyg7;Sous Allard;74120;74173;Megève;;;980785.69;6536146.34;6.620576;45.867034;bal;bal
+74173_lecvlv;Sous la Chataz;74120;74173;Megève;;;978502.11;6533219.61;6.589457;45.841645;bal;bal
+74173_l08d31;Sous le Communal;74120;74173;Megève;;;978404.2;6532705.57;6.587896;45.837061;bal;bal
+74173_m3vffc;Sous le Meu;74120;74173;Megève;;;978921.47;6533328.08;6.594918;45.842449;bal;bal
+74173_n4heyj;Sous le Radat;74120;74173;Megève;;;984198.62;6529848.47;6.660759;45.808966;bal;bal
+74173_88kcne;Sous les Mouillettes;74120;74173;Megève;;;981515.55;6531994.07;6.627516;45.829381;bal;bal
+74173_cix78p;Sous les Vargnes;74120;74173;Megève;;;978698.93;6532615.04;6.591636;45.836126;bal;bal
+74173_iray2h;Sous le Villard;74120;74173;Megève;;;978817.28;6533674.5;6.59378;45.845608;bal;bal
+74173_i8nljq;Sous Riglard;74120;74173;Megève;;;980307.62;6536061.28;6.61437;45.866466;bal;bal
+74173_2lfigp;Stardochet;74120;74173;Megève;;;979654.82;6536696.3;6.606338;45.872447;bal;bal
+74173_ribf2h;Stepan;74120;74173;Megève;;;982495.1;6534511.12;6.641615;45.851617;bal;bal
+74173_wklskg;Sur l'Auguille;74120;74173;Megève;;;979599.77;6535788.33;6.605095;45.864302;bal;bal
+74173_2i5xn6;Sur le Calvaire;74120;74173;Megève;;;980558.3;6534734.87;6.616815;45.854431;bal;bal
+74173_bzio5h;Sur le Martinet;74120;74173;Megève;;;980709.18;6534666.42;6.618717;45.853753;bal;bal
+74173_7jhj4n;Sur le Meu;74120;74173;Megève;;;979137.32;6533700.98;6.597915;45.845715;bal;bal
+74173_qj0wuy;Sur le Mollard;74120;74173;Megève;;;981818.69;6534767.87;6.63306;45.854207;bal;bal
+74173_vo8kpw;Sur le Rocher;74120;74173;Megève;;;981550.08;6535730.01;6.630172;45.862973;bal;bal
+74173_so3fee;Sur les Combettes;74120;74173;Megève;;;978905.98;6534036.5;6.595134;45.848828;bal;bal
+74173_z98mcx;Sur les Croix;74120;74173;Megève;;;981354.47;6534331.97;6.626826;45.850478;bal;bal
+74173_upbp7b;Sur les Prés;74120;74173;Megève;;;981008.34;6530799.07;6.620284;45.818841;bal;bal
+74173_tasukg;Sur les Près;74120;74173;Megève;;;979204.31;6536634.26;6.6005;45.872074;bal;bal
+74173_wh75mk;Tarage;74120;74173;Megève;;;980423.77;6536424.56;6.61608;45.869686;bal;bal
+74173_h0wlq0;Teveny;74120;74173;Megève;;;979269.2;6535196.73;6.600491;45.859116;bal;bal
+74173_B294;Tour de Blé;74120;74173;Megève;;;979998.91;6534745.5;6.60962;45.854757;bal;bal
+74173_1e76ru;Vériaz;74120;74173;Megève;;;979640.29;6534331.9;6.60476;45.851184;bal;bal
+74173_B307;Vers le Planellet;74120;74173;Megève;;;982108.95;6534063.87;6.636379;45.847754;bal;bal
+74173_B311;Villaret d'en Bas;74120;74173;Megève;;;979018.17;6534571.31;6.596892;45.853593;bal;bal
+74173_B312;Villaret d'en Haut;74120;74173;Megève;;;978931.2;6534718.87;6.595859;45.854956;bal;bal
+74173_B313;Villaret Ouest;74120;74173;Megève;;;978790.14;6534483.55;6.593905;45.852897;bal;bal
+74168_vuxfsg;Chemin de la tiollaz;74270;74168;Marlioz;;;;;;;bal;bal
+74167_B245;Cons Sainte Colombe;74210;74167;Val de Chaise;74084;Cons-Sainte-Colombe;958065.99;6521821.35;6.320217;45.747152;bal;bal
+74167_xwyz8f;Marlens;74210;74167;Val de Chaise;74167;Marlens;960494.73;6524656.11;6.352975;45.771732;bal;bal
+74161_lns7bb;Chaunu;74150;74161;Marcellaz-Albanais;;;933116.47;6532994.32;6.005016;45.856679;bal;bal
+74161_qttabw;Chef-lieu;74150;74161;Marcellaz-Albanais;;;932696.83;6534841.12;6.000516;45.873441;bal;bal
+74161_ydbzjv;Chez Nanche;74150;74161;Marcellaz-Albanais;;;931697.2;6535879.38;5.988145;45.883125;bal;bal
+74161_y66yny;Cimetière;74150;74161;Marcellaz-Albanais;;;932481.17;6535248;5.997937;45.877176;bal;bal
+74161_l2n4jo;Contentenaz;74150;74161;Marcellaz-Albanais;;;930873.93;6533995.41;5.976622;45.866452;bal;bal
+74161_B046;Crêt-Dieu;74150;74161;Marcellaz-Albanais;;;933466.68;6535375.86;6.010696;45.877989;bal;bal
+74161_91t2mg;Faramaz;74150;74161;Marcellaz-Albanais;;;931251.31;6536372.38;5.98264;45.887713;bal;bal
+74161_mfxzay;Germagny;74150;74161;Marcellaz-Albanais;;;932494.6;6533116.03;5.997067;45.857987;bal;bal
+74161_x8pzh0;Gleufoy;74150;74161;Marcellaz-Albanais;;;933624.38;6533122.69;6.01162;45.85766;bal;bal
+74161_g6qs7r;Joudrain;74150;74161;Marcellaz-Albanais;;;933552.26;6534807.03;6.011519;45.872841;bal;bal
+74161_48dgtq;La Molière;74150;74161;Marcellaz-Albanais;;;934616.8;6532928.82;6.024305;45.855574;bal;bal
+74161_5z0at8;La Radia;74150;74161;Marcellaz-Albanais;;;932246.04;6534276.8;5.994433;45.868517;bal;bal
+74161_k7k9sd;La Ravoire;74150;74161;Marcellaz-Albanais;;;931987.51;6533867.37;5.990903;45.864921;bal;bal
+74161_8d37ug;Le Faubourg;74150;74161;Marcellaz-Albanais;;;932660.68;6535418.41;6.000333;45.878648;bal;bal
+74161_ym8g39;Le Piémont;74150;74161;Marcellaz-Albanais;;;934372.96;6533221.1;6.021309;45.858288;bal;bal
+74161_jbey62;Les Gargues;74150;74161;Marcellaz-Albanais;;;934059.61;6533386.59;6.017355;45.859885;bal;bal
+74161_220bt5;Les Hévernées;74150;74161;Marcellaz-Albanais;;;930839.62;6534684.9;5.976515;45.872668;bal;bal
+74161_tuk32n;Les Planchettes;74150;74161;Marcellaz-Albanais;;;930707.57;6535965.79;5.975436;45.884239;bal;bal
+74161_98w9zu;Les Prailles;74150;74161;Marcellaz-Albanais;;;933036.98;6534529.56;6.004745;45.870521;bal;bal
+74161_dyzmtw;Les Vorges;74150;74161;Marcellaz-Albanais;;;933665.27;6533729.7;6.012445;45.863108;bal;bal
+74161_3zxncd;"Lotissement ""les Chardonnerets""";74150;74161;Marcellaz-Albanais;;;932196.36;6534974.25;5.994134;45.87481;bal;bal
+74161_4y8i5x;"Lotissement ""les Érènes""";74150;74161;Marcellaz-Albanais;;;932809.06;6535270.24;6.002172;45.877264;bal;bal
+74161_gaxc40;"Lotissement ""les Jardins de Joudrain""";74150;74161;Marcellaz-Albanais;;;933602.18;6534825.27;6.012171;45.872988;bal;bal
+74161_ht8cm0;"Lotissement ""les Jardins du Faubourg""";74150;74161;Marcellaz-Albanais;;;932809.52;6535358.05;6.002221;45.878054;bal;bal
+74161_szrerr;Montmasson;74150;74161;Marcellaz-Albanais;;;935090.69;6532705.07;6.030297;45.853397;bal;bal
+74161_wc1d0z;Muret;74150;74161;Marcellaz-Albanais;;;934295.92;6532724.17;6.020072;45.853843;bal;bal
+74161_2g6332;Oilly;74150;74161;Marcellaz-Albanais;;;934013.22;6534867.86;6.017487;45.87323;bal;bal
+74161_8zjojj;Peignat;74150;74161;Marcellaz-Albanais;;;931361.12;6534415.76;5.983102;45.870069;bal;bal
+74161_8mcf1o;Pieuillet;74150;74161;Marcellaz-Albanais;;;930831.27;6535000.97;5.976561;45.875515;bal;bal
+74135_vjckfd;Giez;74210;74135;Giez;;;;;;;bal;bal
+74135_inqwpi;Le Ferrage;74210;74135;Giez;;;;;;;bal;bal
+74135_a5k4rl;Les Vorsiers;74210;74135;Giez;;;;;;;bal;bal
+74135_496tta;Le Bourgeal;74210;74135;Giez;;;;;;;bal;bal
+74135_B015;Chez Paccard;74210;74135;Giez;;;;;;;bal;bal
+74135_e2k2nc;La Fin;74210;74135;Giez;;;;;;;bal;bal
+74135_B008;Champ Mesy;74210;74135;Giez;;;;;;;bal;bal
+74135_x48ayo;Le Thovex;74210;74135;Giez;;;;;;;bal;bal
+74135_037bst;Les Currales;74210;74135;Giez;;;;;;;bal;bal
+74135_B100;Vers la Gare;74210;74135;Giez;;;;;;;bal;bal
+74135_8rq4ke;Les Pierrailles;74210;74135;Giez;;;;;;;bal;bal
+74135_s3td90;Rovagny;74210;74135;Giez;;;;;;;bal;bal
+74135_qfhh9m;Le Brunet;74210;74135;Giez;;;;;;;bal;bal
+74135_B073;La Roche de Rovagny;74210;74135;Giez;;;;;;;bal;bal
+74135_B009;Champ Montagny;74210;74135;Giez;;;;;;;bal;bal
+74135_B102;Vers le Pont de Laffin;74210;74135;Giez;;;;;;;bal;bal
+74135_zm4mn1;La Crosaz;74210;74135;Giez;;;;;;;bal;bal
+74135_ceftjf;Les Chanoines;74210;74135;Giez;;;;;;;bal;bal
+74135_B077;Saint-Gingolph;74210;74135;Giez;;;;;;;bal;bal
+74135_ub48oi;Le Chateau;74210;74135;Giez;;;;;;;bal;bal
+74127_0gaoq7;Le creux;74500;74127;Féternes;;;973585.49;6589133.76;6.558631;46.346632;bal;bal
+74121_ozxcgx;Cérésy;74140;74121;Excenevex;;;957452.5;6588153.47;6.348502;46.344165;bal;bal
+74121_9gd5fx;Chemin de l'Abbaye;74140;74121;Excenevex;;;957761.26;6587649.61;6.352235;46.339514;bal;bal
+74121_pifrhu;Chemin de la Voie Borgne;74140;74121;Excenevex;;;957615.8;6589207.8;6.351205;46.353588;bal;bal
+74121_c7qbrx;Chemin de la Voie Borgne;74140;74121;Excenevex;;;957741.33;6589138.99;6.352798;46.352921;bal;bal
+74121_f1tpm2;Chemin des Manchettes;74140;74121;Excenevex;;;956803.77;6589183.6;6.340641;46.35368;bal;bal
+74121_camr9m;Chemin des Manchettes;74140;74121;Excenevex;;;956714.52;6589921.21;6.339887;46.36035;bal;bal
+74121_vf4mmc;Chemin des Marterets;74140;74121;Excenevex;;;957073.62;6589644.64;6.344401;46.357725;bal;bal
+74121_8m2g1r;Chemin des Marterets;74140;74121;Excenevex;;;956713.2;6589923.27;6.339871;46.360369;bal;bal
+74121_0050;Chemin des Romains;74140;74121;Excenevex;;;957339.53;6589023.68;6.347514;46.352037;bal;bal
+74121_0058;Chemin des Tattes;74140;74121;Excenevex;;;957087.29;6588924.17;6.344182;46.351238;bal;bal
+74121_2a7sxs;Chevilly;74140;74121;Excenevex;;;956013.14;6588677.9;6.330091;46.349431;bal;bal
+74121_avmwsa;Impasse du Château d'eau;74140;74121;Excenevex;;;957497.34;6588876.2;6.349483;46.35065;bal;bal
+74121_jjxq7s;Impasse du Château d'eau;74140;74121;Excenevex;;;957577.94;6588716.34;6.350442;46.349181;bal;bal
+74121_u0gubt;La Fattaz;74140;74121;Excenevex;;;958073.81;6587904.99;6.356436;46.341692;bal;bal
+74121_ofo24q;Plage d'Excenevex;74140;74121;Excenevex;;;958321.92;6588686.28;6.360091;46.348626;bal;bal
+74121_832u66;Promenade lacustre;74140;74121;Excenevex;;;958003.14;6589356.76;6.35632;46.35478;bal;bal
+74121_4qiwp9;Promenade lacustre;74140;74121;Excenevex;;;958168.24;6588913.28;6.35822;46.350727;bal;bal
+74121_0017;Route des Champs Maures;74140;74121;Excenevex;;;957489.25;6588874.53;6.349377;46.350638;bal;bal
+74121_ys09en;Voie verte;74140;74121;Excenevex;;;957690.08;6589495.62;6.352329;46.356149;bal;bal
+74123_vqik2f;Bellecombe;74210;74123;Faverges-Seythenex;74123;Faverges;956018.82;6520424.02;6.29316;45.735352;bal;bal
+74123_hr9csc;Chambellon;74210;74123;Faverges-Seythenex;74123;Faverges;956568.06;6521206.33;6.300637;45.742184;bal;bal
+74123_kjscl1;Chef-lieu;74210;74123;Faverges-Seythenex;74270;Seythenex;956544.06;6519509.43;6.299417;45.726926;bal;bal
+74123_988gh0;Englannaz;74210;74123;Faverges-Seythenex;74123;Faverges;954687.95;6521942.91;6.276871;45.749516;bal;bal
+74123_z4t7oi;Favergettes;74210;74123;Faverges-Seythenex;74123;Faverges;955294.05;6521542.19;6.284446;45.745684;bal;bal
+74123_dq6sqg;Frontenex;74210;74123;Faverges-Seythenex;74123;Faverges;957431.21;6520096.99;6.31113;45.731878;bal;bal
+74123_n7njl9;Glaise;74210;74123;Faverges-Seythenex;74123;Faverges;955720.22;6519502.38;6.28883;45.727172;bal;bal
+74123_9j9nkq;La Balmette;74210;74123;Faverges-Seythenex;74123;Faverges;955024.28;6522877.74;6.281693;45.757801;bal;bal
+74123_3fddld;La Closette;74210;74123;Faverges-Seythenex;74270;Seythenex;956599.68;6519985.02;6.300387;45.731184;bal;bal
+74123_bmg0di;La Raynoz;74210;74123;Faverges-Seythenex;74270;Seythenex;957322.13;6519483.43;6.309398;45.726399;bal;bal
+74123_k1dry6;La Recorbaz;74210;74123;Faverges-Seythenex;74270;Seythenex;957595.09;6518902.24;6.312591;45.721067;bal;bal
+74123_B214;Le Mont-Bogon;74210;74123;Faverges-Seythenex;74123;Faverges;952874.07;6524452.43;6.25489;45.77277;bal;bal
+74123_5e0qtc;Le Noyeray;74210;74123;Faverges-Seythenex;74123;Faverges;956275.13;6523312.56;6.298004;45.761244;bal;bal
+74123_or3ue4;Les Caillets;74210;74123;Faverges-Seythenex;74270;Seythenex;957085.71;6517312.35;6.305193;45.706955;bal;bal
+74123_h40c9s;Les Chaffauds;74210;74123;Faverges-Seythenex;74270;Seythenex;956507.22;6517354.73;6.297787;45.707554;bal;bal
+74123_4929vo;Les Combes;74210;74123;Faverges-Seythenex;74270;Seythenex;958042.58;6518024.84;6.317865;45.713004;bal;bal
+74123_9nf3ip;Les Gonods;74210;74123;Faverges-Seythenex;74270;Seythenex;956597.63;6518611.81;6.299623;45.71883;bal;bal
+74123_B175;Les Grandes Pièces;74210;74123;Faverges-Seythenex;74123;Faverges;957320.82;6522696.46;6.311113;45.755307;bal;bal
+74123_yuwhf3;Les Losserands;74210;74123;Faverges-Seythenex;74270;Seythenex;956668.65;6518283.78;6.300359;45.715852;bal;bal
+74123_uyeqfe;Les Prières;74210;74123;Faverges-Seythenex;74270;Seythenex;957609.12;6517256.27;6.311884;45.706253;bal;bal
+74123_ncqe4s;Les Tissots;74210;74123;Faverges-Seythenex;74270;Seythenex;956828.18;6518216.88;6.302372;45.71519;bal;bal
+74123_ggvcuv;Le Tertenoz;74210;74123;Faverges-Seythenex;74270;Seythenex;957335.46;6519139.54;6.309384;45.7233;bal;bal
+74123_pqsho3;Le Vargnoz;74210;74123;Faverges-Seythenex;74270;Seythenex;954676.5;6517973.17;6.274607;45.713804;bal;bal
+74123_unzmb4;Le Villard;74210;74123;Faverges-Seythenex;74123;Faverges;952731.26;6523818.57;6.252718;45.76712;bal;bal
+74123_rjng1b;Le Villaret;74210;74123;Faverges-Seythenex;74123;Faverges;956471.05;6520671.32;6.299103;45.737407;bal;bal
+74123_n6v526;"Lieu-dit ""La Carrière""";74210;74123;Faverges-Seythenex;74270;Seythenex;956147.94;6518897.02;6.294;45.721565;bal;bal
+74123_nc9rv0;"Lieu-dit ""Les Grangettes""";74210;74123;Faverges-Seythenex;74270;Seythenex;955851.53;6518419.5;6.289937;45.71738;bal;bal
+74123_uyi4qt;Mercier;74210;74123;Faverges-Seythenex;74123;Faverges;954356.07;6523321.91;6.273341;45.762047;bal;bal
+74123_st9rfd;Neuvillard;74210;74123;Faverges-Seythenex;74270;Seythenex;956506.19;6518800.72;6.29855;45.720564;bal;bal
+74123_7p3m9u;Verchères;74210;74123;Faverges-Seythenex;74123;Faverges;957190.76;6520750.69;6.308393;45.73785;bal;bal
+74123_qe826y;Vesonne;74210;74123;Faverges-Seythenex;74123;Faverges;953236.61;6523843.98;6.259228;45.767161;bal;bal
+74123_sart3t;Viuz;74210;74123;Faverges-Seythenex;74123;Faverges;955848.07;6522483.46;6.29207;45.753945;bal;bal
+74116_o2v0ce;Les sages;74800;74116;Etaux;;;951796.98;6557589.87;6.258634;46.071316;bal;bal
+74116_ruww15;Le Coudray;74800;74116;Etaux;;;953325.58;6557119.23;6.278141;46.066512;bal;bal
+74116_B041;Chez Mugnier;74800;74116;Etaux;;;950929.91;6555525.96;6.246328;46.053068;bal;bal
+74108_4wkdef;Dhéré;74410;74108;Duingt;;;948160.61;6529827.93;6.197087;45.822869;bal;bal
+74108_96wb98;Fergy;74410;74108;Duingt;;;947217.96;6529529.52;6.184801;45.820527;bal;bal
+74108_9ul1mq;Les Barrières;74410;74108;Duingt;;;947517.47;6530448.19;6.189133;45.828684;bal;bal
+74108_k3j8yi;Les Maisons;74410;74108;Duingt;;;948047.25;6529299.75;6.195353;45.818158;bal;bal
+74108_1ow0rd;Les Perris;74410;74108;Duingt;;;947645.4;6530147.5;6.190623;45.825932;bal;bal
+74108_B045;Les Prés Bernard;74410;74108;Duingt;;;948383.58;6530323.43;6.200215;45.827246;bal;bal
+74108_bk275w;Magnonnet;74410;74108;Duingt;;;947443.03;6529873.14;6.187876;45.823537;bal;bal
+74108_B035;Mont Gerbey;74410;74108;Duingt;;;948469.72;6529988.72;6.201149;45.824203;bal;bal
+74108_kng6zp;Vieux Village;74410;74108;Duingt;;;948766.81;6530516.26;6.205248;45.828841;bal;bal
+74095_B030;Pré Servin;74150;74095;Crempigny-Bonneguête;;;925351.88;6542782.6;5.909665;45.947378;bal;bal
+74087_r1rew8;La Perrine;74130;74087;Contamine-sur-Arve;;;957821.85;6564538.64;6.340315;46.131568;bal;bal
+74063_ejg6qt;Aux Boudes;74390;74063;Châtel;;;995922.7;6581630.36;6.84399;46.269715;bal;bal
+74063_B025;Chez Crosson;74390;74063;Châtel;;;993603.03;6579669.61;6.812676;46.253092;bal;bal
+74063_B027;Clos Derrière;74390;74063;Châtel;;;994376.46;6579844.68;6.822814;46.25433;bal;bal
+74063_B028;Clos du Tour;74390;74063;Châtel;;;995028.84;6581593.54;6.832374;46.269775;bal;bal
+74063_B043;Devant La Vora;74390;74063;Châtel;;;995642.11;6582235.43;6.840733;46.27528;bal;bal
+74063_c7qwim;La Béchigne;74390;74063;Châtel;;;995194.42;6581511.86;6.83447;46.268968;bal;bal
+74063_rl5cnu;La Christianie;74390;74063;Châtel;;;994890.72;6580161.36;6.829681;46.256954;bal;bal
+74063_0ka1j2;La Côte;74390;74063;Châtel;;;994288.51;6580233.89;6.821918;46.257869;bal;bal
+74063_tnw038;La Fontaine;74390;74063;Châtel;;;994050.64;6579950.76;6.818656;46.255426;bal;bal
+74063_moc6n6;La Méjaille;74390;74063;Châtel;;;995775.53;6580614.64;6.84144;46.260644;bal;bal
+74063_4o02hg;La Ravine;74390;74063;Châtel;;;993890.85;6579893.22;6.816548;46.254978;bal;bal
+74063_yg5fvr;La Vora;74390;74063;Châtel;;;995435.97;6582247.86;6.838067;46.275482;bal;bal
+74063_y3532w;Le Bouchet;74390;74063;Châtel;;;995671.67;6582010.05;6.840974;46.27324;bal;bal
+74063_mb6nzl;Leibe;74390;74063;Châtel;;;995086.45;6583034.05;6.834029;46.282706;bal;bal
+74063_877wkr;Le Pessat;74390;74063;Châtel;;;994095.71;6580104.7;6.819337;46.256791;bal;bal
+74063_51e98q;Les Argeats;74390;74063;Châtel;;;995887.45;6580291.32;6.842687;46.257687;bal;bal
+74063_sq6eto;Les Avenières;74390;74063;Châtel;;;993770.28;6579544.39;6.814766;46.251893;bal;bal
+74063_yhicq6;Les Masses;74390;74063;Châtel;;;992303.24;6577987.05;6.794774;46.238522;bal;bal
+74063_t38l4j;Les Mouilles;74390;74063;Châtel;;;995381.05;6581087.77;6.836623;46.265072;bal;bal
+74063_a5ri1n;Les Vorres;74390;74063;Châtel;;;994692.64;6582074.1;6.828316;46.274244;bal;bal
+74063_6e8wut;L'Etringa;74390;74063;Châtel;;;995631.2;6580926.16;6.839765;46.263509;bal;bal
+74063_B046;L'Etringa Ouest;74390;74063;Châtel;;;995474.73;6580677.5;6.837579;46.261341;bal;bal
+74063_dzcxs4;Loy;74390;74063;Châtel;;;995190.51;6580326.02;6.833672;46.258304;bal;bal
+74063_ud8esl;Mermy;74390;74063;Châtel;;;994099.82;6579753.79;6.81917;46.253633;bal;bal
+74063_B075;Petit-Châtel;74390;74063;Châtel;;;995080.95;6582479.43;6.833608;46.27772;bal;bal
+74063_B080;Plan du Ryz;74390;74063;Châtel;;;994899.85;6583058.9;6.831624;46.283011;bal;bal
+74063_0240;Route du Meurba;74390;74063;Châtel;;;995631.73;6581373.14;6.840054;46.267529;bal;bal
+74063_jx0kr0;Sous Le Crêt;74390;74063;Châtel;;;995800.84;6580810.89;6.841892;46.262398;bal;bal
+74063_iqiw44;Sous Les Vorres;74390;74063;Châtel;;;994841.68;6581980.04;6.83019;46.273333;bal;bal
+74063_zor1xe;Sous Recardet;74390;74063;Châtel;;;994920;6581684.99;6.83102;46.270645;bal;bal
+74063_0tqzhs;Sous Vonnes;74390;74063;Châtel;;;995592.34;6580499.77;6.838992;46.259691;bal;bal
+74063_718tdr;Super Châtel;74390;74063;Châtel;;;996965.21;6581493.78;6.857424;46.268029;bal;bal
+74063_gexdqo;Sur La Côte;74390;74063;Châtel;;;994924.93;6582636.06;6.831683;46.279197;bal;bal
+74063_jw8p5d;Sur Le Chemin;74390;74063;Châtel;;;995819.21;6581014.8;6.842259;46.264224;bal;bal
+74063_1fxvxd;Sur Vonnes;74390;74063;Châtel;;;995672.27;6580117.18;6.839787;46.256215;bal;bal
+74063_B097;Terre Noire;74390;74063;Châtel;;;995093.63;6581700.98;6.833282;46.270713;bal;bal
+74063_B099;Très Les Pierres;74390;74063;Châtel;;;993358.3;6579214.51;6.809218;46.249105;bal;bal
+74063_B101;Vers Le Saix;74390;74063;Châtel;;;994780.69;6583255.47;6.830202;46.284831;bal;bal
+74063_bkzotq;Villapeyron;74390;74063;Châtel;;;994460.07;6580127.8;6.824076;46.25684;bal;bal
+74063_f835kv;Vonnes;74390;74063;Châtel;;;995818.38;6580127.41;6.841688;46.256243;bal;bal
+74063_dhorcr;Vonnes;74390;74063;Châtel;;;995795.35;6580513.32;6.841633;46.259724;bal;bal
+74060_96h9vi;Borny;74410;74060;La Chapelle-Saint-Maurice;;;944428.91;6524364.01;6.146259;45.775056;bal;bal
+74060_gdw4qh;La Cudraz;74410;74060;La Chapelle-Saint-Maurice;;;944770.27;6524201.58;6.150565;45.773472;bal;bal
+74056_wzgkj4;Argentière;74400;74056;Chamonix-Mont-Blanc;;;1004070.06;6550305.99;6.929418;45.984375;bal;bal
+74056_nzfi9o;Carrefour du Betty;74400;74056;Chamonix-Mont-Blanc;;;999595.97;6542668.07;6.866864;45.917668;bal;bal
+74056_vaknr6;Carrefour du Cry;74400;74056;Chamonix-Mont-Blanc;;;999661.52;6542603.68;6.867668;45.91706;bal;bal
+74056_v71eg9;Carrefour du Fond des Gires;74400;74056;Chamonix-Mont-Blanc;;;1000209.86;6543769.56;6.875472;45.927304;bal;bal
+74056_15d7bi;Carrefour du Grépon;74400;74056;Chamonix-Mont-Blanc;;;999762.47;6542510.46;6.86891;45.916177;bal;bal
+74056_m84eg2;Carrefour du Lyret;74400;74056;Chamonix-Mont-Blanc;;;999817.54;6543015.71;6.869939;45.920697;bal;bal
+74056_ac0zoi;Carrefour du Mont Blanc;74400;74056;Chamonix-Mont-Blanc;;;1000009.59;6543469.53;6.872701;45.924694;bal;bal
+74056_nkpws0;Carrefour Helbronner;74400;74056;Chamonix-Mont-Blanc;;;1000219.35;6543028.32;6.875125;45.920633;bal;bal
+74056_el0cse;Carrefour Louis Lachenal;74400;74056;Chamonix-Mont-Blanc;;;999625.85;6543886.88;6.868019;45.928617;bal;bal
+74056_rjaore;Chamonix;74400;74056;Chamonix-Mont-Blanc;;;999745.38;6543384.3;6.869242;45.924044;bal;bal
+74056_qfefwb;Chamonix Sud;74400;74056;Chamonix-Mont-Blanc;;;999722.72;6542697.52;6.868516;45.917877;bal;bal
+74056_apfpiw;La Frasse;74400;74056;Chamonix-Mont-Blanc;;;1000548.58;6543874.38;6.879904;45.928097;bal;bal
+74056_huzbwy;La Joux;74400;74056;Chamonix-Mont-Blanc;;;1002621.85;6548064.56;6.909301;45.964863;bal;bal
+74056_1a9zm8;La Poya;74400;74056;Chamonix-Mont-Blanc;;;1002366.61;6547345.44;6.90555;45.958509;bal;bal
+74056_4e8nfw;Le Cry;74400;74056;Chamonix-Mont-Blanc;;;999505.29;6542372.66;6.865509;45.915051;bal;bal
+74056_zvwkms;Le Grassonet;74400;74056;Chamonix-Mont-Blanc;;;1003190.07;6548690.49;6.91703;45.970239;bal;bal
+74056_p942yb;Le Lavancher;74400;74056;Chamonix-Mont-Blanc;;;1002416.36;6547095.51;6.906032;45.956239;bal;bal
+74056_9xharw;Le Mont;74400;74056;Chamonix-Mont-Blanc;;;997783.71;6540350.54;6.842056;45.89762;bal;bal
+74056_798api;Le Planet;74400;74056;Chamonix-Mont-Blanc;;;1004340.3;6551006.38;6.933355;45.990553;bal;bal
+74056_a4pj8h;Les Barrats;74400;74056;Chamonix-Mont-Blanc;;;999515.16;6542526.13;6.865733;45.916427;bal;bal
+74056_0z6nux;Les Bois;74400;74056;Chamonix-Mont-Blanc;;;1001839.09;6545602.53;6.897637;45.943068;bal;bal
+74056_cywl0b;Les Bossons;74400;74056;Chamonix-Mont-Blanc;;;998130.2;6540964.48;6.846905;45.90299;bal;bal
+74056_vv5ab2;Les Chosalets;74400;74056;Chamonix-Mont-Blanc;;;1003526.65;6549246.91;6.921728;45.975093;bal;bal
+74056_7ytxzw;Les Frasserands;74400;74056;Chamonix-Mont-Blanc;;;1004065.44;6551491.14;6.93012;45.995036;bal;bal
+74056_lw3mxn;Les Gaillands;74400;74056;Chamonix-Mont-Blanc;;;998010.97;6542050.36;6.846051;45.912809;bal;bal
+74056_8swn71;Les Moentieux;74400;74056;Chamonix-Mont-Blanc;;;998760.22;6543110.7;6.856373;45.922017;bal;bal
+74056_ne90r3;Les Moussoux;74400;74056;Chamonix-Mont-Blanc;;;998959.95;6542882.31;6.858803;45.919875;bal;bal
+74056_a5sywh;Les Nants;74400;74056;Chamonix-Mont-Blanc;;;999972.91;6544528.21;6.872898;45.934232;bal;bal
+74056_5vmuyc;Les Pècles;74400;74056;Chamonix-Mont-Blanc;;;998851.23;6542561.68;6.8572;45.917039;bal;bal
+74056_z4uyt0;Les Pèlerins;74400;74056;Chamonix-Mont-Blanc;;;998447.78;6541933.8;6.851606;45.911569;bal;bal
+74056_3q3a0o;Les Praz;74400;74056;Chamonix-Mont-Blanc;;;1000805.6;6545324.97;6.884137;45.94103;bal;bal
+74056_nzioyf;Les Tines;74400;74056;Chamonix-Mont-Blanc;;;1001853.04;6546583.99;6.898442;45.951889;bal;bal
+74056_494j8m;Le Tour;74400;74056;Chamonix-Mont-Blanc;;;1005263.08;6552398.84;6.94616;46.002662;bal;bal
+74056_lr9vpy;Montroc;74400;74056;Chamonix-Mont-Blanc;;;1004648.22;6552046.78;6.937998;45.999772;bal;bal
+74056_0eq82x;Rond Point de la Chapelle;74400;74056;Chamonix-Mont-Blanc;;;1001085.23;6545271.7;6.887708;45.940427;bal;bal
+74056_hn8cvk;Rond Point de la Mollard;74400;74056;Chamonix-Mont-Blanc;;;999619.49;6543326.54;6.867583;45.92358;bal;bal
+74056_ecgni5;Rond Point des Montquarts;74400;74056;Chamonix-Mont-Blanc;;;997176.71;6541042.47;6.83467;45.904109;bal;bal
+74056_h76xu7;Rond Point du Stade;74400;74056;Chamonix-Mont-Blanc;;;998727.83;6542311.05;6.855452;45.914839;bal;bal
+74056_wxcssq;Rond Point Lionel Terray;74400;74056;Chamonix-Mont-Blanc;;;999472.08;6542820.88;6.865364;45.919097;bal;bal
+74056_j8foes;Trélechamp;74400;74056;Chamonix-Mont-Blanc;;;1003900.72;6551551.09;6.928033;45.995649;bal;bal
+74038_1lnqru;939 Route des Chaix;74250;74038;Bogève;;;963723.38;6571623.13;6.420654;46.19303;bal;bal
+74016_5ia68d;Archamps;74160;74016;Archamps;;;941771.05;6564286.08;6.132458;46.135218;bal;bal
+74016_w3im6a;Archparc;74160;74016;Archamps;;;940837.83;6564531.07;6.120505;46.137755;bal;bal
+74016_c6a2ed;Aux Peupliers;74160;74016;Archamps;;;942599.88;6563932.38;6.143003;46.131739;bal;bal
+74016_pmu1gw;Blécheins;74160;74016;Archamps;;;941441.19;6562672.05;6.127361;46.120813;bal;bal
+74016_B047;Chez Favre;74160;74016;Archamps;;;943208.4;6563107.32;6.150452;46.124097;bal;bal
+74016_tzloek;Chotard;74160;74016;Archamps;;;942862.06;6563315.89;6.146078;46.126098;bal;bal
+74016_zun8gz;La Croisette;74160;74016;Archamps;;;944855.63;6562667.17;6.171538;46.119543;bal;bal
+74016_bhcdui;La Montagnère;74160;74016;Archamps;;;942908.01;6563644.25;6.146842;46.129036;bal;bal
+74016_qmt8p3;Le Beulet;74160;74016;Archamps;;;942467.05;6561234.87;6.139895;46.107515;bal;bal
+74016_v0wgfu;Les Épetières;74160;74016;Archamps;;;941875.16;6562959.78;6.133124;46.123247;bal;bal
+74016_px89zk;Les Pommeraies;74160;74016;Archamps;;;942189.54;6563307.57;6.137371;46.126264;bal;bal
+74016_n4n5ej;Vovray;74160;74016;Archamps;;;943175.85;6563576.14;6.150273;46.128327;bal;bal
+74010_0zccha;Aire de la Ripaille;74600;74010;Annecy;74268;Seynod;938222.21;6535347.41;6.071946;45.876084;bal;bal
+74010_g8300i;Aire des Fontanelles;74600;74010;Annecy;74268;Seynod;938081.4;6535399.28;6.070158;45.8766;bal;bal
+74010_0328;Allée Berthe Morisot;74600;74010;Annecy;74010;Annecy;942009.56;6540550.19;6.123387;45.921561;bal;bal
+74010_0333;Allée Bleu Cerise;74600;74010;Annecy;74010;Annecy;942248.93;6539132.33;6.125749;45.908718;bal;bal
+74010_0334;Allée Bleu Jonquille;74600;74010;Annecy;74010;Annecy;942234.91;6539272.81;6.12564;45.909987;bal;bal
+74010_0455;Allée Catherine Sauvage;74600;74010;Annecy;74010;Annecy;941984.41;6540468.51;6.123021;45.920835;bal;bal
+74010_0355;Allée de Boutae;74600;74010;Annecy;74010;Annecy;941995.54;6539532.28;6.122687;45.912407;bal;bal
+74010_0165;Allée de l'Anglettaz;74600;74010;Annecy;74010;Annecy;943214.46;6539198.1;6.138228;45.908965;bal;bal
+74010_1255;Allée de l'Impérial;74600;74010;Annecy;74010;Annecy;943718.87;6538667.48;6.144457;45.90401;bal;bal
+74010_0332;Allée des Biches;74600;74010;Annecy;74010;Annecy;942620.66;6536538.66;6.129215;45.885248;bal;bal
+74010_0595;Allée des Colchiques;74600;74010;Annecy;74010;Annecy;942572.95;6540682.31;6.130718;45.922549;bal;bal
+74010_8va1so;Allée des Érables;74600;74010;Annecy;74010;Annecy;941354.74;6538140.65;6.113719;45.900113;bal;bal
+74010_bgit11;Allée des Muguets;74600;74010;Annecy;74010;Annecy;942481.69;6540824.29;6.129614;45.923859;bal;bal
+74010_3111;Allée des Pensées;74600;74010;Annecy;74182;Meythet;939407.48;6540774.39;6.089952;45.9245;bal;bal
+74010_2309;Allée des Solliers;74600;74010;Annecy;74010;Annecy;942495.61;6540750.93;6.129756;45.923194;bal;bal
+74010_2366;Allée des Tanneries;74600;74010;Annecy;74010;Annecy;941461.27;6538150.63;6.115097;45.900165;bal;bal
+74010_0468;Allée du Chalet Chappuis;74600;74010;Annecy;74010;Annecy;943255.48;6539169.39;6.138742;45.908692;bal;bal
+74010_3249;Allée du Chèvrefeuille;74600;74010;Annecy;74268;Seynod;940485.23;6537323.45;6.102099;45.893068;bal;bal
+74010_2984;Allée du Vernay;74600;74010;Annecy;74093;Cran-Gevrier;940958.96;6539093.38;6.109102;45.908826;bal;bal
+74010_1775;Allée Olympe de Gouges;74600;74010;Annecy;74010;Annecy;941970.19;6540143.76;6.122672;45.917918;bal;bal
+74010_2348;Allée Suzanne Lansé;74600;74010;Annecy;74010;Annecy;942067.49;6538982.56;6.123334;45.907435;bal;bal
+74010_eg7hd0;Annecy;74600;74010;Annecy;;;;;;;bal;bal
+74010_0xmpyh;Annecy-le-Vieux;74600;74010;Annecy;;;;;;;bal;bal
+74010_i29qw6;Avenue Jean Monnet;74600;74010;Annecy;74011;Annecy-le-Vieux;942885.67;6540428.55;6.13462;45.920154;bal;bal
+74010_0366;Carrefour de la Boverie;74600;74010;Annecy;74010;Annecy;940995.41;6533500.43;6.106734;45.858488;bal;bal
+74010_3117;Chemin de Combalavache;74600;74010;Annecy;74217;Pringy;940897.34;6544700.9;6.111157;45.959304;bal;bal
+74010_0367;Chemin de la Boverie;74600;74010;Annecy;74010;Annecy;941191.07;6533660.72;6.109335;45.859861;bal;bal
+74010_0617;Chemin de la Colonie;74600;74010;Annecy;74010;Annecy;942589.9;6536327.84;6.128711;45.883362;bal;bal
+74010_3277;Chemin de la Ferme;74600;74010;Annecy;74268;Seynod;940852.21;6535475.8;6.105891;45.876313;bal;bal
+74010_1143;Chemin de la Goutte;74600;74010;Annecy;74010;Annecy;941298.74;6532615.28;6.110191;45.850416;bal;bal
+74010_1145;Chemin de la Grangette;74600;74010;Annecy;74010;Annecy;941324.36;6534390.47;6.111422;45.86638;bal;bal
+74010_3318;Chemin de la Marjolaine;74600;74010;Annecy;74268;Seynod;940909.73;6537348.71;6.107582;45.893145;bal;bal
+74010_3502;Chemin de la Montagne des Bauges;74600;74010;Annecy;74268;Seynod;940002.57;6532573.12;6.09348;45.850495;bal;bal
+74010_2998;Chemin de Millemoux;74600;74010;Annecy;74093;Cran-Gevrier;940209.45;6538301.17;6.09904;45.901963;bal;bal
+74010_2225;Chemin de Sainte-Catherine;74600;74010;Annecy;74010;Annecy;941693.37;6535523.4;6.116751;45.876443;bal;bal
+74010_dum5tz;Chemin des Blancs;74600;74010;Annecy;74217;Pringy;938693.87;6545023.3;6.082891;45.962983;bal;bal
+74010_2622;Chemin des Cheneviers;74600;74010;Annecy;74011;Annecy-le-Vieux;947125.95;6540075.41;6.189101;45.915448;bal;bal
+74010_1604;Chemin des Marquisettes;74600;74010;Annecy;74010;Annecy;943359.26;6537069.34;6.139003;45.889759;bal;bal
+74010_2697;Chemin des Marronniers;74600;74010;Annecy;74011;Annecy-le-Vieux;943846.37;6539964.77;6.146767;45.915637;bal;bal
+74010_2263;Chemin des Sangliers;74600;74010;Annecy;74010;Annecy;941562.47;6533298.61;6.113934;45.856471;bal;bal
+74010_0zeu6r;Chemin de Terre Grasse;74600;74010;Annecy;74217;Pringy;940008.22;6544896.3;6.099785;45.961377;bal;bal
+74010_2964;Chemin de Vert Bois;74600;74010;Annecy;74093;Cran-Gevrier;940832.71;6537726.43;6.106781;45.896571;bal;bal
+74010_3230;Chemin du Carré;74600;74010;Annecy;74268;Seynod;938367.83;6533098.49;6.072694;45.855797;bal;bal
+74010_2860;Chemin du Château;74600;74010;Annecy;74093;Cran-Gevrier;940834.8;6538272.41;6.107085;45.901483;bal;bal
+74010_0655;Chemin du Couvent de Sainte-Catherine;74600;74010;Annecy;74010;Annecy;941552.43;6534753.55;6.114544;45.869566;bal;bal
+74010_2871;Chemin du Crêt de la Bossue;74600;74010;Annecy;74093;Cran-Gevrier;940657.2;6538522.7;6.104923;45.903798;bal;bal
+74010_2890;Chemin du Haut Vallon;74600;74010;Annecy;74093;Cran-Gevrier;940444.38;6538495.11;6.102166;45.903625;bal;bal
+74010_2900;Chemin du Lavoir;74600;74010;Annecy;74093;Cran-Gevrier;940639.98;6538924.89;6.104905;45.907423;bal;bal
+74010_2907;Chemin du Manège;74600;74010;Annecy;74093;Cran-Gevrier;941084.53;6537761.35;6.110044;45.896796;bal;bal
+74010_2705;Chemin du Milieu;74600;74010;Annecy;74011;Annecy-le-Vieux;947188.83;6538909.2;6.189304;45.904932;bal;bal
+74010_3009;Chemin du Patronage;74600;74010;Annecy;74093;Cran-Gevrier;940904.77;6538995.78;6.108354;45.907967;bal;bal
+74010_2716;Chemin du Périmètre;74600;74010;Annecy;74010;Annecy;943028.15;6536943.15;6.134672;45.888742;bal;bal
+74010_d3j2fh;Chemin du Puits;74600;74010;Annecy;74217;Pringy;939941.93;6544851.46;6.098907;45.960997;bal;bal
+74010_2269;Chemin du Séminaire;74600;74010;Annecy;74010;Annecy;942634.9;6537348.2;6.129812;45.892527;bal;bal
+74010_2961;Chemin du Vernay;74600;74010;Annecy;74093;Cran-Gevrier;941337.02;6539325.22;6.114093;45.910778;bal;bal
+74010_wtc53p;Cran-Gevrier;74600;74010;Annecy;;;;;;;bal;bal
+74010_1595;Esplanade des Marquisats;74600;74010;Annecy;74010;Annecy;942943.92;6537684.43;6.133966;45.895442;bal;bal
+74010_3032;Impasse d'Androsace;74600;74010;Annecy;74182;Meythet;939715.31;6539125.86;6.093088;45.909558;bal;bal
+74010_1705;Impasse de Montremont;74600;74010;Annecy;74010;Annecy;943262.97;6539390.74;6.138952;45.910681;bal;bal
+74010_3049;Impasse des Crocus;74600;74010;Annecy;74182;Meythet;939844.16;6539011.44;6.094691;45.908483;bal;bal
+74010_3352;Impasse des Pommiers;74600;74010;Annecy;74268;Seynod;940679.74;6535739.85;6.103803;45.87875;bal;bal
+74010_3250;Impasse du Chèvrefeuille;74600;74010;Annecy;74268;Seynod;940506.8;6537272.18;6.102351;45.892599;bal;bal
+74010_1520;Impasse Mahault de Boulogne;74600;74010;Annecy;74010;Annecy;942161.99;6540126.79;6.125136;45.917697;bal;bal
+74010_2895;Jardin public du Huit Mai;74600;74010;Annecy;74093;Cran-Gevrier;940858.78;6539007.41;6.107767;45.908088;bal;bal
+74010_1301;Les Jardins de l'Europe;74600;74010;Annecy;74010;Annecy;942712.67;6538097.13;6.131197;45.899238;bal;bal
+74010_866koc;Meythet;74600;74010;Annecy;;;;;;;bal;bal
+74010_0490;Parc Charles Bosson;74600;74010;Annecy;74010;Annecy;943503.48;6538655.79;6.141675;45.903982;bal;bal
+74010_3000;Parc des Papeteries;74600;74010;Annecy;74093;Cran-Gevrier;940587.97;6538913.96;6.104229;45.907343;bal;bal
+74010_3012;Passage Chorus;74600;74010;Annecy;74093;Cran-Gevrier;940856.18;6538892.17;6.107675;45.907052;bal;bal
+74010_0840;Passage de l'Évêché;74600;74010;Annecy;74010;Annecy;942229.36;6538021.85;6.12493;45.898733;bal;bal
+74010_0674;Passage Derrière Boeuf;74600;74010;Annecy;74010;Annecy;942165.87;6538439.54;6.124325;45.902514;bal;bal
+74010_0325;Passage des Bergues;74600;74010;Annecy;74010;Annecy;941686.14;6537879.67;6.117857;45.897647;bal;bal
+74010_3011;Passage des Calicots;74600;74010;Annecy;74093;Cran-Gevrier;940850.81;6538697.36;6.107507;45.905301;bal;bal
+74010_0464;Passage des Célestins;74600;74010;Annecy;74010;Annecy;942278.35;6538034.79;6.125568;45.898832;bal;bal
+74010_0628;Passage des Cordeliers;74600;74010;Annecy;74010;Annecy;942046.23;6538041.49;6.12258;45.898975;bal;bal
+74010_2978;Passage des Taillandiers;74600;74010;Annecy;74093;Cran-Gevrier;940737.92;6538983.21;6.106197;45.907913;bal;bal
+74010_1955;Passage du Pré Carré;74600;74010;Annecy;74010;Annecy;942320.74;6538390.66;6.126296;45.902019;bal;bal
+74010_3013;Passage du Rouet;74600;74010;Annecy;74093;Cran-Gevrier;941009.56;6538864.65;6.109638;45.90675;bal;bal
+74010_2553;Passage et Escaliers de la Visitation;74600;74010;Annecy;74010;Annecy;942449.49;6537424.87;6.127462;45.893283;bal;bal
+74010_0135;Place Amédée VIII;74600;74010;Annecy;74010;Annecy;942588.09;6538559.85;6.129828;45.903446;bal;bal
+74010_0440;Place Carnot;74600;74010;Annecy;74010;Annecy;942111.96;6538774.49;6.123801;45.905547;bal;bal
+74010_2989;Place Carrée;74600;74010;Annecy;74093;Cran-Gevrier;940860.74;6538931.81;6.107754;45.907407;bal;bal
+74010_3014;Place Charles Saultier;74600;74010;Annecy;74093;Cran-Gevrier;940204.25;6538498.9;6.099073;45.903744;bal;bal
+74010_2991;Place Chorus;74600;74010;Annecy;74093;Cran-Gevrier;940819.68;6538875.29;6.107196;45.906913;bal;bal
+74010_1025;Place de Galbert;74600;74010;Annecy;74010;Annecy;942131.68;6539150.36;6.124247;45.908922;bal;bal
+74010_pqi7f3;Place de l'Abbaye;74600;74010;Annecy;74011;Annecy-le-Vieux;943322.02;6540041.69;6.140047;45.916517;bal;bal
+74010_2979;Place de la Comédie;74600;74010;Annecy;74093;Cran-Gevrier;940740.42;6538913.95;6.106194;45.907289;bal;bal
+74010_1040;Place de la Gare;74600;74010;Annecy;74010;Annecy;941929.74;6538334.18;6.121228;45.90165;bal;bal
+74010_1440;Place de la Libération;74600;74010;Annecy;74010;Annecy;942411.1;6538315.34;6.127422;45.901309;bal;bal
+74010_0140;Place de l'Ancienne Grenette;74600;74010;Annecy;74010;Annecy;942485.99;6538089.69;6.128272;45.899252;bal;bal
+74010_2439;Place de la Tournette;74600;74010;Annecy;74010;Annecy;942744.21;6537923.89;6.131515;45.897668;bal;bal
+74010_2988;Place des Arts;74600;74010;Annecy;74093;Cran-Gevrier;940793.71;6538841.15;6.106844;45.906615;bal;bal
+74010_0252;Place des Balmettes;74600;74010;Annecy;74010;Annecy;942089.69;6537678.57;6.122955;45.895694;bal;bal
+74010_0629;Place des Cordeliers;74600;74010;Annecy;74010;Annecy;942078;6538075.98;6.123007;45.899274;bal;bal
+74010_0765;Place des Éfléchères;74600;74010;Annecy;74010;Annecy;942354.31;6537962.56;6.12651;45.898155;bal;bal
+74010_q7c36k;Place des Résistants et Évadés Français;74600;74010;Annecy;74011;Annecy-le-Vieux;943203.7;6541171.48;6.139101;45.926725;bal;bal
+74010_2087;Place des Rhododendrons;74600;74010;Annecy;74010;Annecy;942397.23;6540239.13;6.128226;45.918624;bal;bal
+74010_2122;Place des Romains;74600;74010;Annecy;74010;Annecy;941970.32;6539022.61;6.122102;45.90783;bal;bal
+74010_0569;Place du Cirque;74600;74010;Annecy;74010;Annecy;943161.23;6539171.09;6.137528;45.908741;bal;bal
+74010_1065;Place du Général de Gaulle;74600;74010;Annecy;74010;Annecy;942695.4;6539494.33;6.131689;45.911816;bal;bal
+74010_1820;Place du Paradis;74600;74010;Annecy;74010;Annecy;942444.32;6537623.82;6.127497;45.895075;bal;bal
+74010_1825;Place du Parmelan;74600;74010;Annecy;74010;Annecy;943216.03;6539225.05;6.138262;45.909207;bal;bal
+74010_2317;Place du Souvenir;74600;74010;Annecy;74010;Annecy;942616.47;6538485.96;6.130156;45.902771;bal;bal
+74010_2818;Place du Souvenir Français;74600;74010;Annecy;74011;Annecy-le-Vieux;944195.76;6541241.03;6.151928;45.926995;bal;bal
+74010_2960;Place du Val Vert;74600;74010;Annecy;74093;Cran-Gevrier;940757.44;6537548.76;6.105721;45.894999;bal;bal
+74010_0955;Place François de Menthon;74600;74010;Annecy;74010;Annecy;942213.33;6538612.69;6.125025;45.904055;bal;bal
+74010_1180;Place Henri Dunant;74600;74010;Annecy;74010;Annecy;943045.13;6539068.56;6.135979;45.90786;bal;bal
+74010_4yw43n;Place Jean Jaurès;74600;74010;Annecy;74182;Meythet;939583.4;6539653.37;6.091654;45.914351;bal;bal
+74010_1750;Place Notre-Dame;74600;74010;Annecy;74010;Annecy;942294.97;6538179.37;6.125856;45.900127;bal;bal
+74010_0225;Pont Bacchus;74600;74010;Annecy;74010;Annecy;942231.82;6538030.17;6.124966;45.898807;bal;bal
+74010_2983;Pont de Cran;74600;74010;Annecy;74093;Cran-Gevrier;940338.21;6538967.6;6.101037;45.907914;bal;bal
+74010_mg4a1r;Pont de Gevrier;74600;74010;Annecy;74093;Cran-Gevrier;940806.64;6538571.82;6.106874;45.904187;bal;bal
+74010_1175;Pont de la Halle;74600;74010;Annecy;74010;Annecy;942549.06;6537982.5;6.12903;45.898265;bal;bal
+74010_3001;Pont de la Pérollière;74600;74010;Annecy;74093;Cran-Gevrier;939573.09;6537824.78;6.090598;45.897901;bal;bal
+74010_3003;Pont de la Salle;74600;74010;Annecy;74093;Cran-Gevrier;939801.47;6538693.36;6.09398;45.905636;bal;bal
+74010_1915;Pont des Amours;74600;74010;Annecy;74010;Annecy;942721.6;6538202.51;6.131366;45.900183;bal;bal
+74010_2996;Pont des Iles;74600;74010;Annecy;74093;Cran-Gevrier;940684.97;6539656.61;6.105856;45.913991;bal;bal
+74010_3015;Pont des Romains;74600;74010;Annecy;74093;Cran-Gevrier;939565.23;6538197.78;6.090685;45.90126;bal;bal
+74010_3010;Pont de Tasset;74600;74010;Annecy;74182;Meythet;940028.16;6539067.23;6.097091;45.90892;bal;bal
+74010_2982;Pont du Jourdil;74600;74010;Annecy;74093;Cran-Gevrier;940106.45;6538841.8;6.097986;45.906864;bal;bal
+74010_2995;Pont du Levray;74600;74010;Annecy;74093;Cran-Gevrier;939312.71;6537544.2;6.087101;45.895468;bal;bal
+74010_3007;Pont du Vallon;74600;74010;Annecy;74093;Cran-Gevrier;940468.49;6538100.63;6.102277;45.900067;bal;bal
+74010_1885;Pont Perrière;74600;74010;Annecy;74010;Annecy;942453.14;6538004.37;6.127805;45.898496;bal;bal
+74010_zg9tze;Pringy;74600;74010;Annecy;;;;;;;bal;bal
+74010_3508;Promenade André Depraz;74600;74010;Annecy;74011;Annecy-le-Vieux;944422.91;6541743.9;6.155116;45.931438;bal;bal
+74010_0548;Promenade Cheltenham;74600;74010;Annecy;74010;Annecy;943357.85;6537280.44;6.139093;45.891659;bal;bal
+74010_3016;Promenade des Moulins;74600;74010;Annecy;74093;Cran-Gevrier;940916.56;6538546.8;6.108278;45.903923;bal;bal
+74010_2986;Promenade des Vergers;74600;74010;Annecy;74093;Cran-Gevrier;939453.3;6537699.4;6.088991;45.896815;bal;bal
+74010_0735;Promenade Docteur Paul-Louis Servettaz;74600;74010;Annecy;74010;Annecy;943241.97;6538666.39;6.13831;45.904171;bal;bal
+74010_2994;Promenade du Lieutenant Godinot;74600;74010;Annecy;74093;Cran-Gevrier;939793.47;6538549.13;6.093804;45.904341;bal;bal
+74010_3004;Promenade du Thiou;74600;74010;Annecy;74093;Cran-Gevrier;941380.83;6537939.74;6.113953;45.898296;bal;bal
+74010_3509;Promenade Jacques de Guigné;74600;74010;Annecy;74011;Annecy-le-Vieux;944589.83;6541933.06;6.157366;45.93308;bal;bal
+74010_1282;Promenade Jacquet;74600;74010;Annecy;74010;Annecy;942607.08;6538221.75;6.1299;45.900397;bal;bal
+74010_2248;Promenade Sainte-Thérèse du Québec;74600;74010;Annecy;74010;Annecy;941428.95;6537960.98;6.114584;45.89847;bal;bal
+74010_0290;Quai de Bayreuth;74600;74010;Annecy;74010;Annecy;942650.84;6537963.53;6.130332;45.898058;bal;bal
+74010_0459;Quai de la Cathédrale;74600;74010;Annecy;74010;Annecy;942257.19;6538124.42;6.125341;45.899646;bal;bal
+74010_2270;Quai de Vicenza;74600;74010;Annecy;74010;Annecy;942492.28;6538003.48;6.128309;45.898474;bal;bal
+74010_3005;Quai du Thiou;74600;74010;Annecy;74093;Cran-Gevrier;940673.36;6538818.07;6.105281;45.90645;bal;bal
+74010_1718;Quai Napoléon III;74600;74010;Annecy;74010;Annecy;942660.61;6538006.93;6.13048;45.898445;bal;bal
+74010_2990;Rond point de Chevennes;74600;74010;Annecy;74093;Cran-Gevrier;940863.65;6538658.97;6.107653;45.904951;bal;bal
+74010_2993;Rond point de l'Europe;74600;74010;Annecy;74093;Cran-Gevrier;940683.45;6538969.62;6.105488;45.90781;bal;bal
+74010_2835;Rond Point du Léman;74600;74010;Annecy;74011;Annecy-le-Vieux;942018.42;6541214.14;6.12384;45.927532;bal;bal
+74010_2987;Route de Chavanod;74600;74010;Annecy;74093;Cran-Gevrier;939140.45;6537510.24;6.084864;45.895223;bal;bal
+74010_3192;Route du Champ Farçon;74600;74010;Annecy;74217;Pringy;942325.46;6542697.2;6.128557;45.940767;bal;bal
+74010_2707;Route du Mont-Baron;74600;74010;Annecy;74011;Annecy-le-Vieux;946955.92;6539681.33;6.186704;45.911964;bal;bal
+74010_3367;Route Romaine;74600;74010;Annecy;74268;Seynod;938659;6533171.07;6.07648;45.856348;bal;bal
+74010_2992;Rue Chorus;74600;74010;Annecy;74093;Cran-Gevrier;940836.63;6538901.96;6.107428;45.907147;bal;bal
+74010_3462;Rue de la Cantamine;74600;74010;Annecy;74268;Seynod;939418.8;6534063.81;6.086714;45.864114;bal;bal
+74010_3068;Rue de l'Hôtel de Ville;74600;74010;Annecy;74182;Meythet;939610.99;6539820.26;6.092094;45.915843;bal;bal
+74010_2611;Rue des Champs;74600;74010;Annecy;74011;Annecy-le-Vieux;943951.37;6539671.89;6.14797;45.912964;bal;bal
+74010_2836;Rue des Gravières;74600;74010;Annecy;74011;Annecy-le-Vieux;941880.98;6541294.72;6.122109;45.928306;bal;bal
+74010_2878;Rue du Docteur Calmette;74600;74010;Annecy;74093;Cran-Gevrier;941236.29;6539180.44;6.112721;45.909511;bal;bal
+74010_2909;Rue du Marais;74600;74010;Annecy;74093;Cran-Gevrier;941023.57;6539578.03;6.110181;45.913164;bal;bal
+74010_2170;Rue Saint-Dominique;74600;74010;Annecy;74010;Annecy;942421.75;6538097.48;6.127448;45.899345;bal;bal
+74010_0345;Sentier du Bois des Nonnes;74600;74010;Annecy;74010;Annecy;941372.16;6534920.7;6.112307;45.871134;bal;bal
+74010_1098;Sentier Georges Grandchamp;74600;74010;Annecy;74010;Annecy;941975.44;6535635.91;6.120442;45.877355;bal;bal
+74010_nyhh8q;Seynod;74600;74010;Annecy;;;;;;;bal;bal
+74010_6u4ljp;Square Bernard Bosson;74600;74010;Annecy;74010;Annecy;942217.17;6538161.06;6.124844;45.89999;bal;bal
+74010_0412;Square Camille Mugnier;74600;74010;Annecy;74010;Annecy;942346.25;6539943.82;6.127418;45.915985;bal;bal
+74010_3528;Square d'Albigny;74600;74010;Annecy;74011;Annecy-le-Vieux;943747.41;6538891.56;6.14494;45.906016;bal;bal
+74010_0995;Square de la Fraternité;74600;74010;Annecy;74010;Annecy;942471.25;6539518.56;6.128812;45.912114;bal;bal
+74010_uugdd7;Square de la Victoire de Stalingrad 1943;74600;74010;Annecy;74010;Annecy;941975.22;6538227.95;6.12176;45.900678;bal;bal
+74010_1425;Square des Laurentides;74600;74010;Annecy;74010;Annecy;941379.38;6537990.14;6.11396;45.89875;bal;bal
+74010_1607;Square des Martyrs de la Déportation;74600;74010;Annecy;74010;Annecy;942398.32;6538410.63;6.127306;45.902171;bal;bal
+74010_2928;Square des Pervenches;74600;74010;Annecy;74093;Cran-Gevrier;940256.1;6538411.36;6.099697;45.902938;bal;bal
+74010_2121;Square des Romains;74600;74010;Annecy;74010;Annecy;941906.56;6539045.87;6.121292;45.908062;bal;bal
+74010_1215;Square du 8 Mai 1945;74600;74010;Annecy;74010;Annecy;942546.59;6538880.4;6.129457;45.906345;bal;bal
+74010_4wpm9z;Square du Collège;74600;74010;Annecy;74010;Annecy;942381.81;6538140.02;6.126955;45.899742;bal;bal
+74010_2899;Square du Jourdil;74600;74010;Annecy;74093;Cran-Gevrier;940255.08;6538802.74;6.099882;45.90646;bal;bal
+74010_2946;Square du Salève;74600;74010;Annecy;74093;Cran-Gevrier;941061.37;6539016.62;6.110383;45.908099;bal;bal
+74010_1118;Square Gillette;74600;74010;Annecy;74010;Annecy;942079.1;6540266.98;6.124139;45.918988;bal;bal
+74010_1496;Square Louise Michel;74600;74010;Annecy;74010;Annecy;941991.5;6540596.93;6.123178;45.921988;bal;bal
+74010_0695;Square Maréchal Jean de Lattre de Tassigny;74600;74010;Annecy;74010;Annecy;942023.56;6538365.23;6.122453;45.901896;bal;bal
+74010_2922;Square Paul Valéry;74600;74010;Annecy;74093;Cran-Gevrier;941007.43;6538056.16;6.1092;45.899476;bal;bal
+74010_2826;Square R. Andres et Léon Bouvard;74600;74010;Annecy;74011;Annecy-le-Vieux;945645.36;6540695.49;6.170336;45.921564;bal;bal
+74010_2515;Square Verdun;74600;74010;Annecy;74010;Annecy;941950.2;6538283.75;6.121466;45.901189;bal;bal
