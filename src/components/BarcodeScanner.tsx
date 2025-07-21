@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { BrowserMultiFormatReader } from '@zxing/browser';
 import { X, Loader2 } from 'lucide-react';
 
 interface BarcodeScannerProps {
@@ -16,7 +15,6 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isScanning, setIsScanning] = useState(false);
   const [error, setError] = useState<string>('');
-  const readerRef = useRef<BrowserMultiFormatReader | null>(null);
 
   const startScanning = useCallback(async () => {
     try {
@@ -36,7 +34,7 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
       setError(error instanceof Error ? error.message : 'Erreur inconnue');
       setIsScanning(false);
     }
-  }, [onScan]);
+  }, [onScan, stopScanning]);
 
   const stopScanning = useCallback(() => {
     setIsScanning(false);

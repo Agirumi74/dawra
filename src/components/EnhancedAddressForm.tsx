@@ -10,16 +10,15 @@ import {
   Star,
   Clock,
   User,
-  Building2,
   Phone,
   Mail,
   AlertCircle,
   CheckCircle,
   MessageSquare
 } from 'lucide-react';
-import { Address } from '../types';
+import { Address, AddressSuggestion } from '../types';
 import { CSVAddressService } from '../services/csvAddressService';
-import { AddressDatabaseService, EnhancedAddress, AddressNote } from '../services/addressDatabase';
+import { AddressDatabaseService, EnhancedAddress } from '../services/addressDatabase';
 
 interface EnhancedAddressFormProps {
   initialAddress?: Address;
@@ -94,7 +93,7 @@ export const EnhancedAddressForm: React.FC<EnhancedAddressFormProps> = ({
     }
   }, [query, manualMode]);
 
-  const handleSuggestionSelect = (suggestion: any) => {
+  const handleSuggestionSelect = (suggestion: AddressSuggestion | EnhancedAddress) => {
     if (suggestion.isLocal) {
       // Adresse de la base locale
       setSelectedAddress(suggestion);
@@ -139,7 +138,7 @@ export const EnhancedAddressForm: React.FC<EnhancedAddressFormProps> = ({
       }
       
       setNewNote('');
-    } catch (error) {
+    } catch (_error) {
       alert('Erreur lors de l\'ajout de la note');
     }
   };
@@ -166,7 +165,7 @@ export const EnhancedAddressForm: React.FC<EnhancedAddressFormProps> = ({
       
       setEditingNote(null);
       setEditNoteText('');
-    } catch (error) {
+    } catch (_error) {
       alert('Erreur lors de la modification de la note');
     }
   };
@@ -182,7 +181,7 @@ export const EnhancedAddressForm: React.FC<EnhancedAddressFormProps> = ({
       if (updated) {
         setSelectedAddress(updated);
       }
-    } catch (error) {
+    } catch (_error) {
       alert('Erreur lors de la suppression de la note');
     }
   };
@@ -216,7 +215,7 @@ export const EnhancedAddressForm: React.FC<EnhancedAddressFormProps> = ({
     };
 
     // Ajouter à la base de données
-    const enhanced = AddressDatabaseService.addOrUpdateAddress(address);
+    AddressDatabaseService.addOrUpdateAddress(address);
     onAddressSelect(address);
   };
 
