@@ -16,6 +16,10 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
   const [isScanning, setIsScanning] = useState(false);
   const [error, setError] = useState<string>('');
 
+  const stopScanning = useCallback(() => {
+    setIsScanning(false);
+  }, []);
+
   const startScanning = useCallback(async () => {
     try {
       setIsScanning(true);
@@ -35,10 +39,6 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
       setIsScanning(false);
     }
   }, [onScan, stopScanning]);
-
-  const stopScanning = useCallback(() => {
-    setIsScanning(false);
-  }, []);
 
   useEffect(() => {
     if (isActive) {
