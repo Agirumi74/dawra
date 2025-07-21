@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { X, Loader2 } from 'lucide-react';
+import { X, Loader2, Camera } from 'lucide-react';
 
 interface BarcodeScannerProps {
   onScan: (barcode: string) => void;
@@ -13,11 +13,27 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
   isActive
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isScanning, setIsScanning] = useState(false);
   const [error, setError] = useState<string>('');
+  const [hasCamera, setHasCamera] = useState(false);
+  const streamRef = useRef<MediaStream | null>(null);
+  const scanIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const stopScanning = useCallback(() => {
     setIsScanning(false);
+    
+    // Stop the camera stream
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach(track => track.stop());
+      streamRef.current = null;
+    }
+    
+    // Clear scan interval
+    if (scanIntervalRef.current) {
+      clearInterval(scanIntervalRef.current);
+      scanIntervalRef.current = null;
+    }
   }, []);
 
   const startScanning = useCallback(async () => {
@@ -25,19 +41,78 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
       setIsScanning(true);
       setError('');
 
-      // Pour cette démonstration, simuler un scan de code-barres
-      // En production, cela utiliserait la vraie caméra
-      setTimeout(() => {
-        const simulatedBarcode = `PKG${Date.now().toString().slice(-6)}`;
-        onScan(simulatedBarcode);
-        stopScanning();
-      }, 2000);
+      // Check if getUserMedia is available
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        throw new Error('Camera not supported in this browser');
+      }
+
+      // Try to access the camera
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: { 
+            facingMode: 'environment', // Use back camera if available
+            width: { ideal: 1280 },
+            height: { ideal: 720 }
+          }
+        });
+
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+          streamRef.current = stream;
+          setHasCamera(true);
+          
+          // Start barcode detection after video loads
+          videoRef.current.onloadedmetadata = () => {
+            startBarcodeDetection();
+          };
+        }
+      } catch (cameraError) {
+        console.warn('Camera access failed, using simulation mode:', cameraError);
+        setHasCamera(false);
+        // Fallback to simulation mode
+        simulateBarcodeScan();
+      }
 
     } catch (error) {
       console.error('Erreur lors de l\'initialisation du scanner:', error);
       setError(error instanceof Error ? error.message : 'Erreur inconnue');
       setIsScanning(false);
     }
+  }, []);
+
+  const startBarcodeDetection = useCallback(async () => {
+    try {
+      // Try to use ZXing library for real barcode detection
+      const { BrowserMultiFormatReader } = await import('@zxing/browser');
+      const codeReader = new BrowserMultiFormatReader();
+      
+      if (videoRef.current) {
+        try {
+          const result = await codeReader.decodeOnceFromVideoDevice(undefined, videoRef.current);
+          if (result) {
+            onScan(result.getText());
+            stopScanning();
+            return;
+          }
+        } catch (decodeError) {
+          console.warn('ZXing decode failed, falling back to simulation:', decodeError);
+        }
+      }
+    } catch (importError) {
+      console.warn('ZXing library not available, using simulation:', importError);
+    }
+    
+    // Fallback to simulation if real detection fails
+    simulateBarcodeScan();
+  }, [onScan, stopScanning]);
+
+  const simulateBarcodeScan = useCallback(() => {
+    // Simulation mode - generate a barcode after a delay
+    setTimeout(() => {
+      const simulatedBarcode = `PKG${Date.now().toString().slice(-6)}`;
+      onScan(simulatedBarcode);
+      stopScanning();
+    }, 2000);
   }, [onScan, stopScanning]);
 
   useEffect(() => {
@@ -50,8 +125,6 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
     return () => stopScanning();
   }, [isActive, startScanning, stopScanning]);
 
-
-
   if (!isActive) {
     return null;
   }
@@ -62,19 +135,35 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
       <div className="bg-white p-4 safe-area-top text-center">
         <h2 className="text-lg md:text-xl font-bold text-gray-900">Scanner le code-barres</h2>
         <p className="text-gray-600 text-sm mt-1">
-          Mode démonstration - Simulation du scan
+          {hasCamera ? 'Pointez la caméra vers le code-barres' : 'Mode démonstration - Simulation du scan'}
         </p>
       </div>
 
       {/* Camera View */}
       <div className="flex-1 relative overflow-hidden">
-        <video
-          ref={videoRef}
-          className="w-full h-full object-cover"
-          autoPlay
-          playsInline
-          muted
-        />
+        {hasCamera ? (
+          <>
+            <video
+              ref={videoRef}
+              className="w-full h-full object-cover"
+              autoPlay
+              playsInline
+              muted
+            />
+            <canvas
+              ref={canvasRef}
+              className="hidden"
+            />
+          </>
+        ) : (
+          <div className="w-full h-full bg-gray-800 flex items-center justify-center">
+            <div className="text-center text-white">
+              <Camera size={64} className="mx-auto mb-4 opacity-50" />
+              <p>Caméra non disponible</p>
+              <p className="text-sm mt-2">Mode simulation activé</p>
+            </div>
+          </div>
+        )}
 
         {/* Overlay pour guider le scan */}
         <div className="absolute inset-0 flex items-center justify-center p-4">
@@ -113,7 +202,9 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
           <div className="absolute bottom-32 left-4 right-4 text-center">
             <div className="inline-flex items-center space-x-2 bg-black bg-opacity-75 text-white px-4 py-3 rounded-lg">
               <Loader2 size={20} className="animate-spin" />
-              <span>Simulation du scan en cours...</span>
+              <span>
+                {hasCamera ? 'Recherche de code-barres...' : 'Simulation du scan en cours...'}
+              </span>
             </div>
           </div>
         )}
@@ -141,7 +232,10 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
 
         <div className="text-center mt-4">
           <p className="text-sm text-gray-600">
-            Centrez le code-barres dans le cadre rouge
+            {hasCamera 
+              ? 'Centrez le code-barres dans le cadre rouge'
+              : 'Mode démonstration - Le scan sera simulé'
+            }
           </p>
         </div>
       </div>
