@@ -17,7 +17,7 @@ import { EnhancedGPSManager } from '../EnhancedGPSManager';
 import { usePackages } from '../../hooks/usePackages';
 
 interface DriverDashboardProps {
-  user: any;
+  user?: any; // Optional for backwards compatibility
 }
 
 export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
@@ -383,7 +383,7 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
               <div>
                 <h1 className="text-lg md:text-xl font-semibold">Tableau de bord chauffeur</h1>
                 <p className="text-xs md:text-sm text-gray-600">
-                  Bonjour {user.firstName} ! Bonne journée de livraison.
+                  Bienvenue ! Bonne journée de livraison.
                 </p>
               </div>
             </div>

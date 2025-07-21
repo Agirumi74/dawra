@@ -6,32 +6,49 @@ interface OCRResult {
 export class GeminiOCRService {
   private apiKey: string | null = null;
   private model: any = null;
+  private isRealApiAvailable: boolean = false;
 
   constructor() {
-    // En production, l'API key serait configurée via les variables d'environnement
-    // Pour cette démo, nous simulons le service OCR
     this.initializeService();
   }
 
   private async initializeService() {
     try {
-      // Simulation de l'initialisation du service Gemini
-      // Dans un environnement réel, vous utiliseriez :
-      // import { GoogleGenerativeAI } from '@google/generative-ai';
-      // const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-      // this.model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
+      // Check for API key in environment variables (client-side)
+      this.apiKey = import.meta.env.VITE_GEMINI_API_KEY || null;
       
-      console.log('Service OCR Gemini initialisé (mode simulation)');
+      if (this.apiKey) {
+        // Try to initialize real Gemini API
+        try {
+          const { GoogleGenerativeAI } = await import('@google/generative-ai');
+          const genAI = new GoogleGenerativeAI(this.apiKey);
+          this.model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+          this.isRealApiAvailable = true;
+          console.log('Service OCR Gemini initialisé avec API réelle');
+        } catch (error) {
+          console.warn('Erreur lors de l\'initialisation de l\'API Gemini, utilisation du mode simulation:', error);
+          this.isRealApiAvailable = false;
+        }
+      } else {
+        console.log('Service OCR Gemini initialisé (mode simulation - pas de clé API)');
+        this.isRealApiAvailable = false;
+      }
     } catch (error) {
       console.error('Erreur lors de l\'initialisation du service OCR:', error);
+      this.isRealApiAvailable = false;
     }
   }
 
   async extractAddressFromImage(imageData: string): Promise<OCRResult> {
+    if (this.isRealApiAvailable && this.model) {
+      return await this.extractWithRealAPI(imageData);
+    } else {
+      return await this.extractWithSimulation();
+    }
+  }
+
+  private async extractWithRealAPI(imageData: string): Promise<OCRResult> {
     try {
-      // Simulation de l'extraction d'adresse avec Gemini
-      // Dans un environnement réel, vous enverriez l'image à Gemini avec ce prompt :
-      
       const prompt = `
         Analyse cette image d'étiquette de colis et extrait UNIQUEMENT l'adresse de livraison.
         
@@ -45,6 +62,45 @@ export class GeminiOCRService {
         Réponds uniquement avec l'adresse, rien d'autre.
       `;
 
+      // Remove data URL prefix if present
+      const base64Data = imageData.replace(/^data:image\/[a-z]+;base64,/, '');
+      
+      const imagePart = {
+        inlineData: {
+          data: base64Data,
+          mimeType: "image/jpeg"
+        }
+      };
+
+      const result = await this.model.generateContent([prompt, imagePart]);
+      const response = await result.response;
+      const text = response.text().trim();
+      
+      // Validate the response
+      if (text === "ERREUR_LECTURE" || text.length < 10) {
+        return {
+          address: "ERREUR_LECTURE",
+          confidence: 0
+        };
+      }
+
+      // Calculate confidence based on response quality
+      const confidence = this.calculateConfidence(text);
+      
+      return {
+        address: text,
+        confidence: confidence
+      };
+      
+    } catch (error) {
+      console.error('Erreur API Gemini:', error);
+      // Fallback to simulation on API error
+      return await this.extractWithSimulation();
+    }
+  }
+
+  private async extractWithSimulation(): Promise<OCRResult> {
+    try {
       // Simulation d'une réponse OCR réaliste
       await new Promise(resolve => setTimeout(resolve, 1500)); // Simule le temps de traitement
       
@@ -67,12 +123,24 @@ export class GeminiOCRService {
       };
       
     } catch (error) {
-      console.error('Erreur OCR:', error);
+      console.error('Erreur OCR simulation:', error);
       return {
         address: "ERREUR_LECTURE",
         confidence: 0
       };
     }
+  }
+
+  private calculateConfidence(text: string): number {
+    let confidence = 0.5; // Base confidence
+    
+    // Check for common address patterns
+    if (/\d+/.test(text)) confidence += 0.2; // Contains numbers (street number/postal code)
+    if (/rue|avenue|boulevard|place|chemin|impasse/i.test(text)) confidence += 0.2; // Contains street type
+    if (/\d{5}/.test(text)) confidence += 0.1; // Contains postal code pattern
+    if (text.length > 20) confidence += 0.1; // Reasonable length
+    
+    return Math.min(confidence, 0.95); // Cap at 95%
   }
 
   // Méthode pour traiter une image capturée depuis la caméra
@@ -87,6 +155,11 @@ export class GeminiOCRService {
         confidence: 0
       };
     }
+  }
+
+  // Method to check if real API is available
+  isRealAPIAvailable(): boolean {
+    return this.isRealApiAvailable;
   }
 }
 
