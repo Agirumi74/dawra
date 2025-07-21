@@ -198,6 +198,11 @@ export class RouteOptimizer {
   ): DeliveryPoint[] {
     if (points.length === 0) return [];
 
+    // Analyser les contraintes temporelles
+    const timeConstrainedPoints = points.filter(p => 
+      p.packages.some(pkg => pkg.timeWindow?.start || pkg.timeWindow?.end)
+    );
+
     // Séparer par priorité
     const premierPoints = points.filter(p => p.priority === 'premier');
     const expressMidiPoints = points.filter(p => p.priority === 'express_midi');
@@ -206,65 +211,268 @@ export class RouteOptimizer {
     let optimized: DeliveryPoint[] = [];
     let currentPosition = userPosition;
     let order = 1;
+    let currentTimeMinutes = this.timeToMinutes(startTime);
 
-    // 1. Traiter les points "premier" en premier
+    // 1. Traiter les points "premier" en premier (contrainte absolue)
     if (premierPoints.length > 0) {
-      const premierOptimized = this.optimizeSimple(premierPoints, currentPosition, distanceMatrix);
+      const premierOptimized = this.optimizeSimpleWithTimeConstraints(
+        premierPoints, 
+        currentPosition, 
+        distanceMatrix, 
+        currentTimeMinutes, 
+        stopTimeMinutes, 
+        averageSpeedKmh
+      );
+      
       premierOptimized.forEach(point => {
         point.order = order++;
         optimized.push(point);
+        
+        // Mettre à jour le temps et la position
+        currentTimeMinutes += stopTimeMinutes;
+        if (point.distance) {
+          currentTimeMinutes += (point.distance / averageSpeedKmh) * 60;
+        }
+        if (point.address.coordinates) {
+          currentPosition = point.address.coordinates;
+        }
       });
-      
-      // Mettre à jour la position actuelle
-      const lastPoint = premierOptimized[premierOptimized.length - 1];
-      if (lastPoint.address.coordinates) {
-        currentPosition = lastPoint.address.coordinates;
-      }
     }
 
-    // 2. Traiter les points "express_midi" avant midi
+    // 2. Traiter les points "express_midi" avec contrainte de midi
     if (expressMidiPoints.length > 0) {
-      const expressOptimized = this.optimizeSimple(expressMidiPoints, currentPosition, distanceMatrix);
-      let cumulativeDistance = 0;
-      expressOptimized.forEach((point, index) => {
-        point.order = order++;
-        cumulativeDistance += point.distance || 0;
-        point.estimatedTime = this.calculateEstimatedTime(
-          point.order, 
-          startTime, 
+      const midiConstraintMinutes = 12 * 60; // 12:00
+      const availableTime = midiConstraintMinutes - currentTimeMinutes;
+      
+      // Filtrer les points express qui peuvent être livrés avant midi
+      const feasibleExpressPoints = expressMidiPoints.filter(point => {
+        const estimatedTravelTime = point.address.coordinates ? 
+          (this.calculateHaversineDistance(currentPosition, point.address.coordinates) / averageSpeedKmh) * 60 : 30;
+        return (estimatedTravelTime + stopTimeMinutes) <= availableTime;
+      });
+
+      if (feasibleExpressPoints.length > 0) {
+        const expressOptimized = this.optimizeSimpleWithTimeConstraints(
+          feasibleExpressPoints, 
+          currentPosition, 
+          distanceMatrix, 
+          currentTimeMinutes, 
           stopTimeMinutes, 
-          cumulativeDistance,
           averageSpeedKmh
         );
-        optimized.push(point);
-      });
-      
-      // Mettre à jour la position actuelle
-      const lastPoint = expressOptimized[expressOptimized.length - 1];
-      if (lastPoint.address.coordinates) {
-        currentPosition = lastPoint.address.coordinates;
+        
+        expressOptimized.forEach(point => {
+          point.order = order++;
+          optimized.push(point);
+          
+          // Mettre à jour le temps et la position
+          currentTimeMinutes += stopTimeMinutes;
+          if (point.distance) {
+            currentTimeMinutes += (point.distance / averageSpeedKmh) * 60;
+          }
+          if (point.address.coordinates) {
+            currentPosition = point.address.coordinates;
+          }
+        });
       }
+
+      // Reclasser les points express non traités comme standard
+      const remainingExpressPoints = expressMidiPoints.filter(p => 
+        !feasibleExpressPoints.find(fp => fp.id === p.id)
+      );
+      standardPoints.push(...remainingExpressPoints);
     }
 
-    // 3. Traiter les points standard
-    if (standardPoints.length > 0) {
-      const standardOptimized = this.optimizeSimple(standardPoints, currentPosition, distanceMatrix);
-      let cumulativeDistance = optimized.reduce((sum, p) => sum + (p.distance || 0), 0);
-      standardOptimized.forEach((point, index) => {
+    // 3. Traiter les points avec fenêtres temporelles spécifiques
+    const remainingTimeConstrainedPoints = timeConstrainedPoints.filter(p => 
+      !optimized.find(op => op.id === p.id)
+    );
+
+    if (remainingTimeConstrainedPoints.length > 0) {
+      const timeOptimized = this.optimizeWithTimeWindows(
+        remainingTimeConstrainedPoints,
+        currentPosition,
+        distanceMatrix,
+        currentTimeMinutes,
+        stopTimeMinutes,
+        averageSpeedKmh
+      );
+
+      timeOptimized.forEach(point => {
         point.order = order++;
-        cumulativeDistance += point.distance || 0;
-        point.estimatedTime = this.calculateEstimatedTime(
-          point.order, 
-          startTime, 
-          stopTimeMinutes, 
-          cumulativeDistance,
-          averageSpeedKmh
-        );
+        optimized.push(point);
+        
+        // Mettre à jour le temps et la position
+        currentTimeMinutes += stopTimeMinutes;
+        if (point.distance) {
+          currentTimeMinutes += (point.distance / averageSpeedKmh) * 60;
+        }
+        if (point.address.coordinates) {
+          currentPosition = point.address.coordinates;
+        }
+      });
+    }
+
+    // 4. Traiter les points standard restants
+    const remainingStandardPoints = standardPoints.filter(p => 
+      !optimized.find(op => op.id === p.id)
+    );
+
+    if (remainingStandardPoints.length > 0) {
+      const standardOptimized = this.optimizeSimpleWithTimeConstraints(
+        remainingStandardPoints, 
+        currentPosition, 
+        distanceMatrix, 
+        currentTimeMinutes, 
+        stopTimeMinutes, 
+        averageSpeedKmh
+      );
+      
+      standardOptimized.forEach(point => {
+        point.order = order++;
         optimized.push(point);
       });
     }
 
     return optimized;
+  }
+
+  // Optimisation avec fenêtres temporelles
+  private static optimizeWithTimeWindows(
+    points: DeliveryPoint[],
+    userPosition: UserPosition,
+    distanceMatrix: number[][],
+    currentTimeMinutes: number,
+    stopTimeMinutes: number,
+    averageSpeedKmh: number
+  ): DeliveryPoint[] {
+    const optimized: DeliveryPoint[] = [];
+    const remaining = [...points];
+    let currentPos = userPosition;
+
+    while (remaining.length > 0) {
+      let bestPoint: DeliveryPoint | null = null;
+      let bestScore = -1;
+      let bestIndex = -1;
+
+      remaining.forEach((point, index) => {
+        if (!point.address.coordinates) return;
+
+        // Calculer le temps d'arrivée
+        const travelTime = this.calculateHaversineDistance(currentPos, point.address.coordinates) / averageSpeedKmh * 60;
+        const arrivalTime = currentTimeMinutes + travelTime;
+
+        // Vérifier les contraintes de fenêtre temporelle
+        let score = 0;
+        let isValidWindow = true;
+
+        point.packages.forEach(pkg => {
+          if (pkg.timeWindow?.start) {
+            const startMinutes = this.timeToMinutes(pkg.timeWindow.start);
+            if (arrivalTime < startMinutes) {
+              // Arrivée trop tôt - attendre
+              score -= (startMinutes - arrivalTime) * 0.1;
+            }
+          }
+          
+          if (pkg.timeWindow?.end) {
+            const endMinutes = this.timeToMinutes(pkg.timeWindow.end);
+            if (arrivalTime > endMinutes) {
+              // Arrivée trop tard - invalide
+              isValidWindow = false;
+            } else {
+              // Bonus pour arriver dans la fenêtre
+              score += 10;
+            }
+          }
+        });
+
+        if (isValidWindow) {
+          // Bonus pour proximité
+          score += Math.max(0, 10 - travelTime / 10);
+          
+          if (score > bestScore) {
+            bestScore = score;
+            bestPoint = point;
+            bestIndex = index;
+          }
+        }
+      });
+
+      if (bestPoint && bestIndex !== -1) {
+        optimized.push(bestPoint);
+        remaining.splice(bestIndex, 1);
+        
+        if (bestPoint.address.coordinates) {
+          currentPos = bestPoint.address.coordinates;
+          const travelTime = this.calculateHaversineDistance(currentPos, bestPoint.address.coordinates) / averageSpeedKmh * 60;
+          currentTimeMinutes += travelTime + stopTimeMinutes;
+        }
+      } else {
+        // Aucun point valide trouvé, prendre le plus proche
+        if (remaining.length > 0) {
+          let closestPoint = remaining[0];
+          let closestDistance = Infinity;
+          let closestIndex = 0;
+
+          remaining.forEach((point, index) => {
+            if (point.address.coordinates) {
+              const distance = this.calculateHaversineDistance(currentPos, point.address.coordinates);
+              if (distance < closestDistance) {
+                closestDistance = distance;
+                closestPoint = point;
+                closestIndex = index;
+              }
+            }
+          });
+
+          optimized.push(closestPoint);
+          remaining.splice(closestIndex, 1);
+          
+          if (closestPoint.address.coordinates) {
+            currentPos = closestPoint.address.coordinates;
+            currentTimeMinutes += (closestDistance / averageSpeedKmh) * 60 + stopTimeMinutes;
+          }
+        }
+      }
+    }
+
+    return optimized;
+  }
+
+  // Optimisation simple avec calcul des temps
+  private static optimizeSimpleWithTimeConstraints(
+    points: DeliveryPoint[], 
+    userPosition: UserPosition, 
+    distanceMatrix: number[][],
+    currentTimeMinutes: number,
+    stopTimeMinutes: number,
+    averageSpeedKmh: number
+  ): DeliveryPoint[] {
+    const optimized = this.optimizeSimple(points, userPosition, distanceMatrix);
+    let cumulativeTime = currentTimeMinutes;
+
+    optimized.forEach(point => {
+      if (point.distance) {
+        cumulativeTime += (point.distance / averageSpeedKmh) * 60;
+      }
+      point.estimatedTime = this.minutesToTime(cumulativeTime);
+      cumulativeTime += stopTimeMinutes;
+    });
+
+    return optimized;
+  }
+
+  // Utilitaires pour conversion temps
+  private static timeToMinutes(time: string): number {
+    const [hours, minutes] = time.split(':').map(Number);
+    return hours * 60 + minutes;
+  }
+
+  private static minutesToTime(minutes: number): string {
+    const hours = Math.floor(minutes / 60);
+    const mins = Math.round(minutes % 60);
+    return `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`;
   }
 
   // Calculer l'heure estimée d'arrivée avec paramètres configurables
