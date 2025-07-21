@@ -22,10 +22,9 @@ interface DeliveryMapProps {
 }
 
 const RouteController: React.FC<{ 
-  points: DeliveryPoint[], 
   currentPoint: DeliveryPoint | null,
   userPosition: UserPosition | null 
-}> = ({ points, currentPoint, userPosition }) => {
+}> = ({ currentPoint, userPosition }) => {
   const map = useMap();
 
   useEffect(() => {
@@ -133,7 +132,6 @@ export const DeliveryMap: React.FC<DeliveryMapProps> = ({
           />
           
           <RouteController 
-            points={points} 
             currentPoint={currentPoint} 
             userPosition={userPosition}
           />

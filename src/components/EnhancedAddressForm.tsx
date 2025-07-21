@@ -34,7 +34,7 @@ export const EnhancedAddressForm: React.FC<EnhancedAddressFormProps> = ({
   currentUser = 'Utilisateur'
 }) => {
   const [query, setQuery] = useState('');
-  const [suggestions, setSuggestions] = useState<any[]>([]);
+  const [suggestions, setSuggestions] = useState<(AddressSuggestion | EnhancedAddress)[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState<EnhancedAddress | null>(null);
@@ -138,7 +138,7 @@ export const EnhancedAddressForm: React.FC<EnhancedAddressFormProps> = ({
       }
       
       setNewNote('');
-    } catch (_error) {
+    } catch {
       alert('Erreur lors de l\'ajout de la note');
     }
   };
@@ -165,7 +165,7 @@ export const EnhancedAddressForm: React.FC<EnhancedAddressFormProps> = ({
       
       setEditingNote(null);
       setEditNoteText('');
-    } catch (_error) {
+    } catch {
       alert('Erreur lors de la modification de la note');
     }
   };
@@ -181,7 +181,7 @@ export const EnhancedAddressForm: React.FC<EnhancedAddressFormProps> = ({
       if (updated) {
         setSelectedAddress(updated);
       }
-    } catch (_error) {
+    } catch {
       alert('Erreur lors de la suppression de la note');
     }
   };
