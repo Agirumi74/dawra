@@ -6,15 +6,10 @@ import {
   Clock, 
   Plus, 
   Settings,
-  Smartphone,
-  Upload,
   Download,
   RefreshCw,
   Play,
-  Pause,
-  SkipForward,
   CheckCircle,
-  AlertTriangle,
   Timer,
   Star,
   Building,
@@ -296,7 +291,6 @@ export const EnhancedGPSManager: React.FC<EnhancedGPSManagerProps> = ({ onBack }
   };
 
   const generateRouteExport = () => {
-    const totalDistance = deliveryPoints.reduce((sum, point) => sum + (point.distance || 0), 0);
     const tourStats = RouteOptimizer.calculateTotalTourTime(
       deliveryPoints,
       routeSettings.startTime,

@@ -323,7 +323,7 @@ export class EnhancedRouteExportService {
 `;
 
     // Ajouter les waypoints
-    deliveryPoints.forEach((point, index) => {
+    deliveryPoints.forEach((point) => {
       const { lat, lng } = point.address.coordinates!;
       gpx += `
   <wpt lat="${lat}" lon="${lng}">
@@ -339,7 +339,7 @@ export class EnhancedRouteExportService {
     <name>${tourName} - Route</name>
     <desc>Itinéraire optimisé de livraison</desc>`;
 
-    deliveryPoints.forEach((point, index) => {
+    deliveryPoints.forEach((point) => {
       const { lat, lng } = point.address.coordinates!;
       gpx += `
     <rtept lat="${lat}" lon="${lng}">
@@ -386,7 +386,7 @@ export class EnhancedRouteExportService {
       <name>Points de livraison</name>`;
 
     // Ajouter les points
-    deliveryPoints.forEach((point, index) => {
+    deliveryPoints.forEach((point) => {
       const { lat, lng } = point.address.coordinates!;
       kml += `
       <Placemark>
@@ -415,7 +415,7 @@ export class EnhancedRouteExportService {
         <coordinates>`;
 
     // Ajouter les coordonnées de la route
-    deliveryPoints.forEach((point, index) => {
+    deliveryPoints.forEach((point) => {
       const { lat, lng } = point.address.coordinates!;
       kml += `${lng},${lat},0 `;
     });
@@ -438,7 +438,7 @@ export class EnhancedRouteExportService {
     text += `🚚 ${deliveryPoints.length} arrêts - ${deliveryPoints.reduce((sum, p) => sum + p.packages.length, 0)} colis\n\n`;
     
     text += `📋 ITINÉRAIRE:\n`;
-    deliveryPoints.forEach((point, index) => {
+    deliveryPoints.forEach((point) => {
       text += `${point.order}. ${point.estimatedTime || ''} - ${point.address.full_address}\n`;
     });
     

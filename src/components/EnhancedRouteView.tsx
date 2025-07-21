@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Route, 
-  MapPin, 
   Navigation, 
   Clock, 
   Loader2, 
@@ -11,7 +10,6 @@ import {
   ArrowRight,
   CheckCircle,
   AlertTriangle,
-  Timer,
   Home,
   Building,
   Package as PackageIcon,
@@ -48,7 +46,6 @@ export const EnhancedRouteView: React.FC<EnhancedRouteViewProps> = ({ onNavigate
   const [showNavigationSelector, setShowNavigationSelector] = useState(false);
   const [showTourProgress, setShowTourProgress] = useState(false);
   const [showFullRouteMap, setShowFullRouteMap] = useState(false);
-  const [showNavigation, setShowNavigation] = useState(false);
   const [tourStats, setTourStats] = useState<{
     totalTime: string;
     endTime: string;
@@ -65,7 +62,7 @@ export const EnhancedRouteView: React.FC<EnhancedRouteViewProps> = ({ onNavigate
     loadUserPosition();
     
     // Fermer le menu export quand on clique ailleurs
-    const handleClickOutside = (event: MouseEvent) => {
+    const handleClickOutside = (_event: MouseEvent) => {
       if (showExportMenu) {
         setShowExportMenu(false);
       }
@@ -197,26 +194,7 @@ export const EnhancedRouteView: React.FC<EnhancedRouteViewProps> = ({ onNavigate
             UPS_DEPOT_ADDRESS.coordinates!
           );
           
-          // Créer un point virtuel pour le dépôt UPS
-          const upsDepotPoint: DeliveryPoint = {
-            id: 'ups-depot-final',
-            address: UPS_DEPOT_ADDRESS,
-            packages: [],
-            status: 'pending',
-            order: optimized.length + 1,
-            distance: lastToUpsDistance,
-            priority: 'standard',
-            estimatedTime: RouteOptimizer.calculateEstimatedTime(
-              optimized.length + 1,
-              settings.startTime,
-              settings.stopTimeMinutes,
-              optimized.reduce((total, point) => total + (point.distance || 0), 0) + lastToUpsDistance,
-              settings.averageSpeedKmh
-            )
-          };
-          
-          // Ne pas l'ajouter comme point de livraison mais l'utiliser pour les calculs
-          // optimized.push(upsDepotPoint);
+          // Note: Point virtuel pour le dépôt UPS pourrait être ajouté ici si nécessaire
         }
       }
 

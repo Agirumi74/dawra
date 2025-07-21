@@ -1,12 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { DeliveryPoint, UserPosition } from '../types';
-import { Navigation, Package, MapPin, ArrowLeft } from 'lucide-react';
+import { Navigation, Package, ArrowLeft } from 'lucide-react';
 
 // Fix for default markers
-delete (L.Icon.Default.prototype as any)._getIconUrl;
+delete (L.Icon.Default.prototype as L.Icon.Default & { _getIconUrl?: unknown })._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
   iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
@@ -22,10 +22,9 @@ interface DeliveryMapProps {
 }
 
 const RouteController: React.FC<{ 
-  points: DeliveryPoint[], 
   currentPoint: DeliveryPoint | null,
   userPosition: UserPosition | null 
-}> = ({ points, currentPoint, userPosition }) => {
+}> = ({ currentPoint, userPosition }) => {
   const map = useMap();
 
   useEffect(() => {
@@ -133,7 +132,6 @@ export const DeliveryMap: React.FC<DeliveryMapProps> = ({
           />
           
           <RouteController 
-            points={points} 
             currentPoint={currentPoint} 
             userPosition={userPosition}
           />

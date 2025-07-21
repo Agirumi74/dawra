@@ -420,7 +420,7 @@ export class RouteExportService {
     summary += `🚚 ITINÉRAIRE:\n`;
     summary += `=============\n`;
     
-    data.deliveryPoints.forEach((point, index) => {
+    data.deliveryPoints.forEach((point) => {
       summary += `\n${point.order}. ${point.estimatedTime || ''} - ${point.address.full_address}\n`;
       summary += `   📍 ${(point.distance || 0).toFixed(1)} km`;
       if (point.priority !== 'standard') {
