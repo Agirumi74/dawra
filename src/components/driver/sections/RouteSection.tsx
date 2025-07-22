@@ -2,10 +2,10 @@ import React from 'react';
 import { Route } from 'lucide-react';
 
 interface RouteSectionProps {
-  todayRoute: any;
+  todayRoute: unknown;
 }
 
-export const RouteSection: React.FC<RouteSectionProps> = ({ todayRoute }) => {
+export const RouteSection: React.FC<RouteSectionProps> = () => {
   return (
     <div className="bg-white rounded-lg shadow-md p-4 md:p-6">
       <div className="flex items-center justify-between mb-4">

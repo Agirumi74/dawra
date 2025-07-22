@@ -22,10 +22,10 @@ import { ScanView } from './views/ScanView';
 import { GPSView } from './views/GPSView';
 
 interface DriverDashboardProps {
-  user?: any; // Optional for backwards compatibility
+  user?: unknown; // Better than 'any'
 }
 
-export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
+export const DriverDashboard: React.FC<DriverDashboardProps> = () => {
   const state = useDriverDashboardState();
   const { packages, addPackage, getPackagesByStatus } = usePackages();
   
@@ -54,7 +54,6 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
   };
 
   // Statistiques des colis
-  const pendingPackages = getPackagesByStatus('pending');
   const deliveredPackages = getPackagesByStatus('delivered');
   const failedPackages = getPackagesByStatus('failed');
 

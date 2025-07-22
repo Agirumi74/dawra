@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import type { Package } from '../../context/AppContext';
 
 export const useDriverActions = (
   setActiveTab: (tab: 'today' | 'scan' | 'gps' | 'history') => void,
@@ -8,8 +9,8 @@ export const useDriverActions = (
   setShowSettings: (show: boolean) => void,
   setShowAddAnotherDialog: (show: boolean) => void,
   setCurrentBarcode: (barcode: string | undefined) => void,
-  setLastSavedPackage: (pkg: any) => void,
-  addPackage: (pkg: any) => void
+  setLastSavedPackage: (pkg: Package | null) => void,
+  addPackage: (pkg: Omit<Package, 'id' | 'timestamp'>) => void
 ) => {
   const handleBarcodeScanned = useCallback((barcode: string) => {
     setCurrentBarcode(barcode);
@@ -17,7 +18,7 @@ export const useDriverActions = (
     setShowPackageForm(true);
   }, [setCurrentBarcode, setShowBarcodeScanner, setShowPackageForm]);
 
-  const handlePackageSaved = useCallback((packageData: any) => {
+  const handlePackageSaved = useCallback((packageData: Omit<Package, 'id' | 'timestamp'>) => {
     addPackage(packageData);
     setLastSavedPackage(packageData);
     setShowPackageForm(false);
