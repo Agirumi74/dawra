@@ -330,6 +330,8 @@ export const MultiFieldAddressForm: React.FC<MultiFieldAddressFormProps> = ({
     setCity(suggestion.nom_commune);
     setPostalCode(suggestion.code_postal);
     setShowCitySuggestions(false);
+    // Also close street suggestions when city is selected
+    setShowSuggestions(false);
   };
 
   // Navigation au clavier
