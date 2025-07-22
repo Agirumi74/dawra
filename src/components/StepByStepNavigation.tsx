@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { DeliveryPoint, UserPosition } from '../types';
 import { RouteDirectionsService, RouteDirections, RouteStep } from '../services/routeDirections';
+import { useVoiceSettings } from '../hooks/useVoiceSettings';
 
 interface StepByStepNavigationProps {
   destination: DeliveryPoint;
@@ -33,6 +34,14 @@ export const StepByStepNavigation: React.FC<StepByStepNavigationProps> = ({
   const [isLoading, setIsLoading] = useState(true);
   const [voiceEnabled, setVoiceEnabled] = useState(false);
   const [estimatedArrival, setEstimatedArrival] = useState<string>('');
+
+  // Voice settings
+  const { voiceSettings } = useVoiceSettings();
+
+  // Check if text-to-speech should be available
+  const isTextToSpeechAvailable = voiceSettings.voiceEnabled && 
+                                 voiceSettings.textToSpeechEnabled && 
+                                 !!window.speechSynthesis;
 
   useEffect(() => {
     loadDirections();
@@ -93,7 +102,7 @@ export const StepByStepNavigation: React.FC<StepByStepNavigationProps> = ({
   };
 
   const speakInstruction = (step: RouteStep) => {
-    if (!voiceEnabled || !window.speechSynthesis) return;
+    if (!isTextToSpeechAvailable || !voiceEnabled) return;
 
     const instruction = RouteDirectionsService.getVoiceInstruction(step);
     const utterance = new SpeechSynthesisUtterance(instruction);
@@ -103,6 +112,8 @@ export const StepByStepNavigation: React.FC<StepByStepNavigationProps> = ({
   };
 
   const toggleVoice = () => {
+    if (!isTextToSpeechAvailable) return;
+    
     setVoiceEnabled(!voiceEnabled);
     if (voiceEnabled) {
       window.speechSynthesis.cancel();
@@ -208,12 +219,15 @@ export const StepByStepNavigation: React.FC<StepByStepNavigationProps> = ({
           </div>
           
           {/* Bouton vocal */}
-          <button
-            onClick={() => speakInstruction(currentStep)}
-            className="mt-4 bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg"
-          >
-            <Volume2 size={20} />
-          </button>
+          {isTextToSpeechAvailable && (
+            <button
+              onClick={() => speakInstruction(currentStep)}
+              className="mt-4 bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg"
+              title="Écouter l'instruction"
+            >
+              <Volume2 size={20} />
+            </button>
+          )}
         </div>
       )}
 
@@ -294,14 +308,17 @@ export const StepByStepNavigation: React.FC<StepByStepNavigationProps> = ({
             Étape Précédente
           </button>
           
-          <button
-            onClick={toggleVoice}
-            className={`px-4 py-3 rounded-lg ${
-              voiceEnabled ? 'bg-green-600 text-white' : 'bg-gray-200 text-gray-700'
-            }`}
-          >
-            {voiceEnabled ? <Volume2 size={20} /> : <VolumeX size={20} />}
-          </button>
+          {isTextToSpeechAvailable && (
+            <button
+              onClick={toggleVoice}
+              className={`px-4 py-3 rounded-lg ${
+                voiceEnabled ? 'bg-green-600 text-white' : 'bg-gray-200 text-gray-700'
+              }`}
+              title={voiceEnabled ? 'Désactiver les instructions vocales' : 'Activer les instructions vocales'}
+            >
+              {voiceEnabled ? <Volume2 size={20} /> : <VolumeX size={20} />}
+            </button>
+          )}
           
           <button
             onClick={handleNextStep}

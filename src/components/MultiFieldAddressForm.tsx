@@ -22,6 +22,7 @@ import { CSVAddressService, CSVAddress } from '../services/csvAddressService';
 import { BANApiService } from '../services/banApiService';
 import { AddressDatabaseService } from '../services/addressDatabase';
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition';
+import { useVoiceSettings } from '../hooks/useVoiceSettings';
 
 interface AddressSearchSuggestion {
   type: 'local' | 'ban';
@@ -69,7 +70,10 @@ export const MultiFieldAddressForm: React.FC<MultiFieldAddressFormProps> = ({
   const streetInputRef = useRef<HTMLInputElement>(null);
   const suggestionRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
-  // Speech recognition for address input
+  // Voice settings
+  const { voiceSettings } = useVoiceSettings();
+
+  // Speech recognition for address input (only if enabled in settings)
   const {
     isListening,
     transcript,
@@ -81,8 +85,15 @@ export const MultiFieldAddressForm: React.FC<MultiFieldAddressFormProps> = ({
     resetTranscript,
   } = useSpeechRecognition('fr-FR', false, 8000); // 8-second timeout
 
-  // Handle speech recognition results
+  // Check if speech recognition should be available
+  const isSpeechRecognitionAvailable = voiceSettings.voiceEnabled && 
+                                      voiceSettings.speechRecognitionEnabled && 
+                                      speechSupported;
+
+  // Handle speech recognition results (only if available)
   useEffect(() => {
+    if (!isSpeechRecognitionAvailable) return;
+    
     if (transcript && confidence > 0.3) {
       // Parse the speech transcript for address components
       const parsed = parseSearchQuery(transcript);
@@ -103,16 +114,20 @@ export const MultiFieldAddressForm: React.FC<MultiFieldAddressFormProps> = ({
         resetTranscript();
       }
     }
-  }, [transcript, confidence, stopListening, resetTranscript]);
+  }, [transcript, confidence, stopListening, resetTranscript, isSpeechRecognitionAvailable]);
 
-  // Handle speech errors
+  // Handle speech errors (only if available)
   useEffect(() => {
+    if (!isSpeechRecognitionAvailable) return;
+    
     if (speechError) {
       setError(speechError);
     }
-  }, [speechError]);
+  }, [speechError, isSpeechRecognitionAvailable]);
 
   const handleVoiceInput = () => {
+    if (!isSpeechRecognitionAvailable) return;
+    
     if (isListening) {
       stopListening();
       resetTranscript();
@@ -484,7 +499,7 @@ export const MultiFieldAddressForm: React.FC<MultiFieldAddressFormProps> = ({
                   <X size={14} />
                 </button>
               )}
-              {speechSupported && (
+              {isSpeechRecognitionAvailable && (
                 <button
                   type="button"
                   onClick={handleVoiceInput}
@@ -654,7 +669,7 @@ export const MultiFieldAddressForm: React.FC<MultiFieldAddressFormProps> = ({
           <span>•</span>
           <Globe size={10} />
           <span>BAN</span>
-          {speechSupported && (
+          {isSpeechRecognitionAvailable && (
             <>
               <span>•</span>
               <Mic size={10} />
@@ -663,11 +678,16 @@ export const MultiFieldAddressForm: React.FC<MultiFieldAddressFormProps> = ({
           )}
         </div>
         
-        <span>Tapez "38 nant" ou utilisez la dictée vocale</span>
+        <span>
+          {isSpeechRecognitionAvailable 
+            ? 'Tapez "38 nant" ou utilisez la dictée vocale'
+            : 'Tapez "38 nant" pour rechercher'
+          }
+        </span>
       </div>
 
       {/* Speech recognition feedback */}
-      {isListening && (
+      {isSpeechRecognitionAvailable && isListening && (
         <div className="bg-red-50 border border-red-200 rounded-lg p-3">
           <div className="flex items-center space-x-2">
             <MicOff size={16} className="text-red-600 animate-pulse" />
