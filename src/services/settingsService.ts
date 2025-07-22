@@ -126,15 +126,17 @@ class SettingsService {
 
   // Method to validate if required settings are configured
   public isConfigurationValid(): boolean {
-    return this.hasValidApiKey();
+    // Basic configuration is always valid since Gemini is optional
+    return true;
   }
 
   public getConfigurationErrors(): string[] {
     const errors: string[] = [];
     
-    if (!this.hasValidApiKey()) {
-      errors.push('Clé API Gemini non configurée');
-    }
+    // Gemini API key is optional, so don't add it as an error
+    // if (!this.hasValidApiKey()) {
+    //   errors.push('Clé API Gemini non configurée');
+    // }
     
     if (this.settings.ocrTimeout < 10 || this.settings.ocrTimeout > 60) {
       errors.push('Timeout OCR doit être entre 10 et 60 secondes');

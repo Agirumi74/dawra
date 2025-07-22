@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Package, Address } from '../types';
 import { DEFAULT_TRUCK_LOCATIONS } from '../constants/locations';
-import { geminiOCR } from '../services/geminiOCR';
+import { unifiedOCR } from '../services/unifiedOCR';
 import { CameraCapture } from './CameraCapture';
 import { MultiFieldAddressForm } from './MultiFieldAddressForm';
 import { 
@@ -72,10 +72,11 @@ export const PackageForm: React.FC<PackageFormProps> = ({
     setShowCamera(false);
 
     try {
-      const result = await geminiOCR.extractAddressFromImage(imageData);
+      const result = await unifiedOCR.extractAddressFromImage(imageData);
       
       if (!result.success || !result.address) {
-        setOcrError(result.error || 'Impossible de lire l\'adresse. Veuillez réessayer ou saisir manuellement.');
+        const methodInfo = result.method ? ` (${result.method === 'basic' ? 'OCR basique' : result.method === 'gemini' ? 'Gemini AI' : 'aucune méthode'})` : '';
+        setOcrError((result.error || 'Impossible de lire l\'adresse. Veuillez réessayer ou saisir manuellement.') + methodInfo);
       } else {
         // Parser l'adresse OCR pour remplir les champs séparés
         // Pour l'instant, on met tout dans le champ full_address et on laisse l'utilisateur ajuster
@@ -85,13 +86,18 @@ export const PackageForm: React.FC<PackageFormProps> = ({
           street_name: result.address // Temporaire, l'utilisateur peut ajuster
         }));
         
-        // Show confidence if it's low
+        // Show confidence and method info
+        const methodInfo = result.method === 'basic' ? 'OCR basique' : result.method === 'gemini' ? 'Gemini AI' : 'Détection automatique';
+        
         if (result.confidence < 0.7) {
-          setOcrError(`Adresse détectée avec confiance ${(result.confidence * 100).toFixed(0)}%. Veuillez vérifier.`);
+          setOcrError(`Adresse détectée par ${methodInfo} avec confiance ${(result.confidence * 100).toFixed(0)}%. Veuillez vérifier.`);
+        } else {
+          // Show success message with method used
+          setOcrError(`Adresse détectée par ${methodInfo}. Vérifiez et ajustez si nécessaire.`);
         }
       }
     } catch (error) {
-      setOcrError('Erreur lors de l\'analyse de l\'image. Vérifiez la configuration Gemini API.');
+      setOcrError('Erreur lors de l\'analyse de l\'image. Veuillez réessayer.');
       console.error('Erreur OCR:', error);
     } finally {
       setIsProcessingOCR(false);
@@ -233,6 +239,14 @@ export const PackageForm: React.FC<PackageFormProps> = ({
                 <span>{ocrError}</span>
               </div>
             )}
+
+            {/* OCR Status Information */}
+            <div className="mt-2 text-xs text-gray-500">
+              {(() => {
+                const status = unifiedOCR.getStatusMessage();
+                return `État OCR: ${status}`;
+              })()}
+            </div>
           </div>
 
           {/* Emplacement dans le camion */}
