@@ -12,10 +12,15 @@ export class GeminiOCRService {
   private isInitialized: boolean = false;
 
   constructor() {
-    this.initializeService();
+    // Don't initialize automatically - make it on-demand
     // Listen for settings changes to reinitialize the service
     settingsService.subscribe(() => {
-      this.initializeService();
+      if (settingsService.hasValidApiKey()) {
+        this.initializeService();
+      } else {
+        this.isInitialized = false;
+        this.model = null;
+      }
     });
   }
 
@@ -24,7 +29,7 @@ export class GeminiOCRService {
       const apiKey = settingsService.getSetting('geminiApiKey');
       
       if (!apiKey || apiKey.trim().length === 0) {
-        console.error('❌ Clé API Gemini non configurée. Veuillez configurer la clé API dans les paramètres.');
+        console.log('ℹ️ Clé API Gemini non configurée. Gemini OCR non disponible (optionnel).');
         this.isInitialized = false;
         return;
       }
@@ -58,12 +63,17 @@ export class GeminiOCRService {
   }
 
   async extractAddressFromImage(imageData: string): Promise<OCRResult> {
+    // Initialize if not already done and API key is available
+    if (!this.isInitialized && settingsService.hasValidApiKey()) {
+      await this.initializeService();
+    }
+
     if (!this.isInitialized || !this.model) {
       return {
         address: '',
         confidence: 0,
         success: false,
-        error: 'Service OCR non initialisé. Vérifiez la configuration de la clé API Gemini dans les paramètres.'
+        error: 'Gemini OCR non configuré ou non disponible'
       };
     }
 

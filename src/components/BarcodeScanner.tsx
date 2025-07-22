@@ -58,6 +58,25 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
         throw new Error('L\'accès à la caméra n\'est pas supporté par ce navigateur');
       }
 
+      // First, check current permission state if the API is available
+      if (navigator.permissions && navigator.permissions.query) {
+        try {
+          const permissionStatus = await navigator.permissions.query({ name: 'camera' as PermissionName });
+          
+          if (permissionStatus.state === 'granted') {
+            // Permission already granted, no need to request again
+            return true;
+          } else if (permissionStatus.state === 'denied') {
+            setError('Permission d\'accès à la caméra refusée. Veuillez autoriser l\'accès dans les paramètres du navigateur.');
+            return false;
+          }
+          // If 'prompt', continue to request permission
+        } catch (permissionError) {
+          // Permission API not supported or failed, continue with getUserMedia
+          console.log('API Permissions non supportée, utilisation de getUserMedia direct');
+        }
+      }
+
       // Request camera permission
       const constraints = settingsService.getCameraConstraints();
       const stream = await navigator.mediaDevices.getUserMedia(constraints);

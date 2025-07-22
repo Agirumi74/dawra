@@ -41,6 +41,25 @@ export const CameraCapture: React.FC<CameraCaptureProps> = ({
         throw new Error('L\'accès à la caméra n\'est pas supporté par ce navigateur');
       }
 
+      // First, check current permission state if the API is available
+      if (navigator.permissions && navigator.permissions.query) {
+        try {
+          const permissionStatus = await navigator.permissions.query({ name: 'camera' as PermissionName });
+          
+          if (permissionStatus.state === 'granted') {
+            // Permission already granted, no need to request again
+            return true;
+          } else if (permissionStatus.state === 'denied') {
+            setError('Permission d\'accès à la caméra refusée. Veuillez autoriser l\'accès dans les paramètres du navigateur.');
+            return false;
+          }
+          // If 'prompt', continue to request permission
+        } catch (permissionError) {
+          // Permission API not supported or failed, continue with getUserMedia
+          console.log('API Permissions non supportée, utilisation de getUserMedia direct');
+        }
+      }
+
       // Get constraints from settings
       const constraints = settingsService.getCameraConstraints();
       // Override facing mode with current selection
@@ -215,7 +234,7 @@ export const CameraCapture: React.FC<CameraCaptureProps> = ({
             <div className="text-white text-center">
               <Loader2 size={48} className="mx-auto mb-4 animate-spin" />
               <p className="text-lg font-semibold">Analyse en cours...</p>
-              <p className="text-sm opacity-75">Extraction de l'adresse avec Gemini 2.0 Flash</p>
+              <p className="text-sm opacity-75">Extraction automatique de l'adresse</p>
             </div>
           </div>
         )}
