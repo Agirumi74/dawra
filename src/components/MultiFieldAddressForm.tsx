@@ -12,12 +12,15 @@ import {
   Database,
   Wifi,
   WifiOff,
-  ArrowRight
+  ArrowRight,
+  Mic,
+  MicOff
 } from 'lucide-react';
 import { Address, BANSuggestion } from '../types';
 import { CSVAddressService, CSVAddress } from '../services/csvAddressService';
 import { BANApiService } from '../services/banApiService';
 import { AddressDatabaseService } from '../services/addressDatabase';
+import { useSpeechRecognition } from '../hooks/useSpeechRecognition';
 
 interface AddressSearchSuggestion {
   type: 'local' | 'ban';
@@ -65,12 +68,62 @@ export const MultiFieldAddressForm: React.FC<MultiFieldAddressFormProps> = ({
   const streetInputRef = useRef<HTMLInputElement>(null);
   const suggestionRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
+  // Speech recognition for address input
+  const {
+    isListening,
+    transcript,
+    confidence,
+    error: speechError,
+    isSupported: speechSupported,
+    startListening,
+    stopListening,
+    resetTranscript,
+  } = useSpeechRecognition('fr-FR', false);
+
+  // Handle speech recognition results
+  useEffect(() => {
+    if (transcript && confidence > 0.3) {
+      // Parse the speech transcript for address components
+      const parsed = parseSearchQuery(transcript);
+      
+      // Set the street name from speech
+      if (parsed.street) {
+        setStreetName(parsed.street);
+      }
+      
+      // Set the street number if detected
+      if (parsed.number) {
+        setStreetNumber(parsed.number);
+      }
+      
+      // Auto-stop listening after receiving a good result
+      if (confidence > 0.7) {
+        stopListening();
+        resetTranscript();
+      }
+    }
+  }, [transcript, confidence, stopListening, resetTranscript]);
+
+  // Handle speech errors
+  useEffect(() => {
+    if (speechError) {
+      setError(speechError);
+    }
+  }, [speechError]);
+
+  const handleVoiceInput = () => {
+    if (isListening) {
+      stopListening();
+    } else {
+      setError('');
+      startListening();
+    }
+  };
+
   // Vérifier la disponibilité de BAN au montage
   useEffect(() => {
     BANApiService.isAvailable().then(setBanAvailable);
   }, []);
-
-  // Parser une requête de recherche pour extraire numéro et nom de rue
   const parseSearchQuery = (query: string) => {
     const trimmed = query.trim();
     
@@ -255,8 +308,18 @@ export const MultiFieldAddressForm: React.FC<MultiFieldAddressFormProps> = ({
       setPostalCode(selectedAddress.postal_code);
       setCity(selectedAddress.city);
       
+      // Fermer toutes les suggestions immédiatement
       setShowSuggestions(false);
+      setShowCitySuggestions(false);
       setSelectedIndex(-1);
+      
+      // Clear any errors
+      setError('');
+      
+      // Remove focus from street input to prevent reopening suggestions
+      if (streetInputRef.current) {
+        streetInputRef.current.blur();
+      }
     } catch (error) {
       console.error('Erreur lors de la sélection:', error);
       setError('Erreur lors de la sélection de l\'adresse');
@@ -333,12 +396,28 @@ export const MultiFieldAddressForm: React.FC<MultiFieldAddressFormProps> = ({
               value={streetName}
               onChange={(e) => setStreetName(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder={placeholder}
-              className="w-full pl-10 pr-12 p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none"
+              placeholder={isListening ? "Dictez l'adresse..." : placeholder}
+              className={`w-full pl-10 pr-20 p-3 border-2 rounded-lg focus:border-blue-500 focus:outline-none ${
+                isListening ? 'border-red-400 bg-red-50' : 'border-gray-300'
+              }`}
               required
             />
             
-            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center space-x-2">
+            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center space-x-1">
+              {speechSupported && (
+                <button
+                  type="button"
+                  onClick={handleVoiceInput}
+                  className={`p-1 rounded transition-colors ${
+                    isListening 
+                      ? 'text-red-600 hover:text-red-700 animate-pulse' 
+                      : 'text-gray-500 hover:text-blue-600'
+                  }`}
+                  title={isListening ? 'Arrêter la dictée' : 'Commencer la dictée vocale'}
+                >
+                  {isListening ? <MicOff size={14} /> : <Mic size={14} />}
+                </button>
+              )}
               {isLoading && (
                 <Loader2 size={16} className="animate-spin text-blue-600" />
               )}
@@ -471,10 +550,34 @@ export const MultiFieldAddressForm: React.FC<MultiFieldAddressFormProps> = ({
           <span>•</span>
           <Globe size={10} />
           <span>BAN</span>
+          {speechSupported && (
+            <>
+              <span>•</span>
+              <Mic size={10} />
+              <span>Vocal</span>
+            </>
+          )}
         </div>
         
-        <span>Tapez "38 nant" pour rechercher automatiquement</span>
+        <span>Tapez "38 nant" ou utilisez la dictée vocale</span>
       </div>
+
+      {/* Speech recognition feedback */}
+      {isListening && (
+        <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+          <div className="flex items-center space-x-2">
+            <MicOff size={16} className="text-red-600 animate-pulse" />
+            <span className="text-red-800 text-sm">
+              En écoute... Dictez l'adresse clairement
+              {transcript && (
+                <span className="block mt-1 text-red-600 font-medium">
+                  "{transcript}" (confiance: {Math.round(confidence * 100)}%)
+                </span>
+              )}
+            </span>
+          </div>
+        </div>
+      )}
 
       {streetName.length > 0 && streetName.length < 2 && (
         <p className="text-sm text-gray-500">

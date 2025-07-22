@@ -8,7 +8,8 @@ import {
   Camera,
   Settings,
   Navigation,
-  Target
+  Target,
+  Plus
 } from 'lucide-react';
 import { BarcodeScanner } from '../BarcodeScanner';
 import { PackageForm } from '../PackageForm';
@@ -29,6 +30,8 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
   const [showPackageForm, setShowPackageForm] = useState(false);
   const [showGPSManager, setShowGPSManager] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [showAddAnotherDialog, setShowAddAnotherDialog] = useState(false);
+  const [lastSavedPackage, setLastSavedPackage] = useState<any>(null);
 
   const [currentBarcode, setCurrentBarcode] = useState<string | undefined>(undefined);
   
@@ -53,10 +56,33 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
   };
 
   const handlePackageSaved = (packageData: any) => {
-    addPackage(packageData);
+    const savedPackage = addPackage(packageData);
+    setLastSavedPackage(savedPackage);
     setShowPackageForm(false);
     setCurrentBarcode(undefined);
-    // Retourner à l'onglet scan pour continuer
+    
+    // Show the "add another" dialog instead of immediately returning to scan
+    setShowAddAnotherDialog(true);
+  };
+
+  const handleAddAnotherPackage = () => {
+    setShowAddAnotherDialog(false);
+    // Start a new package entry (could be with barcode or manual)
+    setCurrentBarcode(undefined);
+    setShowPackageForm(true);
+  };
+
+  const handleAddToSameAddress = () => {
+    setShowAddAnotherDialog(false);
+    // Start a new package entry with the same address prefilled
+    setCurrentBarcode(undefined);
+    setShowPackageForm(true);
+  };
+
+  const handleFinishAdding = () => {
+    setShowAddAnotherDialog(false);
+    setLastSavedPackage(null);
+    // Return to the scan tab to continue scanning
     setActiveTab('scan');
   };
 
@@ -375,7 +401,52 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
           barcode={currentBarcode}
           onSave={handlePackageSaved}
           onCancel={handleCancelScanning}
+          prefilledAddress={lastSavedPackage?.address}
         />
+      )}
+
+      {/* Add Another Package Dialog */}
+      {showAddAnotherDialog && lastSavedPackage && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full">
+            <div className="text-center mb-6">
+              <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                <Package size={32} className="text-green-600" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                Colis ajouté avec succès !
+              </h3>
+              <p className="text-gray-600 text-sm">
+                Adresse: {lastSavedPackage.address.full_address}
+              </p>
+            </div>
+            
+            <div className="space-y-3">
+              <button
+                onClick={handleAddToSameAddress}
+                className="w-full py-3 px-4 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center justify-center space-x-2"
+              >
+                <Package size={20} />
+                <span>Ajouter un autre colis à cette adresse</span>
+              </button>
+              
+              <button
+                onClick={handleAddAnotherPackage}
+                className="w-full py-3 px-4 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors flex items-center justify-center space-x-2"
+              >
+                <Plus size={20} />
+                <span>Ajouter un nouveau colis</span>
+              </button>
+              
+              <button
+                onClick={handleFinishAdding}
+                className="w-full py-2 px-4 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition-colors"
+              >
+                Terminer
+              </button>
+            </div>
+          </div>
+        </div>
       )}
 
       {showGPSManager && (
