@@ -1,15 +1,19 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { X, Loader2, Camera } from 'lucide-react';
+import { X, Loader2, AlertCircle, Settings } from 'lucide-react';
+import type { BrowserMultiFormatReader } from '@zxing/browser';
+import { settingsService } from '../services/settingsService';
 
 interface BarcodeScannerProps {
   onScan: (barcode: string) => void;
   onCancel: () => void;
+  onOpenSettings: () => void;
   isActive: boolean;
 }
 
 export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
   onScan,
   onCancel,
+  onOpenSettings,
   isActive
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -17,8 +21,10 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
   const [isScanning, setIsScanning] = useState(false);
   const [error, setError] = useState<string>('');
   const [hasCamera, setHasCamera] = useState(false);
+  const [isInitializing, setIsInitializing] = useState(true);
   const streamRef = useRef<MediaStream | null>(null);
   const scanIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const codeReaderRef = useRef<BrowserMultiFormatReader | null>(null);
 
   const stopScanning = useCallback(() => {
     setIsScanning(false);
@@ -34,96 +40,145 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
       clearInterval(scanIntervalRef.current);
       scanIntervalRef.current = null;
     }
+
+    // Stop ZXing reader
+    if (codeReaderRef.current) {
+      try {
+        codeReaderRef.current.reset();
+      } catch (error) {
+        console.warn('Erreur lors de l\'arrêt du lecteur de codes-barres:', error);
+      }
+    }
   }, []);
 
-  const startScanning = useCallback(async () => {
+  const requestCameraPermission = useCallback(async (): Promise<boolean> => {
     try {
-      setIsScanning(true);
-      setError('');
-
       // Check if getUserMedia is available
       if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-        throw new Error('Camera not supported in this browser');
+        throw new Error('L\'accès à la caméra n\'est pas supporté par ce navigateur');
       }
 
-      // Try to access the camera
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: { 
-            facingMode: 'environment', // Use back camera if available
-            width: { ideal: 1280 },
-            height: { ideal: 720 }
-          }
-        });
-
-        if (videoRef.current) {
-          videoRef.current.srcObject = stream;
-          streamRef.current = stream;
-          setHasCamera(true);
-          
-          // Start barcode detection after video loads
-          videoRef.current.onloadedmetadata = () => {
-            startBarcodeDetection();
-          };
-        }
-      } catch (cameraError) {
-        console.warn('Camera access failed, using simulation mode:', cameraError);
-        setHasCamera(false);
-        // Fallback to simulation mode
-        simulateBarcodeScan();
-      }
-
+      // Request camera permission
+      const constraints = settingsService.getCameraConstraints();
+      const stream = await navigator.mediaDevices.getUserMedia(constraints);
+      
+      // Test successful, stop the test stream
+      stream.getTracks().forEach(track => track.stop());
+      return true;
     } catch (error) {
-      console.error('Erreur lors de l\'initialisation du scanner:', error);
-      setError(error instanceof Error ? error.message : 'Erreur inconnue');
-      setIsScanning(false);
+      console.error('Erreur d\'accès à la caméra:', error);
+      
+      if (error instanceof Error) {
+        if (error.name === 'NotAllowedError') {
+          setError('Permission d\'accès à la caméra refusée. Veuillez autoriser l\'accès dans les paramètres du navigateur.');
+        } else if (error.name === 'NotFoundError') {
+          setError('Aucune caméra détectée sur cet appareil.');
+        } else if (error.name === 'NotReadableError') {
+          setError('La caméra est déjà utilisée par une autre application.');
+        } else {
+          setError(error.message);
+        }
+      } else {
+        setError('Erreur inconnue lors de l\'accès à la caméra');
+      }
+      
+      return false;
     }
   }, []);
 
   const startBarcodeDetection = useCallback(async () => {
     try {
-      // Try to use ZXing library for real barcode detection
+      setIsScanning(true);
+      
+      // Load ZXing library for barcode detection
       const { BrowserMultiFormatReader } = await import('@zxing/browser');
       const codeReader = new BrowserMultiFormatReader();
+      codeReaderRef.current = codeReader;
       
-      if (videoRef.current) {
+      if (videoRef.current && hasCamera) {
         try {
+          // Start continuous scanning
           const result = await codeReader.decodeOnceFromVideoDevice(undefined, videoRef.current);
-          if (result) {
-            onScan(result.getText());
+          
+          if (result && result.getText()) {
+            const barcode = result.getText();
+            console.log('Code-barres détecté:', barcode);
+            onScan(barcode);
             stopScanning();
             return;
           }
         } catch (decodeError) {
-          console.warn('ZXing decode failed, falling back to simulation:', decodeError);
+          console.warn('Erreur de décodage:', decodeError);
+          // Continue scanning if decode fails
         }
       }
+      
+      // Set up continuous scanning
+      scanIntervalRef.current = setInterval(async () => {
+        if (videoRef.current && codeReaderRef.current && hasCamera) {
+          try {
+            const result = await codeReaderRef.current.decodeOnceFromVideoDevice(undefined, videoRef.current);
+            if (result && result.getText()) {
+              const barcode = result.getText();
+              console.log('Code-barres détecté:', barcode);
+              onScan(barcode);
+              stopScanning();
+            }
+          } catch {
+            // Continue scanning on error
+          }
+        }
+      }, 1000); // Scan every second
+      
     } catch (importError) {
-      console.warn('ZXing library not available, using simulation:', importError);
+      console.error('Impossible de charger la bibliothèque ZXing:', importError);
+      setError('Erreur lors du chargement du scanner de codes-barres. Veuillez rafraîchir la page.');
+      setIsScanning(false);
     }
-    
-    // Fallback to simulation if real detection fails
-    simulateBarcodeScan();
-  }, [onScan, stopScanning]);
+  }, [onScan, stopScanning, hasCamera]);
 
-  const simulateBarcodeScan = useCallback(() => {
-    // Simulation mode - generate a barcode after a delay
-    setTimeout(() => {
-      const simulatedBarcode = `PKG${Date.now().toString().slice(-6)}`;
-      onScan(simulatedBarcode);
-      stopScanning();
-    }, 2000);
-  }, [onScan, stopScanning]);
+  const startCamera = useCallback(async () => {
+    try {
+      setError('');
+      setIsInitializing(true);
+
+      const hasPermission = await requestCameraPermission();
+      if (!hasPermission) {
+        setIsInitializing(false);
+        return;
+      }
+
+      // Start the actual camera stream
+      const constraints = settingsService.getCameraConstraints();
+      const stream = await navigator.mediaDevices.getUserMedia(constraints);
+
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+        streamRef.current = stream;
+        setHasCamera(true);
+        
+        // Start barcode detection after video loads
+        videoRef.current.onloadedmetadata = () => {
+          setIsInitializing(false);
+          startBarcodeDetection();
+        };
+      }
+    } catch {
+      setError('Impossible de démarrer la caméra. Vérifiez les permissions et réessayez.');
+      setIsInitializing(false);
+      setHasCamera(false);
+    }
+  }, [requestCameraPermission, startBarcodeDetection]);
 
   useEffect(() => {
     if (isActive) {
-      startScanning();
+      startCamera();
     } else {
       stopScanning();
     }
 
     return () => stopScanning();
-  }, [isActive, startScanning, stopScanning]);
+  }, [isActive, startCamera, stopScanning]);
 
   if (!isActive) {
     return null;
@@ -135,7 +190,7 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
       <div className="bg-white p-4 safe-area-top text-center">
         <h2 className="text-lg md:text-xl font-bold text-gray-900">Scanner le code-barres</h2>
         <p className="text-gray-600 text-sm mt-1">
-          {hasCamera ? 'Pointez la caméra vers le code-barres' : 'Mode démonstration - Simulation du scan'}
+          Pointez la caméra vers le code-barres du colis
         </p>
       </div>
 
@@ -150,61 +205,73 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
               playsInline
               muted
             />
-            <canvas
-              ref={canvasRef}
-              className="hidden"
-            />
+            <canvas ref={canvasRef} className="hidden" />
+            
+            {/* Scanning overlay */}
+            <div className="absolute inset-0 flex items-center justify-center p-4">
+              <div className="border-2 border-red-500 rounded-lg w-full max-w-sm h-32 md:h-40">
+                {/* Corner indicators */}
+                <div className="absolute inset-0 border-2 border-transparent rounded-lg"
+                     style={{
+                       background: `
+                         linear-gradient(90deg, red 50%, transparent 50%),
+                         linear-gradient(90deg, red 50%, transparent 50%),
+                         linear-gradient(0deg, red 50%, transparent 50%),
+                         linear-gradient(0deg, red 50%, transparent 50%)
+                       `,
+                       backgroundSize: '20px 2px, 20px 2px, 2px 20px, 2px 20px',
+                       backgroundPosition: '0 0, 0 100%, 0 0, 100% 0',
+                       backgroundRepeat: 'no-repeat'
+                     }}>
+                </div>
+              </div>
+            </div>
+
+            {/* Animated scan line */}
+            <div className="absolute inset-0 flex items-center justify-center p-4">
+              <div className="w-full max-w-sm h-32 md:h-40 relative overflow-hidden">
+                <div 
+                  className="absolute w-full h-0.5 bg-red-500"
+                  style={{
+                    animation: 'scanLine 2s ease-in-out infinite',
+                    boxShadow: '0 0 10px red'
+                  }}
+                />
+              </div>
+            </div>
           </>
         ) : (
-          <div className="w-full h-full bg-gray-800 flex items-center justify-center">
-            <div className="text-center text-white">
-              <Camera size={64} className="mx-auto mb-4 opacity-50" />
-              <p>Caméra non disponible</p>
-              <p className="text-sm mt-2">Mode simulation activé</p>
-            </div>
+          <div className="w-full h-full bg-gray-900 flex items-center justify-center">
+            {isInitializing ? (
+              <div className="text-center text-white">
+                <Loader2 size={48} className="mx-auto mb-4 animate-spin" />
+                <p className="text-lg">Initialisation de la caméra...</p>
+                <p className="text-sm mt-2 opacity-75">Veuillez autoriser l'accès à la caméra</p>
+              </div>
+            ) : (
+              <div className="text-center text-white max-w-sm mx-auto px-4">
+                <AlertCircle size={64} className="mx-auto mb-4 text-red-400" />
+                <p className="text-lg font-medium mb-2">Caméra indisponible</p>
+                <p className="text-sm opacity-75 mb-4">
+                  Impossible d'accéder à la caméra. Vérifiez les permissions et la disponibilité de la caméra.
+                </p>
+                <button
+                  onClick={startCamera}
+                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                >
+                  Réessayer
+                </button>
+              </div>
+            )}
           </div>
         )}
 
-        {/* Overlay pour guider le scan */}
-        <div className="absolute inset-0 flex items-center justify-center p-4">
-          <div className="border-2 border-red-500 rounded-lg w-full max-w-sm h-32 md:h-40">
-            <div className="absolute inset-0 border-2 border-transparent rounded-lg"
-                 style={{
-                   background: `
-                     linear-gradient(90deg, red 50%, transparent 50%),
-                     linear-gradient(90deg, red 50%, transparent 50%),
-                     linear-gradient(0deg, red 50%, transparent 50%),
-                     linear-gradient(0deg, red 50%, transparent 50%)
-                   `,
-                   backgroundSize: '20px 2px, 20px 2px, 2px 20px, 2px 20px',
-                   backgroundPosition: '0 0, 0 100%, 0 0, 100% 0',
-                   backgroundRepeat: 'no-repeat'
-                 }}>
-            </div>
-          </div>
-        </div>
-
-        {/* Ligne de scan animée */}
-        <div className="absolute inset-0 flex items-center justify-center p-4">
-          <div className="w-full max-w-sm h-32 md:h-40 relative overflow-hidden">
-            <div 
-              className="absolute w-full h-0.5 bg-red-500 animate-pulse"
-              style={{
-                animation: 'scanLine 2s ease-in-out infinite',
-                boxShadow: '0 0 10px red'
-              }}
-            />
-          </div>
-        </div>
-
-        {/* Messages d'état */}
-        {isScanning && (
+        {/* Status Messages */}
+        {isScanning && hasCamera && (
           <div className="absolute bottom-32 left-4 right-4 text-center">
             <div className="inline-flex items-center space-x-2 bg-black bg-opacity-75 text-white px-4 py-3 rounded-lg">
               <Loader2 size={20} className="animate-spin" />
-              <span>
-                {hasCamera ? 'Recherche de code-barres...' : 'Simulation du scan en cours...'}
-              </span>
+              <span>Recherche de code-barres...</span>
             </div>
           </div>
         )}
@@ -212,7 +279,10 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
         {error && (
           <div className="absolute bottom-32 left-4 right-4 text-center">
             <div className="inline-block bg-red-600 text-white px-4 py-3 rounded-lg max-w-sm mx-auto">
-              {error}
+              <div className="flex items-center space-x-2">
+                <AlertCircle size={16} />
+                <span className="text-sm">{error}</span>
+              </div>
             </div>
           </div>
         )}
@@ -220,7 +290,17 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
 
       {/* Controls */}
       <div className="bg-white p-6 safe-area-bottom">
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center space-x-4">
+          {/* Settings */}
+          <button
+            onClick={onOpenSettings}
+            className="p-4 bg-gray-100 rounded-full hover:bg-gray-200 active:bg-gray-300 transition-colors touch-manipulation"
+            style={{ minWidth: '60px', minHeight: '60px' }}
+          >
+            <Settings size={24} className="text-gray-700" />
+          </button>
+
+          {/* Cancel */}
           <button
             onClick={onCancel}
             className="p-4 bg-gray-100 rounded-full hover:bg-gray-200 active:bg-gray-300 transition-colors touch-manipulation"
@@ -234,7 +314,7 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
           <p className="text-sm text-gray-600">
             {hasCamera 
               ? 'Centrez le code-barres dans le cadre rouge'
-              : 'Mode démonstration - Le scan sera simulé'
+              : 'Accès caméra requis pour le scan'
             }
           </p>
         </div>

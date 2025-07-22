@@ -13,6 +13,7 @@ import {
 import { BarcodeScanner } from '../BarcodeScanner';
 import { PackageForm } from '../PackageForm';
 import { EnhancedGPSManager } from '../EnhancedGPSManager';
+import { SettingsPage } from '../SettingsPage';
 
 import { usePackages } from '../../hooks/usePackages';
 
@@ -27,6 +28,7 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
   const [showBarcodeScanner, setShowBarcodeScanner] = useState(false);
   const [showPackageForm, setShowPackageForm] = useState(false);
   const [showGPSManager, setShowGPSManager] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
 
   const [currentBarcode, setCurrentBarcode] = useState<string | undefined>(undefined);
   
@@ -62,6 +64,14 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
     setShowBarcodeScanner(false);
     setShowPackageForm(false);
     setCurrentBarcode(undefined);
+  };
+
+  const handleOpenSettings = () => {
+    setShowSettings(true);
+  };
+
+  const handleCloseSettings = () => {
+    setShowSettings(false);
   };
 
   const startScanning = () => {
@@ -355,6 +365,7 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
         <BarcodeScanner
           onScan={handleBarcodeScanned}
           onCancel={handleCancelScanning}
+          onOpenSettings={handleOpenSettings}
           isActive={showBarcodeScanner}
         />
       )}
@@ -373,6 +384,10 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
         </div>
       )}
 
+      {showSettings && (
+        <SettingsPage onBack={handleCloseSettings} />
+      )}
+
 
       {/* Header */}
       <div className="bg-white shadow-sm border-b">
@@ -388,7 +403,11 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
               </div>
             </div>
             <div className="flex items-center space-x-2 md:space-x-3">
-              <button className="p-2 text-gray-600 hover:text-gray-900 touch-manipulation">
+              <button 
+                onClick={handleOpenSettings}
+                className="p-2 text-gray-600 hover:text-gray-900 touch-manipulation"
+                title="Paramètres"
+              >
                 <Settings size={20} />
               </button>
               <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">

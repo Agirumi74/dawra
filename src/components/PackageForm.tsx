@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Package, Address, TruckLocation } from '../types';
+import React, { useState } from 'react';
+import { Package, Address } from '../types';
 import { DEFAULT_TRUCK_LOCATIONS } from '../constants/locations';
 import { geminiOCR } from '../services/geminiOCR';
 import { CameraCapture } from './CameraCapture';
@@ -74,8 +74,8 @@ export const PackageForm: React.FC<PackageFormProps> = ({
     try {
       const result = await geminiOCR.extractAddressFromImage(imageData);
       
-      if (result.address === 'ERREUR_LECTURE') {
-        setOcrError('Impossible de lire l\'adresse. Veuillez réessayer ou saisir manuellement.');
+      if (!result.success || !result.address) {
+        setOcrError(result.error || 'Impossible de lire l\'adresse. Veuillez réessayer ou saisir manuellement.');
       } else {
         // Parser l'adresse OCR pour remplir les champs séparés
         // Pour l'instant, on met tout dans le champ full_address et on laisse l'utilisateur ajuster
@@ -84,9 +84,15 @@ export const PackageForm: React.FC<PackageFormProps> = ({
           full_address: result.address,
           street_name: result.address // Temporaire, l'utilisateur peut ajuster
         }));
+        
+        // Show confidence if it's low
+        if (result.confidence < 0.7) {
+          setOcrError(`Adresse détectée avec confiance ${(result.confidence * 100).toFixed(0)}%. Veuillez vérifier.`);
+        }
       }
     } catch (error) {
-      setOcrError('Erreur lors de l\'analyse de l\'image');
+      setOcrError('Erreur lors de l\'analyse de l\'image. Vérifiez la configuration Gemini API.');
+      console.error('Erreur OCR:', error);
     } finally {
       setIsProcessingOCR(false);
     }
@@ -146,6 +152,14 @@ export const PackageForm: React.FC<PackageFormProps> = ({
         <CameraCapture
           onCapture={handleAddressCapture}
           onCancel={() => setShowCamera(false)}
+          onOpenSettings={() => {
+            setShowCamera(false);
+            // The onOpenSettings would need to be passed from parent
+            // For now, we'll handle it in a simpler way
+            if (typeof window !== 'undefined') {
+              window.alert('Ouvrez les paramètres depuis le menu principal pour configurer Gemini API');
+            }
+          }}
           isProcessing={isProcessingOCR}
           title="Capturer l'adresse"
           subtitle="Cadrez l'adresse sur l'étiquette du colis"
