@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Save, Key, Camera, ArrowLeft, AlertCircle, CheckCircle } from 'lucide-react';
+import { VoiceSettings } from './VoiceSettings';
 
 interface SettingsPageProps {
   onBack: () => void;
@@ -109,7 +110,7 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ onBack }) => {
             <h1 className="text-2xl font-bold text-gray-900">Paramètres</h1>
           </div>
           <p className="text-gray-600">
-            Configuration de l'OCR, caméra et intégration Gemini 2.0 Flash
+            Configuration de l'OCR, caméra, fonctionnalités vocales et intégration Gemini 2.0 Flash
           </p>
         </div>
 
@@ -170,6 +171,11 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ onBack }) => {
               </p>
             </div>
           </div>
+        </div>
+
+        {/* Voice Configuration */}
+        <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+          <VoiceSettings />
         </div>
 
         {/* Camera Configuration */}
