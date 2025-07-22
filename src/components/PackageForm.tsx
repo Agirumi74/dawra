@@ -14,19 +14,23 @@ import {
   Truck,
   Building,
   Home,
-  AlertCircle
+  AlertCircle,
+  Image,
+  Trash2
 } from 'lucide-react';
 
 interface PackageFormProps {
   barcode?: string;
   onSave: (packageData: Omit<Package, 'id' | 'createdAt'>) => void;
   onCancel: () => void;
+  prefilledAddress?: Partial<Address>;  // For adding multiple packages to same address
 }
 
 export const PackageForm: React.FC<PackageFormProps> = ({
   barcode,
   onSave,
-  onCancel
+  onCancel,
+  prefilledAddress
 }) => {
   const [formData, setFormData] = useState({
     location: '',
@@ -36,7 +40,7 @@ export const PackageForm: React.FC<PackageFormProps> = ({
   });
   
   // État pour l'adresse composée de champs séparés
-  const [address, setAddress] = useState<Partial<Address>>({
+  const [address, setAddress] = useState<Partial<Address>>(prefilledAddress || {
     street_number: '',
     street_name: '',
     postal_code: '74',
@@ -45,6 +49,8 @@ export const PackageForm: React.FC<PackageFormProps> = ({
   });
   
   const [showCamera, setShowCamera] = useState(false);
+  const [showPackageCamera, setShowPackageCamera] = useState(false); // For package photos
+  const [packagePhoto, setPackagePhoto] = useState<string | undefined>(undefined);
   const [isProcessingOCR, setIsProcessingOCR] = useState(false);
   const [ocrError, setOcrError] = useState('');
   const [customLocation, setCustomLocation] = useState('');
@@ -64,6 +70,15 @@ export const PackageForm: React.FC<PackageFormProps> = ({
       full_address: fullAddress,
       coordinates: partialAddress.coordinates
     };
+  };
+
+  const handlePackagePhotoCapture = (imageData: string) => {
+    setPackagePhoto(imageData);
+    setShowPackageCamera(false);
+  };
+
+  const removePackagePhoto = () => {
+    setPackagePhoto(undefined);
   };
 
   const handleAddressCapture = async (imageData: string) => {
@@ -145,7 +160,8 @@ export const PackageForm: React.FC<PackageFormProps> = ({
       notes: formData.notes,
       type: formData.type,
       priority: formData.priority,
-      status: 'pending'
+      status: 'pending',
+      photo: packagePhoto // Include package photo
     };
 
     onSave(packageData);
@@ -153,7 +169,24 @@ export const PackageForm: React.FC<PackageFormProps> = ({
 
   return (
     <div className="fixed inset-0 bg-gray-50 z-40 overflow-y-auto">
-      {/* Camera Modal */}
+      {/* Camera Modal for package photo */}
+      {showPackageCamera && (
+        <CameraCapture
+          onCapture={handlePackagePhotoCapture}
+          onCancel={() => setShowPackageCamera(false)}
+          onOpenSettings={() => {
+            setShowPackageCamera(false);
+            if (typeof window !== 'undefined') {
+              window.alert('Ouvrez les paramètres depuis le menu principal pour configurer la caméra');
+            }
+          }}
+          isProcessing={false}
+          title="Photo du colis"
+          subtitle="Prenez une photo du colis pour le documenter"
+        />
+      )}
+
+      {/* Camera Modal for address OCR */}
       {showCamera && (
         <CameraCapture
           onCapture={handleAddressCapture}
@@ -384,6 +417,51 @@ export const PackageForm: React.FC<PackageFormProps> = ({
               className="w-full p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               rows={3}
             />
+          </div>
+
+          {/* Photo du colis */}
+          <div className="bg-white rounded-lg shadow-sm p-4">
+            <label className="text-lg font-semibold text-gray-900 mb-3 flex items-center space-x-2">
+              <Image size={20} className="text-green-600" />
+              <span>Photo du colis (optionnel)</span>
+            </label>
+            
+            {!packagePhoto ? (
+              <button
+                type="button"
+                onClick={() => setShowPackageCamera(true)}
+                className="w-full p-6 border-2 border-dashed border-gray-300 rounded-lg hover:border-gray-400 transition-colors flex flex-col items-center space-y-2 text-gray-600"
+              >
+                <Camera size={32} />
+                <span className="font-medium">Prendre une photo du colis</span>
+                <span className="text-sm text-gray-500">Utile pour documenter l'état du colis</span>
+              </button>
+            ) : (
+              <div className="space-y-3">
+                <div className="relative">
+                  <img
+                    src={packagePhoto}
+                    alt="Photo du colis"
+                    className="w-full h-48 object-cover rounded-lg border border-gray-200"
+                  />
+                  <button
+                    type="button"
+                    onClick={removePackagePhoto}
+                    className="absolute top-2 right-2 p-2 bg-red-600 text-white rounded-full hover:bg-red-700 shadow-lg"
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowPackageCamera(true)}
+                  className="w-full p-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center space-x-2"
+                >
+                  <Camera size={16} />
+                  <span>Reprendre la photo</span>
+                </button>
+              </div>
+            )}
           </div>
         </form>
 
