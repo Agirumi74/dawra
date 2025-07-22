@@ -18,9 +18,9 @@ const mockSpeechRecognition = {
   onend: null,
 };
 
-// @ts-ignore
+// @ts-expect-error - Mocking global SpeechRecognition
 global.window.SpeechRecognition = jest.fn(() => mockSpeechRecognition);
-// @ts-ignore
+// @ts-expect-error - Mocking global webkitSpeechRecognition
 global.window.webkitSpeechRecognition = jest.fn(() => mockSpeechRecognition);
 
 describe('useSpeechRecognition', () => {
