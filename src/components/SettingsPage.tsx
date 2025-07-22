@@ -117,20 +117,20 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ onBack }) => {
         <div className="bg-white rounded-lg shadow-md p-6 mb-6">
           <div className="flex items-center space-x-3 mb-4">
             <Key size={24} className="text-blue-600" />
-            <h2 className="text-xl font-semibold text-gray-900">API Gemini 2.0 Flash</h2>
+            <h2 className="text-xl font-semibold text-gray-900">API Gemini 2.0 Flash (Optionnel)</h2>
           </div>
           
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Clé API Gemini
+                Clé API Gemini (pour OCR avancé)
               </label>
               <div className="flex space-x-2">
                 <input
                   type="password"
                   value={geminiApiKey}
                   onChange={(e) => setGeminiApiKey(e.target.value)}
-                  placeholder="Saisissez votre clé API Gemini"
+                  placeholder="Optionnel - Pour OCR avancé uniquement"
                   className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <button
@@ -220,16 +220,16 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ onBack }) => {
         </div>
 
         {/* Important Notice */}
-        <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
           <div className="flex items-start space-x-3">
-            <AlertCircle size={20} className="text-amber-600 mt-0.5" />
-            <div className="text-sm text-amber-800">
-              <p className="font-medium mb-1">Important :</p>
+            <AlertCircle size={20} className="text-blue-600 mt-0.5" />
+            <div className="text-sm text-blue-800">
+              <p className="font-medium mb-1">Information OCR :</p>
               <ul className="list-disc list-inside space-y-1">
-                <li>Une clé API Gemini valide est requise pour l'OCR réel</li>
-                <li>Sans clé API, l'application ne fonctionnera pas</li>
-                <li>Les permissions caméra doivent être accordées pour le scan</li>
-                <li>Toutes les simulations ont été supprimées</li>
+                <li>Gemini AI OCR est optionnel pour une meilleure précision</li>
+                <li>L'application fonctionne sans clé API (OCR basique disponible)</li>
+                <li>Les permissions caméra sont requises pour scanner</li>
+                <li>Configurez Gemini pour une détection d'adresse améliorée</li>
               </ul>
             </div>
           </div>
