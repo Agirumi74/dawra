@@ -175,18 +175,20 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <button
           onClick={() => setActiveTab('scan')}
-          className="bg-blue-600 text-white p-6 rounded-xl hover:bg-blue-700 active:bg-blue-800 transition-colors flex flex-col items-center space-y-3 touch-manipulation"
+          className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-6 rounded-xl hover:from-blue-700 hover:to-blue-800 active:from-blue-800 active:to-blue-900 transition-all duration-200 flex flex-col items-center space-y-3 touch-manipulation shadow-lg hover:shadow-xl transform hover:-translate-y-1"
         >
           <Camera size={32} />
           <span className="font-semibold text-lg">Scanner un colis</span>
+          <span className="text-sm text-blue-100">Démarrer le scan de codes-barres</span>
         </button>
         
         <button
           onClick={() => setShowGPSManager(true)}
-          className="bg-green-600 text-white p-6 rounded-xl hover:bg-green-700 active:bg-green-800 transition-colors flex flex-col items-center space-y-3 touch-manipulation"
+          className="bg-gradient-to-r from-green-600 to-green-700 text-white p-6 rounded-xl hover:from-green-700 hover:to-green-800 active:from-green-800 active:to-green-900 transition-all duration-200 flex flex-col items-center space-y-3 touch-manipulation shadow-lg hover:shadow-xl transform hover:-translate-y-1"
         >
           <Navigation size={32} />
           <span className="font-semibold text-lg">GPS Manager</span>
+          <span className="text-sm text-green-100">Optimiser vos tournées</span>
         </button>
       </div>
 
@@ -241,10 +243,13 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
         <div className="space-y-4">
           <button 
             onClick={startScanning}
-            className="w-full bg-blue-600 text-white py-6 px-6 rounded-xl text-lg md:text-xl font-semibold hover:bg-blue-700 active:bg-blue-800 transition-colors flex items-center justify-center space-x-3 touch-manipulation"
+            className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-6 px-6 rounded-xl text-lg md:text-xl font-semibold hover:from-blue-700 hover:to-blue-800 active:from-blue-800 active:to-blue-900 transition-all duration-200 flex items-center justify-center space-x-3 touch-manipulation shadow-lg hover:shadow-xl transform hover:-translate-y-1"
           >
             <Camera size={32} />
-            <span>Démarrer le scan</span>
+            <div className="text-left">
+              <div>Démarrer le scan</div>
+              <div className="text-sm text-blue-100 font-normal">Scanner les codes-barres</div>
+            </div>
           </button>
           
           <div className="text-center">
@@ -253,7 +258,7 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = ({ user }) => {
 
           <button 
             onClick={startManualEntry}
-            className="w-full bg-gray-600 text-white py-4 px-6 rounded-xl text-lg font-semibold hover:bg-gray-700 active:bg-gray-800 transition-colors touch-manipulation"
+            className="w-full bg-gradient-to-r from-gray-600 to-gray-700 text-white py-4 px-6 rounded-xl text-lg font-semibold hover:from-gray-700 hover:to-gray-800 active:from-gray-800 active:to-gray-900 transition-all duration-200 touch-manipulation shadow-lg hover:shadow-xl"
           >
             Saisie manuelle
           </button>

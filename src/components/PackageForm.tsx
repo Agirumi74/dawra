@@ -409,6 +409,16 @@ export const PackageForm: React.FC<PackageFormProps> = ({
             <label className="text-lg font-semibold text-gray-900 mb-3 flex items-center space-x-2">
               <Edit3 size={20} className="text-gray-600" />
               <span>Notes (optionnel)</span>
+              {formData.notes && (
+                <button
+                  type="button"
+                  onClick={() => setFormData(prev => ({ ...prev, notes: '' }))}
+                  className="ml-auto text-gray-400 hover:text-red-600 transition-colors"
+                  title="Effacer les notes"
+                >
+                  <Trash2 size={16} />
+                </button>
+              )}
             </label>
             <textarea
               value={formData.notes}
@@ -466,18 +476,18 @@ export const PackageForm: React.FC<PackageFormProps> = ({
         </form>
 
         {/* Boutons d'action */}
-        <div className="fixed bottom-0 left-0 right-0 bg-white border-t p-4">
+        <div className="fixed bottom-0 left-0 right-0 bg-white border-t p-4 shadow-lg">
           <div className="flex space-x-3">
             <button
               type="button"
               onClick={onCancel}
-              className="flex-1 py-3 px-4 bg-gray-600 text-white rounded-lg font-semibold hover:bg-gray-700 transition-colors"
+              className="flex-1 py-3 px-4 bg-gradient-to-r from-gray-600 to-gray-700 text-white rounded-lg font-semibold hover:from-gray-700 hover:to-gray-800 transition-all duration-200 shadow-lg"
             >
               Annuler
             </button>
             <button
               onClick={handleSubmit}
-              className="flex-1 py-3 px-4 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center justify-center space-x-2"
+              className="flex-1 py-3 px-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg font-semibold hover:from-blue-700 hover:to-blue-800 transition-all duration-200 flex items-center justify-center space-x-2 shadow-lg"
             >
               <Save size={20} />
               <span>Enregistrer et continuer</span>

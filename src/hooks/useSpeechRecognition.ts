@@ -27,7 +27,8 @@ declare global {
 
 export const useSpeechRecognition = (
   language = 'fr-FR',
-  continuous = false
+  continuous = false,
+  autoStopTimeout = 10000 // Auto-stop after 10 seconds by default
 ): UseSpeechRecognitionReturn => {
   const [isListening, setIsListening] = useState(false);
   const [transcript, setTranscript] = useState('');
@@ -36,6 +37,16 @@ export const useSpeechRecognition = (
   const [isSupported, setIsSupported] = useState(false);
   
   const recognitionRef = useRef<any>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const finalResultReceived = useRef(false);
+
+  // Auto-stop function
+  const autoStop = useCallback(() => {
+    if (recognitionRef.current && isListening) {
+      recognitionRef.current.stop();
+      setError('Écoute arrêtée automatiquement après délai dépassé');
+    }
+  }, [isListening]);
 
   // Check if speech recognition is supported
   useEffect(() => {
@@ -54,6 +65,12 @@ export const useSpeechRecognition = (
       recognition.onstart = () => {
         setIsListening(true);
         setError(null);
+        finalResultReceived.current = false;
+        
+        // Set auto-stop timeout
+        if (autoStopTimeout > 0) {
+          timeoutRef.current = setTimeout(autoStop, autoStopTimeout);
+        }
       };
       
       recognition.onresult = (event: any) => {
@@ -69,6 +86,7 @@ export const useSpeechRecognition = (
           if (result.isFinal) {
             finalTranscript += transcriptPart;
             maxConfidence = Math.max(maxConfidence, confidencePart);
+            finalResultReceived.current = true;
           } else {
             interimTranscript += transcriptPart;
           }
@@ -77,6 +95,15 @@ export const useSpeechRecognition = (
         if (finalTranscript) {
           setTranscript(finalTranscript.trim());
           setConfidence(maxConfidence);
+          
+          // Auto-stop after receiving final result if confidence is good
+          if (maxConfidence > 0.7 && !continuous) {
+            setTimeout(() => {
+              if (recognitionRef.current && isListening) {
+                recognitionRef.current.stop();
+              }
+            }, 1000); // Small delay to allow for more speech
+          }
         } else if (interimTranscript) {
           setTranscript(interimTranscript.trim());
           setConfidence(0.5); // Interim confidence estimate
@@ -86,10 +113,22 @@ export const useSpeechRecognition = (
       recognition.onerror = (event: any) => {
         setError(`Erreur de reconnaissance vocale: ${event.error}`);
         setIsListening(false);
+        
+        // Clear timeout on error
+        if (timeoutRef.current) {
+          clearTimeout(timeoutRef.current);
+          timeoutRef.current = null;
+        }
       };
       
       recognition.onend = () => {
         setIsListening(false);
+        
+        // Clear timeout when recognition ends
+        if (timeoutRef.current) {
+          clearTimeout(timeoutRef.current);
+          timeoutRef.current = null;
+        }
       };
     }
     
@@ -98,8 +137,12 @@ export const useSpeechRecognition = (
       if (recognitionRef.current) {
         recognitionRef.current.stop();
       }
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
     };
-  }, [language, continuous]);
+  }, [language, continuous, autoStopTimeout, autoStop]);
 
   const startListening = useCallback(() => {
     if (!isSupported) {
@@ -117,6 +160,12 @@ export const useSpeechRecognition = (
   const stopListening = useCallback(() => {
     if (recognitionRef.current && isListening) {
       recognitionRef.current.stop();
+    }
+    
+    // Clear timeout when manually stopping
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
     }
   }, [isListening]);
 

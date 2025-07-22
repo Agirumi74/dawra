@@ -77,8 +77,19 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
         }
       }
 
-      // Request camera permission
-      const constraints = settingsService.getCameraConstraints();
+      // Request camera permission with iOS-specific constraints
+      const constraints = {
+        ...settingsService.getCameraConstraints(),
+        video: {
+          ...settingsService.getCameraConstraints().video,
+          // iOS-specific settings to avoid black screen
+          facingMode: 'environment', // Use back camera
+          width: { ideal: 1280, max: 1920 },
+          height: { ideal: 720, max: 1080 },
+          frameRate: { ideal: 15, max: 30 }
+        }
+      };
+      
       const stream = await navigator.mediaDevices.getUserMedia(constraints);
       
       // Test successful, stop the test stream
@@ -89,13 +100,15 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
       
       if (error instanceof Error) {
         if (error.name === 'NotAllowedError') {
-          setError('Permission d\'accès à la caméra refusée. Veuillez autoriser l\'accès dans les paramètres du navigateur.');
+          setError('Permission d\'accès à la caméra refusée. Sur iOS: Allez dans Réglages > Safari > Caméra et autorisez l\'accès.');
         } else if (error.name === 'NotFoundError') {
           setError('Aucune caméra détectée sur cet appareil.');
         } else if (error.name === 'NotReadableError') {
-          setError('La caméra est déjà utilisée par une autre application.');
+          setError('La caméra est déjà utilisée par une autre application. Fermez les autres onglets utilisant la caméra.');
+        } else if (error.name === 'OverconstrainedError') {
+          setError('Configuration caméra non supportée. Essayez avec des paramètres différents.');
         } else {
-          setError(error.message);
+          setError(`Erreur caméra: ${error.message}. Sur iOS, assurez-vous d'utiliser Safari et d'autoriser la caméra.`);
         }
       } else {
         setError('Erreur inconnue lors de l\'accès à la caméra');
@@ -167,23 +180,55 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
         return;
       }
 
-      // Start the actual camera stream
-      const constraints = settingsService.getCameraConstraints();
+      // Start the actual camera stream with iOS-optimized constraints
+      const constraints = {
+        ...settingsService.getCameraConstraints(),
+        video: {
+          ...settingsService.getCameraConstraints().video,
+          // iOS-specific optimizations
+          facingMode: 'environment',
+          width: { ideal: 1280, max: 1920 },
+          height: { ideal: 720, max: 1080 },
+          frameRate: { ideal: 15, max: 30 },
+          // Additional iOS fixes
+          aspectRatio: 16/9,
+          resizeMode: 'crop-and-scale'
+        }
+      };
+      
       const stream = await navigator.mediaDevices.getUserMedia(constraints);
 
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
         streamRef.current = stream;
+        
+        // iOS-specific video element settings
+        videoRef.current.setAttribute('playsinline', 'true');
+        videoRef.current.setAttribute('webkit-playsinline', 'true');
+        videoRef.current.muted = true;
+        videoRef.current.autoplay = true;
+        
         setHasCamera(true);
         
         // Start barcode detection after video loads
         videoRef.current.onloadedmetadata = () => {
           setIsInitializing(false);
-          startBarcodeDetection();
+          // Small delay to ensure video is actually playing on iOS
+          setTimeout(() => {
+            startBarcodeDetection();
+          }, 500);
+        };
+        
+        // Additional event for iOS compatibility
+        videoRef.current.onloadeddata = () => {
+          if (videoRef.current && videoRef.current.videoWidth > 0) {
+            setIsInitializing(false);
+          }
         };
       }
-    } catch {
-      setError('Impossible de démarrer la caméra. Vérifiez les permissions et réessayez.');
+    } catch (error) {
+      console.error('Erreur de démarrage caméra:', error);
+      setError('Impossible de démarrer la caméra. Sur iOS, utilisez Safari et vérifiez les permissions dans Réglages > Safari > Caméra.');
       setIsInitializing(false);
       setHasCamera(false);
     }

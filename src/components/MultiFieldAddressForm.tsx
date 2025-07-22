@@ -14,7 +14,8 @@ import {
   WifiOff,
   ArrowRight,
   Mic,
-  MicOff
+  MicOff,
+  Trash2
 } from 'lucide-react';
 import { Address, BANSuggestion } from '../types';
 import { CSVAddressService, CSVAddress } from '../services/csvAddressService';
@@ -78,7 +79,7 @@ export const MultiFieldAddressForm: React.FC<MultiFieldAddressFormProps> = ({
     startListening,
     stopListening,
     resetTranscript,
-  } = useSpeechRecognition('fr-FR', false);
+  } = useSpeechRecognition('fr-FR', false, 8000); // 8-second timeout
 
   // Handle speech recognition results
   useEffect(() => {
@@ -114,9 +115,50 @@ export const MultiFieldAddressForm: React.FC<MultiFieldAddressFormProps> = ({
   const handleVoiceInput = () => {
     if (isListening) {
       stopListening();
+      resetTranscript();
     } else {
       setError('');
+      resetTranscript();
       startListening();
+    }
+  };
+
+  // Clear all address fields
+  const clearAllFields = () => {
+    setStreetNumber('');
+    setStreetName('');
+    setPostalCode(defaultPostcode);
+    setCity('');
+    setSuggestions([]);
+    setShowSuggestions(false);
+    setCitySuggestions([]);
+    setShowCitySuggestions(false);
+    setError('');
+    if (isListening) {
+      stopListening();
+      resetTranscript();
+    }
+  };
+
+  // Clear specific field
+  const clearField = (field: 'streetNumber' | 'streetName' | 'postalCode' | 'city') => {
+    switch (field) {
+      case 'streetNumber':
+        setStreetNumber('');
+        break;
+      case 'streetName':
+        setStreetName('');
+        setSuggestions([]);
+        setShowSuggestions(false);
+        break;
+      case 'postalCode':
+        setPostalCode('');
+        break;
+      case 'city':
+        setCity('');
+        setCitySuggestions([]);
+        setShowCitySuggestions(false);
+        break;
     }
   };
 
@@ -373,18 +415,44 @@ export const MultiFieldAddressForm: React.FC<MultiFieldAddressFormProps> = ({
 
   return (
     <div className={`space-y-4 ${className}`}>
+      {/* Clear all button */}
+      <div className="flex justify-between items-center">
+        <h3 className="text-sm font-medium text-gray-700">Adresse complète</h3>
+        <button
+          type="button"
+          onClick={clearAllFields}
+          className="flex items-center space-x-1 text-sm text-red-600 hover:text-red-700 bg-red-50 hover:bg-red-100 px-2 py-1 rounded transition-colors"
+          title="Effacer tous les champs"
+        >
+          <Trash2 size={14} />
+          <span>Effacer tout</span>
+        </button>
+      </div>
+
       {/* Champs d'adresse séparés */}
       <div className="grid grid-cols-4 gap-3">
         {/* Numéro de rue */}
-        <div>
+        <div className="relative">
           <label className="block text-sm font-medium mb-1 text-gray-700">N°</label>
-          <input
-            type="text"
-            value={streetNumber}
-            onChange={(e) => setStreetNumber(e.target.value)}
-            placeholder="123"
-            className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none"
-          />
+          <div className="relative">
+            <input
+              type="text"
+              value={streetNumber}
+              onChange={(e) => setStreetNumber(e.target.value)}
+              placeholder="123"
+              className="w-full p-3 pr-8 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none"
+            />
+            {streetNumber && (
+              <button
+                type="button"
+                onClick={() => clearField('streetNumber')}
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-red-600 transition-colors"
+                title="Effacer le numéro"
+              >
+                <X size={16} />
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Nom de rue - avec recherche */}
@@ -399,13 +467,23 @@ export const MultiFieldAddressForm: React.FC<MultiFieldAddressFormProps> = ({
               onChange={(e) => setStreetName(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder={isListening ? "Dictez l'adresse..." : placeholder}
-              className={`w-full pl-10 pr-20 p-3 border-2 rounded-lg focus:border-blue-500 focus:outline-none ${
+              className={`w-full pl-10 pr-24 p-3 border-2 rounded-lg focus:border-blue-500 focus:outline-none ${
                 isListening ? 'border-red-400 bg-red-50' : 'border-gray-300'
               }`}
               required
             />
             
             <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center space-x-1">
+              {streetName && (
+                <button
+                  type="button"
+                  onClick={() => clearField('streetName')}
+                  className="text-gray-400 hover:text-red-600 transition-colors"
+                  title="Effacer la rue"
+                >
+                  <X size={14} />
+                </button>
+              )}
               {speechSupported && (
                 <button
                   type="button"
@@ -415,7 +493,7 @@ export const MultiFieldAddressForm: React.FC<MultiFieldAddressFormProps> = ({
                       ? 'text-red-600 hover:text-red-700 animate-pulse' 
                       : 'text-gray-500 hover:text-blue-600'
                   }`}
-                  title={isListening ? 'Arrêter la dictée' : 'Commencer la dictée vocale'}
+                  title={isListening ? 'Arrêter la dictée (auto-stop dans 8s)' : 'Commencer la dictée vocale'}
                 >
                   {isListening ? <MicOff size={14} /> : <Mic size={14} />}
                 </button>
@@ -486,33 +564,57 @@ export const MultiFieldAddressForm: React.FC<MultiFieldAddressFormProps> = ({
 
       {/* Code postal et ville */}
       <div className="grid grid-cols-2 gap-3">
-        <div>
+        <div className="relative">
           <label className="block text-sm font-medium mb-1 text-gray-700">Code postal *</label>
-          <input
-            type="text"
-            value={postalCode}
-            onChange={(e) => setPostalCode(e.target.value)}
-            placeholder="74000"
-            className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none"
-            required
-          />
+          <div className="relative">
+            <input
+              type="text"
+              value={postalCode}
+              onChange={(e) => setPostalCode(e.target.value)}
+              placeholder="74000"
+              className="w-full p-3 pr-8 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none"
+              required
+            />
+            {postalCode && postalCode !== defaultPostcode && (
+              <button
+                type="button"
+                onClick={() => clearField('postalCode')}
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-red-600 transition-colors"
+                title="Effacer le code postal"
+              >
+                <X size={16} />
+              </button>
+            )}
+          </div>
         </div>
         
         <div className="relative">
           <label className="block text-sm font-medium mb-1 text-gray-700">Ville *</label>
-          <input
-            type="text"
-            value={city}
-            onChange={(e) => {
-              setCity(e.target.value);
-              if (e.target.value.length >= 2 && citySuggestions.length > 0) {
-                setShowCitySuggestions(true);
-              }
-            }}
-            placeholder="Nom de la ville"
-            className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none"
-            required
-          />
+          <div className="relative">
+            <input
+              type="text"
+              value={city}
+              onChange={(e) => {
+                setCity(e.target.value);
+                if (e.target.value.length >= 2 && citySuggestions.length > 0) {
+                  setShowCitySuggestions(true);
+                }
+              }}
+              placeholder="Nom de la ville"
+              className="w-full p-3 pr-8 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none"
+              required
+            />
+            {city && (
+              <button
+                type="button"
+                onClick={() => clearField('city')}
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-red-600 transition-colors"
+                title="Effacer la ville"
+              >
+                <X size={16} />
+              </button>
+            )}
+          </div>
           
           {/* Suggestions de villes */}
           {showCitySuggestions && citySuggestions.length > 0 && (
@@ -569,14 +671,24 @@ export const MultiFieldAddressForm: React.FC<MultiFieldAddressFormProps> = ({
         <div className="bg-red-50 border border-red-200 rounded-lg p-3">
           <div className="flex items-center space-x-2">
             <MicOff size={16} className="text-red-600 animate-pulse" />
-            <span className="text-red-800 text-sm">
-              En écoute... Dictez l'adresse clairement
-              {transcript && (
-                <span className="block mt-1 text-red-600 font-medium">
-                  "{transcript}" (confiance: {Math.round(confidence * 100)}%)
-                </span>
-              )}
-            </span>
+            <div className="flex-1">
+              <span className="text-red-800 text-sm">
+                🎙️ En écoute... Dictez l'adresse clairement (arrêt auto dans 8s)
+                {transcript && (
+                  <span className="block mt-1 text-red-600 font-medium">
+                    "{transcript}" (confiance: {Math.round(confidence * 100)}%)
+                  </span>
+                )}
+              </span>
+            </div>
+            <button
+              type="button"
+              onClick={handleVoiceInput}
+              className="text-red-600 hover:text-red-700 p-1 rounded hover:bg-red-100 transition-colors"
+              title="Arrêter la dictée maintenant"
+            >
+              <X size={16} />
+            </button>
           </div>
         </div>
       )}
