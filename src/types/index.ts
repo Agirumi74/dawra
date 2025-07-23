@@ -47,6 +47,8 @@ export interface TruckLocation {
   id: string;
   name: string;
   color: string;
+  isDefault?: boolean;
+  isCustom?: boolean;
 }
 
 export type AppView = 'home' | 'scan' | 'route' | 'map' | 'gps' | 'settings';

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Package, Address } from '../types';
-import { DEFAULT_TRUCK_LOCATIONS } from '../constants/locations';
+import { usePersonalSettings } from '../hooks/usePersonalSettings';
 import { unifiedOCR } from '../services/unifiedOCR';
 import { CameraCapture } from './CameraCapture';
 import { MultiFieldAddressForm } from './MultiFieldAddressForm';
@@ -32,8 +32,10 @@ export const PackageForm: React.FC<PackageFormProps> = ({
   onCancel,
   prefilledAddress
 }) => {
+  const { personalSettings, addTruckLocation } = usePersonalSettings();
+  
   const [formData, setFormData] = useState({
-    location: '',
+    location: personalSettings.defaultLocation || '',
     notes: '',
     type: 'particulier' as 'particulier' | 'entreprise',
     priority: 'standard' as 'standard' | 'express_midi' | 'premier'
@@ -120,7 +122,7 @@ export const PackageForm: React.FC<PackageFormProps> = ({
   };
 
   const handleLocationSelect = (locationId: string) => {
-    const location = DEFAULT_TRUCK_LOCATIONS.find(loc => loc.id === locationId);
+    const location = personalSettings.truckLocations.find(loc => loc.id === locationId);
     if (location) {
       setFormData(prev => ({
         ...prev,
@@ -131,6 +133,10 @@ export const PackageForm: React.FC<PackageFormProps> = ({
 
   const handleCustomLocationAdd = () => {
     if (customLocation.trim()) {
+      // Add to personal settings
+      const locationId = addTruckLocation(customLocation.trim(), '#3b82f6'); // Default blue color
+      
+      // Set as current location
       setFormData(prev => ({
         ...prev,
         location: customLocation.trim()
@@ -290,7 +296,7 @@ export const PackageForm: React.FC<PackageFormProps> = ({
             </label>
 
             <div className="grid grid-cols-2 gap-2 mb-3">
-              {DEFAULT_TRUCK_LOCATIONS.map((location) => (
+              {personalSettings.truckLocations.map((location) => (
                 <button
                   key={location.id}
                   type="button"

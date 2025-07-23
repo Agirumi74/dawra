@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Save, Key, Camera, ArrowLeft, AlertCircle, CheckCircle } from 'lucide-react';
 import { VoiceSettings } from './VoiceSettings';
+import { PersonalSettings } from './PersonalSettings';
 
 interface SettingsPageProps {
   onBack: () => void;
@@ -176,6 +177,11 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ onBack }) => {
         {/* Voice Configuration */}
         <div className="bg-white rounded-lg shadow-md p-6 mb-6">
           <VoiceSettings />
+        </div>
+
+        {/* Personal Configuration */}
+        <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+          <PersonalSettings />
         </div>
 
         {/* Camera Configuration */}
