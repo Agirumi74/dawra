@@ -218,114 +218,19 @@ export const MultiFieldAddressForm: React.FC<MultiFieldAddressFormProps> = ({
     };
   };
 
-  // Fonction pour normaliser et corriger les erreurs de reconnaissance vocale françaises
+  // Fonction pour normaliser l'entrée vocale - traitement minimal et générique
   const normalizeVoiceInput = (input: string): string => {
-    let normalized = input.toLowerCase().trim();
-    
-    // Corrections spécifiques pour les erreurs courantes de reconnaissance vocale
-    const voiceCorrections: Record<string, string> = {
-      // Erreurs communes rapportées
-      'claude': 'clos',
-      'claude du': 'clos du',
-      'clause': 'clos',
-      'close': 'clos',
-      'klau': 'clos',
-      'closdu': 'clos du',
-      
-      // Corrections pour "nant" et variantes
-      'nan': 'nant',
-      'nand': 'nant',
-      'en an': 'nant',
-      'en ant': 'nant',
-      
-      // Autres corrections communes
-      'avenue': 'av',
-      'boulevard': 'bd',
-      'rue': 'r',
-      'place': 'pl',
-      'route': 'rte',
-      'chemin': 'ch',
-      'impasse': 'imp',
-      
-      // Corrections phonétiques françaises
-      'saint': 'st',
-      'sainte': 'ste',
-      'grande': 'gde',
-      'petit': 'pt',
-      'petite': 'pte',
-    };
-    
-    // Appliquer les corrections mot par mot
-    const words = normalized.split(/\s+/);
-    const correctedWords = words.map(word => {
-      // Recherche directe
-      if (voiceCorrections[word]) {
-        return voiceCorrections[word];
-      }
-      
-      // Recherche par similarité phonétique pour les mots plus longs
-      for (const [incorrect, correct] of Object.entries(voiceCorrections)) {
-        if (word.includes(incorrect) || incorrect.includes(word)) {
-          const similarity = calculateSimilarity(word, incorrect);
-          if (similarity > 0.7) {
-            return correct;
-          }
-        }
-      }
-      
-      return word;
-    });
-    
-    let result = correctedWords.join(' ');
-    
-    // Corrections par patterns complets
-    const patternCorrections: Array<[RegExp, string]> = [
-      [/clos\s+du\s+n[ao]n?t?/g, 'clos du nant'],
-      [/claude?\s+du\s+n[ao]n?t?/g, 'clos du nant'],
-      [/close?\s+du\s+n[ao]n?t?/g, 'clos du nant'],
-      [/avenue\s+de\s+la/g, 'av de la'],
-      [/boulevard\s+de\s+la/g, 'bd de la'],
-      [/rue\s+de\s+la/g, 'r de la'],
-    ];
-    
-    for (const [pattern, replacement] of patternCorrections) {
-      result = result.replace(pattern, replacement);
-    }
-    
-    return result;
+    return input
+      .toLowerCase()
+      .trim()
+      // Normalise les espaces multiples
+      .replace(/\s+/g, ' ')
+      // Supprime les accents pour améliorer la correspondance
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
   };
 
-  // Calcul de similarité simple entre deux mots
-  const calculateSimilarity = (word1: string, word2: string): number => {
-    const longer = word1.length > word2.length ? word1 : word2;
-    const shorter = word1.length > word2.length ? word2 : word1;
-    
-    if (longer.length === 0) return 1.0;
-    
-    const distance = levenshteinDistance(longer, shorter);
-    return (longer.length - distance) / longer.length;
-  };
 
-  // Calcul de distance de Levenshtein
-  const levenshteinDistance = (str1: string, str2: string): number => {
-    const matrix = Array(str2.length + 1).fill(null).map(() => Array(str1.length + 1).fill(null));
-    
-    for (let i = 0; i <= str1.length; i++) matrix[0][i] = i;
-    for (let j = 0; j <= str2.length; j++) matrix[j][0] = j;
-    
-    for (let j = 1; j <= str2.length; j++) {
-      for (let i = 1; i <= str1.length; i++) {
-        const cost = str1[i - 1] === str2[j - 1] ? 0 : 1;
-        matrix[j][i] = Math.min(
-          matrix[j][i - 1] + 1,
-          matrix[j - 1][i] + 1,
-          matrix[j - 1][i - 1] + cost
-        );
-      }
-    }
-    
-    return matrix[str2.length][str1.length];
-  };
 
   const performSearch = useCallback(async (searchQuery: string) => {
     if (searchQuery.length < 2) {
