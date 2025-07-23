@@ -23,6 +23,7 @@ import { BANApiService } from '../services/banApiService';
 import { AddressDatabaseService } from '../services/addressDatabase';
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition';
 import { useVoiceSettings } from '../hooks/useVoiceSettings';
+import { usePersonalSettings } from '../hooks/usePersonalSettings';
 
 interface AddressSearchSuggestion {
   type: 'local' | 'ban';
@@ -94,13 +95,16 @@ export const MultiFieldAddressForm: React.FC<MultiFieldAddressFormProps> = ({
   useEffect(() => {
     if (!isSpeechRecognitionAvailable) return;
     
-    if (transcript && confidence > 0.3) {
+    if (transcript && confidence > 0.2) { // Lower threshold for voice
       // Parse the speech transcript for address components
       const parsed = parseSearchQuery(transcript);
+      console.log('Voice input parsed:', { original: transcript, parsed, confidence });
       
       // Set the street name from speech
       if (parsed.street) {
         setStreetName(parsed.street);
+        // Automatically trigger address search for better suggestions
+        performSearch(parsed.street);
       }
       
       // Set the street number if detected
@@ -108,10 +112,12 @@ export const MultiFieldAddressForm: React.FC<MultiFieldAddressFormProps> = ({
         setStreetNumber(parsed.number);
       }
       
-      // Auto-stop listening after receiving a good result
-      if (confidence > 0.7) {
-        stopListening();
-        resetTranscript();
+      // Auto-stop listening after receiving a result with reasonable confidence
+      if (confidence > 0.6) {
+        setTimeout(() => {
+          stopListening();
+          resetTranscript();
+        }, 1000); // Small delay to allow for additional words
       }
     }
   }, [transcript, confidence, stopListening, resetTranscript, isSpeechRecognitionAvailable]);
@@ -182,7 +188,10 @@ export const MultiFieldAddressForm: React.FC<MultiFieldAddressFormProps> = ({
     BANApiService.isAvailable().then(setBanAvailable);
   }, []);
   const parseSearchQuery = (query: string) => {
-    const trimmed = query.trim();
+    let trimmed = query.trim().toLowerCase();
+    
+    // Normaliser et corriger les erreurs communes de reconnaissance vocale française
+    trimmed = normalizeVoiceInput(trimmed);
     
     // Chercher un pattern numéro + rue au début
     const numberFirstMatch = trimmed.match(/^(\d+)\s+(.+)$/);
@@ -208,6 +217,20 @@ export const MultiFieldAddressForm: React.FC<MultiFieldAddressFormProps> = ({
       street: trimmed
     };
   };
+
+  // Fonction pour normaliser l'entrée vocale - traitement minimal et générique
+  const normalizeVoiceInput = (input: string): string => {
+    return input
+      .toLowerCase()
+      .trim()
+      // Normalise les espaces multiples
+      .replace(/\s+/g, ' ')
+      // Supprime les accents pour améliorer la correspondance
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
+  };
+
+
 
   const performSearch = useCallback(async (searchQuery: string) => {
     if (searchQuery.length < 2) {
