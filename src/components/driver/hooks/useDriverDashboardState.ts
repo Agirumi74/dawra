@@ -2,7 +2,7 @@ import { useState } from 'react';
 import type { Vehicle, Package } from '../../context/AppContext';
 
 export const useDriverDashboardState = () => {
-  const [activeTab, setActiveTab] = useState<'today' | 'scan' | 'gps' | 'history'>('today');
+  const [activeTab, setActiveTab] = useState<'today' | 'scan' | 'gps' | 'info'>('today');
   const [currentVehicle, setCurrentVehicle] = useState<Vehicle | null>(null);
   const [todayRoute, setTodayRoute] = useState<unknown>(null);
   const [showBarcodeScanner, setShowBarcodeScanner] = useState(false);
