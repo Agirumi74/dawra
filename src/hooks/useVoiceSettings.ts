@@ -16,6 +16,7 @@ const VOICE_SETTINGS_KEY = 'dawra_voice_settings';
 
 export const useVoiceSettings = () => {
   const [voiceSettings, setVoiceSettings] = useState<VoiceSettings>(DEFAULT_VOICE_SETTINGS);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   // Load settings from localStorage on mount
   useEffect(() => {
@@ -27,17 +28,21 @@ export const useVoiceSettings = () => {
       }
     } catch (error) {
       console.warn('Failed to load voice settings from localStorage:', error);
+    } finally {
+      setIsInitialized(true);
     }
   }, []);
 
-  // Save settings to localStorage when they change
+  // Save settings to localStorage when they change (but not on initial load)
   useEffect(() => {
+    if (!isInitialized) return;
+    
     try {
       localStorage.setItem(VOICE_SETTINGS_KEY, JSON.stringify(voiceSettings));
     } catch (error) {
       console.warn('Failed to save voice settings to localStorage:', error);
     }
-  }, [voiceSettings]);
+  }, [voiceSettings, isInitialized]);
 
   const updateVoiceSettings = (newSettings: Partial<VoiceSettings>) => {
     setVoiceSettings(prev => ({
