@@ -18,7 +18,6 @@ export const QuickActionsSection: React.FC<QuickActionsSectionProps> = ({
       >
         <Camera size={32} />
         <span className="font-semibold text-lg">Scanner un colis</span>
-        <span className="text-sm text-blue-100">Démarrer le scan de codes-barres</span>
       </button>
       
       <button
@@ -27,7 +26,6 @@ export const QuickActionsSection: React.FC<QuickActionsSectionProps> = ({
       >
         <Navigation size={32} />
         <span className="font-semibold text-lg">GPS Manager</span>
-        <span className="text-sm text-green-100">Optimiser vos tournées</span>
       </button>
     </div>
   );

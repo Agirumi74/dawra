@@ -6,7 +6,8 @@ import {
   Camera, 
   Settings, 
   Navigation, 
-  Plus 
+  Plus,
+  Info
 } from 'lucide-react';
 import { BarcodeScanner } from '../BarcodeScanner';
 import { PackageForm } from '../PackageForm';
@@ -20,6 +21,7 @@ import { useDriverActions } from './hooks/useDriverActions';
 import { TodayView } from './views/TodayView';
 import { ScanView } from './views/ScanView';
 import { GPSView } from './views/GPSView';
+import { InfoView } from './views/InfoView';
 
 interface DriverDashboardProps {
   user?: unknown; // Better than 'any'
@@ -86,8 +88,12 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = () => {
             onLaunchGPSManager={() => state.setShowGPSManager(true)}
           />
         );
-      case 'history':
-        return <div className="text-center py-8 text-gray-500">Historique en développement</div>;
+      case 'info':
+        return (
+          <InfoView
+            currentVehicle={state.currentVehicle}
+          />
+        );
       default:
         return (
           <TodayView
@@ -166,7 +172,7 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = () => {
       )}
 
       {state.showGPSManager && (
-        <div className="fixed inset-0 z-50">
+        <div className="fixed inset-0 z-50 overflow-y-auto">
           <EnhancedGPSManager onBack={() => state.setShowGPSManager(false)} />
         </div>
       )}
@@ -212,7 +218,7 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = () => {
               { id: 'today', label: 'Aujourd\'hui', icon: Clock },
               { id: 'scan', label: 'Scanner', icon: Camera },
               { id: 'gps', label: 'GPS', icon: Navigation },
-              { id: 'history', label: 'Historique', icon: Package },
+              { id: 'info', label: 'Infos', icon: Info },
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -241,7 +247,7 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = () => {
             { id: 'today', label: 'Aujourd\'hui', icon: Clock },
             { id: 'scan', label: 'Scanner', icon: Camera },
             { id: 'gps', label: 'GPS', icon: Navigation },
-            { id: 'history', label: 'Historique', icon: Package },
+            { id: 'info', label: 'Infos', icon: Info },
           ].map((tab) => (
             <button
               key={tab.id}

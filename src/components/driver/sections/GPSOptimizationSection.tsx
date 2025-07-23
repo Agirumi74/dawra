@@ -12,8 +12,7 @@ export const GPSOptimizationSection: React.FC<GPSOptimizationSectionProps> = ({ 
         <div className="flex items-center space-x-3">
           <Target size={24} className="text-purple-600" />
           <div>
-            <h3 className="font-semibold text-purple-900">GPS & Optimisation</h3>
-            <p className="text-sm text-purple-700">Gestion complète des tournées</p>
+            <h3 className="font-semibold text-purple-900">Optimisation GPS</h3>
           </div>
         </div>
       </div>
