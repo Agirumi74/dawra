@@ -1,9 +1,39 @@
 {
-  "name": "Tournée Facile",
-  "short_name": "Tournée",
-  "description": "Assistant de livraison pour chauffeurs",
-  "theme_color": "#2563eb",
-  "background_color": "#ffffff",
+  "name": "Dawra - Assistant Livraison",
+  "short_name": "Dawra",
+  "description": "Assistant intelligent pour chauffeurs-livreurs avec optimisation de tournées et scanner codes-barres",
+  "start_url": "/",
   "display": "standalone",
-  "start_url": "/"
+  "background_color": "#ffffff",
+  "theme_color": "#10b981",
+  "orientation": "portrait-primary",
+  "categories": ["productivity", "navigation", "business"],
+  "icons": [
+    {
+      "src": "/pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-dashboard.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "label": "Tableau de bord principal"
+    },
+    {
+      "src": "/screenshot-scanner.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "label": "Scanner de codes-barres"
+    }
+  ]
 }
