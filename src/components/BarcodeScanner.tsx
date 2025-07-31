@@ -319,12 +319,28 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
                 <p className="text-sm opacity-75 mb-4">
                   Impossible d'accéder à la caméra. Vérifiez les permissions et la disponibilité de la caméra.
                 </p>
-                <button
-                  onClick={startCamera}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                >
-                  Réessayer
-                </button>
+                <div className="space-y-3">
+                  <button
+                    onClick={startCamera}
+                    className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  >
+                    Réessayer
+                  </button>
+                  <button
+                    onClick={() => {
+                      // Generate a simulated barcode for testing
+                      const simulatedBarcode = `PKG${Date.now()}`;
+                      console.log('Mode simulation: code-barres généré:', simulatedBarcode);
+                      onScan(simulatedBarcode);
+                    }}
+                    className="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                  >
+                    Mode Simulation
+                  </button>
+                </div>
+                <p className="text-xs mt-3 opacity-60">
+                  Le mode simulation génère un code-barres fictif pour tester la fonctionnalité
+                </p>
               </div>
             )}
           </div>

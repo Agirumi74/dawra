@@ -217,12 +217,42 @@ export const CameraCapture: React.FC<CameraCaptureProps> = ({
                 <AlertCircle size={64} className="mx-auto mb-4 text-red-400" />
                 <p className="text-lg font-medium mb-2">Caméra indisponible</p>
                 <p className="text-sm opacity-75 mb-4">{error}</p>
-                <button
-                  onClick={startCamera}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                >
-                  Réessayer
-                </button>
+                <div className="space-y-3">
+                  <button
+                    onClick={startCamera}
+                    className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  >
+                    Réessayer
+                  </button>
+                  <button
+                    onClick={() => {
+                      // Generate a simulated address for testing
+                      const simulatedAddresses = [
+                        '123 Rue de la République, 75001 Paris',
+                        '45 Avenue des Champs-Élysées, 75008 Paris', 
+                        '78 Boulevard Saint-Germain, 75006 Paris',
+                        '12 Place Vendôme, 75001 Paris',
+                        '89 Rue de Rivoli, 75004 Paris'
+                      ];
+                      const randomAddress = simulatedAddresses[Math.floor(Math.random() * simulatedAddresses.length)];
+                      console.log('Mode simulation OCR: adresse générée:', randomAddress);
+                      
+                      // Create a simple test image data (1x1 pixel)
+                      const canvas = document.createElement('canvas');
+                      canvas.width = 1;
+                      canvas.height = 1;
+                      const simulatedImageData = canvas.toDataURL('image/jpeg', 0.9);
+                      
+                      onCapture(simulatedImageData);
+                    }}
+                    className="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                  >
+                    Mode Simulation OCR
+                  </button>
+                </div>
+                <p className="text-xs mt-3 opacity-60">
+                  Le mode simulation génère une adresse fictive pour tester l'OCR
+                </p>
               </div>
             )}
           </div>
