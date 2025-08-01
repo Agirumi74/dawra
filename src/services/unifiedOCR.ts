@@ -21,11 +21,6 @@ export class UnifiedOCRService {
   async extractAddressFromImage(imageData: string): Promise<UnifiedOCRResult> {
     let result: UnifiedOCRResult;
 
-    // Check if this is a simulation (1x1 pixel image indicates simulation mode)
-    if (this.isSimulationImage(imageData)) {
-      return this.getSimulationResult();
-    }
-
     // Step 1: Try basic OCR first (always available, no API key needed)
     try {
       const basicResult = await basicOCR.extractAddressFromImage(imageData);
@@ -78,59 +73,17 @@ export class UnifiedOCRService {
         };
       }
     } else {
-      // Gemini not available - suggest simulation mode for testing
+      // Gemini not available
       result = {
         address: '',
         confidence: 0,
         success: false,
-        error: 'Adresse non détectée automatiquement. Utilisez le mode simulation pour tester ou saisissez manuellement.',
+        error: 'Adresse non détectée automatiquement. Saisie manuelle recommandée.',
         method: 'none'
       };
     }
 
     return result;
-  }
-
-  /**
-   * Check if the image data represents a simulation (very small image)
-   */
-  private isSimulationImage(imageData: string): boolean {
-    try {
-      // Create a temporary image to check dimensions
-      const img = new Image();
-      img.src = imageData;
-      // For simulation we use 1x1 pixel images
-      return imageData.includes('data:image') && imageData.length < 200;
-    } catch {
-      return false;
-    }
-  }
-
-  /**
-   * Generate realistic simulation result for testing
-   */
-  private getSimulationResult(): UnifiedOCRResult {
-    const simulatedAddresses = [
-      '123 Rue de la République, 75001 Paris',
-      '45 Avenue des Champs-Élysées, 75008 Paris', 
-      '78 Boulevard Saint-Germain, 75006 Paris',
-      '12 Place Vendôme, 75001 Paris',
-      '89 Rue de Rivoli, 75004 Paris',
-      '34 Rue du Faubourg Saint-Honoré, 75008 Paris',
-      '56 Avenue Montaigne, 75008 Paris',
-      '91 Boulevard Haussmann, 75009 Paris'
-    ];
-    
-    const randomAddress = simulatedAddresses[Math.floor(Math.random() * simulatedAddresses.length)];
-    
-    return {
-      address: randomAddress,
-      confidence: 0.85, // High confidence for simulation
-      success: true,
-      method: 'basic', // Indicate basic method was used
-      // Add a note that this is simulated
-      error: undefined
-    };
   }
 
   /**
