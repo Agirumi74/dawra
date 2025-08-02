@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Save, Key, Camera, ArrowLeft, AlertCircle, CheckCircle, Route, Clock, Plus, Minus } from 'lucide-react';
+import { Save, Key, Camera, ArrowLeft, AlertCircle, CheckCircle, Route, Clock, Plus, Minus, Database } from 'lucide-react';
 import { VoiceSettings } from './VoiceSettings';
 import { PersonalSettings } from './PersonalSettings';
+import { DataFilterSettings } from './DataFilterSettings';
 import { useRouteSettings } from '../hooks/useRouteSettings';
+import { LoadingStats } from '../services/csvAddressService';
 
 interface SettingsPageProps {
   onBack: () => void;
@@ -14,6 +16,7 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ onBack }) => {
   const [ocrTimeout, setOcrTimeout] = useState(30);
   const [cameraFacing, setCameraFacing] = useState<'environment' | 'user'>('environment');
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
+  const [filterStats, setFilterStats] = useState<LoadingStats | null>(null);
   
   // Route optimization settings
   const { settings: routeSettings, updateSetting: updateRouteSetting } = useRouteSettings();
@@ -92,6 +95,11 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ onBack }) => {
       console.error('Erreur test API:', error);
       alert('❌ Erreur lors du test de la clé API. Vérifiez qu\'elle est correcte.');
     }
+  };
+
+  const handleFilterApplied = (stats: LoadingStats) => {
+    setFilterStats(stats);
+    console.log('📊 Statistiques de filtrage appliquées:', stats);
   };
 
   const resolutionOptions = [
@@ -279,6 +287,31 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ onBack }) => {
         {/* Personal Configuration */}
         <div className="bg-white rounded-lg shadow-md p-6 mb-6">
           <PersonalSettings />
+        </div>
+
+        {/* CSV Data Filtering Configuration */}
+        <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+          <div className="flex items-center space-x-3 mb-4">
+            <Database size={24} className="text-blue-600" />
+            <h2 className="text-xl font-semibold text-gray-900">Optimisation des Données CSV</h2>
+          </div>
+          <p className="text-gray-600 mb-4">
+            Configurez le filtrage des données pour améliorer les performances lors du chargement du fichier CSV volumineux.
+          </p>
+          <DataFilterSettings 
+            onFilterApplied={handleFilterApplied}
+            className="w-full"
+          />
+          {filterStats && (
+            <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg">
+              <h4 className="font-medium text-green-900 mb-2">Dernière optimisation appliquée</h4>
+              <div className="text-sm text-green-800 space-y-1">
+                <div>Total dans fichiers: {filterStats.totalAddressesInFile + filterStats.totalLieuxDitsInFile} entrées</div>
+                <div>Chargées en mémoire: {filterStats.loadedAddresses + filterStats.loadedLieuxDits} entrées</div>
+                <div className="font-semibold">Réduction: {filterStats.reductionPercentage.toFixed(1)}%</div>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Camera Configuration */}
