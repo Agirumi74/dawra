@@ -22,18 +22,94 @@ export interface CSVLieuDit {
   lat: number;
 }
 
+export interface DataFilter {
+  postalCodes?: string[];
+  cities?: string[];
+  maxEntries?: number;
+}
+
+export interface LoadingStats {
+  totalAddressesInFile: number;
+  totalLieuxDitsInFile: number;
+  loadedAddresses: number;
+  loadedLieuxDits: number;
+  reductionPercentage: number;
+  filterCriteria?: DataFilter;
+}
+
 export class CSVAddressService {
   private static addresses: CSVAddress[] = [];
   private static lieuxDits: CSVLieuDit[] = [];
   private static isLoaded = false;
+  private static isFilteredLoad = false;
+  private static currentFilter: DataFilter | null = null;
+  private static loadingStats: LoadingStats | null = null;
   private static readonly DELAY_MS = 300;
-  private static debounceTimer: number | null = null;
+  private static debounceTimer: NodeJS.Timeout | null = null;
   
   // Index pour optimiser la recherche par code postal
   private static postalCodeIndex: Map<string, CSVAddress[]> = new Map();
   private static lieuxDitsPostalIndex: Map<string, CSVLieuDit[]> = new Map();
 
-  // Charger les données CSV
+  // Charger les données CSV avec filtrage optimisé
+  static async loadDataWithFilters(filter: DataFilter): Promise<LoadingStats> {
+    console.log('🚀 Démarrage du chargement optimisé avec filtres:', filter);
+    const startTime = performance.now();
+
+    try {
+      // Reset des données précédentes
+      this.addresses = [];
+      this.lieuxDits = [];
+      this.postalCodeIndex.clear();
+      this.lieuxDitsPostalIndex.clear();
+
+      // Charger et parser les CSV avec filtrage
+      const addressResponse = await fetch('/data/addresses.csv');
+      const addressText = await addressResponse.text();
+      const { addresses: filteredAddresses, totalCount: totalAddresses } = 
+        this.parseAddressCSVWithFilter(addressText, filter);
+
+      const lieuxDitsResponse = await fetch('/data/lieux_dits.csv');
+      const lieuxDitsText = await lieuxDitsResponse.text();
+      const { lieuxDits: filteredLieuxDits, totalCount: totalLieuxDits } = 
+        this.parseLieuxDitsCSVWithFilter(lieuxDitsText, filter);
+
+      this.addresses = filteredAddresses;
+      this.lieuxDits = filteredLieuxDits;
+
+      // Créer les index pour optimiser les recherches
+      this.buildPostalCodeIndexes();
+
+      this.isLoaded = true;
+      this.isFilteredLoad = true;
+      this.currentFilter = filter;
+
+      // Calculer les statistiques de réduction
+      const loadingStats: LoadingStats = {
+        totalAddressesInFile: totalAddresses,
+        totalLieuxDitsInFile: totalLieuxDits,
+        loadedAddresses: filteredAddresses.length,
+        loadedLieuxDits: filteredLieuxDits.length,
+        reductionPercentage: ((totalAddresses + totalLieuxDits - filteredAddresses.length - filteredLieuxDits.length) / (totalAddresses + totalLieuxDits)) * 100,
+        filterCriteria: filter
+      };
+
+      this.loadingStats = loadingStats;
+
+      const endTime = performance.now();
+      console.log(`✅ Chargement optimisé terminé en ${(endTime - startTime).toFixed(2)}ms`);
+      console.log(`📊 Réduction de données: ${loadingStats.reductionPercentage.toFixed(1)}%`);
+      console.log(`📈 Adresses: ${loadingStats.loadedAddresses}/${loadingStats.totalAddressesInFile} (${((1 - loadingStats.loadedAddresses/loadingStats.totalAddressesInFile) * 100).toFixed(1)}% réduction)`);
+      console.log(`📈 Lieux-dits: ${loadingStats.loadedLieuxDits}/${loadingStats.totalLieuxDitsInFile} (${((1 - loadingStats.loadedLieuxDits/loadingStats.totalLieuxDitsInFile) * 100).toFixed(1)}% réduction)`);
+
+      return loadingStats;
+    } catch (error) {
+      console.error('❌ Erreur lors du chargement optimisé des données CSV:', error);
+      throw error;
+    }
+  }
+
+  // Charger les données CSV (méthode originale pour compatibilité)
   static async loadData(): Promise<void> {
     if (this.isLoaded) return;
 
@@ -52,6 +128,8 @@ export class CSVAddressService {
       this.buildPostalCodeIndexes();
 
       this.isLoaded = true;
+      this.isFilteredLoad = false;
+      this.currentFilter = null;
       console.log(`Chargé ${this.addresses.length} adresses et ${this.lieuxDits.length} lieux-dits avec indexation optimisée`);
     } catch (error) {
       console.error('Erreur lors du chargement des données CSV:', error);
@@ -142,6 +220,136 @@ export class CSVAddressService {
     }
 
     return lieuxDits;
+  }
+
+  // Parser le CSV des adresses avec filtrage optimisé
+  private static parseAddressCSVWithFilter(csvText: string, filter: DataFilter): { addresses: CSVAddress[], totalCount: number } {
+    const lines = csvText.split('\n');
+    const headers = lines[0].split(';');
+    const addresses: CSVAddress[] = [];
+    const totalCount = lines.length - 1; // Exclure l'en-tête
+
+    console.log(`🔍 Filtrage des adresses avec critères:`, filter);
+
+    for (let i = 1; i < lines.length; i++) {
+      const line = lines[i].trim();
+      if (!line) continue;
+
+      const values = line.split(';');
+      if (values.length < headers.length) continue;
+
+      const codePostal = values[5] || '';
+      const nomCommune = values[7] || '';
+
+      // Appliquer les filtres AVANT de créer l'objet
+      if (!this.matchesFilter(codePostal, nomCommune, filter)) {
+        continue;
+      }
+
+      const address: CSVAddress = {
+        id: values[0] || '',
+        numero: values[2] || '',
+        nom_voie: values[4] || '',
+        code_postal: codePostal,
+        nom_commune: nomCommune,
+        lon: parseFloat(values[12]) || 0,
+        lat: parseFloat(values[13]) || 0,
+        libelle_acheminement: values[17] || '',
+        nom_afnor: values[18] || ''
+      };
+
+      if (address.nom_voie && address.nom_commune && address.code_postal) {
+        addresses.push(address);
+
+        // Limiter le nombre d'entrées si spécifié
+        if (filter.maxEntries && addresses.length >= filter.maxEntries) {
+          console.log(`⚠️ Limite de ${filter.maxEntries} adresses atteinte`);
+          break;
+        }
+      }
+    }
+
+    console.log(`✅ Adresses filtrées: ${addresses.length}/${totalCount} (${((1 - addresses.length/totalCount) * 100).toFixed(1)}% réduction)`);
+    return { addresses, totalCount };
+  }
+
+  // Parser le CSV des lieux-dits avec filtrage optimisé
+  private static parseLieuxDitsCSVWithFilter(csvText: string, filter: DataFilter): { lieuxDits: CSVLieuDit[], totalCount: number } {
+    const lines = csvText.split('\n');
+    const headers = lines[0].split(';');
+    const lieuxDits: CSVLieuDit[] = [];
+    const totalCount = lines.length - 1; // Exclure l'en-tête
+
+    console.log(`🔍 Filtrage des lieux-dits avec critères:`, filter);
+
+    for (let i = 1; i < lines.length; i++) {
+      const line = lines[i].trim();
+      if (!line) continue;
+
+      const values = line.split(';');
+      if (values.length < headers.length) continue;
+
+      const codePostal = values[2] || '';
+      const nomCommune = values[4] || '';
+
+      // Appliquer les filtres AVANT de créer l'objet
+      if (!this.matchesFilter(codePostal, nomCommune, filter)) {
+        continue;
+      }
+
+      const lieuDit: CSVLieuDit = {
+        id: values[0] || '',
+        nom_lieu_dit: values[1] || '',
+        code_postal: codePostal,
+        nom_commune: nomCommune,
+        lon: parseFloat(values[9]) || 0,
+        lat: parseFloat(values[10]) || 0
+      };
+
+      if (lieuDit.nom_lieu_dit && lieuDit.nom_commune && lieuDit.code_postal) {
+        lieuxDits.push(lieuDit);
+
+        // Limiter le nombre d'entrées si spécifié
+        if (filter.maxEntries && lieuxDits.length >= filter.maxEntries) {
+          console.log(`⚠️ Limite de ${filter.maxEntries} lieux-dits atteinte`);
+          break;
+        }
+      }
+    }
+
+    console.log(`✅ Lieux-dits filtrés: ${lieuxDits.length}/${totalCount} (${((1 - lieuxDits.length/totalCount) * 100).toFixed(1)}% réduction)`);
+    return { lieuxDits, totalCount };
+  }
+
+  // Vérifier si une entrée correspond aux critères de filtrage
+  private static matchesFilter(codePostal: string, nomCommune: string, filter: DataFilter): boolean {
+    // Si aucun filtre n'est spécifié, tout correspond
+    if (!filter.postalCodes?.length && !filter.cities?.length) {
+      return true;
+    }
+
+    // Vérifier les codes postaux
+    if (filter.postalCodes?.length) {
+      const matchesPostalCode = filter.postalCodes.some(filterPostal => 
+        codePostal.startsWith(filterPostal)
+      );
+      if (matchesPostalCode) {
+        return true;
+      }
+    }
+
+    // Vérifier les villes
+    if (filter.cities?.length) {
+      const normalizedCommune = this.normalizeText(nomCommune);
+      const matchesCity = filter.cities.some(filterCity => 
+        normalizedCommune.includes(this.normalizeText(filterCity))
+      );
+      if (matchesCity) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   // Rechercher des adresses avec recherche fuzzy améliorée et optimisée
@@ -463,6 +671,34 @@ export class CSVAddressService {
     }
 
     return null;
+  }
+
+  // Obtenir les statistiques de chargement actuelles
+  static getLoadingStats(): LoadingStats | null {
+    return this.loadingStats;
+  }
+
+  // Obtenir les informations sur le filtrage actuel
+  static getCurrentFilter(): DataFilter | null {
+    return this.currentFilter;
+  }
+
+  // Vérifier si les données ont été chargées avec un filtre
+  static isFilteredLoadActive(): boolean {
+    return this.isFilteredLoad;
+  }
+
+  // Réinitialiser le service pour un nouveau chargement
+  static reset(): void {
+    this.addresses = [];
+    this.lieuxDits = [];
+    this.postalCodeIndex.clear();
+    this.lieuxDitsPostalIndex.clear();
+    this.isLoaded = false;
+    this.isFilteredLoad = false;
+    this.currentFilter = null;
+    this.loadingStats = null;
+    console.log('🔄 Service CSV réinitialisé');
   }
 
   // Normaliser le texte pour la recherche
