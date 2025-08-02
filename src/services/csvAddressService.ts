@@ -28,6 +28,10 @@ export class CSVAddressService {
   private static isLoaded = false;
   private static readonly DELAY_MS = 300;
   private static debounceTimer: number | null = null;
+  
+  // Index pour optimiser la recherche par code postal
+  private static postalCodeIndex: Map<string, CSVAddress[]> = new Map();
+  private static lieuxDitsPostalIndex: Map<string, CSVLieuDit[]> = new Map();
 
   // Charger les données CSV
   static async loadData(): Promise<void> {
@@ -44,11 +48,37 @@ export class CSVAddressService {
       const lieuxDitsText = await lieuxDitsResponse.text();
       this.lieuxDits = this.parseLieuxDitsCSV(lieuxDitsText);
 
+      // Créer les index pour optimiser les recherches
+      this.buildPostalCodeIndexes();
+
       this.isLoaded = true;
-      console.log(`Chargé ${this.addresses.length} adresses et ${this.lieuxDits.length} lieux-dits`);
+      console.log(`Chargé ${this.addresses.length} adresses et ${this.lieuxDits.length} lieux-dits avec indexation optimisée`);
     } catch (error) {
       console.error('Erreur lors du chargement des données CSV:', error);
     }
+  }
+
+  // Construire les index par code postal pour optimiser les recherches
+  private static buildPostalCodeIndexes(): void {
+    // Index des adresses par code postal
+    for (const address of this.addresses) {
+      const postalCode = address.code_postal;
+      if (!this.postalCodeIndex.has(postalCode)) {
+        this.postalCodeIndex.set(postalCode, []);
+      }
+      this.postalCodeIndex.get(postalCode)!.push(address);
+    }
+
+    // Index des lieux-dits par code postal
+    for (const lieuDit of this.lieuxDits) {
+      const postalCode = lieuDit.code_postal;
+      if (!this.lieuxDitsPostalIndex.has(postalCode)) {
+        this.lieuxDitsPostalIndex.set(postalCode, []);
+      }
+      this.lieuxDitsPostalIndex.get(postalCode)!.push(lieuDit);
+    }
+
+    console.log(`Index créés: ${this.postalCodeIndex.size} codes postaux pour adresses, ${this.lieuxDitsPostalIndex.size} pour lieux-dits`);
   }
 
   // Parser le CSV des adresses
@@ -114,7 +144,7 @@ export class CSVAddressService {
     return lieuxDits;
   }
 
-  // Rechercher des adresses avec recherche fuzzy améliorée
+  // Rechercher des adresses avec recherche fuzzy améliorée et optimisée
   static async searchAddresses(query: string, postcode?: string, limit: number = 10): Promise<CSVAddress[]> {
     await this.loadData();
 
@@ -146,15 +176,25 @@ export class CSVAddressService {
       }
     }
 
+    // Optimisation: utiliser l'index par code postal pour réduire l'espace de recherche
+    let addressesToSearch: CSVAddress[] = [];
+    
+    if (postcode) {
+      // Si un code postal est fourni, chercher seulement dans les adresses correspondantes
+      for (const [indexedPostcode, addresses] of this.postalCodeIndex.entries()) {
+        if (indexedPostcode.startsWith(postcode)) {
+          addressesToSearch.push(...addresses);
+        }
+      }
+    } else {
+      // Sinon, chercher dans toutes les adresses (fallback)
+      addressesToSearch = this.addresses;
+    }
+
     // Recherche dans les adresses avec scoring de pertinence
     const addressCandidates: Array<{ address: CSVAddress; score: number }> = [];
 
-    for (const address of this.addresses) {
-      // Filtrer par code postal si fourni
-      if (postcode && !address.code_postal.startsWith(postcode)) {
-        continue;
-      }
-
+    for (const address of addressesToSearch) {
       // Éviter les doublons avec la base locale
       const isDuplicate = results.some(r => 
         r.numero === address.numero && 
@@ -178,15 +218,23 @@ export class CSVAddressService {
       .slice(0, limit - results.length)
       .forEach(candidate => results.push(candidate.address));
 
+    // Optimisation similaire pour les lieux-dits
+    let lieuxDitsToSearch: CSVLieuDit[] = [];
+    
+    if (postcode) {
+      for (const [indexedPostcode, lieuxDits] of this.lieuxDitsPostalIndex.entries()) {
+        if (indexedPostcode.startsWith(postcode)) {
+          lieuxDitsToSearch.push(...lieuxDits);
+        }
+      }
+    } else {
+      lieuxDitsToSearch = this.lieuxDits;
+    }
+
     // Recherche dans les lieux-dits avec scoring
     const lieuxDitsCandidates: Array<{ lieuDit: CSVLieuDit; score: number }> = [];
 
-    for (const lieuDit of this.lieuxDits) {
-      // Filtrer par code postal si fourni
-      if (postcode && !lieuDit.code_postal.startsWith(postcode)) {
-        continue;
-      }
-
+    for (const lieuDit of lieuxDitsToSearch) {
       // Éviter les doublons avec la base locale et les adresses
       const isDuplicate = results.some(r => 
         r.nom_voie === lieuDit.nom_lieu_dit && 

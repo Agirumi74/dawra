@@ -38,7 +38,9 @@ export const PackageForm: React.FC<PackageFormProps> = ({
     location: personalSettings.defaultLocation || '',
     notes: '',
     type: 'particulier' as 'particulier' | 'entreprise',
-    priority: 'standard' as 'standard' | 'express_midi' | 'premier'
+    priority: 'standard' as 'standard' | 'express_midi' | 'premier',
+    isPickup: false,
+    pickupMaxTime: ''
   });
   
   // État pour l'adresse composée de champs séparés
@@ -167,7 +169,9 @@ export const PackageForm: React.FC<PackageFormProps> = ({
       type: formData.type,
       priority: formData.priority,
       status: 'pending',
-      photo: packagePhoto // Include package photo
+      photo: packagePhoto, // Include package photo
+      isPickup: formData.isPickup,
+      pickupMaxTime: formData.isPickup ? formData.pickupMaxTime : undefined
     };
 
     onSave(packageData);
@@ -391,23 +395,113 @@ export const PackageForm: React.FC<PackageFormProps> = ({
             </div>
           </div>
 
-          {/* Priorité */}
+          {/* Type de service - Livraison ou Enlèvement */}
+          <div className="bg-white rounded-lg shadow-sm p-4">
+            <label className="text-lg font-semibold text-gray-900 mb-3 block">
+              Type de service
+            </label>
+            <div className="space-y-3">
+              <label className="flex items-center space-x-3 cursor-pointer">
+                <input
+                  type="radio"
+                  name="serviceType"
+                  checked={!formData.isPickup}
+                  onChange={() => setFormData(prev => ({ ...prev, isPickup: false, pickupMaxTime: '' }))}
+                  className="w-4 h-4 text-blue-600 focus:ring-blue-500"
+                />
+                <span className="text-gray-900">Livraison</span>
+              </label>
+              <label className="flex items-center space-x-3 cursor-pointer">
+                <input
+                  type="radio"
+                  name="serviceType"
+                  checked={formData.isPickup}
+                  onChange={() => setFormData(prev => ({ ...prev, isPickup: true }))}
+                  className="w-4 h-4 text-blue-600 focus:ring-blue-500"
+                />
+                <span className="text-gray-900">Enlèvement</span>
+              </label>
+            </div>
+            
+            {/* Heure limite pour enlèvement */}
+            {formData.isPickup && (
+              <div className="mt-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Heure limite d'enlèvement
+                </label>
+                <input
+                  type="time"
+                  value={formData.pickupMaxTime}
+                  onChange={(e) => setFormData(prev => ({ ...prev, pickupMaxTime: e.target.value }))}
+                  className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
+            )}
+          </div>
+
+          {/* Priorité avec boutons radio stylisés */}
           <div className="bg-white rounded-lg shadow-sm p-4">
             <label className="text-lg font-semibold text-gray-900 mb-3 block">
               Priorité
             </label>
-            <select
-              value={formData.priority}
-              onChange={(e) => setFormData(prev => ({ 
-                ...prev, 
-                priority: e.target.value as 'standard' | 'express_midi' | 'premier'
-              }))}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
-              <option value="standard">Standard</option>
-              <option value="express_midi">Express (avant midi)</option>
-              <option value="premier">Premier (prioritaire)</option>
-            </select>
+            <div className="grid grid-cols-1 gap-3">
+              <label className={`flex items-center space-x-3 p-3 border-2 rounded-lg cursor-pointer transition-colors ${
+                formData.priority === 'standard' 
+                  ? 'border-blue-500 bg-blue-50' 
+                  : 'border-gray-200 hover:border-gray-300'
+              }`}>
+                <input
+                  type="radio"
+                  name="priority"
+                  value="standard"
+                  checked={formData.priority === 'standard'}
+                  onChange={(e) => setFormData(prev => ({ ...prev, priority: e.target.value as 'standard' | 'express_midi' | 'premier' }))}
+                  className="w-4 h-4 text-blue-600 focus:ring-blue-500"
+                />
+                <div>
+                  <div className="font-medium text-gray-900">Standard</div>
+                  <div className="text-sm text-gray-600">Livraison normale</div>
+                </div>
+              </label>
+              
+              <label className={`flex items-center space-x-3 p-3 border-2 rounded-lg cursor-pointer transition-colors ${
+                formData.priority === 'express_midi' 
+                  ? 'border-orange-500 bg-orange-50' 
+                  : 'border-gray-200 hover:border-gray-300'
+              }`}>
+                <input
+                  type="radio"
+                  name="priority"
+                  value="express_midi"
+                  checked={formData.priority === 'express_midi'}
+                  onChange={(e) => setFormData(prev => ({ ...prev, priority: e.target.value as 'standard' | 'express_midi' | 'premier' }))}
+                  className="w-4 h-4 text-orange-600 focus:ring-orange-500"
+                />
+                <div>
+                  <div className="font-medium text-gray-900">Express (avant midi)</div>
+                  <div className="text-sm text-gray-600">Livraison prioritaire matin</div>
+                </div>
+              </label>
+              
+              <label className={`flex items-center space-x-3 p-3 border-2 rounded-lg cursor-pointer transition-colors ${
+                formData.priority === 'premier' 
+                  ? 'border-red-500 bg-red-50' 
+                  : 'border-gray-200 hover:border-gray-300'
+              }`}>
+                <input
+                  type="radio"
+                  name="priority"
+                  value="premier"
+                  checked={formData.priority === 'premier'}
+                  onChange={(e) => setFormData(prev => ({ ...prev, priority: e.target.value as 'standard' | 'express_midi' | 'premier' }))}
+                  className="w-4 h-4 text-red-600 focus:ring-red-500"
+                />
+                <div>
+                  <div className="font-medium text-gray-900">Premier (prioritaire)</div>
+                  <div className="text-sm text-gray-600">Livraison ultra-prioritaire</div>
+                </div>
+              </label>
+            </div>
           </div>
 
           {/* Notes */}

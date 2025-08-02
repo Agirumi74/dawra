@@ -184,6 +184,10 @@ export const AdvancedAddressSearch: React.FC<AdvancedAddressSearchProps> = ({
 
   const handleSuggestionSelect = async (suggestion: AddressSearchSuggestion) => {
     try {
+      // Fermer immédiatement les suggestions pour éviter les double-clics
+      setShowSuggestions(false);
+      setSelectedIndex(-1);
+
       let selectedAddress: Address;
 
       if (suggestion.type === 'local') {
@@ -428,7 +432,11 @@ export const AdvancedAddressSearch: React.FC<AdvancedAddressSearchProps> = ({
               <button
                 key={index}
                 ref={(el) => suggestionRefs.current[index] = el}
-                onClick={() => handleSuggestionSelect(suggestion)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  handleSuggestionSelect(suggestion);
+                }}
                 className={`w-full p-4 text-left border-b border-gray-100 last:border-b-0 flex items-start space-x-3 transition-colors ${
                   selectedIndex === index 
                     ? 'bg-blue-50 border-blue-200' 

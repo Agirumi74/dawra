@@ -30,6 +30,9 @@ export interface Package {
     start?: string; // Format HH:MM
     end?: string;   // Format HH:MM
   };
+  // Nouvelle fonctionnalité d'enlèvement
+  isPickup?: boolean;
+  pickupMaxTime?: string; // Format HH:MM - heure limite pour enlèvement
 }
 
 export interface DeliveryPoint {

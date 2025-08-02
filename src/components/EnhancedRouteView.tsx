@@ -41,7 +41,6 @@ export const EnhancedRouteView: React.FC<EnhancedRouteViewProps> = ({ onNavigate
   const [isOptimizing, setIsOptimizing] = useState(false);
   const [userPosition, setUserPosition] = useState<UserPosition | null>(null);
   const [error, setError] = useState<string>('');
-  const [showSettings, setShowSettings] = useState(false);
   const [showExportMenu, setShowExportMenu] = useState(false);
   const [showNavigationSelector, setShowNavigationSelector] = useState(false);
   const [showTourProgress, setShowTourProgress] = useState(false);
@@ -106,6 +105,11 @@ export const EnhancedRouteView: React.FC<EnhancedRouteViewProps> = ({ onNavigate
       setError('Aucun colis à optimiser');
       return;
     }
+
+    // Définir automatiquement l'heure de départ à l'heure locale actuelle
+    const now = new Date();
+    const currentTime = now.toTimeString().slice(0, 5); // Format HH:MM
+    updateSetting('startTime', currentTime);
 
     setIsOptimizing(true);
     setError('');
@@ -407,12 +411,7 @@ export const EnhancedRouteView: React.FC<EnhancedRouteViewProps> = ({ onNavigate
                 )}
               </div>
             )}
-            <button
-              onClick={() => setShowSettings(!showSettings)}
-              className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg"
-            >
-              <Settings size={20} />
-            </button>
+            {/* Settings button removed - now in main Settings page */}
           </div>
         </div>
 
@@ -436,72 +435,7 @@ export const EnhancedRouteView: React.FC<EnhancedRouteViewProps> = ({ onNavigate
           </div>
         </div>
 
-        {/* Panneau de paramètres */}
-        {showSettings && (
-          <div className="bg-gray-50 p-4 rounded-lg mb-4">
-            <h3 className="font-semibold mb-3">Paramètres de Tournée</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Temps d'arrêt (minutes)
-                </label>
-                <div className="flex items-center space-x-2">
-                  <button
-                    onClick={() => updateSetting('stopTimeMinutes', Math.max(1, settings.stopTimeMinutes - 1))}
-                    className="p-1 bg-gray-200 rounded hover:bg-gray-300"
-                  >
-                    <Minus size={16} />
-                  </button>
-                  <span className="px-3 py-1 bg-white border rounded font-medium">
-                    {settings.stopTimeMinutes}
-                  </span>
-                  <button
-                    onClick={() => updateSetting('stopTimeMinutes', settings.stopTimeMinutes + 1)}
-                    className="p-1 bg-gray-200 rounded hover:bg-gray-300"
-                  >
-                    <Plus size={16} />
-                  </button>
-                </div>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Heure de départ
-                </label>
-                <input
-                  type="time"
-                  value={settings.startTime}
-                  onChange={(e) => updateSetting('startTime', e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Vitesse moyenne (km/h)
-                </label>
-                <input
-                  type="number"
-                  value={settings.averageSpeedKmh}
-                  onChange={(e) => updateSetting('averageSpeedKmh', Number(e.target.value))}
-                  min="10"
-                  max="90"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                />
-              </div>
-              <div className="flex items-center space-x-2">
-                <input
-                  type="checkbox"
-                  id="returnToDepot"
-                  checked={settings.returnToDepot}
-                  onChange={(e) => updateSetting('returnToDepot', e.target.checked)}
-                  className="rounded"
-                />
-                <label htmlFor="returnToDepot" className="text-sm font-medium text-gray-700">
-                  Retour au dépôt
-                </label>
-              </div>
-            </div>
-          </div>
-        )}
+        {/* Settings moved to Settings page */}
 
         {/* Bouton d'optimisation et de navigation */}
         <div className="flex space-x-2">

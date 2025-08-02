@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Save, Key, Camera, ArrowLeft, AlertCircle, CheckCircle } from 'lucide-react';
+import { Save, Key, Camera, ArrowLeft, AlertCircle, CheckCircle, Route, Clock, Plus, Minus } from 'lucide-react';
 import { VoiceSettings } from './VoiceSettings';
 import { PersonalSettings } from './PersonalSettings';
+import { useRouteSettings } from '../hooks/useRouteSettings';
 
 interface SettingsPageProps {
   onBack: () => void;
@@ -13,6 +14,9 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ onBack }) => {
   const [ocrTimeout, setOcrTimeout] = useState(30);
   const [cameraFacing, setCameraFacing] = useState<'environment' | 'user'>('environment');
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
+  
+  // Route optimization settings
+  const { settings: routeSettings, updateSetting: updateRouteSetting } = useRouteSettings();
   
   useEffect(() => {
     // Load saved settings from localStorage
@@ -177,6 +181,99 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ onBack }) => {
         {/* Voice Configuration */}
         <div className="bg-white rounded-lg shadow-md p-6 mb-6">
           <VoiceSettings />
+        </div>
+
+        {/* Route Optimization Configuration */}
+        <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+          <div className="flex items-center space-x-3 mb-4">
+            <Route size={24} className="text-blue-600" />
+            <h2 className="text-xl font-semibold text-gray-900">Optimisation de Tournée</h2>
+          </div>
+          
+          <div className="space-y-6">
+            {/* Temps d'arrêt */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Temps d'arrêt par point (minutes)
+              </label>
+              <div className="flex items-center space-x-3">
+                <button
+                  onClick={() => updateRouteSetting('stopTimeMinutes', Math.max(1, routeSettings.stopTimeMinutes - 1))}
+                  className="p-2 bg-gray-200 rounded hover:bg-gray-300 transition-colors"
+                >
+                  <Minus size={16} />
+                </button>
+                <span className="px-4 py-2 bg-gray-50 border rounded-lg font-medium min-w-[60px] text-center">
+                  {routeSettings.stopTimeMinutes}
+                </span>
+                <button
+                  onClick={() => updateRouteSetting('stopTimeMinutes', routeSettings.stopTimeMinutes + 1)}
+                  className="p-2 bg-gray-200 rounded hover:bg-gray-300 transition-colors"
+                >
+                  <Plus size={16} />
+                </button>
+              </div>
+              <p className="text-sm text-gray-600 mt-1">
+                Temps moyen nécessaire pour chaque livraison/enlèvement
+              </p>
+            </div>
+
+            {/* Heure de départ par défaut */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Heure de départ par défaut
+              </label>
+              <div className="flex items-center space-x-3">
+                <Clock size={16} className="text-gray-500" />
+                <input
+                  type="time"
+                  value={routeSettings.startTime}
+                  onChange={(e) => updateRouteSetting('startTime', e.target.value)}
+                  className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
+              <p className="text-sm text-gray-600 mt-1">
+                Cette heure sera mise à jour automatiquement lors du lancement d'optimisation
+              </p>
+            </div>
+
+            {/* Vitesse moyenne */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Vitesse moyenne en ville (km/h)
+              </label>
+              <input
+                type="number"
+                value={routeSettings.averageSpeedKmh}
+                onChange={(e) => updateRouteSetting('averageSpeedKmh', Number(e.target.value))}
+                min="10"
+                max="90"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+              <p className="text-sm text-gray-600 mt-1">
+                Utilisée pour calculer les temps de trajet entre les points
+              </p>
+            </div>
+
+            {/* Retour au dépôt */}
+            <div>
+              <div className="flex items-center space-x-3">
+                <input
+                  type="checkbox"
+                  id="returnToDepot"
+                  checked={routeSettings.returnToDepot}
+                  onChange={(e) => updateRouteSetting('returnToDepot', e.target.checked)}
+                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                />
+                <label htmlFor="returnToDepot" className="text-sm font-medium text-gray-700">
+                  Retour au dépôt en fin de tournée
+                </label>
+              </div>
+              <p className="text-sm text-gray-600 mt-1 ml-7">
+                Inclut automatiquement le trajet de retour dans le calcul de la tournée
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Personal Configuration */}
