@@ -45,7 +45,7 @@ export const useAddressSearch = (options: UseAddressSearchOptions = {}): UseAddr
   const [error, setError] = useState<string | null>(null);
   const [banAvailable, setBanAvailable] = useState(true);
   
-  const debounceTimerRef = useRef<number | null>(null);
+  const debounceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const searchCacheRef = useRef<Map<string, AddressSearchResult[]>>(new Map());
 
   const clearError = useCallback(() => {
