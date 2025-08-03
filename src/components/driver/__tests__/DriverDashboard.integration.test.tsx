@@ -1,7 +1,8 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import { DriverDashboard } from '../DriverDashboard';
-import { AppProvider } from '../../context/AppContext';
+import { AppProvider } from '../../../context/AppContext';
 
 // Mock external dependencies
 jest.mock('../../BarcodeScanner', () => ({

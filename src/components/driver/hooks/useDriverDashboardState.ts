@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import type { Vehicle, Package } from '../../context/AppContext';
+import type { Vehicle } from '../../../context/AppContext';
+import type { Package } from '../../../types';
 
 export const useDriverDashboardState = () => {
   const [activeTab, setActiveTab] = useState<'today' | 'scan' | 'gps' | 'info'>('today');

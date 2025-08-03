@@ -1,8 +1,8 @@
 import { useCallback } from 'react';
-import type { Package } from '../../context/AppContext';
+import type { Package } from '../../../types';
 
 export const useDriverActions = (
-  setActiveTab: (tab: 'today' | 'scan' | 'gps' | 'history') => void,
+  setActiveTab: (tab: 'today' | 'scan' | 'gps' | 'info') => void,
   setShowBarcodeScanner: (show: boolean) => void,
   setShowPackageForm: (show: boolean) => void,
   setShowGPSManager: (show: boolean) => void,
@@ -10,7 +10,7 @@ export const useDriverActions = (
   setShowAddAnotherDialog: (show: boolean) => void,
   setCurrentBarcode: (barcode: string | undefined) => void,
   setLastSavedPackage: (pkg: Package | null) => void,
-  addPackage: (pkg: Omit<Package, 'id' | 'timestamp'>) => void
+  addPackage: (pkg: Omit<Package, 'id' | 'createdAt'>) => Package
 ) => {
   const handleBarcodeScanned = useCallback((barcode: string) => {
     setCurrentBarcode(barcode);
@@ -18,9 +18,9 @@ export const useDriverActions = (
     setShowPackageForm(true);
   }, [setCurrentBarcode, setShowBarcodeScanner, setShowPackageForm]);
 
-  const handlePackageSaved = useCallback((packageData: Omit<Package, 'id' | 'timestamp'>) => {
-    addPackage(packageData);
-    setLastSavedPackage(packageData);
+  const handlePackageSaved = useCallback((packageData: Omit<Package, 'id' | 'createdAt'>) => {
+    const newPackage = addPackage(packageData);
+    setLastSavedPackage(newPackage);
     setShowPackageForm(false);
     setShowAddAnotherDialog(true);
   }, [addPackage, setLastSavedPackage, setShowPackageForm, setShowAddAnotherDialog]);

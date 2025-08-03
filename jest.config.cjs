@@ -3,7 +3,7 @@ module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
   setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
-  moduleNameMapping: {
+  moduleNameMapper: {
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
     '^@/(.*)$': '<rootDir>/src/$1'
   },
@@ -13,7 +13,7 @@ module.exports = {
         jsx: 'react-jsx',
         esModuleInterop: true,
         allowSyntheticDefaultImports: true,
-        types: ['jest', '@testing-library/jest-dom']
+        types: ['jest', '@testing-library/jest-dom', 'node']
       }
     }],
     '^.+\\.(js|jsx)$': 'babel-jest'
@@ -29,15 +29,5 @@ module.exports = {
     '!src/index.tsx',
     '!src/main.tsx'
   ],
-  testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/dist/'],
-  globals: {
-    'ts-jest': {
-      tsconfig: {
-        jsx: 'react-jsx',
-        esModuleInterop: true,
-        allowSyntheticDefaultImports: true,
-        types: ['jest', '@testing-library/jest-dom']
-      }
-    }
-  }
+  testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/dist/']
 };

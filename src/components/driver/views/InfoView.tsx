@@ -10,7 +10,7 @@ import {
   Target,
   Navigation
 } from 'lucide-react';
-import type { Vehicle } from '../../context/AppContext';
+import type { Vehicle } from '../../../context/AppContext';
 
 interface InfoViewProps {
   currentVehicle: Vehicle | null;

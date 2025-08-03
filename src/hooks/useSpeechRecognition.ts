@@ -37,7 +37,7 @@ export const useSpeechRecognition = (
   const [isSupported, setIsSupported] = useState(false);
   
   const recognitionRef = useRef<any>(null);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const finalResultReceived = useRef(false);
 
   // Auto-stop function
