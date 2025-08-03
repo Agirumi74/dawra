@@ -14,7 +14,7 @@ export class BANApiService {
   private static readonly BASE_URL = 'https://api-adresse.data.gouv.fr';
   private static readonly SEARCH_ENDPOINT = '/search/';
   private static readonly DELAY_MS = 300;
-  private static debounceTimer: number | null = null;
+  private static debounceTimer: ReturnType<typeof setTimeout> | null = null;
 
   /**
    * Recherche d'adresses via l'API BAN

@@ -321,32 +321,73 @@ export class CSVAddressService {
     return { lieuxDits, totalCount };
   }
 
-  // Vérifier si une entrée correspond aux critères de filtrage
+  // Vérifier si une entrée correspond aux critères de filtrage (logique améliorée)
   private static matchesFilter(codePostal: string, nomCommune: string, filter: DataFilter): boolean {
     // Si aucun filtre n'est spécifié, tout correspond
     if (!filter.postalCodes?.length && !filter.cities?.length) {
       return true;
     }
 
-    // Vérifier les codes postaux
-    if (filter.postalCodes?.length) {
-      const matchesPostalCode = filter.postalCodes.some(filterPostal => 
-        codePostal.startsWith(filterPostal)
-      );
-      if (matchesPostalCode) {
-        return true;
-      }
+    // Logique AND intelligent : si les deux types de filtres sont spécifiés,
+    // l'entrée doit correspondre à AU MOINS UN de chaque type
+    const hasPostalCodeFilter = filter.postalCodes?.length > 0;
+    const hasCityFilter = filter.cities?.length > 0;
+    
+    let matchesPostalCode = false;
+    let matchesCity = false;
+
+    // Vérifier les codes postaux avec correspondance intelligente
+    if (hasPostalCodeFilter) {
+      matchesPostalCode = filter.postalCodes!.some(filterPostal => {
+        // Correspondance exacte prioritaire
+        if (codePostal === filterPostal) return true;
+        
+        // Correspondance par préfixe pour codes plus courts (ex: "74" match "74000")
+        if (filterPostal.length <= 3 && codePostal.startsWith(filterPostal)) return true;
+        
+        // Pas de correspondance par suffixe - trop risqué pour les faux positifs
+        
+        return false;
+      });
     }
 
-    // Vérifier les villes
-    if (filter.cities?.length) {
+    // Vérifier les villes avec correspondance floue améliorée
+    if (hasCityFilter) {
       const normalizedCommune = this.normalizeText(nomCommune);
-      const matchesCity = filter.cities.some(filterCity => 
-        normalizedCommune.includes(this.normalizeText(filterCity))
-      );
-      if (matchesCity) {
-        return true;
-      }
+      matchesCity = filter.cities!.some(filterCity => {
+        const normalizedFilterCity = this.normalizeText(filterCity);
+        
+        // Correspondance exacte prioritaire
+        if (normalizedCommune === normalizedFilterCity) return true;
+        
+        // Correspondance stricte par début de mot pour éviter les faux positifs
+        if (normalizedCommune.startsWith(normalizedFilterCity + ' ') || 
+            normalizedCommune.startsWith(normalizedFilterCity) && normalizedFilterCity.length >= 4) return true;
+        
+        if (normalizedFilterCity.startsWith(normalizedCommune + ' ') || 
+            normalizedFilterCity.startsWith(normalizedCommune) && normalizedCommune.length >= 4) return true;
+        
+        // Correspondance par mots individuels pour villes composées (plus restrictive)
+        const communeWords = normalizedCommune.split(/\s+/);
+        const filterWords = normalizedFilterCity.split(/\s+/);
+        
+        // Seulement si au moins 50% des mots correspondent exactement
+        const exactMatches = filterWords.filter(filterWord => 
+          communeWords.some(communeWord => communeWord === filterWord)
+        );
+        
+        return exactMatches.length >= Math.ceil(filterWords.length * 0.5) && exactMatches.length > 0;
+      });
+    }
+
+    // Logique de retour intelligente
+    if (hasPostalCodeFilter && hasCityFilter) {
+      // Si les deux filtres sont présents, l'un OU l'autre doit correspondre
+      return matchesPostalCode || matchesCity;
+    } else if (hasPostalCodeFilter) {
+      return matchesPostalCode;
+    } else if (hasCityFilter) {
+      return matchesCity;
     }
 
     return false;
@@ -496,7 +537,7 @@ export class CSVAddressService {
   }
 
   /**
-   * Calcule un score de pertinence pour une adresse donnée
+   * Calcule un score de pertinence pour une adresse donnée (algorithme amélioré)
    * @param address Adresse à évaluer
    * @param queryWords Mots de la requête normalisés
    * @param normalizedQuery Requête complète normalisée
@@ -510,49 +551,96 @@ export class CSVAddressService {
     
     let score = 0;
     
-    // Score basé sur la correspondance exacte
+    // Correspondances exactes (scores les plus élevés)
     if (fullAddressText === normalizedQuery) score += 100;
-    else if (numeroVoieText === normalizedQuery) score += 80;
-    else if (voieText === normalizedQuery) score += 60;
+    else if (numeroVoieText === normalizedQuery) score += 90;
+    else if (voieText === normalizedQuery) score += 80;
     
-    // Score basé sur le début de correspondance
-    if (fullAddressText.startsWith(normalizedQuery)) score += 50;
-    else if (numeroVoieText.startsWith(normalizedQuery)) score += 40;
-    else if (voieText.startsWith(normalizedQuery)) score += 30;
+    // Correspondances au début (scores élevés)
+    if (fullAddressText.startsWith(normalizedQuery)) score += 70;
+    else if (numeroVoieText.startsWith(normalizedQuery)) score += 60;
+    else if (voieText.startsWith(normalizedQuery)) score += 50;
     
-    // Score basé sur la correspondance des mots individuels
-    let wordMatches = 0;
-    for (const word of queryWords) {
-      if (word.length < 2) continue; // Ignorer les mots trop courts
+    // Analyse des mots individuels avec pondération intelligente
+    const totalWords = queryWords.length;
+    let exactWordMatches = 0;
+    let partialWordMatches = 0;
+    let abbreviationMatches = 0;
+    
+    for (const queryWord of queryWords) {
+      if (queryWord.length < 2) continue; // Ignorer les mots trop courts
       
-      if (voieText.includes(word)) {
-        wordMatches++;
+      // Vérification des correspondances exactes de mots
+      if (voieText.includes(` ${queryWord} `) || voieText.startsWith(`${queryWord} `) || voieText.endsWith(` ${queryWord}`)) {
+        exactWordMatches++;
+        score += 15;
+      } else if (communeText.includes(` ${queryWord} `) || communeText.startsWith(`${queryWord} `) || communeText.endsWith(` ${queryWord}`)) {
+        exactWordMatches++;
+        score += 10;
+      } else if (address.numero === queryWord) {
+        exactWordMatches++;
+        score += 8;
+      }
+      // Vérification des correspondances partielles
+      else if (voieText.includes(queryWord)) {
+        partialWordMatches++;
+        score += 8;
+      } else if (communeText.includes(queryWord)) {
+        partialWordMatches++;
         score += 5;
-      } else if (communeText.includes(word)) {
-        wordMatches++;
-        score += 3;
-      } else if (address.numero.includes(word)) {
-        wordMatches++;
-        score += 2;
+      }
+      // Vérification des abréviations
+      else if (this.isAbbreviation(queryWord, voieText) || 
+               voieText.split(' ').some(word => this.isAbbreviation(queryWord, word))) {
+        abbreviationMatches++;
+        score += 6;
+      }
+      // Correspondances floues avec distance de Levenshtein pour les mots longs
+      else if (queryWord.length >= 4) {
+        const voieWords = voieText.split(' ');
+        const bestMatch = voieWords.reduce((best, word) => {
+          if (word.length < 3) return best;
+          const distance = this.levenshteinDistance(queryWord, word);
+          const similarity = 1 - (distance / Math.max(queryWord.length, word.length));
+          return similarity > best ? similarity : best;
+        }, 0);
+        
+        if (bestMatch > 0.7) { // 70% de similarité minimum
+          score += Math.round(bestMatch * 5);
+          partialWordMatches++;
+        }
       }
     }
     
-    // Bonus si tous les mots correspondent
-    if (queryWords.length > 0 && wordMatches === queryWords.length) {
-      score += 20;
+    // Bonus pour correspondance complète des mots
+    if (totalWords > 0) {
+      const matchRatio = (exactWordMatches + partialWordMatches * 0.7 + abbreviationMatches * 0.8) / totalWords;
+      if (matchRatio >= 1.0) score += 25; // Tous les mots correspondent
+      else if (matchRatio >= 0.8) score += 15; // 80% des mots correspondent
+      else if (matchRatio >= 0.5) score += 10; // 50% des mots correspondent
     }
     
-    // Score basé sur la correspondance partielle
-    if (fullAddressText.includes(normalizedQuery)) score += 10;
-    else if (numeroVoieText.includes(normalizedQuery)) score += 8;
-    else if (voieText.includes(normalizedQuery)) score += 6;
-    
-    // Malus pour les adresses très courtes qui matchent par accident
-    if (voieText.length < 4 && normalizedQuery.length > voieText.length) {
-      score -= 5;
+    // Correspondance partielle dans l'adresse complète (fallback)
+    if (fullAddressText.includes(normalizedQuery)) {
+      score += Math.round(8 * (normalizedQuery.length / fullAddressText.length));
     }
     
-    return score;
+    // Bonus pour les adresses courtes et précises
+    if (voieText.length < 20 && score > 20) score += 5;
+    
+    // Malus pour les correspondances accidentelles sur des mots très courts
+    if (queryWords.some(word => word.length <= 2) && 
+        voieText.length < 6 && 
+        normalizedQuery.length > voieText.length * 1.5) {
+      score -= 10;
+    }
+    
+    // Bonus pour correspondance du numéro de rue
+    if (address.numero && queryWords.includes(address.numero)) {
+      score += 12;
+    }
+    
+    return Math.max(0, score); // S'assurer que le score n'est jamais négatif
   }
 
   // Recherche avec debounce
@@ -839,5 +927,39 @@ export class CSVAddressService {
     
     // Vérifier si le mot court est le début du mot long
     return fullLower.startsWith(shortLower) && short.length >= 2;
+  }
+
+  /**
+   * Calcule la distance de Levenshtein entre deux chaînes
+   * @param str1 Première chaîne
+   * @param str2 Deuxième chaîne
+   * @returns Distance de Levenshtein
+   */
+  private static levenshteinDistance(str1: string, str2: string): number {
+    const matrix = [];
+
+    for (let i = 0; i <= str2.length; i++) {
+      matrix[i] = [i];
+    }
+
+    for (let j = 0; j <= str1.length; j++) {
+      matrix[0][j] = j;
+    }
+
+    for (let i = 1; i <= str2.length; i++) {
+      for (let j = 1; j <= str1.length; j++) {
+        if (str2.charAt(i - 1) === str1.charAt(j - 1)) {
+          matrix[i][j] = matrix[i - 1][j - 1];
+        } else {
+          matrix[i][j] = Math.min(
+            matrix[i - 1][j - 1] + 1,
+            matrix[i][j - 1] + 1,
+            matrix[i - 1][j] + 1
+          );
+        }
+      }
+    }
+
+    return matrix[str2.length][str1.length];
   }
 }

@@ -2,34 +2,36 @@ import { BANApiService } from '../services/banApiService';
 import { CSVAddressService } from '../services/csvAddressService';
 import { useFuzzySearch } from '../hooks/useFuzzySearch';
 import { useAddressSearch } from '../hooks/useAddressSearch';
+import { renderHook as testingLibraryRenderHook } from '@testing-library/react';
 
 // Mock des services pour les tests
 jest.mock('../services/banApiService');
 jest.mock('../services/csvAddressService');
 
-describe('BAN API Service', () => {
-  const mockBanResponse = {
-    features: [
-      {
-        properties: {
-          label: '38 Clos du nant, 74540 Alby-sur-Chéran',
-          score: 0.95,
-          housenumber: '38',
-          street: 'Clos du nant',
-          postcode: '74540',
-          city: 'Alby-sur-Chéran',
-          context: 'Haute-Savoie',
-          type: 'housenumber',
-          importance: 0.8
-        },
-        geometry: {
-          type: 'Point',
-          coordinates: [6.013124, 45.814976]
-        }
+// Mock data shared across all tests  
+const mockBanResponse = {
+  features: [
+    {
+      properties: {
+        label: '38 Clos du nant, 74540 Alby-sur-Chéran',
+        score: 0.95,
+        housenumber: '38',
+        street: 'Clos du nant',
+        postcode: '74540',
+        city: 'Alby-sur-Chéran',
+        context: 'Haute-Savoie',
+        type: 'housenumber',
+        importance: 0.8
+      },
+      geometry: {
+        type: 'Point',
+        coordinates: [6.013124, 45.814976] as [number, number]
       }
-    ]
-  };
+    }
+  ]
+};
 
+describe('BAN API Service', () => {
   beforeEach(() => {
     global.fetch = jest.fn();
     jest.clearAllMocks();
@@ -80,32 +82,33 @@ describe('BAN API Service', () => {
   });
 });
 
-describe('CSV Address Service Enhanced', () => {
-  const mockCSVAddresses = [
-    {
-      id: '1',
-      numero: '38',
-      nom_voie: 'Clos du nant',
-      code_postal: '74540',
-      nom_commune: 'Alby-sur-Chéran',
-      lon: 6.013124,
-      lat: 45.814976,
-      libelle_acheminement: 'ALBY-SUR-CHERAN',
-      nom_afnor: 'CLOS DU NANT'
-    },
-    {
-      id: '2',
-      numero: '1',
-      nom_voie: 'Rue de la Mairie',
-      code_postal: '74150',
-      nom_commune: 'Rumilly',
-      lon: 6.145678,
-      lat: 45.867890,
-      libelle_acheminement: 'RUMILLY',
-      nom_afnor: 'RUE DE LA MAIRIE'
-    }
-  ];
+// Mock data shared across all tests  
+const mockCSVAddresses = [
+  {
+    id: '1',
+    numero: '38',
+    nom_voie: 'Clos du nant',
+    code_postal: '74540',
+    nom_commune: 'Alby-sur-Chéran',
+    lon: 6.013124,
+    lat: 45.814976,
+    libelle_acheminement: 'ALBY-SUR-CHERAN',
+    nom_afnor: 'CLOS DU NANT'
+  },
+  {
+    id: '2',
+    numero: '1',
+    nom_voie: 'Rue de la Mairie',
+    code_postal: '74150',
+    nom_commune: 'Rumilly',
+    lon: 6.145678,
+    lat: 45.867890,
+    libelle_acheminement: 'RUMILLY',
+    nom_afnor: 'RUE DE LA MAIRIE'
+  }
+];
 
+describe('CSV Address Service Enhanced', () => {
   beforeEach(() => {
     (CSVAddressService as any).addresses = mockCSVAddresses;
     (CSVAddressService as any).isLoaded = true;
@@ -146,13 +149,17 @@ describe('CSV Address Service Enhanced', () => {
 });
 
 describe('Fuzzy Search Hook', () => {
+  interface TestItem {
+    name: string;
+  }
+
   test('recherche fuzzy basique', () => {
-    const { result } = renderHook(() => useFuzzySearch({
+    const { result } = testingLibraryRenderHook(() => useFuzzySearch<TestItem>({
       keys: ['name'],
       threshold: 0.3
     }));
 
-    const items = [
+    const items: TestItem[] = [
       { name: 'Avenue de la République' },
       { name: 'Rue de la Paix' },
       { name: 'Boulevard Saint-Michel' }
@@ -166,13 +173,13 @@ describe('Fuzzy Search Hook', () => {
   });
 
   test('support des abréviations', () => {
-    const { result } = renderHook(() => useFuzzySearch({
+    const { result } = testingLibraryRenderHook(() => useFuzzySearch<TestItem>({
       keys: ['name'],
       abbreviations: true,
       threshold: 0.3
     }));
 
-    const items = [
+    const items: TestItem[] = [
       { name: 'Avenue Victor Hugo' },
       { name: 'Rue Jean Jaurès' }
     ];
@@ -184,13 +191,13 @@ describe('Fuzzy Search Hook', () => {
   });
 
   test('ignorance des accents', () => {
-    const { result } = renderHook(() => useFuzzySearch({
+    const { result } = testingLibraryRenderHook(() => useFuzzySearch<TestItem>({
       keys: ['name'],
       ignoreAccents: true,
       threshold: 0.3
     }));
 
-    const items = [
+    const items: TestItem[] = [
       { name: 'Château de Versailles' },
       { name: 'Hôtel de Ville' }
     ];
@@ -210,7 +217,7 @@ describe('Address Search Hook Integration', () => {
     (CSVAddressService.searchAddresses as jest.Mock).mockResolvedValue(mockLocalResults);
     (BANApiService.searchAddressesWithRetry as jest.Mock).mockResolvedValue(mockBanResults);
 
-    const { result } = renderHook(() => useAddressSearch({
+    const { result } = testingLibraryRenderHook(() => useAddressSearch({
       enableBAN: true,
       maxLocalResults: 3,
       maxBanResults: 3
@@ -228,7 +235,7 @@ describe('Address Search Hook Integration', () => {
     (CSVAddressService.searchAddresses as jest.Mock).mockResolvedValue(mockLocalResults);
     (BANApiService.searchAddressesWithRetry as jest.Mock).mockRejectedValue(new Error('BAN unavailable'));
 
-    const { result } = renderHook(() => useAddressSearch({
+    const { result } = testingLibraryRenderHook(() => useAddressSearch({
       enableBAN: true
     }));
 
@@ -238,24 +245,3 @@ describe('Address Search Hook Integration', () => {
     expect(results.every(r => r.type === 'local')).toBe(true);
   });
 });
-
-// Helpers pour les tests React
-function renderHook<T>(hook: () => T): { result: { current: T } } {
-  let result: T;
-  
-  function TestComponent() {
-    result = hook();
-    return null;
-  }
-
-  // Simulation simple du rendu du hook
-  result = hook();
-  
-  return {
-    result: {
-      get current() {
-        return result;
-      }
-    }
-  };
-}

@@ -151,30 +151,63 @@ export const PackageForm: React.FC<PackageFormProps> = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!address.street_name?.trim() || !address.city?.trim() || !address.postal_code?.trim()) {
-      alert('Veuillez remplir tous les champs d\'adresse obligatoires (rue, ville, code postal)');
-      return;
+    // Validation améliorée des champs d'adresse
+    const validationErrors: string[] = [];
+    
+    if (!address.street_name?.trim()) {
+      validationErrors.push('Le nom de rue est obligatoire');
+    }
+    
+    if (!address.city?.trim()) {
+      validationErrors.push('La ville est obligatoire');
+    }
+    
+    if (!address.postal_code?.trim()) {
+      validationErrors.push('Le code postal est obligatoire');
+    } else if (!/^\d{5}$/.test(address.postal_code.trim())) {
+      validationErrors.push('Le code postal doit contenir 5 chiffres');
     }
     
     if (!formData.location.trim()) {
-      alert('Veuillez sélectionner un emplacement dans le camion');
+      validationErrors.push('Veuillez sélectionner un emplacement dans le camion');
+    }
+    
+    // Validation spécifique pour les enlèvements
+    if (formData.isPickup && !formData.pickupMaxTime) {
+      validationErrors.push('L\'heure limite d\'enlèvement est obligatoire');
+    }
+    
+    if (validationErrors.length > 0) {
+      setOcrError('Erreurs de validation:\n• ' + validationErrors.join('\n• '));
       return;
     }
 
-    const packageData: Omit<Package, 'id' | 'createdAt'> = {
-      barcode,
-      address: createCompleteAddress(address),
-      location: formData.location,
-      notes: formData.notes,
-      type: formData.type,
-      priority: formData.priority,
-      status: 'pending',
-      photo: packagePhoto, // Include package photo
-      isPickup: formData.isPickup,
-      pickupMaxTime: formData.isPickup ? formData.pickupMaxTime : undefined
-    };
+    try {
+      const packageData: Omit<Package, 'id' | 'createdAt'> = {
+        barcode,
+        address: createCompleteAddress(address),
+        location: formData.location,
+        notes: formData.notes,
+        type: formData.type,
+        priority: formData.priority,
+        status: 'pending',
+        photo: packagePhoto,
+        isPickup: formData.isPickup,
+        pickupMaxTime: formData.isPickup ? formData.pickupMaxTime : undefined
+      };
 
-    onSave(packageData);
+      // Vérification finale de l'adresse complète
+      const completeAddress = packageData.address;
+      if (!completeAddress.full_address || completeAddress.full_address.trim().length < 10) {
+        setOcrError('L\'adresse semble incomplète. Veuillez vérifier tous les champs.');
+        return;
+      }
+
+      onSave(packageData);
+    } catch (error) {
+      console.error('Erreur lors de la création du colis:', error);
+      setOcrError('Erreur lors de la création du colis. Veuillez réessayer.');
+    }
   };
 
   return (
@@ -276,10 +309,27 @@ export const PackageForm: React.FC<PackageFormProps> = ({
               defaultPostcode="74"
             />
 
+            {/* Aide contextuelle pour l'adresse */}
+            {(!address.street_name || !address.city || !address.postal_code) && !isProcessingOCR && (
+              <div className="mt-3 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+                <div className="flex items-start space-x-2">
+                  <AlertCircle size={16} className="text-amber-600 mt-0.5 flex-shrink-0" />
+                  <div className="text-sm text-amber-800">
+                    <p className="font-medium mb-1">Adresse incomplète</p>
+                    <p>
+                      Assurez-vous de remplir tous les champs obligatoires. 
+                      Si l'adresse n'existe pas dans nos bases de données, vous pouvez la créer manuellement 
+                      en remplissant tous les champs puis en utilisant le bouton "Créer l'adresse".
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {ocrError && (
               <div className="mt-2 p-2 bg-red-50 border border-red-200 rounded text-red-700 text-sm flex items-center space-x-2">
                 <AlertCircle size={16} />
-                <span>{ocrError}</span>
+                <span className="whitespace-pre-line">{ocrError}</span>
               </div>
             )}
 
