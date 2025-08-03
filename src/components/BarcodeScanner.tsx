@@ -71,7 +71,7 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
             return false;
           }
           // If 'prompt', continue to request permission
-        } catch (permissionError) {
+        } catch (_permissionError) {
           // Permission API not supported or failed, continue with getUserMedia
           console.log('API Permissions non supportée, utilisation de getUserMedia direct');
         }

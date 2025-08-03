@@ -1,4 +1,6 @@
 // Service de gestion du stockage hors-ligne avancé
+import { Package, DeliveryPoint, DeliverySummary } from '../types';
+
 export class OfflineStorageService {
   private dbName = 'TourneeFacileDB';
   private version = 1;
@@ -37,7 +39,7 @@ export class OfflineStorageService {
     });
   }
 
-  async savePackages(packages: any[]): Promise<void> {
+  async savePackages(packages: Package[]): Promise<void> {
     if (!this.db) await this.initialize();
     
     const transaction = this.db!.transaction(['packages'], 'readwrite');
@@ -52,7 +54,7 @@ export class OfflineStorageService {
     }
   }
 
-  async loadPackages(): Promise<any[]> {
+  async loadPackages(): Promise<Package[]> {
     if (!this.db) await this.initialize();
     
     return new Promise((resolve, reject) => {
@@ -65,7 +67,7 @@ export class OfflineStorageService {
     });
   }
 
-  async saveRoute(route: any[]): Promise<void> {
+  async saveRoute(route: DeliveryPoint[]): Promise<void> {
     if (!this.db) await this.initialize();
     
     const transaction = this.db!.transaction(['routes'], 'readwrite');
@@ -78,7 +80,7 @@ export class OfflineStorageService {
     });
   }
 
-  async loadRoute(): Promise<any[]> {
+  async loadRoute(): Promise<DeliveryPoint[]> {
     if (!this.db) await this.initialize();
     
     return new Promise((resolve, reject) => {
@@ -105,7 +107,7 @@ export class OfflineStorageService {
     ]);
   }
 
-  async saveStats(stats: any): Promise<void> {
+  async saveStats(stats: Partial<DeliverySummary>): Promise<void> {
     if (!this.db) await this.initialize();
     
     const transaction = this.db!.transaction(['stats'], 'readwrite');
