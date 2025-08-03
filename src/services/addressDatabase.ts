@@ -325,7 +325,7 @@ export class AddressDatabaseService {
       }
       
       this.saveAddressDatabase(merged);
-    } catch (_error) {
+    } catch {
       throw new Error('Format de données invalide');
     }
   }

@@ -4,8 +4,6 @@ import {
   Truck, 
   Settings, 
   Plus, 
-  X, 
-  Palette,
   Star,
   Trash2,
   RotateCcw
@@ -18,7 +16,6 @@ export const PersonalSettings: React.FC = () => {
     updatePersonalSettings,
     addTruckLocation,
     removeTruckLocation,
-    updateTruckLocation,
     setDefaultLocation,
     setCustomConstant,
     removeCustomConstant,

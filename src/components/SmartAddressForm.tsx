@@ -15,8 +15,7 @@ import {
   Building2,
   Home,
   Zap,
-  Star,
-  AlertTriangle
+  Star
 } from 'lucide-react';
 import { Address, Package } from '../types';
 import { CSVAddressService, CSVAddress } from '../services/csvAddressService';
@@ -224,7 +223,7 @@ export const SmartAddressForm: React.FC<SmartAddressFormProps> = ({
     onPackageComplete(packageData, duplicateCount);
   };
 
-  const addToIndex = () => {
+  const _addToIndex = () => {
     if (!streetName || !city || !postcode) {
       alert('Veuillez remplir tous les champs avant d\'ajouter à l\'index');
       return;

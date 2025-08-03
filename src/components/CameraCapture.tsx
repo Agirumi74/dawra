@@ -54,7 +54,7 @@ export const CameraCapture: React.FC<CameraCaptureProps> = ({
             return false;
           }
           // If 'prompt', continue to request permission
-        } catch (_permissionError) {
+        } catch {
           // Permission API not supported or failed, continue with getUserMedia
           console.log('API Permissions non supportée, utilisation de getUserMedia direct');
         }

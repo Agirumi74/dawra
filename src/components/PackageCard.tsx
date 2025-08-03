@@ -12,8 +12,7 @@ import {
   XCircle,
   MapPin,
   Star,
-  Zap,
-  AlertTriangle
+  Zap
 } from 'lucide-react';
 import { Package } from '../types';
 
