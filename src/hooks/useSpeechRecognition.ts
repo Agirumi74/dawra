@@ -17,11 +17,47 @@ interface UseSpeechRecognitionReturn {
   resetTranscript: () => void;
 }
 
+// Web Speech API types
+interface SpeechRecognition extends EventTarget {
+  continuous: boolean;
+  interimResults: boolean;
+  lang: string;
+  maxAlternatives: number;
+  serviceURI: string;
+  grammars: SpeechGrammarList;
+  
+  start(): void;
+  stop(): void;
+  abort(): void;
+  
+  onaudiostart: ((this: SpeechRecognition, ev: Event) => any) | null;
+  onaudioend: ((this: SpeechRecognition, ev: Event) => any) | null;
+  onend: ((this: SpeechRecognition, ev: Event) => any) | null;
+  onerror: ((this: SpeechRecognition, ev: SpeechRecognitionErrorEvent) => any) | null;
+  onnomatch: ((this: SpeechRecognition, ev: SpeechRecognitionEvent) => any) | null;
+  onresult: ((this: SpeechRecognition, ev: SpeechRecognitionEvent) => any) | null;
+  onsoundstart: ((this: SpeechRecognition, ev: Event) => any) | null;
+  onsoundend: ((this: SpeechRecognition, ev: Event) => any) | null;
+  onspeechstart: ((this: SpeechRecognition, ev: Event) => any) | null;
+  onspeechend: ((this: SpeechRecognition, ev: Event) => any) | null;
+  onstart: ((this: SpeechRecognition, ev: Event) => any) | null;
+}
+
+interface SpeechRecognitionEvent extends Event {
+  resultIndex: number;
+  results: SpeechRecognitionResultList;
+}
+
+interface SpeechRecognitionErrorEvent extends Event {
+  error: string;
+  message: string;
+}
+
 // Extend the Window interface to include webkitSpeechRecognition
 declare global {
   interface Window {
-    webkitSpeechRecognition: any;
-    SpeechRecognition: any;
+    webkitSpeechRecognition: new () => SpeechRecognition;
+    SpeechRecognition: new () => SpeechRecognition;
   }
 }
 
@@ -36,7 +72,7 @@ export const useSpeechRecognition = (
   const [error, setError] = useState<string | null>(null);
   const [isSupported, setIsSupported] = useState(false);
   
-  const recognitionRef = useRef<any>(null);
+  const recognitionRef = useRef<SpeechRecognition | null>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const finalResultReceived = useRef(false);
 
@@ -73,7 +109,7 @@ export const useSpeechRecognition = (
         }
       };
       
-      recognition.onresult = (event: any) => {
+      recognition.onresult = (event: SpeechRecognitionEvent) => {
         let finalTranscript = '';
         let interimTranscript = '';
         let maxConfidence = 0;
@@ -110,7 +146,7 @@ export const useSpeechRecognition = (
         }
       };
       
-      recognition.onerror = (event: any) => {
+      recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
         setError(`Erreur de reconnaissance vocale: ${event.error}`);
         setIsListening(false);
         
@@ -142,7 +178,7 @@ export const useSpeechRecognition = (
         timeoutRef.current = null;
       }
     };
-  }, [language, continuous, autoStopTimeout, autoStop]);
+  }, [language, continuous, autoStopTimeout, autoStop, isListening]);
 
   const startListening = useCallback(() => {
     if (!isSupported) {
