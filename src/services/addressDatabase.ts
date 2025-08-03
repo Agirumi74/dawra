@@ -138,7 +138,7 @@ export class AddressDatabaseService {
   }
 
   // Modifier une note
-  static updateNote(noteId: string, newNote: string, author: string): void {
+  static updateNote(noteId: string, newNote: string, _author: string): void {
     const database = this.loadAddressDatabase();
     
     for (const address of database) {
@@ -325,7 +325,7 @@ export class AddressDatabaseService {
       }
       
       this.saveAddressDatabase(merged);
-    } catch (error) {
+    } catch (_error) {
       throw new Error('Format de données invalide');
     }
   }

@@ -221,7 +221,7 @@ export const DriverDashboard: React.FC<DriverDashboardProps> = () => {
           ].map((tab) => (
             <button
               key={tab.id}
-              onClick={() => state.setActiveTab(tab.id as any)}
+              onClick={() => state.setActiveTab(tab.id as 'today' | 'scan' | 'gps' | 'history')}
               className={`flex flex-col items-center justify-center py-3 px-4 min-w-0 flex-1 touch-manipulation transition-colors ${
                 state.activeTab === tab.id
                   ? 'text-green-600'

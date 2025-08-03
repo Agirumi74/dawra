@@ -110,8 +110,8 @@ const mockCSVAddresses = [
 
 describe('CSV Address Service Enhanced', () => {
   beforeEach(() => {
-    (CSVAddressService as any).addresses = mockCSVAddresses;
-    (CSVAddressService as any).isLoaded = true;
+    (CSVAddressService as unknown as { addresses: typeof mockCSVAddresses; isLoaded: boolean }).addresses = mockCSVAddresses;
+    (CSVAddressService as unknown as { addresses: typeof mockCSVAddresses; isLoaded: boolean }).isLoaded = true;
   });
 
   test('recherche fuzzy avec score de pertinence', async () => {

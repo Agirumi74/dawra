@@ -19,11 +19,18 @@ export interface Vehicle {
   fuelType: string;
 }
 
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+}
+
 export interface AppState {
   packages: Package[];
   currentVehicle: Vehicle | null;
   activeTab: 'today' | 'scan' | 'gps' | 'history';
-  user: any | null;
+  user: User | null;
   loading: boolean;
   error: string | null;
 }
@@ -33,7 +40,7 @@ export type AppAction =
   | { type: 'UPDATE_PACKAGE'; payload: { id: string; updates: Partial<Package> } }
   | { type: 'SET_VEHICLE'; payload: Vehicle }
   | { type: 'SET_ACTIVE_TAB'; payload: AppState['activeTab'] }
-  | { type: 'SET_USER'; payload: any }
+  | { type: 'SET_USER'; payload: User | null }
   | { type: 'SET_LOADING'; payload: boolean }
   | { type: 'SET_ERROR'; payload: string | null };
 

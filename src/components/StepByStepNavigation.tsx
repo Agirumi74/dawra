@@ -6,7 +6,6 @@ import {
   ArrowUp,
   RotateCcw,
   MapPin,
-  Clock,
   Route as RouteIcon,
   Volume2,
   VolumeX,

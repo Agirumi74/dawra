@@ -4,8 +4,6 @@ import {
   Navigation, 
   Clock, 
   Loader2, 
-  Settings,
-  Plus,
   Minus,
   ArrowRight,
   CheckCircle,
@@ -193,7 +191,7 @@ export const EnhancedRouteView: React.FC<EnhancedRouteViewProps> = ({ onNavigate
         // Calculer la distance du dernier point vers le dépôt UPS
         const lastPoint = optimized[optimized.length - 1];
         if (lastPoint.address.coordinates) {
-          const lastToUpsDistance = RouteOptimizer.calculateHaversineDistance(
+          const _lastToUpsDistance = RouteOptimizer.calculateHaversineDistance(
             lastPoint.address.coordinates,
             UPS_DEPOT_ADDRESS.coordinates!
           );

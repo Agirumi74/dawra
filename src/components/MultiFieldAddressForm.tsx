@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { 
   Search, 
   MapPin, 
-  Check, 
   X, 
   Plus, 
   Star,

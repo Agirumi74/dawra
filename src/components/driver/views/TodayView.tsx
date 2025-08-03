@@ -13,7 +13,7 @@ interface TodayViewProps {
 }
 
 export const TodayView: React.FC<TodayViewProps> = ({
-  currentVehicle,
+  _currentVehicle,
   todayRoute,
   onScanClick,
   onGPSManagerClick
