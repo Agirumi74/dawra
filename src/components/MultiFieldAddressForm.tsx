@@ -243,28 +243,31 @@ export const MultiFieldAddressForm: React.FC<MultiFieldAddressFormProps> = ({
       setIsLoading(true);
       setError('');
       
-      const maxResults = 8;
-      const localLimit = Math.ceil(maxResults * 0.6); // 60% pour local
-      const banLimit = maxResults - localLimit; // 40% pour BAN
+      const maxResults = 10;
+      const localLimit = Math.ceil(maxResults * 0.7); // 70% pour local pour privilégier les résultats locaux
+      const banLimit = maxResults - localLimit; // 30% pour BAN
 
-      // 1. Recherche locale en premier
-      const localResults = await CSVAddressService.searchAddresses(searchQuery, postalCode, localLimit);
+      // 1. Recherche locale en premier avec score de pertinence amélioré
+      const localResults = await CSVAddressService.searchAddresses(searchQuery, postalCode, localLimit * 2); // Demander plus pour filtrer ensuite
       
-      const localSuggestions: AddressSearchSuggestion[] = localResults.map(csvAddr => ({
-        type: 'local',
-        csvAddress: csvAddr,
-        address: CSVAddressService.parseCSVAddress(csvAddr),
-        displayName: `${csvAddr.numero} ${csvAddr.nom_voie}`.trim(),
-        subtitle: `${csvAddr.code_postal} ${csvAddr.nom_commune}`,
-        score: 1 // Score local toujours prioritaire
-      }));
+      const localSuggestions: AddressSearchSuggestion[] = localResults
+        .slice(0, localLimit) // Limiter après scoring
+        .map(csvAddr => ({
+          type: 'local',
+          csvAddress: csvAddr,
+          address: CSVAddressService.parseCSVAddress(csvAddr),
+          displayName: `${csvAddr.numero} ${csvAddr.nom_voie}`.trim(),
+          subtitle: `${csvAddr.code_postal} ${csvAddr.nom_commune}`,
+          score: 1 // Score local toujours prioritaire mais sera recalculé
+        }));
 
-      // 2. Si pas assez de résultats locaux et BAN disponible, chercher en ligne
+      // 2. Si pas assez de résultats locaux pertinents et BAN disponible, chercher en ligne
       let banSuggestions: AddressSearchSuggestion[] = [];
       
       if (localSuggestions.length < maxResults && banAvailable) {
         try {
-          const banResults = await BANApiService.searchAddressesDebounced(
+          // Utiliser la recherche avec retry et gestion d'erreurs améliorée
+          const banResults = await BANApiService.searchAddressesWithRetry(
             searchQuery, 
             banLimit, 
             postalCode
@@ -272,33 +275,33 @@ export const MultiFieldAddressForm: React.FC<MultiFieldAddressFormProps> = ({
           
           banSuggestions = banResults
             .filter(banResult => {
-              // Éviter les doublons avec les résultats locaux
-              return !localSuggestions.some(local => 
-                local.address?.street_name.toLowerCase() === banResult.properties.street?.toLowerCase() &&
-                local.address?.postal_code === banResult.properties.postcode &&
-                local.address?.street_number === banResult.properties.housenumber
-              );
+              // Éviter les doublons avec les résultats locaux (comparaison plus stricte)
+              return !localSuggestions.some(local => {
+                const localAddr = local.address!;
+                return isAddressDuplicate(localAddr, banResult);
+              });
             })
             .map(banResult => ({
               type: 'ban',
               banSuggestion: banResult,
               address: BANApiService.banSuggestionToAddress(banResult),
               displayName: banResult.properties.label,
-              subtitle: `BAN • Score: ${Math.round(banResult.properties.score * 100)}%`,
+              subtitle: `BAN • Score: ${Math.round(banResult.properties.score * 100)}% • +Auto`,
               score: banResult.properties.score
             }));
         } catch (banError) {
           console.warn('Erreur BAN API:', banError);
           setBanAvailable(false);
+          // Ne pas afficher d'erreur à l'utilisateur, juste désactiver BAN
         }
       }
 
-      // 3. Combiner et trier les résultats
+      // 3. Combiner et trier les résultats avec scoring intelligent
       const allSuggestions = [...localSuggestions, ...banSuggestions]
         .sort((a, b) => {
-          // Priorité aux résultats locaux, puis par score
-          if (a.type === 'local' && b.type === 'ban') return -1;
-          if (a.type === 'ban' && b.type === 'local') return 1;
+          // Priorité aux résultats locaux en cas d'égalité
+          if (a.type === 'local' && b.type === 'ban' && Math.abs((a.score || 0) - (b.score || 0)) < 0.1) return -1;
+          if (a.type === 'ban' && b.type === 'local' && Math.abs((a.score || 0) - (b.score || 0)) < 0.1) return 1;
           return (b.score || 0) - (a.score || 0);
         })
         .slice(0, maxResults);
@@ -309,11 +312,26 @@ export const MultiFieldAddressForm: React.FC<MultiFieldAddressFormProps> = ({
 
     } catch (error) {
       console.error('Erreur lors de la recherche:', error);
-      setError('Erreur lors de la recherche d\'adresses');
+      setError('Erreur lors de la recherche d\'adresses. Vérifiez votre connexion.');
     } finally {
       setIsLoading(false);
     }
   }, [postalCode, banAvailable]);
+
+  // Fonction utilitaire pour détecter les doublons d'adresses
+  const isAddressDuplicate = (localAddr: Address, banResult: BANSuggestion): boolean => {
+    const banAddr = BANApiService.banSuggestionToAddress(banResult);
+    
+    // Comparaison multi-critères pour détecter les doublons
+    const sameStreet = localAddr.street_name.toLowerCase().trim() === banAddr.street_name.toLowerCase().trim();
+    const samePostalCode = localAddr.postal_code === banAddr.postal_code;
+    const sameNumber = localAddr.street_number === banAddr.street_number;
+    const sameCity = localAddr.city.toLowerCase().trim() === banAddr.city.toLowerCase().trim();
+    
+    // Doublon si rue + code postal + ville correspondent, et soit même numéro soit l'un des deux est vide
+    return sameStreet && samePostalCode && sameCity && 
+           (sameNumber || !localAddr.street_number || !banAddr.street_number);
+  };
 
   // Recherche de villes par code postal
   useEffect(() => {
@@ -412,6 +430,52 @@ export const MultiFieldAddressForm: React.FC<MultiFieldAddressFormProps> = ({
     setShowCitySuggestions(false);
     // Also close street suggestions when city is selected
     setShowSuggestions(false);
+  };
+
+  const handleCreateNewAddress = async () => {
+    try {
+      // Vérifier que tous les champs requis sont remplis
+      if (!streetName.trim() || !city.trim() || !postalCode.trim()) {
+        setError('Veuillez remplir tous les champs obligatoires avant de créer l\'adresse');
+        return;
+      }
+
+      // Créer la nouvelle adresse
+      const newAddress: Address = {
+        id: `manual_${Date.now()}`,
+        street_number: streetNumber.trim(),
+        street_name: streetName.trim(),
+        postal_code: postalCode.trim(),
+        city: city.trim(),
+        country: 'France',
+        full_address: `${streetNumber} ${streetName}, ${postalCode} ${city}`.trim(),
+        coordinates: undefined // Pas de coordonnées pour les adresses manuelles
+      };
+
+      // Ajouter à la base locale pour les futures recherches
+      CSVAddressService.addBANAddressToLocal(newAddress);
+      AddressDatabaseService.addOrUpdateAddress(newAddress, {
+        isVerified: false, // Marquer comme non vérifiée car créée manuellement
+        alternativeNames: [],
+        accessInstructions: 'Adresse créée manuellement'
+      });
+
+      // Fermer les suggestions et afficher un message de succès
+      setShowSuggestions(false);
+      setError('');
+      
+      // Feedback visuel temporaire
+      const originalError = error;
+      setError('✅ Nouvelle adresse créée et ajoutée à votre base locale !');
+      setTimeout(() => {
+        setError(originalError);
+      }, 3000);
+
+      console.log('Nouvelle adresse créée et ajoutée:', newAddress);
+    } catch (createError) {
+      console.error('Erreur lors de la création de l\'adresse:', createError);
+      setError('Erreur lors de la création de l\'adresse. Veuillez réessayer.');
+    }
   };
 
   // Navigation au clavier
@@ -743,10 +807,25 @@ export const MultiFieldAddressForm: React.FC<MultiFieldAddressFormProps> = ({
       )}
 
       {streetName.length >= 2 && !isLoading && suggestions.length === 0 && showSuggestions && (
-        <div className="text-center py-4 text-gray-500">
-          <MapPin size={20} className="mx-auto mb-2 text-gray-400" />
-          <p className="text-sm">Aucune adresse trouvée</p>
-          <p className="text-xs">Essayez avec d'autres mots-clés</p>
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 space-y-3">
+          <div className="text-center text-blue-800">
+            <MapPin size={20} className="mx-auto mb-2 text-blue-600" />
+            <p className="text-sm font-medium">Aucune adresse trouvée</p>
+            <p className="text-xs text-blue-600">Voulez-vous créer cette nouvelle adresse ?</p>
+          </div>
+          
+          <button
+            type="button"
+            onClick={handleCreateNewAddress}
+            className="w-full py-3 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center space-x-2 text-sm font-medium"
+          >
+            <Plus size={16} />
+            <span>Créer l'adresse "{streetNumber} {streetName}, {postalCode} {city}"</span>
+          </button>
+          
+          <p className="text-xs text-blue-600 text-center">
+            Cette adresse sera ajoutée à votre base locale pour les prochaines utilisations
+          </p>
         </div>
       )}
     </div>

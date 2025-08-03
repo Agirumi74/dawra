@@ -28,6 +28,8 @@ export interface EnhancedAddress extends Address {
     email?: string;
     contactPerson?: string;
   };
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export class AddressDatabaseService {
