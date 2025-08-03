@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { 
   Search, 
   MapPin, 
-  Check, 
   X, 
   Plus, 
   Star,
@@ -23,7 +22,6 @@ import { BANApiService } from '../services/banApiService';
 import { AddressDatabaseService } from '../services/addressDatabase';
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition';
 import { useVoiceSettings } from '../hooks/useVoiceSettings';
-import { usePersonalSettings } from '../hooks/usePersonalSettings';
 
 interface AddressSearchSuggestion {
   type: 'local' | 'ban';

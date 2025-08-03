@@ -5,7 +5,6 @@ import {
   AlertTriangle, 
   CheckCircle, 
   Clock,
-  Route,
   Settings,
   Target,
   Navigation

@@ -27,7 +27,7 @@ const createMockDb = () => {
       where: () => Promise.resolve([]),
     }),
   };
-  return mockDb as any;
+  return mockDb as unknown as typeof import('@libsql/client').createClient;
 };
 
 // Configuration de la base de données

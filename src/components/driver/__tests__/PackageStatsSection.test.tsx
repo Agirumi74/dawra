@@ -35,7 +35,7 @@ describe('PackageStatsSection', () => {
     
     expect(screen.getByText('Colis scannés aujourd\'hui')).toBeInTheDocument();
     expect(screen.getByText('3')).toBeInTheDocument(); // Total
-    expect(screen.getByText('1')).toBeInTheDocument(); // Delivered
+    expect(screen.getAllByText('1')).toHaveLength(2); // Delivered and Failed
     expect(screen.getByText('Total')).toBeInTheDocument();
     expect(screen.getByText('Livrés')).toBeInTheDocument();
     expect(screen.getByText('Échecs')).toBeInTheDocument();
@@ -50,6 +50,6 @@ describe('PackageStatsSection', () => {
       />
     );
     
-    expect(screen.getByText('0')).toBeInTheDocument();
+    expect(screen.getAllByText('0')).toHaveLength(3); // Total, Delivered, Failed all zero
   });
 });

@@ -136,7 +136,7 @@ export const PackageForm: React.FC<PackageFormProps> = ({
   const handleCustomLocationAdd = () => {
     if (customLocation.trim()) {
       // Add to personal settings
-      const locationId = addTruckLocation(customLocation.trim(), '#3b82f6'); // Default blue color
+      addTruckLocation(customLocation.trim(), '#3b82f6'); // Default blue color
       
       // Set as current location
       setFormData(prev => ({

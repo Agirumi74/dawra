@@ -26,7 +26,7 @@ interface TourProgressViewProps {
   onNext: () => void;
   onBack: () => void;
   setCurrentPointIndex?: (index: number) => void;
-  packages: any[];
+  packages: Package[];
 }
 
 export const TourProgressView: React.FC<TourProgressViewProps> = ({
@@ -34,7 +34,7 @@ export const TourProgressView: React.FC<TourProgressViewProps> = ({
   currentPointIndex,
   userPosition,
   onDeliveryComplete,
-  onDeliveryFailed,
+  _onDeliveryFailed,
   onNext,
   onBack,
   setCurrentPointIndex,

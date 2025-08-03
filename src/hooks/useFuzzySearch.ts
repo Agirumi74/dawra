@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback } from 'react';
 
 export interface FuzzySearchOptions {
   threshold?: number; // Seuil de correspondance (0-1)
@@ -206,10 +206,10 @@ export const useFuzzySearch = <T>(options: FuzzySearchOptions = {}): UseFuzzySea
   // Fonction pour extraire la valeur d'une clé dans un objet
   const getValue = useCallback((item: T, key: string): string => {
     const keys = key.split('.');
-    let value: any = item;
+    let value: unknown = item;
     
     for (const k of keys) {
-      value = value?.[k];
+      value = (value as Record<string, unknown>)?.[k];
       if (value === undefined || value === null) return '';
     }
     

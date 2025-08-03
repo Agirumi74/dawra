@@ -134,7 +134,7 @@ export class BasicOCRService {
    * Future enhancement: Use experimental browser text detection APIs
    * This is a placeholder for when browser support improves
    */
-  private async tryExperimentalTextDetection(canvas: HTMLCanvasElement): Promise<string[]> {
+  private async tryExperimentalTextDetection(_canvas: HTMLCanvasElement): Promise<string[]> {
     // Check for experimental text detection APIs
     if ('BarcodeDetector' in window) {
       // Could potentially use similar APIs for text detection in the future

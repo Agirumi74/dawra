@@ -53,4 +53,4 @@ export const demoCSVOptimization = async () => {
 };
 
 // Pour une utilisation dans la console du navigateur
-(window as any).demoCSVOptimization = demoCSVOptimization;
+(window as unknown as { demoCSVOptimization: typeof demoCSVOptimization }).demoCSVOptimization = demoCSVOptimization;

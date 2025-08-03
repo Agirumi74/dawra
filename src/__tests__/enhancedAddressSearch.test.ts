@@ -16,17 +16,24 @@ describe('Enhanced Address Search Tests', () => {
 
   const setupMockAddresses = (addresses: CSVAddress[]) => {
     // Set up internal addresses array for testing
-    (CSVAddressService as any).addresses = addresses;
-    (CSVAddressService as any).isLoaded = true;
-    (CSVAddressService as any).postalCodeIndex = new Map();
+    type TestServiceType = {
+      addresses: CSVAddress[];
+      isLoaded: boolean;
+      postalCodeIndex: Map<string, CSVAddress[]>;
+    };
+    
+    const service = CSVAddressService as unknown as TestServiceType;
+    service.addresses = addresses;
+    service.isLoaded = true;
+    service.postalCodeIndex = new Map();
     
     // Build postal code index
     for (const address of addresses) {
       const postalCode = address.code_postal;
-      if (!(CSVAddressService as any).postalCodeIndex.has(postalCode)) {
-        (CSVAddressService as any).postalCodeIndex.set(postalCode, []);
+      if (!service.postalCodeIndex.has(postalCode)) {
+        service.postalCodeIndex.set(postalCode, []);
       }
-      (CSVAddressService as any).postalCodeIndex.get(postalCode).push(address);
+      service.postalCodeIndex.get(postalCode)!.push(address);
     }
   };
 

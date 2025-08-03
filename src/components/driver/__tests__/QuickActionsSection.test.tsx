@@ -20,8 +20,8 @@ describe('QuickActionsSection', () => {
     
     expect(screen.getByText('Scanner un colis')).toBeInTheDocument();
     expect(screen.getByText('GPS Manager')).toBeInTheDocument();
-    expect(screen.getByText('Démarrer le scan de codes-barres')).toBeInTheDocument();
-    expect(screen.getByText('Optimiser vos tournées')).toBeInTheDocument();
+    expect(screen.getByText('Capturer l\'adresse et le code-barre')).toBeInTheDocument();
+    expect(screen.getByText('Navigation et optimisation')).toBeInTheDocument();
   });
 
   it('calls onScanClick when scan button is clicked', () => {

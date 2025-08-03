@@ -17,7 +17,7 @@ describe('VehicleSection', () => {
     expect(screen.getByText('Mon véhicule')).toBeInTheDocument();
     expect(screen.getByText('ABC-123')).toBeInTheDocument();
     expect(screen.getByText('Mercedes Sprinter')).toBeInTheDocument();
-    expect(screen.getByText('45 000 km')).toBeInTheDocument();
+    expect(screen.getByText('45,000 km')).toBeInTheDocument();
     expect(screen.getByText('Diesel')).toBeInTheDocument();
     expect(screen.getByText('Assigné')).toBeInTheDocument();
   });

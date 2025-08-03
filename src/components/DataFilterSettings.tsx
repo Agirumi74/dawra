@@ -1,10 +1,8 @@
 import React, { useState, useCallback } from 'react';
 import { 
-  Settings, 
   Database, 
   Filter, 
   BarChart3, 
-  Clock, 
   Save,
   RotateCcw,
   CheckCircle,

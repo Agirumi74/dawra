@@ -101,7 +101,7 @@ export class RouteDirectionsService {
   /**
    * Formatter les instructions de navigation
    */
-  private static formatInstruction(maneuver: any): string {
+  private static formatInstruction(maneuver: { type: string; modifier?: string }): string {
     const type = maneuver.type;
     const modifier = maneuver.modifier;
     
@@ -141,9 +141,10 @@ export class RouteDirectionsService {
         return modifier === 'left' ? 'Prendre à gauche à la bifurcation' : 'Prendre à droite à la bifurcation';
       case 'roundabout':
         return 'Entrer dans le rond-point';
-      case 'roundabout turn':
-        const exitNumber = maneuver.exit ? ` et prendre la ${maneuver.exit}ème sortie` : '';
+      case 'roundabout turn': {
+        const exitNumber = (maneuver as { exit?: number }).exit ? ` et prendre la ${(maneuver as { exit: number }).exit}ème sortie` : '';
         return `Dans le rond-point${exitNumber}`;
+      }
       case 'notification':
         return 'Attention';
       default:
